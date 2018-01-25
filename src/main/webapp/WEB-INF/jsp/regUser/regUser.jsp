@@ -7,7 +7,6 @@
 	var flag = false;
 
 	function fn_dupl() {
-		
 		var userID = $('#id').val();
 		
 		if(userID==''){
@@ -50,13 +49,9 @@
 	     rules: {
 	       id : {required : true},
 	       upw :{required : true},
-	       upwConfirm:{required : true, 
-	    	   		equalTo:"#upw"},
-	       uemail: {
-	         required: true,
-	         email: true
-	       },
-	       uname :{required:true}
+	       upwConfirm : {required : true, equalTo:"#upw"},
+	       uemail : {email: true},
+	       uname : {required:true}
 	     },
 	     messages:{
 	    	id:{required :"아이디를 입력해주세요"},
@@ -66,7 +61,6 @@
 	    		equalTo:"패스워드가 일치하지 않습니다"
 	    	},
 	    	uemail:{
-	    		required:"이메일주소를 입력해주세요",
 	    		email:"올바른 이메일 주소를 입력해주세요"
 	    	},
 	    	uname:{required:"이름을 입력해주세요"}
@@ -173,7 +167,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 이름</label>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="uname">
+									<input type="text" class="form-control" id="uname" name="uname">
 								</div>
 							</div>
 							<div class="line"></div>
@@ -191,18 +185,15 @@
 								<div class="col-md-5">
 									<div class="row">
 										<div class="col-md-4">
-											<input id="radioRoleSA" type="radio" checked="" value="SA"
-												name="radioRole1" class="form-control-custom radio-custom">
+											<input id="radioRoleSA" type="radio" checked="" value="SA" name="radioRole" class="form-control-custom radio-custom">
 											<label for="radioRoleSA">슈퍼관리자</label>
 										</div>
 										<div class="col-md-4">
-											<input id="radioRoleAA" type="radio" value="AA"
-												name="radioRole1" class="form-control-custom radio-custom">
+											<input id="radioRoleAA" type="radio" value="AA" name="radioRole" class="form-control-custom radio-custom">
 											<label for="radioRoleAA">관리자</label>
 										</div>
 										<div class="col-md-4">
-											<input id="radioRoleDV" type="radio" value="DV"
-												name="radioRole1" class="form-control-custom radio-custom">
+											<input id="radioRoleDV" type="radio" value="DV" name="radioRole" class="form-control-custom radio-custom">
 											<label for="radioRoleDV">개발자</label>
 										</div>
 									</div>

@@ -1,23 +1,17 @@
 package com.sicc.admin.demo.controller;
 
-import java.util.Iterator;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -92,19 +86,25 @@ public class IndexController {
     }
     
     @PostMapping("/regUser")
-    public String regUser(Model model , @RequestParam("id") String id, @RequestParam("upw") String upw,
-    		@RequestParam("uemail") String uemail, HttpServletRequest req, HttpServletResponse res) {
+    public String regUser(Model model , HttpServletRequest req, HttpServletResponse res,
+    		@RequestParam("id") String adminId, 
+    		@RequestParam("upw") String password,
+    		@RequestParam("uemail") String emailAddr,
+    		@RequestParam("radioRole") String adminPrivCd,
+    		@RequestParam("uname") String adminNm
+    		) {
 		
-    	System.out.println("test : " + id + " "+upw + " "+uemail);
+    	System.out.println("test : " + adminId + " "+password + " "+emailAddr+ " "+adminPrivCd);
     	
     	Member member = new Member();
 		
-		/*member.setId(id);
-		member.setUid(id+"1");
-		member.setUpw(upw);
-		member.setUemail(uemail);
+		member.setAdminId(adminId);
+		member.setPassword(password);
+		member.setAdminNm(adminNm);
+		member.setAdminPrivCd(adminPrivCd);
+		member.setEmailAddr(emailAddr);
 		
-    	userService.createMember(member);*/
+    	userService.createMember(member);
     	
     	return "/login/login";
     	

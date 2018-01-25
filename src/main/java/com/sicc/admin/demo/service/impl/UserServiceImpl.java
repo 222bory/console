@@ -62,5 +62,10 @@ public class UserServiceImpl implements UserService{
 			adminDao.createRelMemberRole(rel);
 			//adminDao.createRole(roleList.get(i));
 		}*/
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		member.setPassword(passwordEncoder.encode(member.getPassword()));
+		
+		adminDao.insertAdminUser(member);
 	}
 }

@@ -18,6 +18,8 @@ public interface AdminDao {
 	
 	public void createRelMemberRole(MemberRoleRel memberRoleRel);
 	
+	public void insertAdminUser(Member member);
+	
 	
 	public Member getMemberById(String id);
 }
