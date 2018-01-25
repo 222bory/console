@@ -33,17 +33,5 @@
     	insert into conadminm (admin_id, admin_nm, admin_priv_cd, email_addr, password, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
     	values (#{adminId}, #{adminNm}, #{adminPrivCd}, #{emailAddr}, #{password}, #{crtId}, #{crtIp}, now(), null, null, null)
     </insert>
-    
-    <insert id ="createMember" parameterType="com.sicc.admin.demo.model.Member">
-    	insert into member (id, uid, upw, uemail, regdate, updatedate) values (#{id},#{uid},#{upw},#{uemail},null,null)
-    </insert>
-    
-    <insert id ="createRole" parameterType="com.sicc.admin.demo.model.MemberRole">
-    	insert into memberrole (rno, rolename) values (#{rno},#{rolename})
-    </insert>
-    
-    <insert id ="createRelMemberRole" parameterType="com.sicc.admin.demo.model.MemberRoleRel">
-    	insert into relmemberrole (uid, rno, member_role_rel_type_cd) values (#{uid},#{rno}, #{memberRoleRelTypeCd})
-    </insert>
 
 </mapper>
