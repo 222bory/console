@@ -28,7 +28,7 @@ public class AdminApplication {
 		System.out.println("ap ::: "+ ap.toString());
 		
 		ApplicationTemp at = new ApplicationTemp(AdminApplication.class);
-		System.out.println("at ::: "+ at.getDir());
+		System.out.println("at ::: "+ at.getDir()); 
 		
 		System.out.println("dir ::: "+System.getProperty("user.dir"));
 		System.out.println("home ::: "+System.getProperty("java.home"));
