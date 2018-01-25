@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 //@EnableEncryptableProperties
-public class AdminApplication {
+public class AdminApplication { 
 
 	public static void main(String[] args) {
 		System.out.println("sicc admin application start");
