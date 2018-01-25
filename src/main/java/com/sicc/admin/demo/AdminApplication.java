@@ -38,7 +38,7 @@ public class AdminApplication {
 		
 		Properties p = System.getProperties();
 		Set<Object> s = p.keySet();
-		Iterator<Object> it = s.iterator();
+		Iterator<Object> it = s.iterator(); 
 		
 		while(it.hasNext()) {
 			String key = it.next().toString();
