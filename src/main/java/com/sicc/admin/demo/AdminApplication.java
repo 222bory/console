@@ -22,7 +22,7 @@ public class AdminApplication {
 		ApplicationHome ah = new ApplicationHome();
 	
 		System.out.println("ah :::" + ah.getDir() );
-		System.out.println("ah :::" + ah.getSource() );
+		System.out.println("ah :::" + ah.getSource() ); 
 		
 		ApplicationPid ap = new ApplicationPid();
 		System.out.println("ap ::: "+ ap.toString());
