@@ -1,8 +1,9 @@
 package com.sicc.admin.demo.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AjaxResponseBody {
+public class AjaxResponseBody implements Serializable {
 
     String msg;
     List<User2> result;

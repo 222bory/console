@@ -1,6 +1,8 @@
 package com.sicc.admin.demo.model;
 
-public class User2 {
+import java.io.Serializable;
+
+public class User2 implements Serializable {
 
     String username;
     String password;

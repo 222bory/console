@@ -1,9 +1,10 @@
 package com.sicc.admin.demo.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Member {
+public class Member  implements Serializable {
 	
 	private String adminId;
 	private String adminNm;
