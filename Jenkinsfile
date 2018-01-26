@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
 node {
+
     properties([
       pipelineTriggers([
        [$class: 'GenericTrigger',
