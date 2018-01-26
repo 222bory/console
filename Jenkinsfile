@@ -7,32 +7,27 @@ node {
             [$class: 'GenericTrigger',
                 genericVariables: [
                     [expressionType: 'JSONPath', key: 'reference', value: '$.ref'],
-                    [expressionType: 'JSONPath', key: 'before', value: '$.before']
+                    [expressionType: 'JSONPath', key: 'before', value: '$.before'],
+                    [expressionType: 'JSONPath', key: 'after', value: '$.after'],
+                    [expressionType: 'JSONPath', key: 'repository', value: '$.repository.full_name']
                 ],
                 genericRequestVariables: [
                     [key: 'requestWithNumber', regexpFilter: '[^0-9]'],
-                    [key: 'repository', regexpFilter: 'console']
+                    [key: 'requestWithString', regexpFilter: '']
                 ],
                 genericHeaderVariables: [
                     [key: 'headerWithNumber', regexpFilter: '[^0-9]'],
                     [key: 'headerWithString', regexpFilter: '']
                 ],
-                regexpFilterText: '',
-                regexpFilterExpression: ''
+                regexpFilterText: '$repository/$reference',
+                regexpFilterExpression: 'GSP/console/refs/heads/master'
             ]
         ])
     ])
 
     stage("Info") {
-      sh '''
-      echo Variables from shell:
-      echo reference $reference
-      echo before $before
-      echo requestWithNumber $requestWithNumber
-      echo requestWithString $requestWithString
-      echo headerWithNumber $headerWithNumber
-      echo headerWithString $headerWithString
-      '''
+        echo "${after} => ${before}"
+        echo "${repository}/${reference}"
     }
 	
     checkout scm
