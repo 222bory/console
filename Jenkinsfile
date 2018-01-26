@@ -43,7 +43,7 @@ node {
 
     stage('Deploy') {
         if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-            //sh 'make publish'
+            sh 'true'
         }
     }
 }
