@@ -11,7 +11,7 @@ node {
                 ],
                 genericRequestVariables: [
                     [key: 'requestWithNumber', regexpFilter: '[^0-9]'],
-                    [key: 'requestWithString', regexpFilter: '']
+                    [key: 'repository', regexpFilter: 'console']
                 ],
                 genericHeaderVariables: [
                     [key: 'headerWithNumber', regexpFilter: '[^0-9]'],
