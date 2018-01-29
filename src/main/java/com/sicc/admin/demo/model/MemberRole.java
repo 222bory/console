@@ -1,6 +1,8 @@
 package com.sicc.admin.demo.model;
 
-public class MemberRole {
+import java.io.Serializable;
+
+public class MemberRole  implements Serializable {
 	private Long rno;
 	
 	private String rolename;

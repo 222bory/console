@@ -185,16 +185,12 @@
 								<div class="col-md-5">
 									<div class="row">
 										<div class="col-md-4">
-											<input id="radioRoleSA" type="radio" checked="" value="SA" name="radioRole" class="form-control-custom radio-custom">
-											<label for="radioRoleSA">슈퍼관리자</label>
+											<input id="radioRoleAdmin" type="radio" checked="" value="ADMIN" name="radioRole" class="form-control-custom radio-custom">
+											<label for="radioRoleAdmin">관리자</label>
 										</div>
 										<div class="col-md-4">
-											<input id="radioRoleAA" type="radio" value="AA" name="radioRole" class="form-control-custom radio-custom">
-											<label for="radioRoleAA">관리자</label>
-										</div>
-										<div class="col-md-4">
-											<input id="radioRoleDV" type="radio" value="DV" name="radioRole" class="form-control-custom radio-custom">
-											<label for="radioRoleDV">개발자</label>
+											<input id="radioRoleBasic" type="radio" value="BASIC" name="radioRole" class="form-control-custom radio-custom">
+											<label for="radioRoleBasic">일반사용자</label>
 										</div>
 									</div>
 								</div>

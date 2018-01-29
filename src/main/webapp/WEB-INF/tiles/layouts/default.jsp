@@ -78,17 +78,19 @@
         <sec:authorize access="isAuthenticated()">
         <div class="admin-menu">
           <ul id="side-admin-menu" class="side-menu list-unstyled"> 
-            <li sec:authorize="isAuthenticated()"> <a href="#pages-nav-list1" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>empty</span>
+			<li sec:authorize="isAuthenticated()"> <a href="#pages-nav-list1" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>서비스 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list1" class="collapse list-unstyled">
-                <li> <a href="#">Page 1</a></li>
-                <li> <a href="#">Page 2</a></li>
-                <li> <a href="#">Page 3</a></li>
-                <li> <a href="#">Page 4</a></li>
+                <li> <a href="#">계약 등록</a></li>
+                <li> <a href="#">계약 관리</a></li>
+                <li> <a href="#">대회 등록</a></li>
+                <li> <a href="#">대회 관리</a></li>
+                <li> <a href="#">서비스 신청</a></li>
+                <li> <a href="#">서비스신청 관리</a></li>
               </ul>
             </li>
             
-            <li> <a href="#pages-nav-list2" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>empty</span>
+            <li> <a href="#pages-nav-list2" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>테넌트 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list2" class="collapse list-unstyled">
                 <li> <a href="#">Page 1</a></li>
@@ -98,7 +100,7 @@
               </ul>
             </li>
             
-            <li> <a href="#pages-nav-list3" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>empty</span>
+            <li> <a href="#pages-nav-list3" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>클라우드 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list3" class="collapse list-unstyled">
                 <li> <a href="#">Page 1</a></li>
@@ -108,7 +110,7 @@
               </ul>
             </li>
             
-            <li> <a href="#pages-nav-list4" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>empty</span>
+            <li> <a href="#pages-nav-list4" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>모듈 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list4" class="collapse list-unstyled">
                 <li> <a href="#">Page 1</a></li>
@@ -118,13 +120,21 @@
               </ul>
             </li>
            
-            <li> <a href="#pages-nav-list5" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>User Mng.</span>
+            <li> <a href="#pages-nav-list5" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>시스템 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list5" class="collapse list-unstyled">
-                <li> <a href="#">Page 1</a></li>
-                <li> <a href="#">Page 2</a></li>
-                <li> <a href="#">Page 3</a></li>
-                <li> <a href="/insMonitorForm">url</a></li>
+                <li> <a href="#">코드 관리</a></li>
+                <li> <a href="#">모니터링 등록</a></li>
+                <li> <a href="#">모니터링 관리</a></li>
+                <li> <a href="/insMonitorForm">모니터링 조회</a></li>
+              </ul>
+            </li>
+            
+            <li> <a href="#pages-nav-list6" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>계정 관리</span>
+                <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
+              <ul id="pages-nav-list6" class="collapse list-unstyled">
+                <li> <a href="/regUser">관리자계정 등록</a></li>
+                <li> <a href="#">관리자계정 관리</a></li>
               </ul>
             </li>
             <!-- <li> <a href="#"> <i class="icon-screen"> </i><span>Demo</span></a></li>

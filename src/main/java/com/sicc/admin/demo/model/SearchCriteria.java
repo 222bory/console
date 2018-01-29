@@ -2,7 +2,9 @@ package com.sicc.admin.demo.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class SearchCriteria {
+import java.io.Serializable;
+
+public class SearchCriteria implements Serializable {
 
     @NotBlank(message = "username can't empty!")
     String username;

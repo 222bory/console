@@ -13,7 +13,7 @@ function fn_dupl(){
 	
 	flag=true;
 	
-	return flag;
+	return flag; 
 }
 </script>
 

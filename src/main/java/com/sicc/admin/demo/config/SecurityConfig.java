@@ -10,12 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.sicc.admin.demo.service.impl.CustomUserDetailsService;
+import com.sicc.admin.service.impl.CustomUserDetailsService;
+
+import javax.annotation.Resource;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-	@Autowired
-	CustomUserDetailsService customUserDetailsService;
+
+	@Resource
+	CustomUserDetailsService detailsService;
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception
@@ -52,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(detailsService)
+				.passwordEncoder(passwordEncoder());
 	}
  
 }
