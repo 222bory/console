@@ -1,6 +1,6 @@
 package com.sicc.admin.common;
 
-import java.lang.reflect.Method;
+/*import java.lang.reflect.Method;
 import java.util.List;
 
 import org.apache.ibatis.mapping.BoundSql;
@@ -22,26 +22,26 @@ import org.springframework.stereotype.Component;
 import com.sicc.admin.controller.IndexController;
 import com.sicc.admin.enums.AdminEnums;
 import com.sicc.admin.model.Member;
-import com.sicc.admin.service.UserService;
+import com.sicc.admin.service.UserService;*/
 
-@Aspect
+//@Aspect
 
 //@Component
 
-public class TestAop implements ApplicationContextAware{
+public class TestAop{
 
 
-	private ApplicationContext applicationContext;
+	//private ApplicationContext applicationContext;
 	
-	@Autowired
-	private SqlSessionTemplate sqlSessionTemplate;	
+	//@Autowired
+	//private SqlSessionTemplate sqlSessionTemplate;	
 
-	@Around("@annotation(com.sicc.admin.demo.common.WithHist) && @ annotation(target)")
-    public Object customAnnoTest(ProceedingJoinPoint joinPoint, WithHist target) throws Throwable {
+	//@Around("@annotation(com.sicc.admin.demo.common.WithHist) && @ annotation(target)")
+    /*public Object customAnnoTest(ProceedingJoinPoint joinPoint, WithHist target) throws Throwable {
 		
-		/*IndexController m = (IndexController)applicationContext.getBean("indexController");
+		IndexController m = (IndexController)applicationContext.getBean("indexController");
 		
-		System.out.println("aop111 test :::: " + target.sqlId());*/
+		System.out.println("aop111 test :::: " + target.sqlId());
 		
 		//AdminEnums.target.getValue();
 		
@@ -74,13 +74,8 @@ public class TestAop implements ApplicationContextAware{
 
 		return returnPoint;
 
-    }
+    }*/
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
-		
-	}
 
 
    
