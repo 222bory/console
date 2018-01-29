@@ -13,15 +13,15 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="org.springframework.security" level="debug" additivity="false">
+    <logger name="org.springframework.security" level="error" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
     
     <logger name="org.springframework.web" level="debug" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
-
-	<logger name="com.sicc.admin.demo.dao.AdminDao" level="DEBUG"></logger>
+    
+	<logger name="com.sicc.admin.dao" level="DEBUG"></logger>
 
     <root level="error">
         <appender-ref ref="STDOUT"/>
