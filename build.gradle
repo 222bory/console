@@ -10,7 +10,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        //classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.17.2"
+        classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.17.2"
 	}
 }
 
@@ -18,7 +18,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
-//apply plugin: "com.palantir.docker"
+apply plugin: "com.palantir.docker"
 
 war {
     baseName = 'console'
@@ -34,11 +34,11 @@ repositories {
 	mavenCentral()
 }
 
-//docker {
-//	name "${project.group}/${war.baseName}:${war.version}"
-//	files war.archivePath
-//	buildArgs(['WAR_FILE': "${war.archiveName}"])
-//}
+docker {
+	name "${project.group}/${war.baseName}:${war.version}"
+	files war.archivePath
+	buildArgs(['WAR_FILE': "${war.archiveName}"])
+}
 
 configurations {
 	providedRuntime
