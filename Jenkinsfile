@@ -40,7 +40,7 @@ node {
 
     stage('Build') {
         sh './gradlew build dockerPush'
-        archiveArtifacts artifacts: '**/build/libs/*.jar', fingerprint: true
+        archiveArtifacts artifacts: '**/build/libs/*.war', fingerprint: true
     }
 
     stage('Deploy check') {
