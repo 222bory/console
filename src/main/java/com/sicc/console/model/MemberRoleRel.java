@@ -1,4 +1,4 @@
-package com.sicc.admin.model;
+package com.sicc.console.model;
 
 public class MemberRoleRel {
 	public String uid;

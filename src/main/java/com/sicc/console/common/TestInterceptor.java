@@ -1,4 +1,4 @@
-package com.sicc.admin.common;
+package com.sicc.console.common;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -16,8 +16,8 @@ import org.apache.ibatis.plugin.Signature;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.sicc.admin.dao.CommonDao;
-import com.sicc.admin.model.Member;
+import com.sicc.console.dao.CommonDao;
+import com.sicc.console.model.Member;
 
 @Intercepts({
 		@Signature(type=StatementHandler.class, method="update", args= {Statement.class}),

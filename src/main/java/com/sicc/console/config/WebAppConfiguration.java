@@ -1,4 +1,4 @@
-package com.sicc.admin.config;
+package com.sicc.console.config;
 
 import java.nio.charset.Charset;
 

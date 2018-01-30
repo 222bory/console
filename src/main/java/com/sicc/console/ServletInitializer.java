@@ -1,4 +1,4 @@
-package com.sicc.admin;
+package com.sicc.console;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;

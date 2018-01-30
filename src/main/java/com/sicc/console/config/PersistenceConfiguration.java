@@ -1,4 +1,4 @@
-package com.sicc.admin.config;
+package com.sicc.console.config;
 
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.sicc.admin.common.TestInterceptor;
+import com.sicc.console.common.TestInterceptor;
 
 @Configuration
 @EnableConfigurationProperties

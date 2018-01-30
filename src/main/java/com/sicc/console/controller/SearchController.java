@@ -1,9 +1,4 @@
-package com.sicc.admin.controller;
-
-import com.sicc.admin.model.AjaxResponseBody;
-import com.sicc.admin.model.SearchCriteria;
-import com.sicc.admin.model.User2;
-import com.sicc.admin.service.UserService;
+package com.sicc.console.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +6,11 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.sicc.console.model.AjaxResponseBody;
+import com.sicc.console.model.SearchCriteria;
+import com.sicc.console.model.User2;
+import com.sicc.console.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;

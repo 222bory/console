@@ -1,4 +1,4 @@
-package com.sicc.admin.model;
+package com.sicc.console.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 

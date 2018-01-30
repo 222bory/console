@@ -1,4 +1,4 @@
-package com.sicc.admin.common;
+package com.sicc.console.common;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

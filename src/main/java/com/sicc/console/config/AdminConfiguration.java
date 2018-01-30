@@ -1,4 +1,4 @@
-package com.sicc.admin.config;
+package com.sicc.console.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,9 +8,9 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
-import com.sicc.admin.dao.AdminDao;
-import com.sicc.admin.dao.CommonDao;
-import com.sicc.admin.dao.impl.AdminDaoImpl;
+import com.sicc.console.dao.AdminDao;
+import com.sicc.console.dao.CommonDao;
+import com.sicc.console.dao.impl.AdminDaoImpl;
 
 @Configuration
 public class AdminConfiguration {

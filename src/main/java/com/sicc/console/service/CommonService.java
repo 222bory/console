@@ -1,9 +1,9 @@
-package com.sicc.admin.service;
+package com.sicc.console.service;
 
 import java.util.List;
 
-import com.sicc.admin.model.Member;
-import com.sicc.admin.model.User2;
+import com.sicc.console.model.Member;
+import com.sicc.console.model.User2;
 
 public interface CommonService {
 

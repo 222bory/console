@@ -1,4 +1,4 @@
-package com.sicc.admin.enums;
+package com.sicc.console.enums;
 
 public enum AdminEnums {
 	

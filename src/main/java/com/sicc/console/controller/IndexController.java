@@ -1,4 +1,4 @@
-package com.sicc.admin.controller;
+package com.sicc.console.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sicc.admin.common.WithHist;
-import com.sicc.admin.model.Member;
-import com.sicc.admin.service.UserService;
-import com.sicc.admin.service.impl.CustomUserDetailsService;
+import com.sicc.console.common.WithHist;
+import com.sicc.console.model.Member;
+import com.sicc.console.service.UserService;
+import com.sicc.console.service.impl.CustomUserDetailsService;
 
 @Controller
 public class IndexController { 
