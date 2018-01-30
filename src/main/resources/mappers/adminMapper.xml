@@ -37,7 +37,8 @@
     </select>
     
     <select id="selectListAdmin" resultType="com.sicc.console.model.AdminModel">
-    	SELECT COUNT(1) OVER() AS totalCount, admin_id as adminId, admin_nm as adminNm, admin_priv_cd as adminPrivCd, email_addr as emailAddr, password as password
+    	SELECT COUNT(1) OVER() AS totalCount, admin_id as adminId, admin_nm as adminNm, admin_priv_cd as adminPrivCd, email_addr as emailAddr, password as password, 
+    	to_char(ad_date,'yyyy-mm-dd') as adDate
     	  FROM 
     	   conadminm 
     	 order by udt_date desc   

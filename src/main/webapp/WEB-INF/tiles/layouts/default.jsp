@@ -166,7 +166,7 @@
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list6" class="collapse list-unstyled">
                 <li> <a href="/regUser">사용자계정 등록</a></li>
-                <li> <a href="/userList">사용자계정 관리</a></li>
+                <li> <a href="/selectListAdmin">사용자계정 관리</a></li>
               </ul>
             </li>
             <!-- <li> <a href="#"> <i class="icon-screen"> </i><span>Demo</span></a></li>
