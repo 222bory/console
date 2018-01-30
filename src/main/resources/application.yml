@@ -12,7 +12,7 @@ spring:
     type: org.apache.tomcat.jdbc.pool.DataSource
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/postgres?autoReconnect=true&useSSL=false
-    username: postgres
+    username: con_user
     #password: ENC(2L3MvBFx+sCd0DQ79sMY6wR0bJvSGq3R)
     password: New1234!
     

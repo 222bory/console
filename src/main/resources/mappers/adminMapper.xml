@@ -39,12 +39,12 @@
     
     <insert id="insertAdminUser" parameterType="com.sicc.console.model.Member">
     	insert into conadminm (admin_id, admin_nm, admin_priv_cd, email_addr, password, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
-    	values (#{adminId}, #{adminNm}, #{adminPrivCd}, #{emailAddr}, #{password}, null, null, current_timestamp, null, null, current_timestamp)
+    	values (#{adminId}, #{adminNm}, #{adminPrivCd}, #{emailAddr}, #{password}, 'ADMIN', '127.0.0.1', current_timestamp, 'ADMIN', '127.0.0.1', current_timestamp)
     </insert>
     
     <insert id="insertAdminUserH" parameterType="com.sicc.console.model.Member">
     	insert into conadminh (admin_id, admin_nm, admin_priv_cd, email_addr, password, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
-    	values (#{adminId}, #{adminNm}, #{adminPrivCd}, #{emailAddr}, #{password}, #{crtId}, #{crtIp}, current_timestamp, null, null, current_timestamp)
+    	values (#{adminId}, #{adminNm}, #{adminPrivCd}, #{emailAddr}, #{password}, #{crtId}, #{crtIp}, current_timestamp, #{udt_id}, #{udt_ip}, current_timestamp)
     </insert>
     
     <insert id ="createMember" parameterType="com.sicc.console.model.Member">
