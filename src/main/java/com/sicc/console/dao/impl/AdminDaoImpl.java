@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.sicc.console.common.WithHist;
 import com.sicc.console.dao.AdminDao;
+import com.sicc.console.model.AdminModel;
 import com.sicc.console.model.Member;
 import com.sicc.console.model.MemberRole;
 import com.sicc.console.model.MemberRoleRel;
@@ -26,7 +27,7 @@ public class AdminDaoImpl implements AdminDao{
 	public void insertAdminUser(Member member) {
 		
 		
-		sqlSessionTemplate.insert("com.sicc.admin.dao.AdminDao.insertAdminUser", member);
+		sqlSessionTemplate.insert("com.sicc.console.dao.AdminDao.insertAdminUser", member);
 		
 	}
 	
@@ -34,7 +35,7 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public Member getUser(String username) {
 		
-		return sqlSessionTemplate.selectOne("com.sicc.admin.dao.AdminDao.getMember");
+		return sqlSessionTemplate.selectOne("com.sicc.console.dao.AdminDao.getMember");
 	}
 
 	@Override
@@ -59,6 +60,12 @@ public class AdminDaoImpl implements AdminDao{
 	public Member getMemberById(String id) {
 		return sqlSessionTemplate.selectOne("com.sicc.console.dao.AdminDao.getMemberById", id);
 	}
+
+	@Override
+	public List<AdminModel> selectListAdmin(AdminModel adminModel) {
+		return sqlSessionTemplate.selectList("com.sicc.console.dao.AdminDao.selectListAdmin", adminModel);
+	}
+
 	
 	
 }
