@@ -47,7 +47,7 @@ public class TestInterceptor implements Interceptor{
 			}
 		}	
 			
-		Member m = (Member)param;
+		/*Member m = (Member)param;
 		
 		Statement st = (Statement) (invocation.getArgs())[0];
 		Connection con = st.getConnection();
@@ -55,7 +55,7 @@ public class TestInterceptor implements Interceptor{
 		String histSql = "insert into conadminh (admin_id, admin_nm, admin_priv_cd, email_addr, password, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)" + 
 				"    	values ('"+m.getAdminId()+"', '"+m.getAdminNm()+"', '"+m.getAdminPrivCd()+"', '"+m.getEmailAddr()+"', '"+m.getPassword()+"', 'ADMIN', null, current_timestamp, 'ADMIN', null, current_timestamp)";
 		Statement st2 = con.prepareStatement(histSql);
-		handler.update(st2);
+		handler.update(st2);*/
 		
 		return invocation.proceed();
 	}
