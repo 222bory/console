@@ -32,14 +32,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.and().formLogin()
 		.loginPage("/login")
 		.loginProcessingUrl("/login")
-		.defaultSuccessUrl("/test")
+		.defaultSuccessUrl("/selectListAdmin")
     	.failureUrl("/login")
     	.and()
     	.logout();
 		
 		
 		//http.csrf().disable().authorizeRequests().antMatchers("/regUser", "regUserPage").permitAll()
-		// To do : role 정의 및 접근 경로 변경
+		// To do : role �젙�쓽 諛� �젒洹� 寃쎈줈 蹂�寃�
 			//.antMatchers("/admin/**").hasRole("ADMIN")
 		//.antMatchers("/**").hasRole("ADMIN")
 			//.antMatchers("/**").permitAll();

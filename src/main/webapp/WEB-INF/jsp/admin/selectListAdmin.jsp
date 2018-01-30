@@ -4,9 +4,9 @@
 <%@ taglib prefix="crt" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
-<head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript">
 	
 
@@ -23,17 +23,17 @@
 	
 	
 </script>
-</head>
+
 <section class="charts">
         <div class="container-fluid">
           <header> 
-            <h1 class="h3">User Information</h1>
+            <h1 class="h3">사용자계정관리</h1>
           </header>
           <div class="row">
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-header d-flex align-items-center">
-                  <h2 class="h5 display">List of user's access info</h2>
+                  <h2 class="h5 display">사용자계정목록</h2>
                 </div>
                 <div class="card-body">
                 <form action="" method="post" id="frm">
@@ -65,12 +65,18 @@
                   </table>
               	  </form>
                   <!-- //Pagenate -->
-				  <div class="pgwrap">
+<%-- 				  <div class="pgwrap">
 					<div class="pg_num">
 					<c:import url="/WEB-INF/jsp/paging/paging.jsp">
 					</c:import>
 					</div>
-				  </div>
+				  </div> --%>
+				 	<div class="pagination">
+					  <ul>
+					  	<c:import url="/WEB-INF/jsp/paging/paging.jsp"></c:import>
+					  </ul>
+					</div>
+				  
                 </div>
               </div>
             </div>

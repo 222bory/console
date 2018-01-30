@@ -4302,13 +4302,6 @@ tbody.collapse.show {
   color: #868e96;
 }
 
-.pagination {
-  display: -ms-flexbox;
-  display: flex;
-  padding-left: 0;
-  list-style: none;
-  border-radius: 0.25rem;
-}
 
 .page-item:first-child .page-link {
   margin-left: 0;
