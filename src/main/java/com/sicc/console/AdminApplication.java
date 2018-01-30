@@ -1,15 +1,7 @@
 package com.sicc.console; 
 
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.Set;
-
-import org.springframework.boot.ApplicationHome;
-import org.springframework.boot.ApplicationPid;
-import org.springframework.boot.ApplicationTemp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 //import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 
