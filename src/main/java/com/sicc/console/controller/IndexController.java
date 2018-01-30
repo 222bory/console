@@ -1,5 +1,7 @@
 package com.sicc.console.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,13 +58,10 @@ public class IndexController {
     public String admin(Model model) {
     	
     	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	Member member = userService.findByUserNameOrEmail(principal.getUsername());
+    	List<Member> memberList = userService.getMember();
     	
-    	System.out.println(member.getAdminId());
-    	System.out.println(member.getAdminNm());
-    	System.out.println(member.getEmailAddr());
     	
-    	model.addAttribute("member", member);
+    	model.addAttribute("memberList", memberList);
     	
         return "/admin/test";
     }

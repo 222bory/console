@@ -22,5 +22,7 @@ public interface AdminDao {
 	public void insertAdminUser(Member member);
 	
 	public Member getMemberById(String id);
+	
+	public List<Member> getMember();
 }
 

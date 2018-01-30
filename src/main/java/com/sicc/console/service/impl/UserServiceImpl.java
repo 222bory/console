@@ -69,4 +69,10 @@ public class UserServiceImpl implements UserService{
 		adminDao.insertAdminUser(member);
 		System.out.println("service completed...........");
 	}
+
+	@Override
+	public List<Member> getMember() {
+		
+		return adminDao.getMember();
+	}
 }

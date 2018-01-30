@@ -17,20 +17,20 @@
                       <tr>
                         <th>#</th>
                         <th>User Id</th>
+                        <th>User Name</th>
                         <th>User Email</th>
                         <th>User Roles</th>
                       </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="member" varStatus="parent">
-                      <tr>
-                        <th scope="row">${parent.count}</th>
-                        <td>${member.adminId}</td>
-                        <td>${member.emailAddr}</td>
-                        <td>
-                        	${member.adminPrivCd}
-                        </td>
-                      </tr>
+                    <c:forEach items="${memberList}" var="member" varStatus="parent">
+	                   <tr>
+	                     <th scope="row">${parent.count}</th>
+	                     <td>${member.adminId}</td>
+	                     <td>${member.adminNm}</td>
+	                     <td>${member.emailAddr}</td>
+	                     <td>${member.adminPrivCd}</td>
+	                   </tr>
                     </c:forEach>  
                     </tbody>
                   </table>

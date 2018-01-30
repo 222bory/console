@@ -34,7 +34,6 @@
     	  FROM 
     	   conadminm 
     	 order by udt_date desc
-    	 limit 1   
     </select>
     
     <insert id="insertAdminUser" parameterType="com.sicc.console.model.Member">

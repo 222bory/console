@@ -12,4 +12,6 @@ public interface UserService {
     public void iniDataForTesting();
     
     public void createMember(Member member) ;
+    
+    public List<Member> getMember();
 }
