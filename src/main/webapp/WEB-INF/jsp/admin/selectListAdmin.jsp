@@ -42,9 +42,11 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>new User Id</th>
-                        <th>new User Email</th>
-                        <th>new User Roles</th>
+                        <th>ID</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>권한</th>
+                        <th>가입일자</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -54,10 +56,11 @@
                       <tr>
                         <th scope="row">${no - countNo}</th>
                         <td>${list.adminId}</td>
+                        <td>${list.adminNm}</td>
                         <td>${list.emailAddr}</td>
-                        <td>
-                        	${list.adminPrivCd}
-                        </td>
+                        <td>${list.adminPrivCd}</td>
+                        <td>${list.adDate}</td>
+                        
                       </tr>
                     <c:set var="countNo" value="${countNo+1 }" />
                     </c:forEach>  
