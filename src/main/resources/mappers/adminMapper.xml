@@ -37,6 +37,14 @@
     	 limit 1   
     </select>
     
+    <select id="selectListAdmin" resultType="com.sicc.console.model.AdminModel">
+    	SELECT COUNT(1) OVER() AS totalCount, admin_id as adminId, admin_nm as adminNm, admin_priv_cd as adminPrivCd, email_addr as emailAddr, password as password
+    	  FROM 
+    	   conadminm 
+    	 order by udt_date desc   
+    	 LIMIT #{rowPerPage} OFFSET #{skipCount}
+    </select>
+    
     <insert id="insertAdminUser" parameterType="com.sicc.console.model.Member">
     	insert into conadminm (admin_id, admin_nm, admin_priv_cd, email_addr, password, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
     	values (#{adminId}, #{adminNm}, #{adminPrivCd}, #{emailAddr}, #{password}, null, null, current_timestamp, null, null, current_timestamp)
