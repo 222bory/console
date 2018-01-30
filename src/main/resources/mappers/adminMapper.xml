@@ -3,33 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
-<mapper namespace="com.sicc.admin.dao.AdminDao">
+<mapper namespace="com.sicc.console.dao.AdminDao">
 
-    <resultMap id="userResultMap" type="com.sicc.admin.model.Member">
+    <resultMap id="userResultMap" type="com.sicc.console.model.Member">
 	    <id property="id" column="id" />
 	    <result property="upw" column="upw"/>
 	    <result property="uemail" column="uemail"/>
 	    <collection property="roles" javaType="java.util.ArrayList" resultMap="roleMap"/>
 	</resultMap>
 	
-	<resultMap id="roleMap" type="com.sicc.admin.model.MemberRole">
+	<resultMap id="roleMap" type="com.sicc.console.model.MemberRole">
 	    <id property="rno" column="rno"/>
 	    <result property="rolename" column="rolename"/>
 	</resultMap>
     
     
-    <select id="getUser" parameterType="String" resultType="com.sicc.admin.model.User2">
+    <select id="getUser" parameterType="String" resultType="com.sicc.console.model.User2">
     	SELECT * FROM test where username = #{username}
     </select>
     
-    <select id="getMemberById" parameterType="String" resultType="com.sicc.admin.model.Member">
+    <select id="getMemberById" parameterType="String" resultType="com.sicc.console.model.Member">
     	SELECT admin_id as adminId, admin_nm as adminNm, admin_priv_cd as adminPrivCd, email_addr as emailAddr, password as password
     	  FROM 
     	   conadminm 
     	 WHERE admin_id = #{username} 
     </select>
     
-    <select id="getMember" parameterType="String" resultType="com.sicc.admin.model.Member">
+    <select id="getMember" parameterType="String" resultType="com.sicc.console.model.Member">
     	SELECT admin_id as adminId, admin_nm as adminNm, admin_priv_cd as adminPrivCd, email_addr as emailAddr, password as password
     	  FROM 
     	   conadminm 
@@ -37,25 +37,25 @@
     	 limit 1   
     </select>
     
-    <insert id="insertAdminUser" parameterType="com.sicc.admin.model.Member">
+    <insert id="insertAdminUser" parameterType="com.sicc.console.model.Member">
     	insert into conadminm (admin_id, admin_nm, admin_priv_cd, email_addr, password, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
     	values (#{adminId}, #{adminNm}, #{adminPrivCd}, #{emailAddr}, #{password}, null, null, current_timestamp, null, null, current_timestamp)
     </insert>
     
-    <insert id="insertAdminUserH" parameterType="com.sicc.admin.model.Member">
+    <insert id="insertAdminUserH" parameterType="com.sicc.console.model.Member">
     	insert into conadminh (admin_id, admin_nm, admin_priv_cd, email_addr, password, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
     	values (#{adminId}, #{adminNm}, #{adminPrivCd}, #{emailAddr}, #{password}, #{crtId}, #{crtIp}, current_timestamp, null, null, current_timestamp)
     </insert>
     
-    <insert id ="createMember" parameterType="com.sicc.admin.model.Member">
+    <insert id ="createMember" parameterType="com.sicc.console.model.Member">
     	insert into member (id, uid, upw, uemail, regdate, updatedate) values (#{id},#{uid},#{upw},#{uemail},null,null)
     </insert>
     
-    <insert id ="createRole" parameterType="com.sicc.admin.model.MemberRole">
+    <insert id ="createRole" parameterType="com.sicc.console.model.MemberRole">
     	insert into memberrole (rno, rolename) values (#{rno},#{rolename})
     </insert>
     
-    <insert id ="createRelMemberRole" parameterType="com.sicc.admin.model.MemberRoleRel">
+    <insert id ="createRelMemberRole" parameterType="com.sicc.console.model.MemberRoleRel">
     	insert into relmemberrole (uid, rno, member_role_rel_type_cd) values (#{uid},#{rno}, #{memberRoleRelTypeCd})
     </insert>
 

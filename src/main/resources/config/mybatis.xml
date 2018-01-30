@@ -8,10 +8,10 @@
         <setting name="useColumnLabel" value="true"/>
     </settings>
     <typeAliases>
-        <package name="com.sicc.admin.model"/>
+        <package name="com.sicc.console.model"/>
     </typeAliases>
     <plugins>
-	    <plugin interceptor="com.sicc.admin.common.TestInterceptor"/>
+	    <plugin interceptor="com.sicc.console.common.TestInterceptor"/>
 	</plugins>
     <mappers>
         <mapper resource="mappers/adminMapper.xml"/>
