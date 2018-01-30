@@ -126,5 +126,10 @@ public class IndexController {
     	
     	return result;
     }
+    
+    @GetMapping("/userList") 
+    public String userList() {
+        return "/regUser/userList";
+    }
 
 }
