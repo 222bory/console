@@ -57,7 +57,7 @@ public class AdminDaoImpl implements AdminDao{
 
 	@Override
 	public Member getMemberById(String id) {
-		return sqlSessionTemplate.selectOne("com.sicc.admin.dao.AdminDao.getMemberById", id);
+		return sqlSessionTemplate.selectOne("com.sicc.console.dao.AdminDao.getMemberById", id);
 	}
 	
 	
