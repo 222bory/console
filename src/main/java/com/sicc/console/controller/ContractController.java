@@ -33,13 +33,13 @@ public class ContractController {
     
 
     @GetMapping("/insContract") 
-    public String contReg() {
+    public String insContract() {
         return "/contract/insContract";
     }
     
     @PostMapping("/insContract")
     @Transactional(rollbackFor=Exception.class)
-    public String contReg(Model model , 
+    public String insContract(Model model , 
     		@RequestParam(value="custId", required=true) String custId, 
     		@RequestParam("custNm") String custNm, 
     		@RequestParam("repFaxNo") String repFaxNo,
