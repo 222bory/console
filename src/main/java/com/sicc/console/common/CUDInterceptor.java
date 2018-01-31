@@ -35,7 +35,7 @@ public class CUDInterceptor implements Interceptor{
 		StatementHandler handler = (StatementHandler) invocation.getTarget();
 		BoundSql bs = handler.getBoundSql();
 		
-		String sql = bs.getSql();
+		//String sql = bs.getSql();
 		
 		Object param = handler.getParameterHandler().getParameterObject();
 		
