@@ -2,8 +2,9 @@ package com.sicc.console.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.sicc.console.model.Member;
-import com.sicc.console.model.User2;
 
 public interface UserService {
 
@@ -11,6 +12,7 @@ public interface UserService {
     
     public void iniDataForTesting();
     
+    @Transactional(rollbackFor=Exception.class)
     public void createMember(Member member) ;
     
     public List<Member> getMember();
