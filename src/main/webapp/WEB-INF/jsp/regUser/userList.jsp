@@ -33,14 +33,14 @@ $(function () {
 <section class="charts">
 	<div class="container-fluid">
 	<header>
-		<h1 class="h3 display">사용자 계정 관리</h1>
+		<h1 class="h3 display">Sample Code</h1>
 	</header>
 		
 	<div class="row">
 		<div class="col-lg-8">
 			<div class="card">
 				<div class="card-header d-flex align-items-center">
-					<h2 class="h5 display">사용자 계정 목록</h2>
+					<h2 class="h5 display">sample</h2>
 				</div>
 				<div class="card-body">
 				
@@ -49,35 +49,13 @@ $(function () {
 						<thead>
 	                      <tr>
 	                        <th>no</th>
-	                        <th>권한</th>
-	                        <th>ID</th>
-	                        <th>이름</th>
-	                        <th>이메일</th>
+	                        <th>color</th>
 	                        <th>가입일자</th>
 	                      </tr>
 	                    </thead>
 						<tbody>
 	                      <tr>
-	                        <th scope="row">1</th>
-	                        <td>관리자</td>
-	                        <td>Admin1</td>
-	                        <td>관리자1</td>
-	                        <td>admin@sicc.co.kr</td>
-	                        <td>2018-01-08</td>
-	                      </tr>
-	                      <tr>
-	                        <th scope="row">2</th>
-	                        <td>일반사용자</td>
-	                        <td>User1</td>
-	                        <td>일반사용자1</td>
-	                        <td>user1234@sicc.co.kr</td>
-	                        <td>2018-01-20</td>
-	                      </tr>
-	                      <tr>
-	                        <th scope="row">3</th>
-	                        <td>일반사용자</td>
-	                        <td>User1</td>
-	                        <td>일반사용자1</td>
+	                        <th scope="row">#</th>
 	                        <td><div id="cp3" class="input-group colorpicker-component">
 							    <input type="text" value="#00AABB" class="form-control" />
 							    <span class="input-group-addon"><i></i></span>
@@ -87,7 +65,10 @@ $(function () {
 	                       
 								<!--<span class="input-group-addon">
 			                    	<i class="glyphicon glyphicon-calendar"></i>
-			                    </span>  -->
+			                    </span>  
+			                    <a href="#">
+						          <span class="glyphicon glyphicon-calendar"></span>
+						        </a>-->
 	                     
 	                       	</td>
 	                      </tr>
