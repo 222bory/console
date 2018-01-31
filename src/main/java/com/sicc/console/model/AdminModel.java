@@ -8,8 +8,8 @@ public class AdminModel {
 	private String adminPrivCd;
 	private String emailAddr;
 	private String password;
-	private Date adDate;
-	private Date udtDate;
+	private String adDate;
+	private String udtDate;
 	private String crtId;
 	private String crtIp;
 	private String udtId;
@@ -74,16 +74,17 @@ public class AdminModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getAdDate() {
+
+	public String getAdDate() {
 		return adDate;
 	}
-	public void setAdDate(Date adDate) {
+	public void setAdDate(String adDate) {
 		this.adDate = adDate;
 	}
-	public Date getUdtDate() {
+	public String getUdtDate() {
 		return udtDate;
 	}
-	public void setUdtDate(Date udtDate) {
+	public void setUdtDate(String udtDate) {
 		this.udtDate = udtDate;
 	}
 	public String getCrtId() {

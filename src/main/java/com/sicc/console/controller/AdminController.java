@@ -48,6 +48,8 @@ public class AdminController {
 			pagination.setTotalRow(0);
 		}
 		
+		System.out.println("addate : "+list.get(0).getAdDate());
+		
 		model.addAttribute("list", list);
         model.addAttribute("adminModel", adminModel);
 		model.addAttribute("pagination", pagination);

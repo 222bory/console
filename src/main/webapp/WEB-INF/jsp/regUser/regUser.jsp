@@ -92,14 +92,14 @@
 	<div class="container-fluid">
 		<ul class="breadcrumb">
 			<li class="breadcrumb-item"><a href="index.html">계정관리</a></li>
-			<li class="breadcrumb-item active">관리자 계정 등록</li>
+			<li class="breadcrumb-item active">사용자 계정 등록</li>
 		</ul>
 	</div>
 </div>
 <section class="forms">
 	<div class="container-fluid">
 		<header>
-			<h1 class="h3 display">관리자 계정 등록</h1>
+			<h1 class="h3 display">사용자 계정 등록</h1>
 		</header>
 		<div class="row">
 			<div class="col-lg-12">
