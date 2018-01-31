@@ -26,7 +26,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SICC Admin Demo</title>
+    <title>SICC Admin Console</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -113,7 +113,7 @@
 			<li sec:authorize="isAuthenticated()"> <a href="#pages-nav-list1" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>서비스 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list1" class="collapse list-unstyled">
-                <li> <a href="#">계약 등록</a></li>
+                <li> <a href="/insContract">계약 등록</a></li>
                 <li> <a href="#">계약 관리</a></li>
                 <li> <a href="#">대회 등록</a></li>
                 <li> <a href="#">대회 관리</a></li>
@@ -194,12 +194,12 @@
           <div class="container-fluid">
             <div class="navbar-holder d-flex align-items-center justify-content-between">
               <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="index.html" class="navbar-brand">
-                  <div class="brand-text d-none d-md-inline-block"><span>SICC </span><strong class="text-primary"> Admin Demo</strong></div></a></div>
+                  <div class="brand-text d-none d-md-inline-block"><span>SICC </span><strong class="text-primary"> Admin Console</strong></div></a></div>
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 
                 <li class="nav-item">
                 	<a href="#" class="nav-link logout">
-                	<sec:authorize access="isAuthenticated()"> welcome <sec:authentication property="principal.username"/></sec:authorize>
+                	<sec:authorize access="isAuthenticated()"><sec:authentication property="principal.username"/> 님 로그인 중</sec:authorize>
                 	</a></li>
                 
                 <!-- <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell"></i><span class="badge badge-warning">12</span></a>
@@ -269,7 +269,7 @@
               <p>SICC &copy; 2018-2019</p>
             </div>
             <div class="col-sm-6 text-right">
-              <p>SICC <a href="/index" class="external">Admin Demo</a></p>
+              <p>SICC <a href="/index" class="external">Admin Console</a></p>
               <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
             </div>
           </div>

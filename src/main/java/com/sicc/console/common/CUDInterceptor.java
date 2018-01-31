@@ -20,8 +20,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sicc.console.dao.CommonDao;
-import com.sicc.console.model.ContModel;
-import com.sicc.console.model.CustModel;
+import com.sicc.console.model.ContractModel;
+import com.sicc.console.model.CustomerModel;
 import com.sicc.console.model.Member;
 
 @Intercepts({
@@ -42,16 +42,16 @@ public class CUDInterceptor implements Interceptor{
 		List<ParameterMapping> pmList = bs.getParameterMappings();
 		
 		
-		if(param instanceof ContModel){
+		if(param instanceof Member){
 			for(int i = 0 ; i < pmList.size() ; i ++) {
 				String key = pmList.get(i).getProperty();
 				System.out.println("interceptor test ::::::::::: "+ key);
 				
 			}
-		}else if(param instanceof Member) {
+		}else if(param instanceof ContractModel) {
 			Statement st = (Statement) (invocation.getArgs())[0];
 			Connection con = st.getConnection();
-			String orginSql = "select tenant_id, cust_id, cont_nm, valid_start_dt, valid_end_dt, cont_stat_cd, network_fg_cd, password_lod_cd, password_min_len, password_rnwl_cycl_cd, password_use_lmt_yn, password_pose_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date from concustcontm where tenant_id = '1'" ;
+			String orginSql = "select tenant_id, cust_id, cont_nm, valid_start_dt, valid_end_dt, cont_stat_cd, network_fg_cd, password_lod_cd, password_min_len, password_rnwl_cycl_cd, password_use_lmt_yn, password_pose_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date from concustcontm where tenant_id = '"+((ContractModel) param).getTenantId()+"'" ;
 			
 			PreparedStatement psmt = con.prepareStatement(orginSql);
 			psmt.execute();
@@ -65,7 +65,6 @@ public class CUDInterceptor implements Interceptor{
 				psmt.execute();
 			}
 			psmt.close();
-			
 		}
 			
 		

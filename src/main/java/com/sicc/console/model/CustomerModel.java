@@ -2,7 +2,7 @@ package com.sicc.console.model;
 
 import java.util.Date;
 
-public class CustModel {
+public class CustomerModel {
 	private String custId;
 	private String custNm;
 	private String repFaxNo;

@@ -2,17 +2,17 @@ package com.sicc.console.model;
 
 import java.util.Date;
 
-public class ContModel {
+public class ContractModel {
 	
 	private String tenantId;
 	private String custId;
 	private String contNm;
-	private Date validStartDt;
-	private Date validEndDt;
+	private String validStartDt;
+	private String validEndDt;
 	private String contStatCd;
 	private String networkFgCd;
 	private String passwordLodCd;
-	private String passwordMinLen;
+	private int passwordMinLen;
 	private String passwordRnwlCyclCd;
 	private String passwordUseLmtYn;
 	private String passwordPoseYn;
@@ -22,7 +22,6 @@ public class ContModel {
 	private String udtId;
 	private String udtIp;
 	private Date udtDate;
-	
 	public String getTenantId() {
 		return tenantId;
 	}
@@ -41,16 +40,16 @@ public class ContModel {
 	public void setContNm(String contNm) {
 		this.contNm = contNm;
 	}
-	public Date getValidStartDt() {
+	public String getValidStartDt() {
 		return validStartDt;
 	}
-	public void setValidStartDt(Date validStartDt) {
+	public void setValidStartDt(String validStartDt) {
 		this.validStartDt = validStartDt;
 	}
-	public Date getValidEndDt() {
+	public String getValidEndDt() {
 		return validEndDt;
 	}
-	public void setValidEndDt(Date validEndDt) {
+	public void setValidEndDt(String validEndDt) {
 		this.validEndDt = validEndDt;
 	}
 	public String getContStatCd() {
@@ -71,10 +70,10 @@ public class ContModel {
 	public void setPasswordLodCd(String passwordLodCd) {
 		this.passwordLodCd = passwordLodCd;
 	}
-	public String getPasswordMinLen() {
+	public int getPasswordMinLen() {
 		return passwordMinLen;
 	}
-	public void setPasswordMinLen(String passwordMinLen) {
+	public void setPasswordMinLen(int passwordMinLen) {
 		this.passwordMinLen = passwordMinLen;
 	}
 	public String getPasswordRnwlCyclCd() {
@@ -131,5 +130,6 @@ public class ContModel {
 	public void setUdtDate(Date udtDate) {
 		this.udtDate = udtDate;
 	}
+	
 	
 }

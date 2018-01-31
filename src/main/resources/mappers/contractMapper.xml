@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.sicc.console.dao.ContractDao">
+
+    <insert id="insContract" parameterType="com.sicc.console.model.ContractModel">
+    	INSERT INTO concustcontm(
+						      tenant_id,
+							  cust_id,
+							  cont_nm,
+							  valid_start_dt,
+							  valid_end_dt,
+							  cont_stat_cd,
+							  network_fg_cd,
+							  password_lod_cd,
+							  password_min_len,
+							  password_rnwl_cycl_cd,
+							  password_use_lmt_yn,
+							  password_pose_yn,
+							  crt_id,
+							  crt_ip,
+							  ad_date,
+							  udt_id,
+							  udt_ip,
+							  udt_date
+							  )
+					VALUES (
+							  #{tenantId},
+							  #{custId},
+							  #{contNm},
+							  #{validStartDt},
+							  #{validEndDt},
+							  #{contStatCd},
+							  #{networkFgCd},
+							  #{passwordLodCd},
+							  #{passwordMinLen},
+							  #{passwordRnwlCyclCd},
+							  #{passwordUseLmtYn},
+							  #{passwordPoseYn},
+							  #{crtId},
+							  #{crtIp},
+							  current_timestamp,
+							  #{udtId},
+							  #{udtIp},
+							  current_timestamp
+							  )
+    </insert>
+    
+</mapper>

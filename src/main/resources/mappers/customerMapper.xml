@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.sicc.console.dao.CustomerDao">
+
+    <insert id="insCustomer" parameterType="com.sicc.console.model.CustomerModel">
+    	INSERT INTO concustm(
+						      cust_id,
+							  cust_nm,
+							  rep_fax_no,
+							  rep_tel_no,
+							  corp_ad_no,
+							  mgr_nm,
+							  mgr_email_addr,
+							  mgr_tel_no,
+							  crt_id,
+							  crt_ip,
+							  ad_date,
+							  udt_id,
+							  udt_ip,
+							  udt_date
+							  )
+					VALUES (
+							  #{custId},
+							  #{custNm},
+							  #{repFaxNo},
+							  #{repTelNo},
+							  #{corpAdNo},
+							  #{mgrNm},
+							  #{mgrEmailAddr},
+							  #{mgrTelNo},
+							  #{crtId},
+							  #{crtIp},
+							  current_timestamp,
+							  #{udtId},
+							  #{udtIp},
+							  current_timestamp
+							  )
+    </insert>
+    
+</mapper>

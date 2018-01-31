@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.sicc.console.dao.AdminDao;
 import com.sicc.console.model.Member;
 import com.sicc.console.model.SecurityMember;
-import com.sicc.console.model.User2;
 
 import java.util.List;
 import java.util.Optional;
