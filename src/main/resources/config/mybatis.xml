@@ -11,7 +11,7 @@
         <package name="com.sicc.console.model"/>
     </typeAliases>
     <plugins>
-	    <plugin interceptor="com.sicc.console.common.TestInterceptor"/>
+	    <plugin interceptor="com.sicc.console.common.CUDInterceptor"/>
 	</plugins>
     <mappers>
         <mapper resource="mappers/adminMapper.xml"/>

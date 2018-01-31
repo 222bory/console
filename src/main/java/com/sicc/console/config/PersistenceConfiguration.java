@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.sicc.console.common.TestInterceptor;
+import com.sicc.console.common.CUDInterceptor;
 
 @Configuration
 @EnableConfigurationProperties
@@ -30,7 +30,7 @@ public class PersistenceConfiguration {
         sessionFactory.setDataSource(dataSource);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sessionFactory.setMapperLocations(resolver.getResources("classpath:mappers/**/*.xml"));
-        Interceptor [] plugins = {testInterceptor()};
+        Interceptor [] plugins = {cUDInterceptor()};
         sessionFactory.setPlugins(plugins);
         return sessionFactory.getObject();
     }
@@ -42,8 +42,8 @@ public class PersistenceConfiguration {
     }
     
     @Bean
-    public TestInterceptor testInterceptor() {
-    	return new TestInterceptor();
+    public CUDInterceptor cUDInterceptor() {
+    	return new CUDInterceptor();
     }
     
 }
