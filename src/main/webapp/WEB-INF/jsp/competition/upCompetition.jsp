@@ -20,7 +20,7 @@
 				data : {
 					userID : userID
 				},
-				success : function(result) {
+				success : function(result) { 
 					if (result == "0") {
 						$('#duplResult').html('사용할 수 있는 아이디입니다.');
 						flag = true;

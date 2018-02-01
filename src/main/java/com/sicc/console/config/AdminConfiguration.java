@@ -13,7 +13,7 @@ import com.sicc.console.dao.CustomerDao;
 import com.sicc.console.dao.impl.AdminDaoImpl;
 import com.sicc.console.dao.impl.CompetitionDaoImpl;
 import com.sicc.console.dao.impl.ContractDaoImpl;
-import com.sicc.console.dao.impl.CustomerDaoImpl;
+import com.sicc.console.dao.impl.CustomerDaoImpl; 
 
 @Configuration
 public class AdminConfiguration {

@@ -13,7 +13,7 @@
 							  cp_start_dt,
 							  cp_end_dt,
 							  cp_place_nm,
-							  cp_scale_cd,
+							  cp_scale_cd, 
 							  cp_type_cd,
 							  expect_user_num,
 							  crt_id,

@@ -6,5 +6,5 @@ public interface CompetitionService {
 
     public void insCompetition(CompetitionModel competitionModel) ;
     
-    public void upCompetition(CompetitionModel competitionModel) ;
+    public void upCompetition(CompetitionModel competitionModel) ; 
 }

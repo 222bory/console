@@ -8,7 +8,7 @@ import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.service.CompetitionService;
 
 @Service
-public class CompetitionServiceImpl implements CompetitionService{
+public class CompetitionServiceImpl implements CompetitionService{ 
 	
 	@Autowired
 	private CompetitionDao competitionDao;

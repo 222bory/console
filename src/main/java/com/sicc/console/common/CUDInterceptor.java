@@ -23,7 +23,7 @@ import com.sicc.console.dao.CommonDao;
 import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.model.ContractModel;
 import com.sicc.console.model.CustomerModel;
-import com.sicc.console.model.Member;
+import com.sicc.console.model.Member; 
 
 @Intercepts({
 		@Signature(type=StatementHandler.class, method="update", args= {Statement.class}),

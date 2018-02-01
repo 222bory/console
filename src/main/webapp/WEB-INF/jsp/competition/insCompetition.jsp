@@ -19,7 +19,7 @@
 				//파리미터 변수 이름 : 값
 				data : {
 					userID : userID
-				},
+				}, 
 				success : function(result) {
 					if (result == "0") {
 						$('#duplResult').html('사용할 수 있는 아이디입니다.');

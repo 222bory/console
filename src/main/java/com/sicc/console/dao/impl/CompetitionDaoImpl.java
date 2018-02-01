@@ -4,7 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sicc.console.dao.CompetitionDao;
-import com.sicc.console.model.CompetitionModel;
+import com.sicc.console.model.CompetitionModel; 
 
 public class CompetitionDaoImpl implements CompetitionDao{
 	
