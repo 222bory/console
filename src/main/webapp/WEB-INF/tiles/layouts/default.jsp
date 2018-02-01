@@ -115,8 +115,8 @@
               <ul id="pages-nav-list1" class="collapse list-unstyled">
                 <li> <a href="/insContract">계약 등록</a></li>
                 <li> <a href="#">계약 관리</a></li>
-                <li> <a href="#">대회 등록</a></li>
-                <li> <a href="#">대회 관리</a></li>
+                <li> <a href="/insCompetition">대회 등록</a></li>
+                <li> <a href="/upCompetition">대회 관리</a></li>
                 <li> <a href="#">서비스 신청</a></li>
                 <li> <a href="#">서비스신청 관리</a></li>
               </ul>
@@ -138,7 +138,7 @@
                 <li> <a href="#">Page 1</a></li>
                 <li> <a href="#">Page 2</a></li>
                 <li> <a href="#">Page 3</a></li>
-                <li> <a href="#">Page 4</a></li>
+                <li> <a href="#">Page 4</a></li> 
               </ul>
             </li>
             

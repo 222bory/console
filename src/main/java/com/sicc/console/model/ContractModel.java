@@ -22,6 +22,7 @@ public class ContractModel {
 	private String udtId;
 	private String udtIp;
 	private Date udtDate;
+	
 	public String getTenantId() {
 		return tenantId;
 	}
