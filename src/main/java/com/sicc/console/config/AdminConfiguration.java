@@ -7,9 +7,11 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 import com.sicc.console.dao.AdminDao;
+import com.sicc.console.dao.CompetitionDao;
 import com.sicc.console.dao.ContractDao;
 import com.sicc.console.dao.CustomerDao;
 import com.sicc.console.dao.impl.AdminDaoImpl;
+import com.sicc.console.dao.impl.CompetitionDaoImpl;
 import com.sicc.console.dao.impl.ContractDaoImpl;
 import com.sicc.console.dao.impl.CustomerDaoImpl;
 
@@ -37,13 +39,18 @@ public class AdminConfiguration {
   }
   
   @Bean
-  public CustomerDao custDao() {
+  public CustomerDao customerDao() {
 	return new CustomerDaoImpl();
   }
   
   @Bean
-  public ContractDao contDao() {
+  public ContractDao contractDao() {
 	return new ContractDaoImpl();
+  }
+  
+  @Bean
+  public CompetitionDao competitionDao() {
+	return new CompetitionDaoImpl();
   }
 
 }

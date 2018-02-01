@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.sicc.console.dao.CompetitionDao">
+
+    <insert id="insCompetition" parameterType="com.sicc.console.model.CompetitionModel">
+    	INSERT INTO concpm(
+						      tenant_id,
+							  cp_cd,
+							  cp_nm,
+							  cp_start_dt,
+							  cp_end_dt,
+							  cp_place_nm,
+							  cp_scale_cd,
+							  cp_type_cd,
+							  expect_user_num,
+							  crt_id,
+							  crt_ip,
+							  ad_date,
+							  udt_id,
+							  udt_ip,
+							  udt_date
+							  )
+					VALUES (
+							  #{tenantId},
+							  #{cpCd},
+							  #{cpNm},
+							  #{cpStartDt},
+							  #{cpEndDt},
+							  #{cpPlaceNm},
+							  #{cpScaleCd},
+							  #{cpTypeCd},
+							  #{expectUserNum},
+							  #{crtId},
+							  #{crtIp},
+							  current_timestamp,
+							  #{udtId},
+							  #{udtIp},
+							  current_timestamp
+							  )
+    </insert>
+    
+    <update id="upCompetition" parameterType="com.sicc.console.model.CompetitionModel">
+    	UPDATE concpm
+    	   SET cp_cd = #{cpCd},
+			   cp_nm = #{cpNm},
+			   cp_start_dt = #{cpStartDt},
+			   cp_end_dt = #{cpEndDt},
+			   cp_place_nm = #{cpPlaceNm},
+			   cp_scale_cd = #{cpScaleCd},
+			   cp_type_cd = #{cpTypeCd},
+			   expect_user_num = #{expectUserNum},
+			   udt_id = #{udtId},
+			   udt_ip = #{udtIp},
+			   udt_date = current_timestamp
+         WHERE tenant_id = #{tenantId}			   
+    </update>
+    
+</mapper>
