@@ -3,25 +3,17 @@ package com.sicc.console.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sicc.console.model.ContractModel;
 import com.sicc.console.model.CustomerModel;
-import com.sicc.console.model.Member;
 import com.sicc.console.service.ContractService;
-import com.sicc.console.service.UserService;
-import com.sicc.console.service.impl.CustomUserDetailsService;
 
 @Controller
 public class ContractController { 
