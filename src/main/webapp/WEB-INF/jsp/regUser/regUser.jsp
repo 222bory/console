@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	var flag = false;
 
-	function fn_dupl() {
+	function fnDupl() {
 		var userID = $('#id').val();
 		
 		if(userID==''){
@@ -35,7 +35,7 @@
 		return flag;
 	}
 	
-	function fn_idCheck(){
+	function fnIdCheck(){
 		flag=false;
 	}
  
@@ -45,17 +45,19 @@
 	$(function(){
 	    $('#frm').validate({
 	     rules: {
-	       id : {required : true},
-	       upw :{required : true},
-	       upwConfirm : {required : true, equalTo:"#upw"},
-	       uemail : {email: true},
-	       uname : {required:true}
+	       id : {required : true, maxlength:100},
+	       upw :{required : true, minlength: 8, maxlength:100},
+	       upwConfirm : {required : true, minlength: 8, equalTo:"#upw", maxlength:100},
+	       uemail : {email: true, maxlength:100},
+	       uname : {required:true, maxlength:100}
 	     },
 	     messages:{
 	    	id:{required :"아이디를 입력해주세요"},
-	    	upw:{required :"패스워드를 입력해주세요"},
+	    	upw:{required :"패스워드를 입력해주세요",
+	    		minlength :"패스워드는 8자리 이상 입력해주세요"},
 	    	upwConfirm:{
 	    		required : "패스워드 확인을 입력해주세요",
+	    		minlength :"패스워드는 8자리 이상 입력해주세요",
 	    		equalTo:"패스워드가 일치하지 않습니다"
 	    	},
 	    	uemail:{
@@ -111,17 +113,16 @@
 						<form class="form-horizontal" id="frm" name="frm" method="POST" action="/regUser">
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 관리자ID</label>
-								<div class="help-block with-errors"></div>
-							<div class="col-md-6">
-								<div class="row">
-									<div style="width: 70%; padding: 0.375rem 0.75rem;">
-										<input type="text" class="form-control" id="id" name="id" onchange="fn_idCheck();">
+									<div class="col-md-6">
+										<div class="row">
+											<div style="width: 60%; padding: 0.375rem 0.75rem;">
+												<input type="text" class="form-control" id="id" name="id" onchange="fnIdCheck();">
+											</div>
+											<div style="width: 30%; padding: 0.375rem 0.75rem;">
+												<button type="button" id="btnDupl" onclick="fnDupl()" data-toggle="modal" data-target="#myModal" class="btn btn-primary">중복확인</button>
+											</div>
+										</div>
 									</div>
-									<div style="width: 30%; padding: 0.375rem 0.75rem;">
-										<button type="button" id="btnDupl" onclick="fn_dupl()" data-toggle="modal" data-target="#myModal" class="btn btn-primary">중복확인</button>
-									</div>
-								</div>
-							</div>
 
 								<!-- Modal -->
 								<div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
@@ -151,14 +152,14 @@
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 비밀번호</label>
 								<div class="col-md-5">
-									<input type="password" class="form-control" id="upw" name="upw" placeholder="영문+숫자+특수문자 10자리 이상">
+									<input type="password" class="form-control" id="upw" name="upw" placeholder="영문+숫자+특수문자 8자리 이상">
 								</div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 비밀번호 확인</label>
 								<div class="col-md-5">
-									<input type="password" class="form-control" id="upwConfirm" name="upwConfirm" placeholder="영문+숫자+특수문자 10자리 이상">
+									<input type="password" class="form-control" id="upwConfirm" name="upwConfirm" placeholder="영문+숫자+특수문자 8자리 이상">
 								</div>
 							</div>
 							<div class="line"></div>
@@ -200,7 +201,7 @@
 									<button type="submit" id="btnRegister" class="btn btn-primary" >등록</button>
 								</div>
 							</div>
-
+							<input type="hidden" name="num" value="1">
 						</form>
 					</div>
 				</div>

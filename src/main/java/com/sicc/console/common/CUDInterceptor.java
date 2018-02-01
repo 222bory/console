@@ -15,14 +15,9 @@ import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
-import org.apache.ibatis.session.ResultHandler;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.sicc.console.dao.CommonDao;
 import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.model.ContractModel;
-import com.sicc.console.model.CustomerModel;
 import com.sicc.console.model.Member; 
 
 @Intercepts({

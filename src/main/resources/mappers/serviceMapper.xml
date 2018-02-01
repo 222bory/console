@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sicc.console.dao.ServiceApplyDao">
+
+	<insert id="insServiceApply" parameterType="com.sicc.console.model.ServiceModel">
+		INSERT INTO con.concpservicem(
+				tenant_id,
+				cp_cd,
+				service_cd, 
+				service_start_dt, 
+				service_end_dt, 
+				service_url_addr, 
+				rep_color_value,
+				fst_lang_cd, 
+				scnd_lang_cd, 
+				thrd_lang_cd, 
+				foth_lang_cd, 
+				fith_lang_cd,
+				test_lab_use_yn, 
+				test_lab_remark_desc, 
+				test_event_add_yn,
+				test_event_remark_desc, 
+				crt_id, 
+				crt_ip, 
+				ad_date, 
+				udt_id, 
+				udt_ip,
+				udt_date)
+		VALUES (#{tenantId},
+				#{cpCd}, 
+				#{serviceCd}, 
+				#{serviceStartDt}, 
+				#{serviceEndDt},
+				#{serviceUrlAddr}, 
+				#{repColorCd}, 
+				#{fstLangCd}, 
+				#{scndLangCd}, 
+				#{thrdLangCd},
+		 		#{fothLangCd}, 
+		 		#{fithLangCd}, 
+		 		#{testLabUseYn}, 
+		 		#{testLabRemarkDesc},
+		 		#{testEventAddYn}, 
+		 		#{testEventRemarkDesc}, 
+		 		'ADMIN', '127.0.0.1', current_timestamp, 'ADMIN', '127.0.0.1', current_timestamp)
+	</insert>
+
+	<insert id="insServiceApplyDetail" parameterType="com.sicc.console.model.ServiceDetailModel">
+		INSERT INTO con.concpserviced(
+					tenant_id,
+					cp_cd, 
+					service_cd, 
+					system_cd, 
+					service_start_dt, 
+					service_end_dt, 
+					service_url_addr, 
+					crt_id,
+					crt_ip, 
+					ad_date, 
+					udt_id, 
+					udt_ip, 
+					udt_date)
+		VALUES (#{tenantId},
+				#{cpCd}, 
+				#{serviceCd}, 
+				#{systemCd}, 
+				#{serviceStartDt}, 
+				#{serviceEndDt}, 
+				#{serviceUrlAddr}, 
+				'ADMIN', '127.0.0.1', current_timestamp, 'ADMIN', '127.0.0.1', current_timestamp)
+	</insert>
+
+
+</mapper>

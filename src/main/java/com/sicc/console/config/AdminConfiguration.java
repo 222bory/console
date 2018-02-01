@@ -10,10 +10,12 @@ import com.sicc.console.dao.AdminDao;
 import com.sicc.console.dao.CompetitionDao;
 import com.sicc.console.dao.ContractDao;
 import com.sicc.console.dao.CustomerDao;
+import com.sicc.console.dao.ServiceApplyDao;
 import com.sicc.console.dao.impl.AdminDaoImpl;
 import com.sicc.console.dao.impl.CompetitionDaoImpl;
 import com.sicc.console.dao.impl.ContractDaoImpl;
-import com.sicc.console.dao.impl.CustomerDaoImpl; 
+import com.sicc.console.dao.impl.CustomerDaoImpl;
+import com.sicc.console.dao.impl.ServiceApplyDaoImpl; 
 
 @Configuration
 public class AdminConfiguration {
@@ -51,6 +53,11 @@ public class AdminConfiguration {
   @Bean
   public CompetitionDao competitionDao() {
 	return new CompetitionDaoImpl();
+  }
+  
+  @Bean
+  public ServiceApplyDao serviceApplyDao() {
+	return new ServiceApplyDaoImpl();
   }
 
 }

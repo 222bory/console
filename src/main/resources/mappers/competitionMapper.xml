@@ -58,4 +58,26 @@
          WHERE tenant_id = #{tenantId}			   
     </update>
     
+    <select id="selCompetition" parameterType="com.sicc.console.model.CompetitionModel" resultType="com.sicc.console.model.CompetitionModel">
+    	SELECT COUNT(1) OVER() AS totalCount,
+    		   tenant_id as tenantId,
+			   cp_cd as cpCd,
+			   cp_nm as cpNm,
+			   cp_start_dt as cpStartDt,
+			   cp_end_dt as cpEndDt,
+			   cp_place_nm as cpPlaceNm,
+			   cp_scale_cd as cpScaleCd, 
+			   cp_type_cd as cpTypeCd,
+			   expect_user_num as expectUserNum,
+			   crt_id as crtId,
+			   crt_ip as crtIp,
+			   ad_date as adDate,
+			   udt_id as udtId,
+			   udt_ip as udtIp,
+			   udt_date as udtDate
+		  FROM concpm	
+      order by tenant_id desc   
+    	 LIMIT #{rowPerPage} OFFSET #{skipCount}   
+    </select>
+    
 </mapper>

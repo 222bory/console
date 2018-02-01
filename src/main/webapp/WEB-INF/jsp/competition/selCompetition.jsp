@@ -1,4 +1,4 @@
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="crt" uri="http://java.sun.com/jstl/core_rt"%>
@@ -25,8 +25,8 @@
 <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selectListAdmin">계정관리</a></li>
-			<li class="breadcrumb-item active">사용자 계정 관리</li>
+			<li class="breadcrumb-item"><a href="/selectListAdmin">대회관리</a></li>
+			<li class="breadcrumb-item active">대회관리</li>
 		</ul>
 	</div>
 </div>
@@ -34,53 +34,51 @@
 <section class="charts">
         <div class="container-fluid">
           <header> 
-            <h1 class="h3">사용자계정관리</h1>
+            <h1 class="h3">대회관리</h1>
           </header>
           <div class="row">
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-header d-flex align-items-center">
-                  <h2 class="h5 display">사용자계정목록</h2>
+                  <h2 class="h5 display">대회목록</h2>
                 </div>
                 <div class="card-body">
                 <form action="" method="post" id="frm">
-                <input type="hidden" name="page" value="${adminModel.page}" />
+                <input type="hidden" name="page" value="${competitionModel.page}" />
                   <table class="table">
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>ID</th>
-                        <th>이름</th>
-                        <th>이메일</th>
-                        <th>권한</th>
-                        <th>가입일자</th>
+                        <th>Tenant ID</th>
+                        <th>계약명</th>
+                        <th>대회코드</th>
+                        <th>대회명</th>
+                        <th>대회기간</th>
+                        <th>대표자명</th>
+                        <th>전화번호</th>
+                        <th>등록일</th>
                       </tr>
                     </thead>
                     <tbody>
                     <c:set var="no" value="${pagination.totalRow - (pagination.currentPage - 1) * pagination.rowPerPage }"/>
 					<c:set var="countNo" value="0"/>
-                    <c:forEach items="${list}" var="list" varStatus="parent">
+                    <c:forEach items="${competitionList}" var="list" varStatus="parent">
                       <tr>
                         <th scope="row">${no - countNo}</th>
-                        <td>${list.adminId}</td>
-                        <td>${list.adminNm}</td>
-                        <td>${list.emailAddr}</td>
-                        <td>${list.adminPrivCd}</td>
+                        <td>${list.tenantId}</td>
+                        <td></td>
+                        <td>${list.cpCd}</td>
+                        <td>${list.cpNm}</td>
+                        <td>${list.cpStartDt} ~ ${list.cpEndDt}</td>
+                        <td></td>
+                        <td></td>
                         <td>${list.adDate}</td>
-                        
                       </tr>
                     <c:set var="countNo" value="${countNo+1 }" />
                     </c:forEach>  
                     </tbody>
                   </table>
               	  </form>
-                  <!-- //Pagenate -->
-<%-- 				  <div class="pgwrap">
-					<div class="pg_num">
-					<c:import url="/WEB-INF/jsp/paging/paging.jsp">
-					</c:import>
-					</div>
-				  </div> --%>
 				 	<div class="pagination">
 					  <ul>
 					  	<c:import url="/WEB-INF/jsp/paging/paging.jsp"></c:import>
