@@ -19,6 +19,11 @@ public class CompetitionModel {
 	private String udtIp;
 	private Date udtDate;
 	
+	private Integer page;
+    private int rowPerPage;
+    private int skipCount;
+    private Integer totalCount;
+	
 	public String getTenantId() {
 		return tenantId;
 	}
@@ -109,5 +114,28 @@ public class CompetitionModel {
 	public void setUdtDate(Date udtDate) {
 		this.udtDate = udtDate;
 	}
-	
+	public Integer getPage() {
+		return page;
+	}
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+	public int getRowPerPage() {
+		return rowPerPage;
+	}
+	public void setRowPerPage(int rowPerPage) {
+		this.rowPerPage = rowPerPage;
+	}
+	public int getSkipCount() {
+		return skipCount;
+	}
+	public void setSkipCount(int skipCount) {
+		this.skipCount = skipCount;
+	}
+	public Integer getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(Integer totalCount) {
+		this.totalCount = totalCount;
+	}
 }

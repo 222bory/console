@@ -7,10 +7,12 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 import com.sicc.console.dao.AdminDao;
+import com.sicc.console.dao.CodeDao;
 import com.sicc.console.dao.CompetitionDao;
 import com.sicc.console.dao.ContractDao;
 import com.sicc.console.dao.CustomerDao;
 import com.sicc.console.dao.impl.AdminDaoImpl;
+import com.sicc.console.dao.impl.CodeDaoImpl;
 import com.sicc.console.dao.impl.CompetitionDaoImpl;
 import com.sicc.console.dao.impl.ContractDaoImpl;
 import com.sicc.console.dao.impl.CustomerDaoImpl; 
@@ -31,6 +33,11 @@ public class AdminConfiguration {
 	  final TilesViewResolver resolver = new TilesViewResolver();
 	  resolver.setViewClass(TilesView.class);
 	  return resolver;
+  }
+  
+  @Bean
+  public CodeDao codeDao() {
+	return new CodeDaoImpl();
   }
   
   @Bean

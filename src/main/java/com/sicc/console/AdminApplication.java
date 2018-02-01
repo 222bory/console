@@ -9,11 +9,13 @@ import org.springframework.boot.ApplicationPid;
 import org.springframework.boot.ApplicationTemp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 //import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 
 @SpringBootApplication
+@EnableCaching
 //@EnableEncryptableProperties
 public class AdminApplication {   
 

@@ -1,5 +1,7 @@
 package com.sicc.console.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,6 @@ public class CompetitionServiceImpl implements CompetitionService{
 	@Override
 	public void insCompetition(CompetitionModel competitionModel) {
 		competitionDao.insCompetition(competitionModel);
-		
 	}
 
 	@Override
@@ -24,4 +25,10 @@ public class CompetitionServiceImpl implements CompetitionService{
 		competitionDao.upCompetition(competitionModel);
 	}
 
+	@Override
+	public List<CompetitionModel> selCompetition(CompetitionModel competitionModel) {
+		return competitionDao.selCompetition(competitionModel);
+	}
+
+	
 }

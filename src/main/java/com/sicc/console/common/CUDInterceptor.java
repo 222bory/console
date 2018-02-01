@@ -19,7 +19,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.sicc.console.dao.CommonDao;
+import com.sicc.console.dao.CodeDao;
 import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.model.ContractModel;
 import com.sicc.console.model.CustomerModel;

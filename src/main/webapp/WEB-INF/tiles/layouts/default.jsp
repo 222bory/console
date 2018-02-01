@@ -116,7 +116,7 @@
                 <li> <a href="/insContract">계약 등록</a></li>
                 <li> <a href="#">계약 관리</a></li>
                 <li> <a href="/insCompetition">대회 등록</a></li>
-                <li> <a href="/upCompetition">대회 관리</a></li>
+                <li> <a href="/selCompetition">대회 관리</a></li>
                 <li> <a href="#">서비스 신청</a></li>
                 <li> <a href="#">서비스신청 관리</a></li>
               </ul>

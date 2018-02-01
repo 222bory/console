@@ -1,5 +1,7 @@
 package com.sicc.console.dao.impl;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,5 +22,11 @@ public class CompetitionDaoImpl implements CompetitionDao{
 	public void upCompetition(CompetitionModel competitionModel) {
 		sqlSessionTemplate.update("com.sicc.console.dao.CompetitionDao.upCompetition", competitionModel);
 	}
+
+	@Override
+	public List<CompetitionModel> selCompetition(CompetitionModel competitionModel) {
+		return sqlSessionTemplate.selectList("com.sicc.console.dao.CompetitionDao.selCompetition", competitionModel);
+	}
+	
 }
 
