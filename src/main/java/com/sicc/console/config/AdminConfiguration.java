@@ -37,7 +37,7 @@ public class AdminConfiguration {
   
   @Bean
   public CodeDao codeDao() {
-	return new CodeDaoImpl();
+	return new CodeDaoImpl(); 
   }
   
   @Bean
