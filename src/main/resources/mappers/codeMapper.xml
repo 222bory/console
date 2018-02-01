@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.sicc.console.dao.CodeDao">
+
+    <select id="selCode" parameterType="String" resultType="com.sicc.console.model.CodeModel">
+    	SELECT parent.cd_group_id as cdGroupId, 
+    		   parent.cd_group_nm as cdGroupNm, 
+    		   child.cd_id as cdId, 
+    		   child.cd_nm as cdNm, 
+    		   child.sort_ord as sortOrd, 
+    		   child.use_yn as useYn
+		  FROM concdm parent, concdd child 
+		 WHERE parent.cd_group_id = child.cd_group_id
+		   AND parent.cd_group_id = #{cdGroupId};
+    </select>
+    
+</mapper>

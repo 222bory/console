@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache>  
+<cache name="code"
+     maxEntriesLocalHeap="5000"
+     eternal="false"
+     timeToIdleSeconds="0"
+     timeToLiveSeconds="30"
+     maxEntriesLocalDisk="0"
+     overflowToDisk="false"
+     statistics="true"
+     memoryStoreEvictionPolicy="LRU"
+     transactionalMode="off">   
+  </cache>        
+</ehcache>
+
