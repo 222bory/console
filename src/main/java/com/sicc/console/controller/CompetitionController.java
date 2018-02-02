@@ -56,7 +56,7 @@ public class CompetitionController {
     	model.addAttribute("cpScaleCdList", cpScaleCdList);
     	model.addAttribute("cpTypeCdList", cpTypeCdList);
     	
-        return "/competition/insCompetition";
+        return "/competition/insCompetition"; 
     }
     
     @PostMapping("/insCompetition")
