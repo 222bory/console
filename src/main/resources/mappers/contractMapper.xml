@@ -4,7 +4,35 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace="com.sicc.console.dao.ContractDao">
-
+	<select id="selListContract" resultType="com.sicc.console.model.ContractExtModel">
+		SELECT COUNT(1) OVER() AS totalCount
+			   ,cust.cust_id as custId 
+		       , cust.cust_nm as custNm 
+		       , cust.rep_fax_no as repFaxNo
+		       , cust.rep_tel_no as repTelNo
+		       , cust.corp_ad_no as corpAdNo
+		       , cust.mgr_nm as mgrNm
+		       , cust.mgr_email_addr as mgrEmailAddr
+		       , cust.mgr_tel_no as mgrTelNo
+		       , cont.tenant_id as tenantId
+		       , cont.cont_nm as contNm
+		       , cont.valid_start_dt as validStartDt
+		       , cont.valid_end_dt as validEndDt
+		       , cont.cont_stat_cd as contStatDd
+		       , cont.network_fg_cd as networkFgCd
+		       , cont.password_lod_cd as passwordLodCd
+		       , cont.password_min_len as passwordMinLen
+		       , cont.password_rnwl_cycl_cd as passwordRnwlCyclCd
+		       , cont.password_pose_yn as passwordPoseYn
+		       , cont.ad_date as adDate
+		       , cont.udt_date as udtDate
+		FROM con.concustm cust
+		INNER JOIN con.concustcontm cont
+		ON cust.cust_id=cont.cust_id
+		order by udtDate desc   
+		LIMIT #{rowPerPage} OFFSET #{skipCount}
+    </select>
+    
     <insert id="insContract" parameterType="com.sicc.console.model.ContractModel">
     	INSERT INTO concustcontm(
 						      tenant_id,

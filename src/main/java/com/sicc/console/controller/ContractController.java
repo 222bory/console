@@ -1,33 +1,34 @@
 package com.sicc.console.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils; 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sicc.console.common.Pagination;
+import com.sicc.console.model.ContractExtModel;
 import com.sicc.console.model.ContractModel;
 import com.sicc.console.model.CustomerModel;
-import com.sicc.console.model.Member;
-import com.sicc.console.service.ContractService;
-import com.sicc.console.service.UserService;
-import com.sicc.console.service.impl.CustomUserDetailsService;
+import com.sicc.console.service.ContractService; 
 
 @Controller
 public class ContractController { 
 
     //private final Logger logger = LoggerFactory.getLogger(ContController.class);
-
+	private Integer rowPerPage = 10;  
+	
     @Autowired
     ContractService contractService;
     
@@ -37,6 +38,40 @@ public class ContractController {
         return "/contract/insContract";
     }
     
+	@RequestMapping("/selListContract")
+    public String selectListContract(@RequestParam Map<String, String> param, ContractExtModel contractExtModel, Model model) {
+		// 페이징 처리
+		String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
+		if(NumberUtils.toInt(page) < 1) page = "1";
+		
+		int rows = StringUtils.isNotEmpty( param.get("rowPerPage"))? NumberUtils.toInt(param.get("rowPerPage")) : rowPerPage;
+		
+		contractExtModel.setRowPerPage(rows);
+		contractExtModel.setPage(NumberUtils.toInt(page));
+		contractExtModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
+    	
+		
+        List<ContractExtModel> list = contractService.selListContract(contractExtModel);  
+        
+        System.out.println("list : "+ list.get(0));
+        //페이징 처리
+        Pagination pagination = new Pagination();
+		if(list != null && !list.isEmpty() ){
+			pagination.setTotalRow(list.get(0).getTotalCount()).setRowPerPage(rows).setCurrentPage(page);
+		} else {
+			pagination.setTotalRow(0);
+		}
+		
+		System.out.println("addate : "+list.get(0).getAdDate());
+		
+		model.addAttribute("list", list);
+        model.addAttribute("adminModel", contractExtModel); 
+		model.addAttribute("pagination", pagination);
+    	
+    	return "/contract/selListContract";
+    	
+    }
+	
     @PostMapping("/insContract")
     @Transactional(rollbackFor=Exception.class)
     public String insContract(Model model , 
