@@ -72,10 +72,6 @@ public class CompetitionController {
     		@RequestParam("cpTypeCd") String cpTypeCd,
     		@RequestParam("expectUserNum") String expectUserNum,
     		HttpServletRequest req, HttpServletResponse res) {
-		
-    	
-    	System.out.println(tenantId+" "+cpCd+" "+cpNm+" "+cpStartDt +" "+cpEndDt +" "+cpPlaceNm +" "+
-    			cpScaleCd +" "+cpTypeCd +" "+expectUserNum );
     	
     	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	String userId = principal.getUsername();
@@ -104,21 +100,7 @@ public class CompetitionController {
     }
     
     @RequestMapping("/selListCompetition")
-    public String selCompetition(@RequestParam Map<String, String> param, Model model, CompetitionModel competitionModel, HttpServletRequest req, HttpServletResponse res) {
-    	
-    	List<CodeModel> cdList = commonService.selCode("ADMIN_PRIV_CD");
-    	for(int i = 0 ; i < cdList.size() ; i ++) {
-    		CodeModel cd = cdList.get(i);
-    		System.out.println("Code test :: "+cd.getCdGroupId());
-    		System.out.println("Code test :: "+cd.getCdGroupNm());
-    		System.out.println("Code test :: "+cd.getCdId());
-    		System.out.println("Code test :: "+cd.getCdNm());
-    		System.out.println("Code test :: "+cd.getUseYn());
-    		System.out.println("---------------------------------------");
-    	}
-    	
-    	System.out.println("ip ::: "+ req.getRemoteAddr());
-    	System.out.println("tenantSeq :::: "+commonService.selTenantIdSeq());
+    public String selListCompetition(@RequestParam Map<String, String> param, Model model, CompetitionModel competitionModel, HttpServletRequest req, HttpServletResponse res) {
     	
     	String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
 		if(NumberUtils.toInt(page) < 1) page = "1";
@@ -129,11 +111,7 @@ public class CompetitionController {
 		competitionModel.setPage(NumberUtils.toInt(page));
 		competitionModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
 		
-        List<CompetitionExtModel> competitionList = competitionService.selCompetition(competitionModel);
-        
-        /*for(int i = 0 ; i < competitionList.size() ; i ++) {
-        	CompetitionModel cm = competitionList.get(i);
-        }*/
+        List<CompetitionExtModel> competitionList = competitionService.selListCompetition(competitionModel);
         
         Pagination pagination = new Pagination();
 		if(competitionList != null && !competitionList.isEmpty() ){
@@ -147,6 +125,39 @@ public class CompetitionController {
 		model.addAttribute("pagination", pagination);
 		
         return "/competition/selListCompetition";
+    }
+    
+    @RequestMapping("/selCompetition")
+    public String selCompetition(@RequestParam Map<String, String> param, 
+    								@RequestParam(value="hiddenTenantId", required=true) String hiddenTenantId, 
+    								Model model, CompetitionModel competitionModel, HttpServletRequest req, HttpServletResponse res) {
+    	
+    	String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
+		if(NumberUtils.toInt(page) < 1) page = "1";
+		
+		int rows = StringUtils.isNotEmpty( param.get("rowPerPage"))? NumberUtils.toInt(param.get("rowPerPage")) : rowPerPage;
+
+		competitionModel.setTenantId(hiddenTenantId);
+		competitionModel.setRowPerPage(rows);
+		competitionModel.setPage(NumberUtils.toInt(page));
+		competitionModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
+		
+        CompetitionExtModel competition = competitionService.selCompetition(competitionModel);
+        competition.setCpScaleCd(commonService.selCodeByCdId(CommonEnums.CP_SCALE_CD.getValue(), competition.getCpScaleCd()));
+        competition.setCpTypeCd(commonService.selCodeByCdId(CommonEnums.CP_TYPE_CD.getValue(), competition.getCpTypeCd()));
+        
+        Pagination pagination = new Pagination();
+		if(competition != null){
+			pagination.setTotalRow(competition.getTotalCount()).setRowPerPage(rows).setCurrentPage(page);
+		} else {
+			pagination.setTotalRow(0);
+		}
+		
+		model.addAttribute("competition", competition);
+        model.addAttribute("competitionModel", competitionModel);
+		model.addAttribute("pagination", pagination);
+		
+        return "/competition/selCompetition";
     }
     
     @GetMapping("/upCompetition") 

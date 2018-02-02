@@ -10,6 +10,8 @@ public interface CompetitionDao {
 
 	public void upCompetition(CompetitionModel competitionModel) ; 
 	
-	public List<CompetitionExtModel> selCompetition(CompetitionModel competitionExtModel);
+	public List<CompetitionExtModel> selListCompetition(CompetitionModel competitionExtModel);
+	
+	public CompetitionExtModel selCompetition(CompetitionModel competitionExtModel);
 }
 
