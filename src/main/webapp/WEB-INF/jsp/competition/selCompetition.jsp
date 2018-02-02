@@ -33,17 +33,17 @@
 		alert(tenantId);
 	}); */
 	
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		$('#selListCompetitionTable tr').click(function(event){
 			if(event.target.nodeName.toLowerCase() == 'td') {
-				
 				$('#hiddenTenantId').val($(this).children().eq(1).text());
+				alert("test :: "+ $('#hiddenTenantId').val());
 				$("#detailFrm").submit();
 				//var checkbox = $(this).find('td:first-child :checkbox');
 				//checkbox.attr('checked', !checkbox.is(':checked'));
 			}
 		});
-	});
+	}); */
 </script>
 
 <div class="breadcrumb-holder">
@@ -64,54 +64,30 @@
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-header d-flex align-items-center">
-                  <h2 class="h5 display" >대회목록</h2>
+                  <h2 class="h5 display" >대회상세</h2>
                 </div>
                 <div class="card-body">
                 <form action="/selCompetition" method="post" id="detailFrm">
-                	<input type="hidden" id="hiddenTenantId" name="hiddenTenantId" value="" />
+                	<%-- <input type="hidden" name="page" value="${competitionModel.page}" /> --%>
+                	<input type="hidden" id="hiddenTenantId" />
                 </form>
                 
                 <form action="" method="post" id="frm">
                 <input type="hidden" name="page" value="${competitionModel.page}" />
                   <table class="table" id="selListCompetitionTable">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Tenant ID</th>
-                        <th>계약명</th>
-                        <th>대회코드</th>
-                        <th>대회명</th>
-                        <th>대회기간</th>
-                        <th>대표자명</th>
-                        <th>전화번호</th>
-                        <th>등록일</th>
-                      </tr>
-                    </thead>
                     <tbody>
-                    <c:set var="no" value="${pagination.totalRow - (pagination.currentPage - 1) * pagination.rowPerPage }"/>
-					<c:set var="countNo" value="0"/>
-                    <c:forEach items="${competitionList}" var="list" varStatus="parent">
-                      <tr>
-                        <th scope="row">${no - countNo}</th>
-                        <td>${list.tenantId}</td>
-                        <td>${list.contNm}</td>
-                        <td>${list.cpCd}</td>
-                        <td>${list.cpNm}</td>
-                        <td>${list.cpStartDt} ~ ${list.cpEndDt}</td>
-                        <td>${list.mgrNm}</td>
-                        <td>${list.mgrTelNo}</td>
-                        <td>${list.adDate}</td>
-                      </tr>
-                    <c:set var="countNo" value="${countNo+1 }" />
-                    </c:forEach>  
+                    	<tr><td>테넌트ID</td><td>${competition.tenantId}</td></tr>
+                    	<tr><td>계약명</td><td>${competition.contNm}</td></tr>
+                    	<tr><td>대회 코드</td><td>${competition.cpCd}</td></tr>
+                    	<tr><td>대회명</td><td>${competition.cpNm}</td></tr>
+                    	<tr><td>대회 기간</td><td>${competition.cpStartDt} ~ ${competition.cpEndDt}</td></tr>
+                    	<tr><td>대회 장소</td><td>${competition.cpPlaceNm}</td></tr>
+                    	<tr><td>대회 규모</td><td>${competition.cpScaleCd}</td></tr>
+                    	<tr><td>대회 유형</td><td>${competition.cpTypeCd}</td></tr>
+                    	<tr><td>예상 이용자수</td><td>${competition.expectUserNum}</td></tr>
                     </tbody>
                   </table>
               	  </form>
-				 	<div class="pagination">
-					  <ul>
-					  	<c:import url="/WEB-INF/jsp/paging/paging.jsp"></c:import>
-					  </ul>
-					</div>
                 </div>
               </div>
             </div>

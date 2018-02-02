@@ -17,4 +17,12 @@
 		   AND parent.cd_group_id = #{cdGroupId};
     </select>
     
+    <select id="selCodeByCdId" parameterType="java.util.Map" resultType="String">
+    	SELECT child.cd_nm as cdNm 
+		  FROM concdm parent, concdd child 
+		 WHERE parent.cd_group_id = child.cd_group_id
+		   AND child.cd_group_id = #{cdGroupId}
+		   AND child.cd_id = #{cdId}
+    </select>
+    
 </mapper>

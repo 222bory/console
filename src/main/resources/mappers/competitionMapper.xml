@@ -58,7 +58,7 @@
          WHERE tenant_id = #{tenantId}			   
     </update>
     
-    <select id="selCompetition" parameterType="com.sicc.console.model.CompetitionModel" resultType="com.sicc.console.model.CompetitionExtModel">
+    <select id="selListCompetition" parameterType="com.sicc.console.model.CompetitionModel" resultType="com.sicc.console.model.CompetitionExtModel">
     	SELECT COUNT(1) OVER() AS totalCount,
         	   cust.mgr_nm as mgrNm,
                cust.mgr_tel_no as mgrTelNo,
@@ -83,6 +83,32 @@
            AND cont.tenant_id = cp.tenant_id
       order by cp.tenant_id desc  
     	 LIMIT #{rowPerPage} OFFSET #{skipCount}   
+    </select>
+    
+    <select id="selCompetition" parameterType="com.sicc.console.model.CompetitionModel" resultType="com.sicc.console.model.CompetitionExtModel">
+    	SELECT COUNT(1) OVER() AS totalCount,
+        	   cust.mgr_nm as mgrNm,
+               cust.mgr_tel_no as mgrTelNo,
+               cont.cont_nm as contNm,
+    		   cp.tenant_id as tenantId,
+			   cp.cp_cd as cpCd,
+			   cp.cp_nm as cpNm,
+			   cp.cp_start_dt as cpStartDt,
+			   cp.cp_end_dt as cpEndDt,
+			   cp.cp_place_nm as cpPlaceNm,
+			   cp.cp_scale_cd as cpScaleCd, 
+			   cp.cp_type_cd as cpTypeCd,
+			   cp.expect_user_num as expectUserNum,
+			   cp.crt_id as crtId,
+			   cp.crt_ip as crtIp,
+			   cp.ad_date as adDate,
+			   cp.udt_id as udtId,
+			   cp.udt_ip as udtIp,
+			   cp.udt_date as udtDate
+		  FROM concustm cust, concustcontm cont, concpm cp
+         WHERE cust.cust_id = cont.cust_id
+           AND cont.tenant_id = cp.tenant_id
+           AND cont.tenant_id = #{tenantId}
     </select>
     
 </mapper>

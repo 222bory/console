@@ -27,7 +27,12 @@ public class CompetitionServiceImpl implements CompetitionService{
 	}
 
 	@Override
-	public List<CompetitionExtModel> selCompetition(CompetitionModel competitionModel) {
+	public List<CompetitionExtModel> selListCompetition(CompetitionModel competitionModel) {
+		return competitionDao.selListCompetition(competitionModel);
+	}
+	
+	@Override
+	public CompetitionExtModel selCompetition(CompetitionModel competitionModel) {
 		return competitionDao.selCompetition(competitionModel);
 	}
 

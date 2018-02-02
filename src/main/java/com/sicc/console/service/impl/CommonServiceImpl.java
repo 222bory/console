@@ -1,6 +1,8 @@
 package com.sicc.console.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,11 @@ public class CommonServiceImpl implements CommonService{
 	@Override
 	public List<CodeModel> selCode(String cdGroupId) {
 		return codeDao.selCode(cdGroupId);
+	}
+
+	@Override
+	public String selCodeByCdId(String cdGroupId, String cdId) {
+		return codeDao.selCodeByCdId(cdGroupId, cdId);
 	}
 
 	@Override
