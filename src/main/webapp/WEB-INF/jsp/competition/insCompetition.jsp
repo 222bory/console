@@ -34,7 +34,7 @@
 		
 		
 			$('#cal3').datepicker({
-					"format" :'yyyymmdd',
+					"format" :'yyyy-mm-dd',
 					"setDate": new Date(),
 			        "autoclose": true,
 			        "todayHighlight":true

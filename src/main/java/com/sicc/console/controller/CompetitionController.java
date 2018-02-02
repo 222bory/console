@@ -50,8 +50,8 @@ public class CompetitionController {
     @GetMapping("/insCompetition") 
     public String insCompetition(Model model) {
     	
-    	List<CodeModel> cpScaleCdList = commonService.selCode("CP_SCALE_CD");
-    	List<CodeModel> cpTypeCdList = commonService.selCode("CP_TYPE_CD");
+    	List<CodeModel> cpScaleCdList = commonService.selCode(CommonEnums.CP_SCALE_CD.getValue());
+    	List<CodeModel> cpTypeCdList = commonService.selCode(CommonEnums.CP_TYPE_CD.getValue());
     	
     	model.addAttribute("cpScaleCdList", cpScaleCdList);
     	model.addAttribute("cpTypeCdList", cpTypeCdList);
