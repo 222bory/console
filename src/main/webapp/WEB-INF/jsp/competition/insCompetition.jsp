@@ -17,7 +17,7 @@
 			success : function(result) {
 				alert(result);
 			}
-		});
+		}); 
 		
 	}
 	

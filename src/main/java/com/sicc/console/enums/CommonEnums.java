@@ -10,7 +10,7 @@ public enum CommonEnums {
 	private String code;
 	private String value;
 	
-	private CommonEnums (String code, String value) {
+	private CommonEnums (String code, String value) { 
 		this.code = code;
 		this.value = value;
 	}

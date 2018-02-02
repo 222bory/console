@@ -16,7 +16,7 @@ public class CommonUtil {
 	public static String concatString(String str1 , String str2) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(str1).append(str2);
-		return sb.toString(); 
+		return sb.toString();  
 	}
 	
 	public static String removeSpecificStr(String originStr, String specificStr) {

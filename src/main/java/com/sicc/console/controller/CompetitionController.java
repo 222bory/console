@@ -32,8 +32,7 @@ import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.service.CommonService;
 import com.sicc.console.service.CompetitionService;
 import com.sicc.console.service.UserService;
-import com.sicc.console.service.impl.CustomUserDetailsService;
-
+import com.sicc.console.service.impl.CustomUserDetailsService; 
 @Controller
 public class CompetitionController { 
 
