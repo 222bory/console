@@ -28,7 +28,7 @@ import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.AdminModel;
 import com.sicc.console.model.CodeModel;
 import com.sicc.console.model.CompetitionExtModel;
-import com.sicc.console.model.CompetitionModel;
+import com.sicc.console.model.CompetitionModel; 
 import com.sicc.console.service.CommonService;
 import com.sicc.console.service.CompetitionService;
 import com.sicc.console.service.UserService;

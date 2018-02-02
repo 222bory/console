@@ -7,7 +7,7 @@ public enum CommonEnums {
 	ONLY_YEAR_FORMAT 			("ONLY_YEAR_FORMAT", 			"YYYY"  	),
 	SLASH_MARK 					("SLASH_MARK", 					"/"  		);
 	
-	private String code;
+	private String code; 
 	private String value;
 	
 	private CommonEnums (String code, String value) { 

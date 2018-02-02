@@ -15,7 +15,7 @@
 				userID : userID
 			}, 
 			success : function(result) {
-				alert(result);
+				alert(result); 
 			}
 		}); 
 		
