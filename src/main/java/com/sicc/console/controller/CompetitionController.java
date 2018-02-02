@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sicc.console.common.CommonUtil;
 import com.sicc.console.common.Pagination;
+import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.AdminModel;
 import com.sicc.console.model.CodeModel;
 import com.sicc.console.model.CompetitionExtModel;
@@ -48,7 +49,14 @@ public class CompetitionController {
     
 
     @GetMapping("/insCompetition") 
-    public String insCompetition() {
+    public String insCompetition(Model model) {
+    	
+    	List<CodeModel> cpScaleCdList = commonService.selCode("CP_SCALE_CD");
+    	List<CodeModel> cpTypeCdList = commonService.selCode("CP_TYPE_CD");
+    	
+    	model.addAttribute("cpScaleCdList", cpScaleCdList);
+    	model.addAttribute("cpTypeCdList", cpTypeCdList);
+    	
         return "/competition/insCompetition";
     }
     
@@ -70,20 +78,23 @@ public class CompetitionController {
     	System.out.println(tenantId+" "+cpCd+" "+cpNm+" "+cpStartDt +" "+cpEndDt +" "+cpPlaceNm +" "+
     			cpScaleCd +" "+cpTypeCd +" "+expectUserNum );
     	
+    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String userId = principal.getUsername();
+    	
     	CompetitionModel competitionModel= new CompetitionModel();
     	
-    	competitionModel.setTenantId("t"+System.currentTimeMillis());
+    	competitionModel.setTenantId(commonService.selTenantIdSeq());
     	competitionModel.setCpCd(cpCd);
     	competitionModel.setCpNm(cpNm);
-    	competitionModel.setCpStartDt(cpStartDt);
-    	competitionModel.setCpEndDt(cpEndDt);
+    	competitionModel.setCpStartDt(CommonUtil.removeSpecificStr(cpStartDt, CommonEnums.SLASH_MARK.getValue()));
+    	competitionModel.setCpEndDt(CommonUtil.removeSpecificStr(cpEndDt, CommonEnums.SLASH_MARK.getValue()));
     	competitionModel.setCpPlaceNm(cpPlaceNm);
     	competitionModel.setCpScaleCd(cpScaleCd);
     	competitionModel.setCpTypeCd(cpTypeCd);
     	competitionModel.setExpectUserNum(Integer.parseInt(expectUserNum));
-    	competitionModel.setCrtId("test");
+    	competitionModel.setCrtId(userId);
     	competitionModel.setCrtIp(req.getRemoteAddr());
-    	competitionModel.setUdtId("test");
+    	competitionModel.setUdtId(userId);
     	competitionModel.setUdtIp(req.getRemoteAddr());
     	
     	competitionService.insCompetition(competitionModel);
@@ -109,7 +120,6 @@ public class CompetitionController {
     	
     	System.out.println("ip ::: "+ req.getRemoteAddr());
     	System.out.println("tenantSeq :::: "+commonService.selTenantIdSeq());
-    	System.out.println("tenantSeq :::: "+CommonUtil.getCurrentDate("YYYY"));
     	
     	String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
 		if(NumberUtils.toInt(page) < 1) page = "1";

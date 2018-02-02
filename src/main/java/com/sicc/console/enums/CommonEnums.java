@@ -1,9 +1,11 @@
 package com.sicc.console.enums;
 
 public enum CommonEnums {
-	
-	DEFAULT_LENGTH_FOR_ZERO ("DEFAULT_LENGTH_FOR_ZERO", 	"6"		),
-	ONLY_YEAR_FORMAT 		("ONLY_YEAR_FORMAT", 			"YYYY"  );
+	DEFAULT_CREATE_DATA_USER 	("DEFAULT_CREATE_DATA_USER", 	"ADMIN"		),
+	DEFAULT_UPDATE_DATA_USER 	("DEFAULT_UPDATE_DATA_USER", 	"ADMIN"		),
+	DEFAULT_LENGTH_FOR_ZERO 	("DEFAULT_LENGTH_FOR_ZERO", 	"6"			),
+	ONLY_YEAR_FORMAT 			("ONLY_YEAR_FORMAT", 			"YYYY"  	),
+	SLASH_MARK 					("SLASH_MARK", 					"/"  		);
 	
 	private String code;
 	private String value;

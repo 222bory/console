@@ -18,4 +18,8 @@ public class CommonUtil {
 		sb.append(str1).append(str2);
 		return sb.toString(); 
 	}
+	
+	public static String removeSpecificStr(String originStr, String specificStr) {
+		return originStr.replaceAll(specificStr, "");
+	}
 }

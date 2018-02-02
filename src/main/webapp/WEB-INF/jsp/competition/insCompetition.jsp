@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
 
 <script type="text/javascript">
 	/* var flag = false; */
@@ -25,6 +26,23 @@
 		flag=false;
 	} */
  
+	$(function () {
+		$('#cp3').colorpicker({
+	        color: '#AA3399',
+	        format: 'hex'
+	    });
+		
+		
+			$('#cal3').datepicker({
+					"format" :'yyyymmdd',
+					"setDate": new Date(),
+			        "autoclose": true,
+			        "todayHighlight":true
+				});
+				
+				$("#cpStartDt").datepicker("setDate", new Date());
+				$("#cpEndDt").datepicker("setDate", new Date());
+	});
 </script>
 
 
@@ -50,7 +68,7 @@
 					<div class="card-body">
 						<form class="form-horizontal" id="frm" name="frm" method="POST" action="/insCompetition">
 							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* Tenant ID</label>
+								<label class="col-sm-2 form-control-label">* 고객계약 선택</label>
 								<div class="col-md-6">
 										<div class="row">
 											<div style="width: 60%; padding: 0.375rem 0.75rem;">
@@ -103,7 +121,7 @@
 							</div>
 							<div class="line"></div> -->
 							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* 대회코드</label>
+								<label class="col-sm-2 form-control-label">* 대회 코드</label>
 								<div class="col-md-5">
 									<input type="text" class="form-control" id="cpCd" name="cpCd">
 								</div>
@@ -117,42 +135,46 @@
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* 대회시작일자</label>
-								<div class="col-md-5">
-									<input type="text" class="form-control" id="cpStartDt" name="cpStartDt">
+								<label class="col-sm-2 form-control-label">* 대회 기간</label>
+								<div class="col-md-2">
+									<input type="text" class="form-control" id="cpStartDt" name="cpStartDt"> ~
 								</div>
-							</div>
-							<div class="line"></div>
-							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* 대회종료일자</label>
-								<div class="col-md-5">
+								<div class="col-md-2">
 									<input type="text" class="form-control" id="cpEndDt" name="cpEndDt">
 								</div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* 대회장소명</label>
+								<label class="col-sm-2 form-control-label">* 대회 장소</label>
 								<div class="col-md-5">
 									<input type="text" class="form-control" id="cpPlaceNm" name="cpPlaceNm">
 								</div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* 대회Scale코드</label>
-								<div class="col-md-5">
-									<input type="text" class="form-control" id="cpScaleCd" name="cpScaleCd">
-								</div>
+								<label class="col-sm-2 form-control-label">* 대회 규모</label>
+		                        <div class="col-sm-5 select">
+		                          <select id="cpScaleCd" name="cpScaleCd" class="form-control">
+		                          <c:forEach items="${cpScaleCdList}" var="list" varStatus="parent">
+		                            <option value="${list.cdId}">${list.cdNm}</option>
+		                          </c:forEach>
+		                          </select>
+		                        </div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* 대회유형코드</label>
-								<div class="col-md-5">
-									<input type="text" class="form-control" id="cpTypeCd" name="cpTypeCd">
-								</div>
+								<label class="col-sm-2 form-control-label">* 대회 유형</label>
+								<div class="col-sm-5 select">
+		                          <select id="cpTypeCd" name="cpTypeCd" class="form-control">
+		                          <c:forEach items="${cpTypeCdList}" var="list" varStatus="parent">
+		                            <option value="${list.cdId}">${list.cdNm}</option>
+		                          </c:forEach>  
+		                          </select>
+		                        </div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* 예상사용자수</label>
+								<label class="col-sm-2 form-control-label">* 예상 이용자수</label>
 								<div class="col-md-5">
 									<input type="text" class="form-control" id="expectUserNum" name="expectUserNum">
 								</div>
