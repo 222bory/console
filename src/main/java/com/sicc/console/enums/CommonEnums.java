@@ -5,11 +5,14 @@ public enum CommonEnums {
 	DEFAULT_UPDATE_DATA_USER 	("DEFAULT_UPDATE_DATA_USER", 	"ADMIN"		),
 	DEFAULT_LENGTH_FOR_ZERO 	("DEFAULT_LENGTH_FOR_ZERO", 	"6"			),
 	ONLY_YEAR_FORMAT 			("ONLY_YEAR_FORMAT", 			"YYYY"  	),
-	SLASH_MARK 					("SLASH_MARK", 					"/"  		);
+	SLASH_MARK 					("SLASH_MARK", 					"/"  		),
+	
+	CP_SCALE_CD 				("CP_SCALE_CD", 			"CP_SCALE_CD"  	),
+	CP_TYPE_CD 					("CP_TYPE_CD", 				"CP_TYPE_CD"  	);
 	
 	private String code; 
 	private String value;
-	
+	 
 	private CommonEnums (String code, String value) { 
 		this.code = code;
 		this.value = value;
