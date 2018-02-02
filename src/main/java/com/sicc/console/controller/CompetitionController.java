@@ -85,8 +85,8 @@ public class CompetitionController {
     	competitionModel.setTenantId(commonService.selTenantIdSeq());
     	competitionModel.setCpCd(cpCd);
     	competitionModel.setCpNm(cpNm);
-    	competitionModel.setCpStartDt(CommonUtil.removeSpecificStr(cpStartDt, CommonEnums.SLASH_MARK.getValue()));
-    	competitionModel.setCpEndDt(CommonUtil.removeSpecificStr(cpEndDt, CommonEnums.SLASH_MARK.getValue()));
+    	competitionModel.setCpStartDt(CommonUtil.removeSpecificStr(cpStartDt, CommonEnums.DASH_MARK.getValue()));
+    	competitionModel.setCpEndDt(CommonUtil.removeSpecificStr(cpEndDt, CommonEnums.DASH_MARK.getValue()));
     	competitionModel.setCpPlaceNm(cpPlaceNm);
     	competitionModel.setCpScaleCd(cpScaleCd);
     	competitionModel.setCpTypeCd(cpTypeCd);
