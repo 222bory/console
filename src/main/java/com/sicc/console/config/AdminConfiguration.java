@@ -12,12 +12,14 @@ import com.sicc.console.dao.CompetitionDao;
 import com.sicc.console.dao.ContractDao;
 import com.sicc.console.dao.CustomerDao;
 import com.sicc.console.dao.ServiceApplyDao;
+import com.sicc.console.dao.UtilDao;
 import com.sicc.console.dao.impl.AdminDaoImpl;
 import com.sicc.console.dao.impl.CodeDaoImpl;
 import com.sicc.console.dao.impl.CompetitionDaoImpl;
 import com.sicc.console.dao.impl.ContractDaoImpl;
 import com.sicc.console.dao.impl.CustomerDaoImpl;
-import com.sicc.console.dao.impl.ServiceApplyDaoImpl; 
+import com.sicc.console.dao.impl.ServiceApplyDaoImpl;
+import com.sicc.console.dao.impl.UtilDaoImpl; 
 
 @Configuration
 public class AdminConfiguration {
@@ -35,6 +37,11 @@ public class AdminConfiguration {
 	  final TilesViewResolver resolver = new TilesViewResolver();
 	  resolver.setViewClass(TilesView.class);
 	  return resolver;
+  }
+  
+  @Bean
+  public UtilDao utilDao() {
+	return new UtilDaoImpl(); 
   }
   
   @Bean

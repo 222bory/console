@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sicc.console.common.CommonUtil;
 import com.sicc.console.common.Pagination;
 import com.sicc.console.model.AdminModel;
 import com.sicc.console.model.CodeModel;
@@ -92,7 +93,7 @@ public class CompetitionController {
     	
     }
     
-    @RequestMapping("/selCompetition")
+    @RequestMapping("/selListCompetition")
     public String selCompetition(@RequestParam Map<String, String> param, Model model, CompetitionModel competitionModel, HttpServletRequest req, HttpServletResponse res) {
     	
     	List<CodeModel> cdList = commonService.selCode("ADMIN_PRIV_CD");
@@ -105,6 +106,10 @@ public class CompetitionController {
     		System.out.println("Code test :: "+cd.getUseYn());
     		System.out.println("---------------------------------------");
     	}
+    	
+    	System.out.println("ip ::: "+ req.getRemoteAddr());
+    	System.out.println("tenantSeq :::: "+commonService.selTenantIdSeq());
+    	System.out.println("tenantSeq :::: "+CommonUtil.getCurrentDate("YYYY"));
     	
     	String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
 		if(NumberUtils.toInt(page) < 1) page = "1";
@@ -132,7 +137,7 @@ public class CompetitionController {
         model.addAttribute("competitionModel", competitionModel);
 		model.addAttribute("pagination", pagination);
 		
-        return "/competition/selCompetition";
+        return "/competition/selListCompetition";
     }
     
     @GetMapping("/upCompetition") 

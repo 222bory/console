@@ -2,89 +2,29 @@
 	pageEncoding="UTF-8"%>
 
 <script type="text/javascript">
-	/* var flag = false;
+	/* var flag = false; */
 
 	function fn_dupl() {
-		var userID = $('#id').val();
+		alert("test");
+		$.ajax({
+			type : 'POST',
+			url : '/userDuplCheck',
+			//파리미터 변수 이름 : 값
+			data : {
+				userID : userID
+			}, 
+			success : function(result) {
+				alert(result);
+			}
+		});
 		
-		if(userID==''){
-			$('#duplResult').html('아이디를 입력해주세요');
-			flag=false;
-			return;
-		}
-		else{
-			$.ajax({
-				type : 'POST',
-				url : '/userDuplCheck',
-				//파리미터 변수 이름 : 값
-				data : {
-					userID : userID
-				}, 
-				success : function(result) {
-					if (result == "0") {
-						$('#duplResult').html('사용할 수 있는 아이디입니다.');
-						flag = true;
-					} else {
-						$('#duplResult').html('이미 사용중인 아이디입니다.');
-						flag = false;
-					}
-				}
-			});
-		}
-		
-		return flag;
 	}
 	
+	/*
 	function fn_idCheck(){
 		flag=false;
 	} */
  
-</script>
-
-<script>
-	/* $(function(){
-	    $('#frm').validate({
-	     rules: {
-	       id : {required : true},
-	       upw :{required : true},
-	       upwConfirm : {required : true, equalTo:"#upw"},
-	       uemail : {email: true},
-	       uname : {required:true}
-	     },
-	     messages:{
-	    	id:{required :"아이디를 입력해주세요"},
-	    	upw:{required :"패스워드를 입력해주세요"},
-	    	upwConfirm:{
-	    		required : "패스워드 확인을 입력해주세요",
-	    		equalTo:"패스워드가 일치하지 않습니다"
-	    	},
-	    	uemail:{
-	    		email:"올바른 이메일 주소를 입력해주세요"
-	    	},
-	    	uname:{required:"이름을 입력해주세요"}
-	     },
-	     highlight: function(element) {
-	       $(element).closest('.control-group').removeClass('success').addClass('error');
-	     },
-	     /* ,
-	     success: function(element) {
-	       element
-	       .text('OK!').addClass('valid')
-	       .closest('.control-group').removeClass('error').addClass('success');
-	     } 
-	     submitHandler: function(frm){
-	    	
-	    	 if (!flag) {
-					alert('ID 중복확인을 해주세요');
-					return;
-			 }
-	    	 else{
-	    		 frm.submit();
-	    	 }
-	     }
-	    });
-	}); */
-	
 </script>
 
 
@@ -111,15 +51,17 @@
 						<form class="form-horizontal" id="frm" name="frm" method="POST" action="/insCompetition">
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* Tenant ID</label>
-								<div class="help-block with-errors"></div>
-							<div class="col-md-6">
-								<div class="row">
-									<div style="width: 70%; padding: 0.375rem 0.75rem;">
-										<input type="text" class="form-control" id="tenantId" name="tenantId">
+								<div class="col-md-6">
+										<div class="row">
+											<div style="width: 60%; padding: 0.375rem 0.75rem;">
+												<input type="text" class="form-control" id="tenantId" name="tenantId">
+											</div>
+											<div style="width: 30%; padding: 0.375rem 0.75rem;">
+												<button type="button" id="btnDupl" onclick="fnDupl()" class="btn btn-primary">중복확인</button>
+											</div>
+										</div>
 									</div>
-									
-								</div>
-							</div>
+								<div class="help-block with-errors"></div>
 
 								<!-- Modal -->
 								<!-- <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
