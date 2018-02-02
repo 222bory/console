@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sicc.console.dao.CompetitionDao;
+import com.sicc.console.model.CompetitionExtModel;
 import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.service.CompetitionService;
 
@@ -26,7 +27,7 @@ public class CompetitionServiceImpl implements CompetitionService{
 	}
 
 	@Override
-	public List<CompetitionModel> selCompetition(CompetitionModel competitionModel) {
+	public List<CompetitionExtModel> selCompetition(CompetitionModel competitionModel) {
 		return competitionDao.selCompetition(competitionModel);
 	}
 

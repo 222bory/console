@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sicc.console.dao.CompetitionDao;
+import com.sicc.console.model.CompetitionExtModel;
 import com.sicc.console.model.CompetitionModel; 
 
 public class CompetitionDaoImpl implements CompetitionDao{
@@ -24,7 +25,7 @@ public class CompetitionDaoImpl implements CompetitionDao{
 	}
 
 	@Override
-	public List<CompetitionModel> selCompetition(CompetitionModel competitionModel) {
+	public List<CompetitionExtModel> selCompetition(CompetitionModel competitionModel) {
 		return sqlSessionTemplate.selectList("com.sicc.console.dao.CompetitionDao.selCompetition", competitionModel);
 	}
 	

@@ -12,26 +12,38 @@
 		$("input[name=page]").val(page);
 		submit();
 	}
-	
 	function submit(){
-		
 		$("#frm").submit();  
-		
 	}
 	
 	
+	$("#a td").click(function() {
+		alert("test");
+        var str = ""
+        var tdArr = new Array();
+
+        var tr = $(this);
+        var td = tr.children();
+
+        td.each(function(i){
+            tdArr.push(td.eq(i).text());
+        });
+
+        var tenantId = td.eq(0).text();
+		alert(tenantId);
+	});
 </script>
 
 <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selectListAdmin">대회관리</a></li>
+			<li class="breadcrumb-item"><a href="/selCompetition">대회관리</a></li>
 			<li class="breadcrumb-item active">대회관리</li>
 		</ul>
 	</div>
 </div>
 
-<section class="charts">
+	  <section class="charts">
         <div class="container-fluid">
           <header> 
             <h1 class="h3">대회관리</h1>
@@ -40,7 +52,7 @@
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-header d-flex align-items-center">
-                  <h2 class="h5 display">대회목록</h2>
+                  <h2 class="h5 display" >대회목록</h2>
                 </div>
                 <div class="card-body">
                 <form action="" method="post" id="frm">
@@ -66,12 +78,12 @@
                       <tr>
                         <th scope="row">${no - countNo}</th>
                         <td>${list.tenantId}</td>
-                        <td></td>
+                        <td>${list.contNm}</td>
                         <td>${list.cpCd}</td>
                         <td>${list.cpNm}</td>
                         <td>${list.cpStartDt} ~ ${list.cpEndDt}</td>
-                        <td></td>
-                        <td></td>
+                        <td>${list.mgrNm}</td>
+                        <td>${list.mgrTelNo}</td>
                         <td>${list.adDate}</td>
                       </tr>
                     <c:set var="countNo" value="${countNo+1 }" />
@@ -84,7 +96,6 @@
 					  	<c:import url="/WEB-INF/jsp/paging/paging.jsp"></c:import>
 					  </ul>
 					</div>
-				  
                 </div>
               </div>
             </div>

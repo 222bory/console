@@ -2,6 +2,7 @@ package com.sicc.console.service;
 
 import java.util.List;
 
+import com.sicc.console.model.CompetitionExtModel;
 import com.sicc.console.model.CompetitionModel;
 
 public interface CompetitionService {
@@ -10,5 +11,5 @@ public interface CompetitionService {
     
     public void upCompetition(CompetitionModel competitionModel) ; 
     
-    public List<CompetitionModel> selCompetition(CompetitionModel competitionModel);
+    public List<CompetitionExtModel> selCompetition(CompetitionModel competitionModel);
 }

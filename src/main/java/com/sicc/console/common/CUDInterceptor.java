@@ -78,8 +78,9 @@ public class CUDInterceptor implements Interceptor{
 				psmt.execute();
 			}
 		}
-			
-		psmt.close();
+		if(psmt != null) {
+			psmt.close();
+		}
 		
 		return invocation.proceed();
 	}
