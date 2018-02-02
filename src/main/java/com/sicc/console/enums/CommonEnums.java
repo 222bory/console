@@ -8,7 +8,9 @@ public enum CommonEnums {
 	SLASH_MARK 					("SLASH_MARK", 					"/"  		),
 	
 	CP_SCALE_CD 				("CP_SCALE_CD", 			"CP_SCALE_CD"  	),
-	CP_TYPE_CD 					("CP_TYPE_CD", 				"CP_TYPE_CD"  	);
+	CP_TYPE_CD 					("CP_TYPE_CD", 				"CP_TYPE_CD"  	),
+	SERVICE_CD 					("SERVICE_CD", 				"SERVICE_CD"  	),
+	LANG_CD 					("LANG_CD", 				"LANG_CD"  	);
 	
 	private String code; 
 	private String value;
