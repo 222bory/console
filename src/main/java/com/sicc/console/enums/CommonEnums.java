@@ -9,10 +9,15 @@ public enum CommonEnums {
 	DASH_MARK 					("DASH_MARK", 					"-"  		),
 	
 	CP_SCALE_CD 				("CP_SCALE_CD", 			"CP_SCALE_CD"  	),
+	CONT_STAT_CD				("CONT_STAT_CD", 			"CONT_STAT_CD"  ),
+	NETWORK_FG_CD				("NETWORK_FG_CD", 			"NETWORK_FG_CD" ),
+	PASSWORD_LOD_CD				("PASSWORD_LOD_CD", 		"PASSWORD_LOD_CD"),
+	RNWL_CYCL_CD				("RNWL_CYCL_CD", 			"RNWL_CYCL_CD"  ),
 	CP_TYPE_CD 					("CP_TYPE_CD", 				"CP_TYPE_CD"  	),
 	SERVICE_CD 					("SERVICE_CD", 				"SERVICE_CD"  	),
 	LANG_CD 					("LANG_CD", 				"LANG_CD"  	),
 	GMS_SYSTEM_CD 				("GMS_SYSTEM_CD", 			"GMS_SYSTEM_CD"  	);
+	
 	
 	private String code; 
 	private String value;

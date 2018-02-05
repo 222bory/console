@@ -26,6 +26,10 @@ public class ContractServiceImpl implements ContractService{
 		return contractDao.selListContract(contractExtModel); 
 	};
 	
+	public List<ContractExtModel> selListContractCnt(ContractExtModel contractExtModel){
+		return contractDao.selListContractCnt(contractExtModel); 
+	};
+	
 	@Override
 	public void insCustomer(CustomerModel customerModel) {
 		customerDao.insCustomer(customerModel);

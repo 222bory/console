@@ -33,6 +33,12 @@
 		LIMIT #{rowPerPage} OFFSET #{skipCount}
     </select>
     
+    <select id="selListContractCnt" resultType="com.sicc.console.model.ContractExtModel">
+		SELECT COUNT(1) OVER() AS totalCount
+		FROM concustm 
+		WHERE cust_id =  #{custId}
+    </select>
+    
     <insert id="insContract" parameterType="com.sicc.console.model.ContractModel">
     	INSERT INTO concustcontm(
 						      tenant_id,

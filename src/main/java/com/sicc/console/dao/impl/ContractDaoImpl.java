@@ -19,6 +19,10 @@ public class ContractDaoImpl implements ContractDao{
 		return sqlSessionTemplate.selectList("com.sicc.console.dao.ContractDao.selListContract", contractExtModel);
 	}
 	@Override
+	public List<ContractExtModel> selListContractCnt(ContractExtModel contractExtModel) {
+		return sqlSessionTemplate.selectList("com.sicc.console.dao.ContractDao.selListContractCnt", contractExtModel);
+	}
+	@Override
 	public void insContract(ContractModel contractModel) {
 		sqlSessionTemplate.insert("com.sicc.console.dao.ContractDao.insContract", contractModel);
 	}

@@ -114,7 +114,7 @@
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list1" class="collapse list-unstyled">
                 <li> <a href="/insContract">계약 등록</a></li>
-                <li> <a href="#">계약 관리</a></li>
+                <li> <a href="/selListContract">계약 관리</a></li>
                 <li> <a href="/insCompetition">대회 등록</a></li>
                 <li> <a href="/selListCompetition">대회 관리</a></li>
                 <li> <a href="/insServiceApply">서비스 신청</a></li>
