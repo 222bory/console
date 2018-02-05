@@ -11,7 +11,8 @@ public enum CommonEnums {
 	CP_SCALE_CD 				("CP_SCALE_CD", 			"CP_SCALE_CD"  	),
 	CP_TYPE_CD 					("CP_TYPE_CD", 				"CP_TYPE_CD"  	),
 	SERVICE_CD 					("SERVICE_CD", 				"SERVICE_CD"  	),
-	LANG_CD 					("LANG_CD", 				"LANG_CD"  	);
+	LANG_CD 					("LANG_CD", 				"LANG_CD"  	),
+	GMS_SYSTEM_CD 				("GMS_SYSTEM_CD", 			"GMS_SYSTEM_CD"  	);
 	
 	private String code; 
 	private String value;
