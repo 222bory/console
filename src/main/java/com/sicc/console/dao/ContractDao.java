@@ -6,7 +6,9 @@ import com.sicc.console.model.ContractExtModel;
 import com.sicc.console.model.ContractModel;
 
 public interface ContractDao {
-	public List<ContractExtModel> selListContract(ContractExtModel contractExtModel); 
+	public List<ContractExtModel> selListContract(ContractExtModel contractExtModel);
+	
+	public List<ContractExtModel> selListContractCnt(ContractExtModel contractExtModel);
 	
 	public void insContract(ContractModel contractModel) ; 
 	
