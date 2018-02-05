@@ -1,8 +1,6 @@
 package com.sicc.console.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sicc.console.enums.CommonEnums;
+import com.sicc.console.model.CodeModel;
+import com.sicc.console.service.CommonService;
 import com.sicc.console.service.ServiceApplyService;
 
 @Controller
@@ -27,25 +28,18 @@ public class ServiceApplyController {
 	@Autowired
 	ServiceApplyService serviceApplyService;
 	
+	@Autowired
+	CommonService commonService;
+	
 	
     @GetMapping("/insServiceApply") 
     public String insServiceApply(Model model) {
+    	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());
     	
-    	ArrayList serviceList = new ArrayList();
-    	
-    	Map serviceName1 = new HashMap();
-    	serviceName1.put("name","GMS");
-    	serviceList.add(serviceName1);
-    	
-    	Map serviceName2 = new HashMap();
-    	serviceName2.put("name","INFO");
-    	serviceList.add(serviceName2);
-    	
-    	Map serviceName3 = new HashMap();
-    	serviceName3.put("name","INFO");
-    	serviceList.add(serviceName3);
-	
+    	List<CodeModel> languageList = commonService.selCode(CommonEnums.LANG_CD.getValue());
+
     	model.addAttribute("serviceList",serviceList);
+    	model.addAttribute("languageList",languageList);
     	
         return "/service/insServiceApply";
     }

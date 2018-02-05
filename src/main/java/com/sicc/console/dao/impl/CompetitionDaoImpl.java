@@ -25,8 +25,13 @@ public class CompetitionDaoImpl implements CompetitionDao{
 	}
 
 	@Override
-	public List<CompetitionExtModel> selCompetition(CompetitionModel competitionModel) {
-		return sqlSessionTemplate.selectList("com.sicc.console.dao.CompetitionDao.selCompetition", competitionModel);
+	public List<CompetitionExtModel> selListCompetition(CompetitionModel competitionModel) {
+		return sqlSessionTemplate.selectList("com.sicc.console.dao.CompetitionDao.selListCompetition", competitionModel);
+	}
+	
+	@Override
+	public CompetitionExtModel selCompetition(CompetitionModel competitionModel) {
+		return sqlSessionTemplate.selectOne("com.sicc.console.dao.CompetitionDao.selCompetition", competitionModel);
 	}
 	
 }

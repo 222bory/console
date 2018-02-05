@@ -33,12 +33,18 @@
 	    });
 		
 		
-			$('#cal3').datepicker({
+			$('#cpStartDt').datepicker({
 					"format" :'yyyy-mm-dd',
 					"setDate": new Date(),
 			        "autoclose": true,
 			        "todayHighlight":true
 				});
+			$('#cpEndDt').datepicker({
+				"format" :'yyyy-mm-dd',
+				"setDate": new Date(),
+		        "autoclose": true,
+		        "todayHighlight":true
+			});
 				
 				$("#cpStartDt").datepicker("setDate", new Date());
 				$("#cpEndDt").datepicker("setDate", new Date());
