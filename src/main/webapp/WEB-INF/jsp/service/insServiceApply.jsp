@@ -8,62 +8,6 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-
-    // 추가 버튼 클릭시
-    $("#addRowBtn").click(function(){
-	 var serviceTbl = $("#serviceTbl tr:eq(1)").clone(); //1행 복사
-	 var serviceDetailTbl = $("#serviceDetailTbl tr:eq(1)").clone();
-	
-	
-     $("#serviceTbl").append(serviceTbl);
-     $("#serviceDetailTbl").append(serviceDetailTbl);
-    });
-    
- 	// 삭제버튼 클릭시
-    $("#delRowBtn").click(function(){  
-		var rows= $('#serviceTbl > tbody:last > tr').length;
-
-		if(rows>1){
-	   		$('#serviceTbl > tbody:last > tr:last').remove();
-	   	    $('#serviceDetailTbl > tbody:last > tr:last').remove();
-		}
-    
-    });
- 	
- 	//서비스 선택
- 	$('select[name=serviceSel]').each(function(index){
- 		$(this).change(function(){
- 			var i =  index;
- 			var serviceId = this.value;
-
- 			$.ajax({
-	 			type : 'POST',
-	 			url : '/selServicebySytem',
-	 			//파리미터 변수 이름 : 값
-	 			data : {
-	 				serviceId : serviceId
-	 			},
-	 			success : function(data){
-	 				if(data.length>0){
-						
-	 					$('#serviceModal').html(data);
-	 					
-	 					/* for(var i=0; i <result.length; i++){
-	 						html += "<input type='checkbox' name='systemChkBox' value='"+data[i].cdId
-	 						+"'/> <label>"+data[i].cdNm+"</label>";
-	 					}	
-						$('#systemChkBox').append(html); */
-	 				}
-	 			},
-	 			error:function(){
-	 				alert("에러");
-	 			}
-	 	});
- 		});
- 	});
- 		
-
- 	
  	// 달력 세팅
     $('input[name=serviceStartDt]').each(function(){
     	$(this).datepicker({
@@ -89,6 +33,65 @@ $(document).ready(function(){
         color: '#AA3399',
         format: 'hex'
     });
+	
+    // 추가 버튼 클릭시
+    $("#addRowBtn").click(function(){
+	 var serviceTbl = $("#serviceTbl tr:eq(1)").clone(); //1행 복사
+	 var serviceDetailTbl = $("#serviceDetailTbl tr:eq(1)").clone();
+	
+	
+     $("#serviceTbl").append(serviceTbl);
+     $("#serviceDetailTbl").append(serviceDetailTbl);
+    });
+    
+ 	// 삭제버튼 클릭시
+    $("#delRowBtn").click(function(){  
+		var rows= $('#serviceTbl > tbody:last > tr').length;
+
+		if(rows>1){
+	   		$('#serviceTbl > tbody:last > tr:last').remove();
+	   	    $('#serviceDetailTbl > tbody:last > tr:last').remove();
+		}
+    
+    });
+ 	
+ 	//서비스 선택
+ 	//$('select[name=serviceSel]').each(function(index){
+ 		
+ 		$('select[name=serviceSel]').change(function(){
+ 			var html="";
+ 			var serviceId = this.value;
+
+ 			$.ajax({
+	 			type : 'POST',
+	 			url : '/selServicebySytem',
+	 			//파리미터 변수 이름 : 값
+	 			data : {
+	 				serviceId : serviceId
+	 			},
+	 			success : function(data){
+	 				if(data.length>0){
+	 					for(var i=0; i <data.length; i++){
+	 						html += "<input type='checkbox' id='systemChkBox"+i+"' name='systemChkBox' value='"+data[i].cdId
+	 						+"'/> <label for='systemChkBox"+i+"'>"+data[i].cdNm+"</label>";
+	 					}	
+						$('div[name=checkBoxArea]').append(html);
+	 				}
+	 			},
+	 			error:function(){
+	 				alert("에러");
+	 			}
+	 	});
+ 		});
+ 	//});
+ 	
+ 	$('#btnModal').click(function(){
+ 		var modalTbl = $('#serviceDetailTbl').clone();
+ 		
+ 		console.log(modalTbl);
+ 		
+ 		$("#hiddenTbl").append(modalTbl);
+ 	});
 
 });
 </script>
@@ -96,68 +99,81 @@ $(document).ready(function(){
 <script>
 
 $(document).ready(function(){
+	
 	$('#btnPopup').click(function(event){
-		console.log($(this).parent().parent().children().eq(0).children().eq(0).val());
-		var serviceId=$(this).parent().parent().children().eq(0).children().eq(0).val();
+		var serviceId = $(this).parent().parent().children().eq(0).children().eq(0).val();
+		var startDt = $(this).parent().parent().children().eq(1).children().eq(0).val();
+		var endDt = $(this).parent().parent().children().eq(2).children().eq(0).val();
 		
-		console.log(data);
 		
-		
+		$('#serviceNmHidden').val(serviceId);
+		$('#startDtHidden').val(startDt);
+		$('#endDtHidden').val(endDt);
+			
+		 $('input[name=serviceStartDtD]').datepicker("setDate",$('#startDtHidden').val());
+		 $('input[name=serviceEndDtD]').datepicker("setDate",$('#endDtHidden').val());
 	});
-}); 
+	
+});
+
+
+//로드되지 않은 태그에 대해서 change 이벤트 
+$(document).on("change","input[name=systemChkBox]", function(e){
+	var html="";
+	var chkId = $(this).val();
+	var chkNm = $(this).next().text();
+	var serviceId = $('#serviceNmHidden').val();
+	var id = $(this).attr('id');
+	var name = $(this).attr('name');
+	
+
+	if($(this).is(':checked')){
+		html += "<tr id='checkTr"+id+"'>";
+		html += "<td id='dtlServiceId' style='display:none;'>" + serviceId +"</td>";
+		html += "<td id='dtlSystemId' style='display:none;'>" + chkId +"</td>";
+		html += "<td id='dtlServiceNm'>" + serviceId + "</td>";
+		html += "<td id='dtlSystemNm'>" + chkNm + "</td>";
+		html += "<td> <input name='serviceStartDtD' type='text' class='form-control-sm'/> </td>";
+		html += "<td> <input name='serviceEndDtD' type='text' class='form-control-sm'/> </td>";
+		html += "<td> <input name='serviceUrlAddrD' type='text' class='form-control-sm'/> </td>";
+		html += "</tr>"; 
+
+		$('tbody[name=tbodySystemList]').append(html); 
+	}
+	else{
+	 	$('#checkTr'+id).remove();
+	}
+	
+	
+	 //하위서비스 달력 세팅
+    $('input[name=serviceStartDtD]').each(function(){
+    	$(this).datepicker({
+			"format" :'yyyy-mm-dd',
+	        "autoclose": true,
+	        "todayHighlight":true
+		});
+    	$(this).datepicker("setDate",$('#startDtHidden').val());
+    });
+	 
+	//하위서비스 달력 세팅
+    $('input[name=serviceEndDtD]').each(function(){
+    	$(this).datepicker({
+    		"format" :'yyyy-mm-dd',
+	        "autoclose": true,
+	        "todayHighlight":true
+		});
+    	$(this).datepicker("setDate",$('#endDtHidden').val());
+    });
+});
 
 	
-	function fnGoPopup(data){
-		var html="";
-		var chkIdList = "";
-		var chkNmList = "";
-		var slitData = "";
-		
-		console.log(data);
-		
-		
+	function fnGoPopup(){
 /* 		$('input[name=systemChkBox]:checked').each(function(index){
 			chkIdList += $(this).val() + ',';
 			chkNmList += $(this).text() + ',';
 		});
 		
-		slitData = chkIdList.split(",");
-				
-		for(var i=0; i < (slitData.length-1); i++){
-			console.log(slitData[i]);
-			console.log(i);
-			html += "<tr>";
-			html += "<td id='dtlServiceId' style='display:none;'>" + 11 +"</td>";
-			html += "<td id='dtlSystemId' style='display:none;'>" + slitData[i] +"</td>";
-			html += "<td id='dtlServiceNm'>" + 11 + "</td>";
-			html += "<td id='dtlSystemNm'>" + slitData[i] + "</td>";
-			html += "<td> <input name='serviceStartDtD' type='text' class='form-control-sm'/> </td>";
-			html += "<td> <input name='serviceEndDtD' type='text' class='form-control-sm'/> </td>";
-			html += "<td> <input name='serviceUrlAddrD' type='text' class='form-control-sm'/> </td>";
-			html += "</tr>"; 
-		}	
-		$("#tbodySystemList").append(html);  
-
-
-		 //하위서비스 달력 세팅
-	    $('input[name=serviceStartDtD]').each(function(){
-	    	$(this).datepicker({
-				"format" :'yyyy-mm-dd',
-		        "autoclose": true,
-		        "todayHighlight":true
-			});
-	    });
-		 
-		//하위서비스 달력 세팅
-	    $('input[name=serviceEndDtD]').each(function(){
-	    	$(this).datepicker({
-	    		"format" :'yyyy-mm-dd',
-		        "autoclose": true,
-		        "todayHighlight":true
-			});
-	    });
-		*/
-			
+		slitData = chkIdList.split(",");*/
 	}
 </script>
 
@@ -170,8 +186,6 @@ $(document).ready(function(){
 		</ul>
 	</div>
 </div>
-
-
 
 <section class="forms">
 	<div class="container-fluid">
@@ -259,60 +273,41 @@ $(document).ready(function(){
              <div class="line"></div>
              
              
-             
-       <!-- Modal Start -->
-		<div id="serviceModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-		<div role="document" class="modal-dialog">
-			
-			<div class="modal-content">
-			<div class="modal-header">
-				<h5 id="exampleModalLabel" class="modal-title">하위서비스 선택</h5>
-				<button type="button" data-dismiss="modal" aria-label="Close" class="close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			
-			<div class="modal-body">
-			<div>
-				<input type='checkbox' name='systemChkBox' /> 
-				<label></label>
-			</div>
-			<div class="line"></div>
-			<div class="col-md-15">
-			<table id="serviceDetailTbl" name="serviceDetailTbl" class="table">
-				<thead>
-                     <tr>
-                       <th>서비스명</th>
-                       <th>하위서비스명</th>
-                       <th>시작일자</th>
-                       <th>종료일자</th>
-                       <th>하위서비스 URL</th>
-                     </tr>
-                   </thead>
-				<tbody id="tbodySystemList">
-                   </tbody>
-			</table>
-		  	</div>
-		  	</div>
-		  	
-			<div class="modal-footer">
-			 <input type="button" data-dismiss="modal" class="btn btn-secondary" value="닫기" />
-			 <input type="button" data-dismiss="modal" class="btn btn-primary" value="선택" />
-			</div>
-           </div>
-           </div>
-         </div>
-             
-        <!-- Modal End -->    
+
+    	<div class="col-md-15" id="hiddenTbl">
+				<!-- 	<table id="serviceDetailTbl" name="serviceDetailTbl" class="table">
+						<thead>
+	                      <tr>
+	                        <th>서비스명</th>
+	                        <th>하위서비스명</th>
+	                        <th>시작일자</th>
+	                        <th>종료일자</th>
+	                        <th>하위서비스 URL</th>
+	                      </tr>
+	                    </thead>
+						<tbody>
+						<tr>
+						<td id='dtlServiceId' style='display:none;'></td>
+						<td id='dtlSystemId' style='display:none;'></td>
+						<td id='dtlServiceNm'></td>
+						<td id='dtlSystemNm'></td>
+						<td> <input name='serviceStartDtD2' type='text' class='form-control-sm'/> </td>
+						<td> <input name='serviceEndDtD2' type='text' class='form-control-sm'/> </td>
+						<td> <input name='serviceUrlAddrD2' type='text' class='form-control-sm'/> </td>
+						</tr>
+							
+	                    </tbody>
+					</table> -->
+		</div>
          
-<%--               <div class="line"></div>   
+               <div class="line"></div>   
               
               <div class="form-group">
 				<div class="row">
 					<label class="col-sm-2 form-control-label">서비스별 설정</label>
 				</div>
                 <div class="col-md-8">
-					<table id="serviceDetailTbl" name="serviceDetailTbl" class="table">
+					<table id="serviceOptionTbl" name="serviceOptionTbl" class="table">
 						<thead>
 	                      <tr>
 	                        <th>서비스명</th>
@@ -412,12 +407,56 @@ $(document).ready(function(){
 	                      
 	                    </tbody>
 					</table>
-					<input type="button" name="addTblBtn" id="addTblBtn" value="추가" class="btn btn-secondary"/>
-	                	<input type="button" name="addTblBtn" id="addTblBtn" value="삭제" class="btn btn-secondary"/>
+					<input type="button" name="addOptionTblBtn" id="addOptionTblBtn" value="추가" class="btn btn-secondary"/>
+	                <input type="button" name="delOptionTblBtn" id="delOptionTblBtn" value="삭제" class="btn btn-secondary"/>
 				  </div> 
-                  --%>
-                 
 				</form>
+				
+				
+				
+				<!-- Modal Start -->
+				<div id="serviceModal" name="serviceModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+				<div role="document" class="modal-dialog modal-lg">
+					
+					<div class="modal-content">
+					<div class="modal-header">
+						<h5 id="exampleModalLabel" class="modal-title">하위서비스 선택</h5>
+						<button type="button" data-dismiss="modal" aria-label="Close" class="close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+						<div class="modal-body">
+						<p type="hidden" id="serviceNmHidden" name="serviceNmHidden" value=""></p>
+					  	<p type="hidden" id="startDtHidden" name="startDtHidden" value=""></p>
+					  	<p type="hidden" id="endDtHidden" name="endDtHidden" value=""></p>
+					  	
+						<div name="checkBoxArea"></div>
+						<div class="line"></div>
+						<div class="col-md-15">
+						<table id="serviceDetailTbl" name="serviceDetailTbl" class="table">
+							<thead>
+			                     <tr>
+			                       <th>서비스명</th>
+			                       <th>하위서비스명</th>
+			                       <th>시작일자</th>
+			                       <th>종료일자</th>
+			                       <th>하위서비스 URL</th>
+			                     </tr>
+			                   </thead>
+							<tbody name="tbodySystemList"></tbody>
+						</table>
+					  	</div>
+					  	</div>
+					<div class="modal-footer">
+					 <input type="button" data-dismiss="modal" class="btn btn-secondary" value="닫기" />
+					 <input type="button" data-dismiss="modal" id="btnModal" class="btn btn-primary" value="선택" />
+					</div>
+		           </div>
+		           </div>
+		         </div>
+		        <!-- Modal End -->  
+				
+				
 				</div>
 			</div>
 		</div>
