@@ -98,12 +98,6 @@
                   </table>
               	  </form>
                   <!-- //Pagenate -->
-<%-- 				  <div class="pgwrap">
-					<div class="pg_num">
-					<c:import url="/WEB-INF/jsp/paging/paging.jsp">
-					</c:import>
-					</div>
-				  </div> --%>
 				 	<div class="pagination">
 					  <ul>
 					  	<c:import url="/WEB-INF/jsp/paging/paging.jsp"></c:import>

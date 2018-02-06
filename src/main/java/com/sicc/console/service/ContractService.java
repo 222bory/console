@@ -12,6 +12,8 @@ public interface ContractService {
 	
 	public List<ContractExtModel> selListContractCnt(ContractExtModel contractExtModel);
 	
+	public List<ContractExtModel> selListCust(ContractExtModel contractExtModel);
+	
     public void insCustomer(CustomerModel customerModel) ;
     
     public void insContract(ContractModel contractModel) ;

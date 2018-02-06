@@ -4,6 +4,31 @@
 
 <script type="text/javascript">
 $(function () {
+	
+	if("${modalFlag}"=="popshow"){
+		$("#myModal").modal('show');
+	}
+	
+	$("table tr").click(function(){
+        tr = $(this);
+        var td = tr.children();
+		var custId = td.eq(1).text();
+        var custNm = td.eq(2).text();
+        var repFaxNo = td.eq(3).text();
+        var repTelNo = td.eq(4).text();
+        var corpAdNo = td.eq(5).text();
+        
+        
+        $("input[name=custId]").val(custId);
+	 	$("input[name=custNm]").val(custNm);
+	 	$("input[name=repFaxNo]").val(repFaxNo);
+	 	$("input[name=repTelNo]").val(repTelNo);
+	 	$("input[name=corpAdNo]").val(corpAdNo);
+	 	
+		$("#myModal").modal('hide');
+    });
+
+
 	$("#btnRegister").on("click", function(e){
 		
 		/* if(isEmpty($("input[name=titlNm]").val())){
@@ -71,6 +96,46 @@ function redirectList(){
 	$("input[name=page]").val("1");
 	$("#frm").submit();
 }
+
+function goPage(page) {
+	$("input[name=page]").val(page);
+	submit();
+}
+
+function submit(){
+	$("#frm1").submit();
+	/* $.ajax({
+		type : "POST",
+		url  : "/selCustId", 
+		dataType : "json",
+		data : $("#frm1").serialize(),
+		success : function(data, status) {
+			try{
+				if( data.result == '1'){
+					alert("조회 성공!");
+					//redirectList();
+					$('#myModal').modal('hide');
+					$("#myModal").modal('show');
+				} else {
+					//alert(makeMessage(INSERT_FAIL, '<br>' + 'RETURN CODE : ' + data.result + '<br>' + 'RETURN MESSAGE : ' + data.message));
+					alert("RETURN CODE : "+ data.result+' , '+"등록 실패!");
+				}
+			}catch(e) {	
+				alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			if(XMLHttpRequest.status == '901'){
+				sessionTimeOut();			
+			} else {
+				//console.log(XMLHttpRequest.code + ":" + textStatus + ":" + errorThrown);
+				alert('서비스에 문제가 있습니다. 관리자에게 문의 하세요.');
+			}
+			return;
+		}
+	}); */
+	
+}
 </script>
 
 
@@ -103,9 +168,10 @@ function redirectList(){
 		                      </div>
 		                      
 		                      <div class="form-group">
-			                      <input type="button" value="검색" class="mx-sm-3 btn btn-primary">
+		                      	<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">검색</button>
+			                      <!-- <input type="button" value="검색" class="mx-sm-3 btn btn-primary"> -->
 			                    </div>
-			                  &nbsp;&nbsp;&nbsp;
+			                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			                  <label class="col-sm-2 form-control-label">* 고객명</label>
 		                      <div class="col-md-4">
 		                        <input type="text" class="form-control" id="custNm" name="custNm">
@@ -316,4 +382,69 @@ function redirectList(){
 		</div>
 	</div>
 	</form>
+	
+	<!-- Modal-->
+    <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+      <div role="document" class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="exampleModalLabel" class="modal-title">고객ID 조회</h5>
+            <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+          </div>
+          <div class="modal-body">
+               <form action="" method="post" id="frm1">
+                <input type="hidden" name="page" value="${ContractExtModel.page}" />
+                <input type="hidden" name="modalFlag" value="Y" />
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>고객ID</th>
+                        <th>고객명</th>
+                        <th>팩스번호</th>
+                        <th>전화번호</th>
+                        <th>법인번호</th>
+                     <!--    <th>담당자명</th>
+                        <th>담당자이메일</th>
+                        <th>담당자전화번호</th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <c:set var="no" value="${pagination.totalRow - (pagination.currentPage - 1) * pagination.rowPerPage }"/>
+					<c:set var="countNo" value="0"/>
+                    <c:forEach items="${list}" var="list" varStatus="parent">
+                      <tr id="javaScript:dataSet">
+                        <th scope="row">${no - countNo}</th>
+                        <td>${list.custId}</td>
+                        <td>${list.custNm}</td>
+                        <td>${list.repFaxNo}</td>
+                        <td>${list.repTelNo}</td>
+                        <td>${list.corpAdNo}</td>
+                       <%--  <td>${list.mgrNm}</td>
+                        <td>${list.mgrEmailAddr}</td>
+                        <td>${list.mgrTelNo}</td> --%>
+                        
+                      </tr>
+                    <c:set var="countNo" value="${countNo+1 }" />
+                    </c:forEach>  
+                    </tbody>
+                  </table>
+              	  </form>
+                  <!-- //Pagenate -->
+				 	<div class="pagination">
+					  <ul>
+					  	<c:import url="/WEB-INF/jsp/paging/paging.jsp"></c:import>
+					  </ul>
+					</div>
+            
+            
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+            <button type="button" id="regTest" class="btn btn-primary">Save changes</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    
 </section>

@@ -1,6 +1,5 @@
 package com.sicc.console.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils; 
+import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.sicc.console.common.Pagination;
 import com.sicc.console.enums.CommonEnums;
@@ -35,6 +33,7 @@ public class ContractController {
 
     //private final Logger logger = LoggerFactory.getLogger(ContController.class);
 	private Integer rowPerPage = 10;  
+	private Integer rowPerPagePop = 5;
 	
     @Autowired
     ContractService contractService;
@@ -42,8 +41,8 @@ public class ContractController {
     @Autowired
     CommonService commonService;
 
-    @GetMapping("/insContract") 
-    public String insContract(Model model) {
+    @RequestMapping("/insContractForm") 
+    public String insContract(@RequestParam Map<String, String> param, ContractExtModel contractExtModel,Model model) {
     	String tid = commonService.selTenantIdSeq();
     	//코드 조회
     	List<CodeModel> contStatCdList = commonService.selCode(CommonEnums.CONT_STAT_CD.getValue());
@@ -56,6 +55,44 @@ public class ContractController {
     	model.addAttribute("passwordLodCdList", passwordLodCdList);	  //비밀번호난이도코드
     	model.addAttribute("rnwlCyclCd", rnwlCyclCd);				  //비밀번호갱신주기코드
     	model.addAttribute("tid", tid);
+    	
+    	//아이디조회 모달 팝업용 
+    	// 페이징 처리
+		String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
+		if(NumberUtils.toInt(page) < 1) page = "1";
+		
+		int rows = StringUtils.isNotEmpty( param.get("rowPerPagePop"))? NumberUtils.toInt(param.get("rowPerPagePop")) : rowPerPagePop;
+		
+		contractExtModel.setRowPerPage(rows);
+		contractExtModel.setPage(NumberUtils.toInt(page));
+		contractExtModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
+    	
+		
+        List<ContractExtModel> list = contractService.selListCust(contractExtModel);  
+        
+        System.out.println("list : "+ list.get(0));
+        //페이징 처리
+        Pagination pagination = new Pagination();
+		if(list != null && !list.isEmpty() ){
+			pagination.setTotalRow(list.get(0).getTotalCount()).setRowPerPage(rows).setCurrentPage(page);
+		} else {
+			pagination.setTotalRow(0);
+		}
+		
+		System.out.println("addate : "+list.get(0).getAdDate());
+		
+		model.addAttribute("list", list);
+        model.addAttribute("adminModel", contractExtModel); 
+		model.addAttribute("pagination", pagination);
+    	
+		
+		//모달팝업 페이징을 위한 플레그 처리 
+		String mf = StringUtils.defaultIfEmpty(param.get("modalFlag"), "N");   
+		if(mf.equals("Y")){
+			model.addAttribute("modalFlag", "popshow");
+		}else {
+			model.addAttribute("modalFlag", "pophide");
+		}
     	
     	return "/contract/insContract";
     }
