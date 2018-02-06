@@ -8,15 +8,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.CodeModel;
+import com.sicc.console.model.Member;
 import com.sicc.console.service.CommonService;
 import com.sicc.console.service.ServiceApplyService;
 
@@ -31,17 +35,29 @@ public class ServiceApplyController {
 	@Autowired
 	CommonService commonService;
 	
+
 	
     @GetMapping("/insServiceApply") 
     public String insServiceApply(Model model) {
     	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());
-    	
     	List<CodeModel> languageList = commonService.selCode(CommonEnums.LANG_CD.getValue());
 
     	model.addAttribute("serviceList",serviceList);
     	model.addAttribute("languageList",languageList);
     	
         return "/service/insServiceApply";
+    }
+    
+    @ResponseBody
+    @PostMapping("/selServicebySytem")
+    public List<CodeModel> selServicebySytem(HttpServletRequest req, 
+    		@RequestParam("serviceId") String serviceId) {
+
+    	List<CodeModel> systemList = commonService.selCode(serviceId+"_SYSTEM_CD");
+    	
+    	System.out.println("systemList --> "+systemList);
+    	
+    	return systemList;
     }
     
     
@@ -64,11 +80,11 @@ public class ServiceApplyController {
     		@RequestParam(value="testLabRemarkDesc", required=false) String testLabRemarkDesc,
     		@RequestParam(value="testEventAddYn", required=true) String testEventAddYn,
     		@RequestParam(value="testEventRemarkDesc", required=false) String testEventRemarkDesc,
-    		@RequestParam(value="crtId", required=false) String crtId,
-    		@RequestParam(value="crtIp", required=false) String crtIp,
-    		@RequestParam(value="udtId", required=false) String udtId,
-    		@RequestParam(value="udtIp", required=false) String udtIp,
     		HttpServletRequest req, HttpServletResponse res) {
+    	
+    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String crtId = principal.getUsername(); //현재 사용자
+    	String crtIp = req.getRemoteAddr(); //현재 사용자 ip
     	
     	
     	return "";
