@@ -17,7 +17,7 @@
 	} */
 	
 	$(document).ready(function(){
-		$('#listButton').click(function(event){
+		$('#listButton').click(function(event){ 
 			
 			$("#hiddenTenantId").val($("#tenantId").text());
 			
