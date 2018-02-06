@@ -160,10 +160,10 @@ public class CompetitionController {
         return "/competition/selCompetition";
     }
     
-    @GetMapping("/upCompetition") 
+    /*@GetMapping("/upCompetition") 
     public String upCompetition() {
         return "/competition/upCompetition";
-    }
+    }*/
     
     @PostMapping("/upCompetition")
     @Transactional(rollbackFor=Exception.class)

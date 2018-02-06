@@ -8,15 +8,33 @@
 <script>
 	
  
-	function goPage(page) {
+	/* function goPage(page) {
 		$("input[name=page]").val(page);
 		submit();
 	}
 	function submit(){
 		$("#frm").submit();  
-	}
+	} */
 	
-	
+	$(document).ready(function(){
+		$('#listButton').click(function(event){
+			
+			$("#hiddenTenantId").val($("#tenantId").text());
+			
+			alert($("#tenantId").text());
+			alert($("#hiddenTenantId").val());
+			$("#frm").action = "/selListCompetition";
+			$("#frm").submit();  
+		});
+		$('#upButton').click(function(event){
+			$("#frm").action = "/upCompetition";
+			$("#frm").submit();  
+		});
+		$('#delButton').click(function(event){
+			$("#frm").action = "/delCompetition";
+			$("#frm").submit();  
+		});
+	});
 /* 	$("#selListCompetitionTable tr").click(function() {
 		alert("test");
         var str = ""
@@ -69,14 +87,14 @@
                 <div class="card-body">
                 <form action="/selCompetition" method="post" id="detailFrm">
                 	<%-- <input type="hidden" name="page" value="${competitionModel.page}" /> --%>
-                	<input type="hidden" id="hiddenTenantId" />
+                	<input type="hidden" id="hiddenTenantId" name="hiddenTenantId"/>
                 </form>
                 
                 <form action="" method="post" id="frm">
                 <input type="hidden" name="page" value="${competitionModel.page}" />
                   <table class="table" id="selListCompetitionTable">
                     <tbody>
-                    	<tr><td>테넌트ID</td><td>${competition.tenantId}</td></tr>
+                    	<tr><td>테넌트ID</td><td id="tenantId">${competition.tenantId}</td></tr>
                     	<tr><td>계약명</td><td>${competition.contNm}</td></tr>
                     	<tr><td>대회 코드</td><td>${competition.cpCd}</td></tr>
                     	<tr><td>대회명</td><td>${competition.cpNm}</td></tr>
@@ -87,6 +105,14 @@
                     	<tr><td>예상 이용자수</td><td>${competition.expectUserNum}</td></tr>
                     </tbody>
                   </table>
+                  
+                  <div class="form-group">
+					<div class="col-sm-4 offset-sm-2">
+						<input type="button" id="listButton" class="btn btn-primary" value="목록" />
+						<input type="button" id="upButton" class="btn btn-primary" value="수정" />
+						<input type="button" id="delButton" class="btn btn-primary" value="삭제" />
+					</div>
+				  </div>
               	  </form>
                 </div>
               </div>
