@@ -10,6 +10,8 @@ public interface ContractDao {
 	
 	public List<ContractExtModel> selListContractCnt(ContractExtModel contractExtModel);
 	
+	public List<ContractExtModel> selListCust(ContractExtModel contractExtModel);
+	
 	public void insContract(ContractModel contractModel) ; 
 	
 }

@@ -33,6 +33,22 @@
 		LIMIT #{rowPerPage} OFFSET #{skipCount}
     </select>
     
+    <select id="selListCust" resultType="com.sicc.console.model.ContractExtModel">
+		SELECT COUNT(1) OVER() AS totalCount
+		       ,cust.cust_id as custId 
+		       , cust.cust_nm as custNm 
+		       , cust.rep_fax_no as repFaxNo
+		       , cust.rep_tel_no as repTelNo
+		       , cust.corp_ad_no as corpAdNo
+		       , cust.mgr_nm as mgrNm
+		       , cust.mgr_email_addr as mgrEmailAddr
+		       , cust.mgr_tel_no as mgrTelNo
+		FROM concustm cust
+		ORDER BY custId DESC   
+		LIMIT #{rowPerPage} OFFSET #{skipCount}
+    </select>
+    
+    
     <select id="selListContractCnt" resultType="com.sicc.console.model.ContractExtModel">
 		SELECT COUNT(1) OVER() AS totalCount
 		FROM concustm 
