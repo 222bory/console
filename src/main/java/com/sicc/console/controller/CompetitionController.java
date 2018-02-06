@@ -165,7 +165,7 @@ public class CompetitionController {
         return "/competition/upCompetition";
     }*/
     
-    @PostMapping("/upCompetition") 
+    @PostMapping("/upCompetition")  
     @Transactional(rollbackFor=Exception.class)
     public String upCompetition(Model model , 
     		@RequestParam(value="tenantId", required=true) String tenantId, 
