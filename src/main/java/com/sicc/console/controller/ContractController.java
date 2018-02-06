@@ -105,6 +105,7 @@ public class ContractController {
     		@RequestParam("mgrNm") String mgrNm,
     		@RequestParam("mgrEmailAddr") String mgrEmailAddr,
     		@RequestParam("mgrTelNo") String mgrTelNo,
+    		@RequestParam("tenantId") String tenantId,
     		@RequestParam("contNm") String contNm,
     		@RequestParam("validStartDt") String validStartDt,
     		@RequestParam("validEndDt") String validEndDt,
@@ -115,9 +116,9 @@ public class ContractController {
     		@RequestParam("passwordRnwlCyclCd") String passwordRnwlCyclCd,
     		@RequestParam("passwordUseLmtYn") String passwordUseLmtYn,
     		@RequestParam("passwordPoseYn") String passwordPoseYn,
-    		HttpServletRequest req, HttpServletResponse res) {
+    		HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
-    	try {
+    	
     		//유효일 처리
         	validStartDt = validStartDt.replaceAll("-", "");
         	validEndDt = validEndDt.replaceAll("-", "");
@@ -156,7 +157,7 @@ public class ContractController {
     	    	contractService.insCustomer(customerModel);
         	}
         	
-        	contractModel.setTenantId(commonService.selTenantIdSeq());
+        	contractModel.setTenantId(tenantId);
         	contractModel.setCustId(custId);
         	contractModel.setContNm(contNm);
         	contractModel.setValidStartDt(validStartDt);
@@ -177,11 +178,7 @@ public class ContractController {
         	
         	//등록 완료 플레그 
         	model.addAttribute("result", "1");
-     	} catch (Exception e) {
-			e.getMessage();
-			model.addAttribute("result", "0");
-		}
-    	
+        	
     	return "jsonView";
     	
     }
