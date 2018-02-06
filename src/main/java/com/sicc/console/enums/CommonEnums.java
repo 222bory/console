@@ -15,7 +15,8 @@ public enum CommonEnums {
 	RNWL_CYCL_CD				("RNWL_CYCL_CD", 			"RNWL_CYCL_CD"  ),
 	CP_TYPE_CD 					("CP_TYPE_CD", 				"CP_TYPE_CD"  	),
 	SERVICE_CD 					("SERVICE_CD", 				"SERVICE_CD"  	),
-	LANG_CD 					("LANG_CD", 				"LANG_CD"  	);
+	LANG_CD 					("LANG_CD", 				"LANG_CD"  	),
+	GMS_SYSTEM_CD 				("GMS_SYSTEM_CD", 			"GMS_SYSTEM_CD"  	);
 	
 	
 	private String code; 
