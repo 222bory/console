@@ -8,6 +8,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+		
  	// 달력 세팅
     $('input[name=serviceStartDt]').each(function(){
     	$(this).datepicker({
@@ -29,155 +30,127 @@ $(document).ready(function(){
 	 	$(this).datepicker("setDate", new Date());
     });
  	
-	$('#repColorCd').colorpicker({
+	$('div[name=repColorCd]').colorpicker({
         color: '#AA3399',
         format: 'hex'
     });
 	
-    // 추가 버튼 클릭시
-    $("#addRowBtn").click(function(){
-	 var serviceTbl = $("#serviceTbl tr:eq(1)").clone(); //1행 복사
-	 var serviceDetailTbl = $("#serviceDetailTbl tr:eq(1)").clone();
-	
-	
-     $("#serviceTbl").append(serviceTbl);
-     $("#serviceDetailTbl").append(serviceDetailTbl);
+    // 서비스 추가 버튼 클릭시
+    $("#addRowBtn").click(function(){  
+     	var html ="";
+	    var originSelectItem = $('tbody[name=serviceTbody]:last > tr:last > td:eq(0) > select').clone();
+	    var newSelectItem = "";
+	    
+	    html += "<tr>"; 
+    	html += "<td> </td>";
+		html += "<td> <select name='systemSel' class='form select'> <option value='0'>서비스선택</option> </select> </td>";
+		html += "<td> <input name='serviceStartDt' type='text' class='form-control' /> </td>";
+		html += "<td> <input name='serviceEndDt' type='text' class='form-control' /> </td>";
+		html += "<td> <div class='row'> <input name='testLabUseYn' type='checkbox' value='Y' checked='checked' class='form-control-custom'>";
+		html += "<label for ='testLabUseYn'></label> <input name='testLabRemarkDesc' type='text' class='form-control' placeholder='비고(용도)'/></div></td>";
+		html += "<td> <div class='row'> <input name='testEventAddYn' type='checkbox' value='Y' checked='checked' class='form-control-custom'>";
+		html += "<label for ='testEventAddYn'></label> <input name='testEventRemarkDesc' type='text' class='form-control' placeholder='비고(용도)'/></div></td>";
+		html += "<td> <input name='serviceUrlAddr' type='text' class='form-control' placeholder=''/> </td>";
+		html += "</tr>"; 
+
+		$('tbody[name=serviceTbody]').append(html); 
+		$('tbody[name=serviceTbody]:last > tr:last > td:eq(0)').html(originSelectItem); 
+	 
+	 	// 달력 초기화
+	    $('input[name=serviceStartDt]').datepicker({
+	    		"format" :'yyyy-mm-dd',
+	            "autoclose": true,
+	            "todayHighlight":true
+	    });
+	 	
+	 	// 달력 초기화
+	    $('input[name=serviceEndDt]').datepicker({
+	    		"format" :'yyyy-mm-dd',
+	            "autoclose": true,
+	            "todayHighlight":true
+	    });
+
     });
     
- 	// 삭제버튼 클릭시
+ 	// 서비스 삭제버튼 클릭시
     $("#delRowBtn").click(function(){  
 		var rows= $('#serviceTbl > tbody:last > tr').length;
 
 		if(rows>1){
 	   		$('#serviceTbl > tbody:last > tr:last').remove();
-	   	    $('#serviceDetailTbl > tbody:last > tr:last').remove();
 		}
-    
     });
  	
- 	//서비스 선택
- 	//$('select[name=serviceSel]').each(function(index){
- 		
- 		$('select[name=serviceSel]').change(function(){
- 			var html="";
- 			var serviceId = this.value;
-
- 			$.ajax({
-	 			type : 'POST',
-	 			url : '/selServicebySytem',
-	 			//파리미터 변수 이름 : 값
-	 			data : {
-	 				serviceId : serviceId
-	 			},
-	 			success : function(data){
-	 				if(data.length>0){
-	 					for(var i=0; i <data.length; i++){
-	 						html += "<input type='checkbox' id='systemChkBox"+i+"' name='systemChkBox' value='"+data[i].cdId
-	 						+"'/> <label for='systemChkBox"+i+"'>"+data[i].cdNm+"</label>";
-	 					}	
-						$('div[name=checkBoxArea]').append(html);
-	 				}
-	 			},
-	 			error:function(){
-	 				alert("에러");
-	 			}
-	 	});
- 		});
- 	//});
- 	
- 	$('#btnModal').click(function(){
- 		var modalTbl = $('#serviceDetailTbl').clone();
- 		
- 		console.log(modalTbl);
- 		
- 		$("#hiddenTbl").append(modalTbl);
- 	});
-
 });
 </script>
 
+<!-- dynamic object event binding -->
 <script>
 
-$(document).ready(function(){
-	
-	$('#btnPopup').click(function(event){
-		var serviceId = $(this).parent().parent().children().eq(0).children().eq(0).val();
-		var startDt = $(this).parent().parent().children().eq(1).children().eq(0).val();
-		var endDt = $(this).parent().parent().children().eq(2).children().eq(0).val();
-		
-		
-		$('#serviceNmHidden').val(serviceId);
-		$('#startDtHidden').val(startDt);
-		$('#endDtHidden').val(endDt);
-			
-		 $('input[name=serviceStartDtD]').datepicker("setDate",$('#startDtHidden').val());
-		 $('input[name=serviceEndDtD]').datepicker("setDate",$('#endDtHidden').val());
+ 	$(document).on("change","select[name='serviceSel']",function(){
+ 		var html="";
+		var serviceId = this.value;
+	 	var serviceSel = $(this);
+	 	var systemSel = serviceSel.parent().next().children();
+
+	 	//하위서비스 clear
+	 	//systemSel.find('option').not("[value='']").remove();
+	 	systemSel.find('option').remove();
+	 	//하위서비스 첫행
+	 	systemSel.append("<option value=''>대표서비스</option>");
+
+		$.ajax({
+			type : 'POST',
+			url : '/selServicebySytem',
+			//파리미터 변수 이름 : 값
+			data : {
+				serviceId : serviceId
+			},
+			cache:true,
+			success : function(data){
+				
+				if(data.length>0){
+					for(var i=0; i <data.length; i++){
+						systemSel.append("<option value='"+data[i].cdId+"'>"+data[i].cdNm+"</option>");
+					}	
+				} 
+			},
+			error:function(){
+				alert("에러");
+			}
+		});
 	});
-	
-});
-
-
-//로드되지 않은 태그에 대해서 change 이벤트 
-$(document).on("change","input[name=systemChkBox]", function(e){
-	var html="";
-	var chkId = $(this).val();
-	var chkNm = $(this).next().text();
-	var serviceId = $('#serviceNmHidden').val();
-	var id = $(this).attr('id');
-	var name = $(this).attr('name');
-	
-
-	if($(this).is(':checked')){
-		html += "<tr id='checkTr"+id+"'>";
-		html += "<td id='dtlServiceId' style='display:none;'>" + serviceId +"</td>";
-		html += "<td id='dtlSystemId' style='display:none;'>" + chkId +"</td>";
-		html += "<td id='dtlServiceNm'>" + serviceId + "</td>";
-		html += "<td id='dtlSystemNm'>" + chkNm + "</td>";
-		html += "<td> <input name='serviceStartDtD' type='text' class='form-control-sm'/> </td>";
-		html += "<td> <input name='serviceEndDtD' type='text' class='form-control-sm'/> </td>";
-		html += "<td> <input name='serviceUrlAddrD' type='text' class='form-control-sm'/> </td>";
-		html += "</tr>"; 
-
-		$('tbody[name=tbodySystemList]').append(html); 
-	}
-	else{
-	 	$('#checkTr'+id).remove();
-	}
-	
-	
-	 //하위서비스 달력 세팅
-    $('input[name=serviceStartDtD]').each(function(){
-    	$(this).datepicker({
-			"format" :'yyyy-mm-dd',
-	        "autoclose": true,
-	        "todayHighlight":true
+ 	
+ 	
+	 // 서비스별 설정 추가 버튼 클릭시
+ 	$(document).on("click","#addOptionTblBtn",function(){
+ 		//tbody 복제
+ 	   var originTbody = $('tbody[name=configTbody]:eq(0)').clone();
+ 	   $('#configTable').append(originTbody);	
+ 	   
+ 	   
+ 	   //colorpicker 초기화
+		$('div[name=repColorCd]').each(function(){
+			$(this).colorpicker({
+		        color: '#AA3399',
+		        format: 'hex'
+			});
 		});
-    	$(this).datepicker("setDate",$('#startDtHidden').val());
-    });
+ 	});
+
+	 // 서비스별 설정 삭제 버튼 클릭시
+ 	$(document).on("click","#delOptionTblBtn",function(){
+ 		var tbodyCount= $('#configTable > tbody').length;
+
+		if(tbodyCount > 1){
+	   		$('#configTable > tbody:last').remove();
+		}
+ 		
+ 	});
 	 
-	//하위서비스 달력 세팅
-    $('input[name=serviceEndDtD]').each(function(){
-    	$(this).datepicker({
-    		"format" :'yyyy-mm-dd',
-	        "autoclose": true,
-	        "todayHighlight":true
-		});
-    	$(this).datepicker("setDate",$('#endDtHidden').val());
-    });
-});
-
-	
-	function fnGoPopup(){
-/* 		$('input[name=systemChkBox]:checked').each(function(index){
-			chkIdList += $(this).val() + ',';
-			chkNmList += $(this).text() + ',';
-		});
-		
-		slitData = chkIdList.split(",");*/
-	}
 </script>
 
-    
+
  <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
@@ -222,25 +195,30 @@ $(document).on("change","input[name=systemChkBox]", function(e){
 						<thead>
 	                      <tr>
 	                        <th>서비스명</th>
+	                        <th>하위서비스</th>
 	                        <th>시작일자</th>
 	                        <th>종료일자</th>
 	                        <th>테스트랩<br>사용여부</th>
 	                        <th>테스트이벤트<br>사용여부</th>
-	                        <th>대표URL</th>
-	                        <th>하위서비스 선택</th>
+	                        <th>서비스URL</th>
+	                        
 	                      </tr>
 	                    </thead>
-						<tbody>
+						<tbody name="serviceTbody">
 	                      <tr>
 	                        <td>
-	                        	<!-- <div class="col-sm-5 select"> -->
 		                        	<select id="serviceSel" name="serviceSel" class="form select">
 		                        			<option value="0">선택</option>
 			                        	<c:forEach items="${serviceList}" var="list" varStatus="status">
 			                        		<option value="${list.cdId}">${list.cdNm}</option>
 			                        	</c:forEach>
 		                        	</select> 
-	                        	<!-- </div> -->
+	                        </td>
+	                        <td>
+	                        	<select id="systemSel" name="systemSel" class="form select">
+	                        			<option value="0">대표서비스</option>
+		                        	
+	                        	</select> 
 	                        </td>
 	                        <td> <input id="serviceStartDt" name="serviceStartDt" type="text" class="form-control" /> </td>
 	                        <td> <input id="serviceEndDt" name="serviceEndDt" type="text" class="form-control" /> </td>
@@ -260,7 +238,7 @@ $(document).on("change","input[name=systemChkBox]", function(e){
 		                     </div>
 							</td>
 							<td> <input id="serviceUrlAddr" name="serviceUrlAddr" type="text" class="form-control" placeholder=""/> </td>
-	                      	<td> <input id="btnPopup" class="btnPopup" name="btnPopup" type="button" value="클릭"  data-toggle="modal" data-target="#serviceModal"> </td>
+	                      	<!-- <td> <input id="btnPopup" class="btnPopup" name="btnPopup" type="button" value="클릭"  data-toggle="modal" data-target="#serviceModal"> </td> -->
 	                      </tr>
 	                    </tbody>
 					</table>
@@ -272,42 +250,12 @@ $(document).on("change","input[name=systemChkBox]", function(e){
                  
              <div class="line"></div>
              
-             
-
-    	<div class="col-md-15" id="hiddenTbl">
-				<!-- 	<table id="serviceDetailTbl" name="serviceDetailTbl" class="table">
-						<thead>
-	                      <tr>
-	                        <th>서비스명</th>
-	                        <th>하위서비스명</th>
-	                        <th>시작일자</th>
-	                        <th>종료일자</th>
-	                        <th>하위서비스 URL</th>
-	                      </tr>
-	                    </thead>
-						<tbody>
-						<tr>
-						<td id='dtlServiceId' style='display:none;'></td>
-						<td id='dtlSystemId' style='display:none;'></td>
-						<td id='dtlServiceNm'></td>
-						<td id='dtlSystemNm'></td>
-						<td> <input name='serviceStartDtD2' type='text' class='form-control-sm'/> </td>
-						<td> <input name='serviceEndDtD2' type='text' class='form-control-sm'/> </td>
-						<td> <input name='serviceUrlAddrD2' type='text' class='form-control-sm'/> </td>
-						</tr>
-							
-	                    </tbody>
-					</table> -->
-		</div>
-         
-               <div class="line"></div>   
-              
               <div class="form-group">
 				<div class="row">
 					<label class="col-sm-2 form-control-label">서비스별 설정</label>
 				</div>
                 <div class="col-md-8">
-					<table id="serviceOptionTbl" name="serviceOptionTbl" class="table">
+					<table class="table" id="configTable">
 						<thead>
 	                      <tr>
 	                        <th>서비스명</th>
@@ -315,7 +263,7 @@ $(document).on("change","input[name=systemChkBox]", function(e){
 	                        <th>선택</th>
 	                      </tr>
 	                    </thead>
-						<tbody>
+						<tbody name='configTbody'>
 	                      <tr>
 	                        <td rowspan="6">
 	                        	<div class="col-sm-5 select">
@@ -336,11 +284,11 @@ $(document).on("change","input[name=systemChkBox]", function(e){
 	                      </tr>
 	                      
 	                      <tr>
-	                        
 	                        <td>1차언어</td>
 	                        <td>
 	                        	<div class="col-sm-5 select">
 		                        	<select name="selectLang1" class="form select">
+		                        		<option value="0">사용안함</option>
 			                        	<c:forEach items="${languageList}" var="list" varStatus="status">
 			                        		<option value="${list.cdId}">${list.cdNm}</option>
 			                        	</c:forEach>
@@ -350,11 +298,11 @@ $(document).on("change","input[name=systemChkBox]", function(e){
 	                      </tr>
 	                      
 	                      <tr>
-	                        
 	                        <td>2차언어</td>
 	                        <td>
 	                        	<div class="col-sm-5 select">
 		                        	<select name="selectLang2" class="form select">
+		                        		<option value="0">사용안함</option>
 			                        	<c:forEach items="${languageList}" var="list" varStatus="status">
 			                        		<option value="${list.cdId}">${list.cdNm}</option>
 			                        	</c:forEach>
@@ -364,11 +312,11 @@ $(document).on("change","input[name=systemChkBox]", function(e){
 	                      </tr>
 	                      
 	                      <tr>
-	                        
 	                        <td>3차언어</td>
 	                        <td>
 	                        	<div class="col-sm-5 select">
 		                        	<select name="selectLang3" class="form select">
+		                        		<option value="0">사용안함</option>
 			                        	<c:forEach items="${languageList}" var="list" varStatus="status">
 			                        		<option value="${list.cdId}">${list.cdNm}</option>
 			                        	</c:forEach>
@@ -378,11 +326,11 @@ $(document).on("change","input[name=systemChkBox]", function(e){
 	                      </tr>
 	                      
 	                      <tr>
-	                       
 	                        <td>4차언어</td>
 	                        <td>
 	                        	<div class="col-sm-5 select">
 		                        	<select name="selectLang4" class="form select">
+		                        		<option value="0">사용안함</option>
 			                        	<c:forEach items="${languageList}" var="list" varStatus="status">
 			                        		<option value="${list.cdId}">${list.cdNm}</option>
 			                        	</c:forEach>
@@ -392,11 +340,11 @@ $(document).on("change","input[name=systemChkBox]", function(e){
 	                      </tr>
 	                      
 	                     <tr>
-	                       
 	                        <td>5차언어</td>
 	                        <td>
 	                        	<div class="col-sm-5 select">
 		                        	<select name="selectLang5" class="form select">
+		                        		<option value="0">사용안함</option>
 			                        	<c:forEach items="${languageList}" var="list" varStatus="status">
 			                        		<option value="${list.cdId}">${list.cdNm}</option>
 			                        	</c:forEach>
@@ -411,58 +359,11 @@ $(document).on("change","input[name=systemChkBox]", function(e){
 	                <input type="button" name="delOptionTblBtn" id="delOptionTblBtn" value="삭제" class="btn btn-secondary"/>
 				  </div> 
 				</form>
-				
-				
-				
-				<!-- Modal Start -->
-				<div id="serviceModal" name="serviceModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-				<div role="document" class="modal-dialog modal-lg">
-					
-					<div class="modal-content">
-					<div class="modal-header">
-						<h5 id="exampleModalLabel" class="modal-title">하위서비스 선택</h5>
-						<button type="button" data-dismiss="modal" aria-label="Close" class="close">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-						<div class="modal-body">
-						<p type="hidden" id="serviceNmHidden" name="serviceNmHidden" value=""></p>
-					  	<p type="hidden" id="startDtHidden" name="startDtHidden" value=""></p>
-					  	<p type="hidden" id="endDtHidden" name="endDtHidden" value=""></p>
-					  	
-						<div name="checkBoxArea"></div>
-						<div class="line"></div>
-						<div class="col-md-15">
-						<table id="serviceDetailTbl" name="serviceDetailTbl" class="table">
-							<thead>
-			                     <tr>
-			                       <th>서비스명</th>
-			                       <th>하위서비스명</th>
-			                       <th>시작일자</th>
-			                       <th>종료일자</th>
-			                       <th>하위서비스 URL</th>
-			                     </tr>
-			                   </thead>
-							<tbody name="tbodySystemList"></tbody>
-						</table>
-					  	</div>
-					  	</div>
-					<div class="modal-footer">
-					 <input type="button" data-dismiss="modal" class="btn btn-secondary" value="닫기" />
-					 <input type="button" data-dismiss="modal" id="btnModal" class="btn btn-primary" value="선택" />
-					</div>
-		           </div>
-		           </div>
-		         </div>
-		        <!-- Modal End -->  
-				
-				
+	
 				</div>
 			</div>
 		</div>
 		</div>	
 	</div>
-		
-
-	</div>
+</div>
 </section>
