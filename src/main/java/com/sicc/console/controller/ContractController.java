@@ -124,10 +124,26 @@ public class ContractController {
 		System.out.println("addate : "+list.get(0).getAdDate());
 		
 		model.addAttribute("list", list);
-        model.addAttribute("adminModel", contractExtModel); 
+        model.addAttribute("contractExtModel", contractExtModel); 
 		model.addAttribute("pagination", pagination);
     	
     	return "/contract/selListContract";
+    	
+    }
+	
+	@RequestMapping("/selContractView")
+    public String selContractView(@RequestParam Map<String, String> param, ContractExtModel contractExtModel, Model model) {
+		
+		ContractExtModel cem = contractService.selContract(contractExtModel);  
+        
+		cem.setContStatCd(commonService.selCodeByCdId(CommonEnums.CONT_STAT_CD.getValue(), cem.getContStatCd()));
+		cem.setNetworkFgCd(commonService.selCodeByCdId(CommonEnums.NETWORK_FG_CD.getValue(), cem.getNetworkFgCd()));
+		cem.setPasswordLodCd(commonService.selCodeByCdId(CommonEnums.PASSWORD_LOD_CD.getValue(), cem.getPasswordLodCd()));
+		cem.setPasswordRnwlCyclCd(commonService.selCodeByCdId(CommonEnums.RNWL_CYCL_CD.getValue(), cem.getPasswordRnwlCyclCd()));
+		
+		System.out.println("page : "+ param.get("page"));
+        model.addAttribute("cem", cem); 
+       return "/contract/selContract";
     	
     }
 	

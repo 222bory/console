@@ -18,11 +18,12 @@
 		       , cont.cont_nm as contNm
 		       , cont.valid_start_dt as validStartDt
 		       , cont.valid_end_dt as validEndDt
-		       , cont.cont_stat_cd as contStatDd
+		       , cont.cont_stat_cd as contStatCd
 		       , cont.network_fg_cd as networkFgCd
 		       , cont.password_lod_cd as passwordLodCd
 		       , cont.password_min_len as passwordMinLen
 		       , cont.password_rnwl_cycl_cd as passwordRnwlCyclCd
+		       , cont.password_use_lmt_yn as passwordUseLmtYn
 		       , cont.password_pose_yn as passwordPoseYn
 		       , cont.ad_date as adDate
 		       , cont.udt_date as udtDate
@@ -53,6 +54,35 @@
 		SELECT COUNT(1) OVER() AS totalCount
 		FROM concustm 
 		WHERE cust_id =  #{custId}
+    </select>
+    
+    <select id="selContract" resultType="com.sicc.console.model.ContractExtModel">
+		SELECT 	 cust.cust_id as custId 
+		       , cust.cust_nm as custNm 
+		       , cust.rep_fax_no as repFaxNo
+		       , cust.rep_tel_no as repTelNo
+		       , cust.corp_ad_no as corpAdNo
+		       , cust.mgr_nm as mgrNm
+		       , cust.mgr_email_addr as mgrEmailAddr
+		       , cust.mgr_tel_no as mgrTelNo
+		       , cont.tenant_id as tenantId
+		       , cont.cont_nm as contNm
+		       , cont.valid_start_dt as validStartDt
+		       , cont.valid_end_dt as validEndDt
+		       , cont.cont_stat_cd as contStatCd
+		       , cont.network_fg_cd as networkFgCd
+		       , cont.password_lod_cd as passwordLodCd
+		       , cont.password_min_len as passwordMinLen
+		       , cont.password_rnwl_cycl_cd as passwordRnwlCyclCd
+		       , cont.password_use_lmt_yn as passwordUseLmtYn
+		       , cont.password_pose_yn as passwordPoseYn
+		       , cont.ad_date as adDate
+		       , cont.udt_date as udtDate
+		FROM con.concustm cust
+		INNER JOIN con.concustcontm cont
+		ON cust.cust_id=cont.cust_id
+		WHERE cust.cust_id = #{custId}
+		AND   cont.tenant_id = #{tenantId}
     </select>
     
     <insert id="insContract" parameterType="com.sicc.console.model.ContractModel">

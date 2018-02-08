@@ -27,6 +27,11 @@ $(function () {
 	 	
 		$("#myModal").modal('hide');
     });
+	
+	$("#btnCancel").on("click", function(e){
+		$("#frm").attr("action", "/selListContract");
+		$("#frm").submit();
+	});
 
 
 	$("#btnRegister").on("click", function(e){

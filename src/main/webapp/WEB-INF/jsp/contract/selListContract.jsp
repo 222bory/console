@@ -6,8 +6,22 @@
 	pageEncoding="UTF-8"%>
 
 <script>
+$(function () {
+	$("table tr").click(function(){
+        tr = $(this);
+        var td = tr.children();
+		var custId = td.eq(1).text();
+        var tenantId = td.eq(3).text();
+        
+        $("input[name=custId]").val(custId);
+	 	$("input[name=tenantId]").val(tenantId);
+	 	
+	 	$("#frm").attr("action", "/selContractView");
+	 	submit();
+    });
+
+});
 	
- 
 	function goPage(page) {
 		$("input[name=page]").val(page);
 		submit();
@@ -25,7 +39,7 @@
 <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selListContract">서비스관리</a></li>
+			<li class="breadcrumb-item"><a href="/selListContract">서비스관리</a></li> 
 			<li class="breadcrumb-item active">계약 목록</li>
 		</ul>
 	</div>
@@ -43,7 +57,7 @@
                   <h2 class="h5 display">계약 목록</h2>
                 </div>
                 <div class="card-body">
-                          
+                <%--          
                <div class="card-header d-flex align-items-center">
                    <form class="form-inline">
                     <div class="form-group">
@@ -62,12 +76,12 @@
                       <input type="button" value="검색" class="mx-sm-3 btn btn-primary">
                     </div>
                 	</form>
-                </div>
-                
-              
+                </div> --%>
                 <div class="line"></div>        
                 <form action="" method="post" id="frm">
-                <input type="hidden" name="page" value="${ContractExtModel.page}" />
+                <input type="hidden" name="page" value="${contractExtModel.page}" />
+                <input type="hidden" name="custId" value="" />
+                <input type="hidden" name="tenantId" value="" />
                   <table class="table">
                     <thead>
                       <tr>

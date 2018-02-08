@@ -12,6 +12,8 @@ public interface ContractDao {
 	
 	public List<ContractExtModel> selListCust(ContractExtModel contractExtModel);
 	
+	public ContractExtModel selContract(ContractExtModel contractExtModel);
+	
 	public void insContract(ContractModel contractModel) ; 
 	
 }
