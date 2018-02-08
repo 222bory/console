@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sicc.console.common.CommonUtil;
 import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.CodeModel;
-import com.sicc.console.model.Member;
+import com.sicc.console.model.ServiceDetailModel;
+import com.sicc.console.model.ServiceModel;
 import com.sicc.console.service.CommonService;
 import com.sicc.console.service.ServiceApplyService;
 
@@ -66,28 +68,94 @@ public class ServiceApplyController {
     public String insServiceApply(Model model,
     		@RequestParam(value="tenantId", required=true) String tenantId,
     		@RequestParam(value="cpCd", required=true) String cpCd,
-    		@RequestParam(value="serviceCd", required=true) String serviceCd,
-    		@RequestParam(value="serviceStartDt", required=true) String serviceStartDt,
-    		@RequestParam(value="serviceEndDt", required=true) String serviceEndDt,
-    		@RequestParam(value="serviceUrlAddr", required=false) String serviceUrlAddr,
-    		@RequestParam(value="repColorCd", required=false) String repColorCd,
-    		@RequestParam(value="fstLangCd", required=false) String fstLangCd,
-    		@RequestParam(value="scndLangCd", required=false) String scndLangCd,
-    		@RequestParam(value="thrdLangCd", required=false) String thrdLangCd,
-    		@RequestParam(value="fothLangCd", required=false) String fothLangCd,
-    		@RequestParam(value="fithLangCd", required=false) String fithLangCd,
-    		@RequestParam(value="testLabUseYn", required=true) String testLabUseYn,
-    		@RequestParam(value="testLabRemarkDesc", required=false) String testLabRemarkDesc,
-    		@RequestParam(value="testEventAddYn", required=true) String testEventAddYn,
-    		@RequestParam(value="testEventRemarkDesc", required=false) String testEventRemarkDesc,
+    		@RequestParam(value="serviceCd", required=true) String[] serviceCd,
+    		@RequestParam(value="systemCd", required=true) String[] systemCd,
+    		@RequestParam(value="serviceStartDt", required=true) String[] serviceStartDt,
+    		@RequestParam(value="serviceEndDt", required=true) String[] serviceEndDt,
+    		@RequestParam(value="serviceUrlAddr", required=false) String[] serviceUrlAddr,
+    		@RequestParam(value="testLabUseYn", required=true) String[] testLabUseYn,
+    		@RequestParam(value="testLabRemarkDesc", required=false) String[] testLabRemarkDesc,
+    		@RequestParam(value="testEventAddYn", required=true) String[] testEventAddYn,
+    		@RequestParam(value="testEventRemarkDesc", required=false) String[] testEventRemarkDesc,
+    		@RequestParam(value="serviceCdD", required=true) String[] serviceCdD,
+    		@RequestParam(value="repColorCd", required=false) String[] repColorCd,
+    		@RequestParam(value="fstLangCd", required=false) String[] fstLangCd,
+    		@RequestParam(value="scndLangCd", required=false) String[] scndLangCd,
+    		@RequestParam(value="thrdLangCd", required=false) String[] thrdLangCd,
+    		@RequestParam(value="fothLangCd", required=false) String[] fothLangCd,
+    		@RequestParam(value="fithLangCd", required=false) String[] fithLangCd,
     		HttpServletRequest req, HttpServletResponse res) {
     	
-    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String crtId = principal.getUsername(); //현재 사용자
-    	String crtIp = req.getRemoteAddr(); //현재 사용자 ip
+	    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    	String crtId = principal.getUsername(); //현재 사용자
+	    	String crtIp = req.getRemoteAddr(); //현재 사용자 ip
+	    	
+	    	ServiceModel serviceModel = new ServiceModel();
+	    	ServiceDetailModel serviceDetailModel = new ServiceDetailModel();
     	
-    	
-    	return "";
+	    	int upCount=0;
+	    	int downCount=0;
+	    	
+	    	for(int i=0; i<serviceCd.length; i++) {
+	    		System.out.println("serviceCd.length-->"+serviceCd.length);
+	    		System.out.println("serviceCdD.length-->"+serviceCdD.length);
+	    		
+	    		//하위서비스가 대표서비스인 경우 --> 상위서비스 insert
+	    		if(systemCd[i].equals("default")){
+	    			serviceModel.setTenantId(tenantId);
+	    			serviceModel.setCpCd(cpCd);
+	    			serviceModel.setServiceCd(serviceCd[i]);
+	    			serviceModel.setServiceStartDt(CommonUtil.removeSpecificStr(serviceStartDt[i], CommonEnums.DASH_MARK.getValue()));
+	    			serviceModel.setServiceEndDt(CommonUtil.removeSpecificStr(serviceEndDt[i], CommonEnums.DASH_MARK.getValue()));
+	    			serviceModel.setServiceUrlAddr(serviceUrlAddr[i]);
+	    			serviceModel.setTestLabUseYn(testLabUseYn[i]);
+	    			serviceModel.setTestLabRemarkDesc(testLabRemarkDesc[i]);
+	    			serviceModel.setTestEventAddYn(testEventAddYn[i]);
+	    			serviceModel.setTestEventRemarkDesc(testEventRemarkDesc[i]);
+	    			
+	    			for(int j=0; j< serviceCdD.length;j++ ) {
+		    			if(serviceCd[i].equals(serviceCdD[j])) {
+		    				System.out.println("serviceCdD --> "+serviceCdD[j]);
+		    				serviceModel.setRepColorCd(repColorCd[j]);
+		    				serviceModel.setFstLangCd(fstLangCd[j]);
+		    				serviceModel.setScndLangCd(scndLangCd[j]);
+		    				serviceModel.setThrdLangCd(thrdLangCd[j]);
+		    				serviceModel.setFothLangCd(fothLangCd[j]);
+		    				serviceModel.setFithLangCd(fithLangCd[j]);
+		    			}
+	    			}
+	    			
+	    			serviceModel.setCrtId(crtId);
+	    			serviceModel.setCrtIp(crtIp);
+	    			
+	    			serviceApplyService.insServiceApply(serviceModel);
+	    			
+	    			upCount++;
+	    		}
+	    		// 하위서비스 insert
+	    		else {
+	    			serviceDetailModel.setTenantId(tenantId);
+	    			serviceDetailModel.setCpCd(cpCd);
+	    			serviceDetailModel.setServiceCd(serviceCd[i]);
+	    			serviceDetailModel.setSystemCd(systemCd[i]);
+	    			serviceDetailModel.setServiceStartDt(CommonUtil.removeSpecificStr(serviceStartDt[i], CommonEnums.DASH_MARK.getValue()));
+	    			serviceDetailModel.setServiceEndDt(CommonUtil.removeSpecificStr(serviceEndDt[i], CommonEnums.DASH_MARK.getValue()));
+	    			serviceDetailModel.setServiceUrlAddr(serviceUrlAddr[i]);
+	    			serviceDetailModel.setCrtId(crtId);
+	    			serviceDetailModel.setCrtIp(crtIp);
+	    			
+	    			serviceApplyService.insServiceApplyDetail(serviceDetailModel);
+	    			downCount++;
+	    		}
+	    		
+	    	}
+
+	    	System.out.println("upCount --> "+upCount);
+	    	System.out.println("downCount --> "+downCount);
+	    	
+	    	model.addAttribute("result", "1");
+	    	
+    	return "jsonView";
     }
 	
 

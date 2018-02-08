@@ -45,24 +45,29 @@
 		 		#{testLabRemarkDesc},
 		 		#{testEventAddYn}, 
 		 		#{testEventRemarkDesc}, 
-		 		'ADMIN', '127.0.0.1', current_timestamp, 'ADMIN', '127.0.0.1', current_timestamp)
+		 		#{crtId},
+		 		#{crtIp},
+		 		current_timestamp, 
+				#{udtId},
+				#{udtIp},
+				current_timestamp)
 	</insert>
 
 	<insert id="insServiceApplyDetail" parameterType="com.sicc.console.model.ServiceDetailModel">
 		INSERT INTO con.concpserviced(
-					tenant_id,
-					cp_cd, 
-					service_cd, 
-					system_cd, 
-					service_start_dt, 
-					service_end_dt, 
-					service_url_addr, 
-					crt_id,
-					crt_ip, 
-					ad_date, 
-					udt_id, 
-					udt_ip, 
-					udt_date)
+				tenant_id,
+				cp_cd, 
+				service_cd, 
+				system_cd, 
+				service_start_dt, 
+				service_end_dt, 
+				service_url_addr, 
+				crt_id,
+				crt_ip, 
+				ad_date, 
+				udt_id, 
+				udt_ip, 
+				udt_date)
 		VALUES (#{tenantId},
 				#{cpCd}, 
 				#{serviceCd}, 
@@ -70,7 +75,12 @@
 				#{serviceStartDt}, 
 				#{serviceEndDt}, 
 				#{serviceUrlAddr}, 
-				'ADMIN', '127.0.0.1', current_timestamp, 'ADMIN', '127.0.0.1', current_timestamp)
+				#{crtId},
+		 		#{crtIp},
+		 		current_timestamp, 
+				#{udtId},
+				#{udtIp},
+				current_timestamp)
 	</insert>
 
 
