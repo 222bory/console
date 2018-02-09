@@ -172,11 +172,42 @@ public class CompetitionController {
         return "/competition/upCompetition";
     }*/
     
+    @GetMapping("/upCompetition") 
+    public String upCompetition(Model model, @RequestParam(value="searchType", required=false) String searchType, 
+    											@RequestParam(value="searchValue", required=false) String searchValue,
+    											@RequestParam(value="tenantId", required=true) String tenantId,
+    		    								@RequestParam(value="cpCd", required=true) String cpCd,
+    		    								CompetitionModel competitionModel, HttpServletRequest req, HttpServletResponse res) {
+    	
+    	if(searchType == null) {
+    		searchType = "C";
+    	}
+    	
+    	List<ContractExtModel> contractList = commonService.searchContract(searchType, searchValue);
+    	List<CodeModel> cpScaleCdList = commonService.selCode(CommonEnums.CP_SCALE_CD.getValue());
+    	List<CodeModel> cpTypeCdList = commonService.selCode(CommonEnums.CP_TYPE_CD.getValue());
+    	
+    	
+    	competitionModel.setTenantId(tenantId);
+		competitionModel.setCpCd(cpCd);
+		
+        CompetitionExtModel competition = competitionService.selCompetition(competitionModel);
+        competition.setCpScaleCd(commonService.selCodeByCdId(CommonEnums.CP_SCALE_CD.getValue(), competition.getCpScaleCd()));
+        competition.setCpTypeCd(commonService.selCodeByCdId(CommonEnums.CP_TYPE_CD.getValue(), competition.getCpTypeCd()));
+    	
+    	model.addAttribute("competition", competition);
+    	model.addAttribute("contractList", contractList);
+    	model.addAttribute("cpScaleCdList", cpScaleCdList);
+    	model.addAttribute("cpTypeCdList", cpTypeCdList);
+    	
+        return "/competition/upCompetition"; 
+    }
+    
     @PostMapping("/upCompetition")   
     @Transactional(rollbackFor=Exception.class)
     public String upCompetition(Model model , 
     		@RequestParam(value="tenantId", required=true) String tenantId, 
-    		@RequestParam("cpCd") String cpCd, 
+    		@RequestParam(value="cpCd", required=true) String cpCd, 
     		@RequestParam("cpNm") String cpNm,
     		@RequestParam("cpStartDt") String cpStartDt,
     		@RequestParam("cpEndDt") String cpEndDt,
@@ -186,30 +217,46 @@ public class CompetitionController {
     		@RequestParam("expectUserNum") String expectUserNum,
     		HttpServletRequest req, HttpServletResponse res) {
 		
-    	
-    	System.out.println(tenantId+" "+cpCd+" "+cpNm+" "+cpStartDt +" "+cpEndDt +" "+cpPlaceNm +" "+
-    			cpScaleCd +" "+cpTypeCd +" "+expectUserNum );
+    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String userId = principal.getUsername();
     	
     	CompetitionModel competitionModel= new CompetitionModel();
     	
-    	competitionModel.setTenantId("t1517446536049");
+    	competitionModel.setTenantId(tenantId);
     	competitionModel.setCpCd(cpCd);
     	competitionModel.setCpNm(cpNm);
-    	competitionModel.setCpStartDt(cpStartDt);
-    	competitionModel.setCpEndDt(cpEndDt);
+    	competitionModel.setCpStartDt(CommonUtil.removeSpecificStr(cpStartDt, CommonEnums.DASH_MARK.getValue()));
+    	competitionModel.setCpEndDt(CommonUtil.removeSpecificStr(cpEndDt, CommonEnums.DASH_MARK.getValue()));
     	competitionModel.setCpPlaceNm(cpPlaceNm);
     	competitionModel.setCpScaleCd(cpScaleCd);
     	competitionModel.setCpTypeCd(cpTypeCd);
     	competitionModel.setExpectUserNum(Integer.parseInt(expectUserNum));
-    	competitionModel.setCrtId("test");
-    	competitionModel.setCrtIp(req.getRemoteAddr());
-    	competitionModel.setUdtId("test");
+    	competitionModel.setUdtId(userId);
     	competitionModel.setUdtIp(req.getRemoteAddr());
     	
     	competitionService.upCompetition(competitionModel);
     	
     	
-    	return "/competition/upCompetition";
+    	return "redirect:/selListCompetition";
+    	
+    }
+    
+    @PostMapping("/delCompetition")   
+    @Transactional(rollbackFor=Exception.class)
+    public String delCompetition(Model model , 
+    		@RequestParam(value="tenantId", required=true) String tenantId, 
+    		@RequestParam(value="cpCd", required=true) String cpCd, 
+    		HttpServletRequest req, HttpServletResponse res) {
+		
+    	CompetitionModel competitionModel= new CompetitionModel();
+    	
+    	competitionModel.setTenantId(tenantId);
+    	competitionModel.setCpCd(cpCd);
+    	
+    	competitionService.delCompetition(competitionModel);
+    	
+    	
+    	return "redirect:/selListCompetition";
     	
     }
     
