@@ -33,6 +33,11 @@ public class CompetitionDaoImpl implements CompetitionDao{
 	public CompetitionExtModel selCompetition(CompetitionModel competitionModel) {
 		return sqlSessionTemplate.selectOne("com.sicc.console.dao.CompetitionDao.selCompetition", competitionModel);
 	}
+
+	@Override
+	public void delCompetition(CompetitionModel competitionModel) {
+		sqlSessionTemplate.delete("com.sicc.console.dao.CompetitionDao.delCompetition", competitionModel);
+	}
 	
 }
 

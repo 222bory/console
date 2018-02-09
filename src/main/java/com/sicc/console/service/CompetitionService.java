@@ -14,4 +14,6 @@ public interface CompetitionService {
     public List<CompetitionExtModel> selListCompetition(CompetitionModel competitionModel);
     
     public CompetitionExtModel selCompetition(CompetitionModel competitionModel);
+    
+    public void delCompetition(CompetitionModel competitionModel);
 }

@@ -36,5 +36,9 @@ public class CompetitionServiceImpl implements CompetitionService{
 		return competitionDao.selCompetition(competitionModel);
 	}
 
-	
+	@Override
+	public void delCompetition(CompetitionModel competitionModel) {
+		competitionDao.delCompetition(competitionModel);
+	}
+
 }

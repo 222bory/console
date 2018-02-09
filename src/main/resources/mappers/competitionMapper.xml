@@ -44,8 +44,7 @@
     
     <update id="upCompetition" parameterType="com.sicc.console.model.CompetitionModel">
     	UPDATE concpm
-    	   SET cp_cd = #{cpCd},
-			   cp_nm = #{cpNm},
+    	   SET cp_nm = #{cpNm},
 			   cp_start_dt = #{cpStartDt},
 			   cp_end_dt = #{cpEndDt},
 			   cp_place_nm = #{cpPlaceNm},
@@ -55,7 +54,8 @@
 			   udt_id = #{udtId},
 			   udt_ip = #{udtIp},
 			   udt_date = current_timestamp
-         WHERE tenant_id = #{tenantId}			   
+         WHERE tenant_id = #{tenantId}	
+           AND cp_cd = #{cpCd}		   
     </update>
     
     <select id="selListCompetition" parameterType="com.sicc.console.model.CompetitionModel" resultType="com.sicc.console.model.CompetitionExtModel">
@@ -111,5 +111,11 @@
            AND cont.tenant_id = #{tenantId}
            AND cp.cp_cd = #{cpCd}
     </select>
+    
+    <delete id="delCompetition" parameterType="com.sicc.console.model.CompetitionModel">
+    	DELETE FROM concpm
+         WHERE tenant_id = #{tenantId}	
+           AND cp_cd = #{cpCd}		   
+    </delete>
     
 </mapper>
