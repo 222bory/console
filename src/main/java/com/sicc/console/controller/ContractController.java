@@ -147,6 +147,33 @@ public class ContractController {
     	
     }
 	
+	@RequestMapping("/delContract")
+    public String delContract(@RequestParam Map<String, String> param, ContractExtModel contractExtModel, Model model) {
+		
+		contractExtModel.getCustId();
+		contractExtModel.getTenantId();
+		
+		System.out.println("딜리트 시작~");
+		System.out.println("getCustId : "+ contractExtModel.getCustId());
+		System.out.println("getTenantId :"+ contractExtModel.getTenantId());
+		//계약 삭제
+		contractService.delContract(contractExtModel);
+		System.out.println("계약 삭제 완료!");
+		
+		List<ContractExtModel> list = contractService.selListCustCnt(contractExtModel);
+		System.out.println("list.size : " + list.size());
+		
+		if(list.size() <1) {
+			//고객 삭제
+			contractService.delCust(contractExtModel);
+		}
+		
+		//등록 완료 플레그 
+    	model.addAttribute("result", "1");
+    	
+    	return "jsonView";
+    }
+	
     @PostMapping("/insContract")
     @Transactional(rollbackFor=Exception.class)
     public String insContract(Model model ,ContractExtModel contractExtModel,

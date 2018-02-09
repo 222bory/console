@@ -34,6 +34,44 @@ $(function () {
 		$("#frm").submit();
 	});
 	
+	$("#btnDelete").on("click", function(e){
+		var r = confirm("정말 삭제 하시겠습니까?");
+		
+		if (r == true) {
+			$.ajax({
+				type : "POST",
+				url  : "/delContract", 
+				dataType : "json",
+				data : $("#frm").serialize(),
+				success : function(data, status) {
+					try{
+						if( data.result == '1'){
+							alert("삭제 성공!");
+							redirectList();
+						} else {
+							//alert(makeMessage(INSERT_FAIL, '<br>' + 'RETURN CODE : ' + data.result + '<br>' + 'RETURN MESSAGE : ' + data.message));
+							alert("RETURN CODE : "+ data.result+' , '+"삭제 실패!");
+						}
+					}catch(e) {	
+						alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					if(XMLHttpRequest.status == '901'){
+						sessionTimeOut();			
+					} else {
+						//console.log(XMLHttpRequest.code + ":" + textStatus + ":" + errorThrown);
+						alert('서비스에 문제가 있습니다. 관리자에게 문의 하세요.');
+					}
+					return;
+				}
+			}); 
+	    } else {
+	        //취소 처리 
+	    }
+		
+	});
+	
 	$('#cp3').colorpicker({
         color: '#AA3399',
         format: 'hex'
@@ -118,7 +156,7 @@ function submit(){
 	<input type="hidden" name="page" value="${contractExtModel.page}" />
 	<div class="container-fluid">
 		<header>
-			<h1 class="h3 display">계약 상세${ContractExtModel.page}</h1>
+			<h1 class="h3 display">계약 상세</h1>
 		</header>
 		<div class="row">
 			<div class="col-lg-12">
@@ -131,6 +169,7 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 고객ID </label>
 		                      <div class="col-md-4">
+		                      <input type="hidden" name="custId" value="${cem.custId}" />
 		                        ${cem.custId}
 		                      </div>
 		                      
@@ -194,6 +233,7 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">테넌트ID</label>
 		                      <div class="col-md-4">
+		                      <input type="hidden" name="tenantId" value="${cem.tenantId}" /> 
 		                        ${cem.tenantId}
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 계약명</label>

@@ -48,7 +48,7 @@ $(function () {
 <section class="charts">
         <div class="container-fluid">
           <header> 
-            <h1 class="h3">서비스관리</h1>
+            <h1 class="h3">계약 목록</h1>
           </header>
           <div class="row">
             <div class="col-lg-12">
