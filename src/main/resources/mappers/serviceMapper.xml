@@ -83,5 +83,28 @@
 				current_timestamp)
 	</insert>
 
+	<select id="selListServiceApply" parameterType="com.sicc.console.model.ServiceModel" resultType="com.sicc.console.model.ServiceExtModel">
+		SELECT  COUNT(1) OVER() AS totalCount,
+				servicem.tenant_id AS tenantId, 
+				servicem.cp_cd AS cpCd, 
+		        servicem.service_cd AS serviceCd, 
+		        servicem.ad_date AS adDate,
+		        cpm.cp_nm AS cpNm,
+		        cpm.cp_start_dt AS cpStartDt,
+		        cpm.cp_end_dt AS cpEndDt
+		FROM (SELECT tenant_id,
+	            cp_cd,
+	            STRING_AGG(service_cd,',') as service_cd, 
+	            max(ad_date) as ad_date
+	            FROM con.concpservicem
+	            group by tenant_id, cp_cd	) AS servicem 
+	    	 INNER JOIN 
+	    	 con.concpm AS cpm
+	    ON servicem.tenant_id = cpm.tenant_id 
+	    	AND servicem.cp_cd = cpm.cp_cd
+		ORDER BY cpm.tenant_id desc
+		LIMIT #{rowPerPage} OFFSET #{skipCount}
+
+	</select>
 
 </mapper>

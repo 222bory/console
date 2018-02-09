@@ -1,10 +1,13 @@
 package com.sicc.console.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sicc.console.common.CommonUtil;
+import com.sicc.console.common.Pagination;
 import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.CodeModel;
 import com.sicc.console.model.ServiceDetailModel;
+import com.sicc.console.model.ServiceExtModel;
 import com.sicc.console.model.ServiceModel;
 import com.sicc.console.service.CommonService;
 import com.sicc.console.service.ServiceApplyService;
@@ -37,7 +43,7 @@ public class ServiceApplyController {
 	@Autowired
 	CommonService commonService;
 	
-
+    private Integer rowPerPage = 10;
 	
     @GetMapping("/insServiceApply") 
     public String insServiceApply(Model model) {
@@ -147,9 +153,7 @@ public class ServiceApplyController {
 	    			serviceApplyService.insServiceApplyDetail(serviceDetailModel);
 	    			downCount++;
 	    		}
-	    		
 	    	}
-
 	    	System.out.println("upCount --> "+upCount);
 	    	System.out.println("downCount --> "+downCount);
 	    	
@@ -158,5 +162,34 @@ public class ServiceApplyController {
     	return "jsonView";
     }
 	
+
+    @RequestMapping("/selListServiceApply")
+    public String selListServiceApply(@RequestParam Map<String, String> param, Model model, 
+    		ServiceModel serviceModel,HttpServletRequest req, HttpServletResponse res) {
+    	
+    	String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
+		if(NumberUtils.toInt(page) < 1) page = "1";
+		
+		int rows = StringUtils.isNotEmpty( param.get("rowPerPage"))? NumberUtils.toInt(param.get("rowPerPage")) : rowPerPage;
+		
+    	serviceModel.setRowPerPage(rows);
+    	serviceModel.setPage(NumberUtils.toInt(page));
+    	serviceModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
+    	
+    	List<ServiceExtModel> serviceList = serviceApplyService.selListServiceApply(serviceModel);
+    	
+    	Pagination pagination = new Pagination();
+		if(serviceList != null && !serviceList.isEmpty() ){
+			pagination.setTotalRow(serviceList.get(0).getTotalCount()).setRowPerPage(rows).setCurrentPage(page);
+		} else {
+			pagination.setTotalRow(0);
+		}
+    	
+		model.addAttribute("serviceList", serviceList);
+		model.addAttribute("serviceModel", serviceModel);
+		model.addAttribute("pagination", pagination);
+		
+    	return "/service/selListServiceApply";
+    }
 
 }

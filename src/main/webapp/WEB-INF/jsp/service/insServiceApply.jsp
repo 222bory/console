@@ -10,28 +10,10 @@ $(document).ready(function(){
 
     // 서비스 추가 버튼 클릭시
     $("#addRowBtn").click(function(){
-     	var html ="";
-	   // var originSelectItem = $('tbody[name=serviceTbody]:last > tr:last > td:eq(0) > select').clone();
-	    var newSelectItem = "";
-   
-	    html += "<tr>"; 
-    	html += "<td> <select name='serviceCd' class='form select'> <option value='0'>선택</option>"+
-    			 " <c:forEach items='${serviceList}' var='list'> "+
-    			 " <option value='${list.cdId}'>${list.cdNm}</option></c:forEach> </select> </td>";
-		html += "<td> <select name='systemCd' class='form select'> <option value='0'>서비스선택</option> </select> </td>";
-		html += "<td> <input name='serviceStartDt' type='text' class='form-control' /> </td>";
-		html += "<td> <input name='serviceEndDt' type='text' class='form-control' /> </td>";
-		html += "<td> <div class='row'> <input name='testLabUseYn' type='checkbox' value='Y' checked='checked' >";
-		html += "<label></label> <input name='testLabRemarkDesc' type='text' class='form-control' placeholder='비고(용도)'/></div></td>";
-		html += "<td> <div class='row'> <input name='testEventAddYn' type='checkbox' value='Y' checked='checked' >";
-		html += "<label></label> <input name='testEventRemarkDesc' type='text' class='form-control' placeholder='비고(용도)'/></div></td>";
-		html += "<td> <input name='serviceUrlAddr' type='text' class='form-control' placeholder=''/> </td>";
-		html += "</tr>"; 
-
-		$('tbody[name=serviceTbody]').append(html); 
-		//$('tbody[name=serviceTbody]:last > tr:last > td:eq(0)').html(originSelectItem); 
-
-	 	// 달력 초기화
+    	
+    	addServiceTbl('btn');
+    	
+    	// 달력 초기화
 	    $('input[name=serviceStartDt]').datepicker({
 	    		"format" :'yyyy-mm-dd',
 	            "autoclose": true,
@@ -46,15 +28,15 @@ $(document).ready(function(){
 	            "todayHighlight":true
 	    });
 	    $('input[name=serviceEndDt]').datepicker("setDate", new Date());
+	 	
     });
     
 			
  	// 서비스 삭제버튼 클릭시
     $("#delRowBtn").click(function(){  
 		//var rows= $('#serviceTbl > tbody:last > tr').length;
-
-	   		$('#serviceTbl > tbody:last > tr:last').remove();
-		
+		//$('#serviceTbl > tbody:last > tr:last').remove();
+    	delServiceTbl('', 'btn');
     });
  	
  	
@@ -65,6 +47,21 @@ $(document).ready(function(){
 		//disabled 설정 해제
 		$("select[name=serviceCd]").removeAttr("disabled");
 		$("select[name=systemCd]").removeAttr("disabled");
+		
+		$("input[name=testLabCheck]:checked").each(function(){
+			$(this).next().val('Y');
+			console.log($(this).next().val());
+		});
+		$("input[name=testLabCheck]").not(":checked").each(function(){
+			$(this).next().val('N');
+			console.log($(this).next().val());
+		});
+		$("input[name=testEventCheck]:checked").each(function(){
+			$(this).next().val('Y');
+		});
+		$("input[name=testEventCheck]").not(":checked").each(function(){
+			$(this).next().val('N');
+		});
 		
 		
 		$.ajax({
@@ -138,14 +135,14 @@ $(document).ready(function(){
  	
 	//체크박스 서비스 선택
 	$(document).on("change","input[name='serviceChkBox']",function(){
-		var rowNum = $('tbody[name=serviceTbody] tr').length;
-
 		//상위서비스 사용 체크시
 		if($(this).is(":checked")){
 			var servicdCd="";
 			var systemCd="";
 			
-			$("#addRowBtn").click();
+			//$("#addRowBtn").click();
+			addServiceTbl('chk');
+			setDatepicker();
 			
 			servicdCd = $('tbody[name=serviceTbody]:last > tr:last > td:eq(0) >select');
 			systemCd = $('tbody[name=serviceTbody]:last > tr:last > td:eq(1) >select');
@@ -160,8 +157,10 @@ $(document).ready(function(){
 		 	addOptionTbl($(this).val()); //서비스별 설정 row 추가
 		 	
 		}
-		//상위서비스 미사용 체크시
+		//상위서비스 체크 해제
 		else{
+			/* var rowNum = $('tbody[name=serviceTbody] tr').length;
+			
 			for( i=0; i< rowNum; i++){
 				var removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
 				
@@ -171,9 +170,12 @@ $(document).ready(function(){
 						removeRow.remove();
 					}
 				}
-			}
+			} */
+			var checkService = $(this).val();
 			
-			delOptionTbl($(this).val()); //서비스별 설정 row 삭제
+			delServiceTbl(checkService, 'chk'); //서비스 상세정보 입력 row 삭제
+			
+			delOptionTbl(checkService); //서비스별 설정 row 삭제
 		}
 	});
  	
@@ -181,10 +183,38 @@ $(document).ready(function(){
 
 <script>
 function redirectList(){
-	$("#frm").attr("action", "/userList");
+	$("#frm").attr("action", "/selListServiceApply");
 
-	//$("input[name=page]").val("1");
 	$("#frm").submit();
+}
+
+function addServiceTbl(flag){
+	var html ="";
+	
+    html += "<tr>"; 
+	html += "<td> <select name='serviceCd' class='form select'> <option value='0'>선택</option>"+
+			 " <c:forEach items='${serviceList}' var='list'> "+
+			 " <option value='${list.cdId}'>${list.cdNm}</option></c:forEach> </select> </td>";
+	html += "<td> <select name='systemCd' class='form select'> <option value='0'>서비스선택</option> </select> </td>";
+	html += "<td> <input name='serviceStartDt' type='text' class='form-control' /> </td>";
+	html += "<td> <input name='serviceEndDt' type='text' class='form-control' /> </td>";
+	html += "<td> <input name='serviceUrlAddr' type='text' class='form-control' placeholder=''/> </td>";
+	
+	if(flag == 'chk'){ //체크박스로 서비스 선택 및 추가
+		html += "<td> <div class='row'> <input name='testLabCheck' type='checkbox'/> <input type='hidden' name='testLabUseYn' value='N'/>";
+		html += "<label></label> <input name='testLabRemarkDesc' type='text' class='form-control' placeholder='비고(용도)'/></div></td>";
+		html += "<td> <div class='row'> <input name='testEventCheck' type='checkbox'> <input type='hidden' name='testEventAddYn' value='N'/>";
+		html += "<label></label> <input name='testEventRemarkDesc' type='text' class='form-control' placeholder='비고(용도)'/></div></td>";
+	}
+	else if(flag == 'btn'){ //추가 버튼 클릭으로 하위서비스 추가
+		html += "<td> <div class='row'> <input type='hidden' name='testLabUseYn' value='N'/></div></td>";
+		html += "<td> <div class='row'> <input type='hidden' name='testEventAddYn' value='N'/></div></td>";
+	}
+
+	html += "</tr>"; 
+
+	$('tbody[name=serviceTbody]').append(html); 
+	
 }
 
 function addOptionTbl(serviceCd){
@@ -194,7 +224,7 @@ function addOptionTbl(serviceCd){
 	    html += "<td>"+serviceCd+"</td>";
 	    html += "<input type='hidden' name='serviceCdD' value='"+serviceCd+"'></div>";
  		html += "<td> <div name='colorGroup' class='input-group colorpicker-component'>"+
- 				"<input name='repColorCd' type='text' value='#00AABB' class='form-control' />"+
+ 				"<input name='repColorCd' type='text' class='form-control' />"+
  				"<span class='input-group-addon'><i></i></span></div></td>";
  		html += "<td> <div class='col-sm-5 select'> <select name='fstLangCd' class='form select'> <option value='0'>사용안함</option>" +
  			 	" <c:forEach items='${languageList}' var='list'> "+
@@ -224,16 +254,57 @@ function addOptionTbl(serviceCd){
 		});
 }
 
-function delOptionTbl(servicdCd){
+function delServiceTbl(checkService , flag){
+	var rowNum = $('tbody[name=serviceTbody] tr').length;
+
+	for( i=0; i< rowNum; i++){
+		var removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
+		
+		if(flag=='chk'){//체크해제
+			if(removeRow.find('td:eq(1) select').val() == 'default'){
+				if( removeRow.find('td:eq(0) select').val() == checkService){
+					removeRow.remove();
+				}
+			}
+		}
+		else if(flag=='btn'){//삭제버튼
+			if(removeRow.find('td:eq(1) select').val() != 'default'){ 
+					removeRow.remove();
+			}
+		}
+	}
+}
+
+function delOptionTbl(checkService){
 	var rowNum = $('#configTable > tbody > tr').length;
 	
 	for( i=0; i< rowNum; i++){
 		var removeRow = $('tbody[name=configTbody] > tr:eq('+i+')');
 		
-		if( removeRow.find('td:eq(0)').text() == servicdCd){
+		if( removeRow.find('td:eq(0)').text() == checkService){
 			removeRow.remove();
 		}
 	}
+}
+
+function setDatepicker(){
+	
+	// 달력 초기화
+    $('input[name=serviceStartDt]').datepicker({
+    		"format" :'yyyy-mm-dd',
+            "autoclose": true,
+            "todayHighlight":true
+    });
+    $('input[name=serviceStartDt]').datepicker("setDate", new Date());
+ 	
+ 	// 달력 초기화
+    $('input[name=serviceEndDt]').datepicker({
+    		"format" :'yyyy-mm-dd',
+            "autoclose": true,
+            "todayHighlight":true
+    });
+    $('input[name=serviceEndDt]').datepicker("setDate", new Date());
+	
 }
 </script>
 
@@ -281,9 +352,7 @@ function delOptionTbl(servicdCd){
 					<div class="line"></div>
 					
 					<div class="col-md-15">
-					<label class="col-sm-2 form-control-label">* 서비스별 상세정보 입력</label>
-					<br>
-					<label class="col-sm-2 form-control-label">하위 서비스 추가/삭제</label>
+					<label class="col-sm-4 form-control-label">* 서비스별 상세정보 입력</label>
 					<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-secondary"/>
                 	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn btn-secondary"/>
 					<table id="serviceTbl" name="serviceTbl" class="table">
@@ -293,9 +362,9 @@ function delOptionTbl(servicdCd){
 	                        <th>하위서비스</th>
 	                        <th>시작일자</th>
 	                        <th>종료일자</th>
+	                        <th>서비스URL</th>
 	                        <th>테스트랩<br>사용여부</th>
 	                        <th>테스트이벤트<br>사용여부</th>
-	                        <th>서비스URL</th>
 	                      </tr>
 	                    </thead>
 						<tbody name="serviceTbody">
@@ -333,7 +402,7 @@ function delOptionTbl(servicdCd){
 				<div class="form-group">
 					<div class="col-sm-4 offset-sm-2">
 						<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
-						<button type="submit" id="btnRegister" class="btn btn-primary" >등록</button>
+						<input type="button" id="btnRegister" class="btn btn-primary" value="등록"></button>
 					</div>
 				</div>
 				</form>
