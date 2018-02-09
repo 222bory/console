@@ -13,5 +13,7 @@ public interface CompetitionDao {
 	public List<CompetitionExtModel> selListCompetition(CompetitionModel competitionExtModel);
 	
 	public CompetitionExtModel selCompetition(CompetitionModel competitionExtModel);
+	
+	public void delCompetition(CompetitionModel competitionModel);
 }
 

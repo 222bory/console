@@ -6,60 +6,26 @@
 	pageEncoding="UTF-8"%>
 
 <script>
-	
- 
-	/* function goPage(page) {
-		$("input[name=page]").val(page);
-		submit();
-	}
-	function submit(){
-		$("#frm").submit();  
-	} */
-	
 	$(document).ready(function(){ 
-		
 		var tenantId = $('#tenantId').text();
 		var cpCd = $('#cpCd').text();
-		
-		alert(tenantId+cpCd);
 		
 		$('#listButton').click(function(event){  
 			location.href = "/selListCompetition";
 		});
 		$('#upButton').click(function(event){
-			location.href = "/upCompetition";
+			location.href = "/upCompetition?tenantId="+tenantId+"&cpCd="+cpCd;
 		});
 		$('#delButton').click(function(event){
-			location.href = "/delCompetition";
+			var result = confirm('대회정보를 삭제 하시겠습니까?'); 
+			
+			if(result) { 
+				alert("삭제");
+			} 
+
+			//location.href = "/delCompetition?tenantId="+tenantId+"&cpCd="+cpCd;
 		});
 	});
-/* 	$("#selListCompetitionTable tr").click(function() {
-		alert("test");
-        var str = ""
-        var tdArr = new Array();
-
-        var tr = $(this);
-        var td = tr.children();
-
-        td.each(function(i){
-            tdArr.push(td.eq(i).text());
-        });
-
-        var tenantId = td.eq(0).text();
-		alert(tenantId);
-	}); */
-	
-	/* $(document).ready(function(){
-		$('#selListCompetitionTable tr').click(function(event){
-			if(event.target.nodeName.toLowerCase() == 'td') {
-				$('#hiddenTenantId').val($(this).children().eq(1).text());
-				alert("test :: "+ $('#hiddenTenantId').val());
-				$("#detailFrm").submit();
-				//var checkbox = $(this).find('td:first-child :checkbox');
-				//checkbox.attr('checked', !checkbox.is(':checked'));
-			}
-		});
-	}); */
 </script>
 
 <div class="breadcrumb-holder">
@@ -70,7 +36,6 @@
 		</ul>
 	</div>
 </div>
-
 	  <section class="charts">
         <div class="container-fluid">
           <header> 
@@ -87,7 +52,6 @@
                 	<%-- <input type="hidden" name="page" value="${competitionModel.page}" /> --%>
                 	<input type="hidden" id="hiddenTenantId" name="hiddenTenantId"/>
                 </form>
-                
                 <form action="" method="post" id="frm">
                 <input type="hidden" name="page" value="${competitionModel.page}" />
                   <table class="table" id="selListCompetitionTable">
@@ -103,7 +67,6 @@
                     	<tr><td>예상 이용자수</td><td>${competition.expectUserNum}</td></tr>
                     </tbody>
                   </table>
-                  
                   <div class="form-group">
 					<div class="col-sm-4 offset-sm-2">
 						<input type="button" id="listButton" class="btn btn-primary" value="목록" />
