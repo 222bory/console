@@ -21,6 +21,14 @@ apply plugin: 'war'
 apply plugin: "com.palantir.docker"
 
 war {
+	//doFirst {
+    //    manifest {
+    //        if (!configurations.runtime.isEmpty()) {
+    //            attributes('Class-Path': 
+    //                            configurations.runtime.collect{it.toURI().toString()}.join(' '))
+    //        }
+    //    }
+    //}
     baseName = 'console'
     version =  '1.0.0-RELEASE'
 }
