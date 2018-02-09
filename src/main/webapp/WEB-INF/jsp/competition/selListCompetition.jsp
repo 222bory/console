@@ -36,9 +36,11 @@
 	$(document).ready(function(){
 		$('#selListCompetitionTable tr').click(function(event){
 			if(event.target.nodeName.toLowerCase() == 'td') {
-				
-				$('#hiddenTenantId').val($(this).children().eq(1).text());
-				$("#detailFrm").submit();
+				var tenantId = $(this).children().eq(1).text();
+				var cpCd = $(this).children().eq(3).text();
+				location.href='/selCompetition?tenantId='+tenantId+'&cpCd='+cpCd;
+				//$('#hiddenTenantId').val($(this).children().eq(1).text());
+				//$("#detailFrm").submit();
 				//var checkbox = $(this).find('td:first-child :checkbox');
 				//checkbox.attr('checked', !checkbox.is(':checked'));
 			}

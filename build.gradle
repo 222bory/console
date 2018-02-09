@@ -22,11 +22,10 @@ apply plugin: "com.palantir.docker"
 
 war {
     baseName = 'console'
-    version =  '1.0.0-RELEASE'
+    version =  '1.0.0'
 }
 
-group = 'docker.gsp.sicc.co.kr:5000'
-version =  '1.0.0-RELEASE'
+group = 'docker.gsp.sicc.co.kr'
 
 sourceCompatibility = 1.8
 

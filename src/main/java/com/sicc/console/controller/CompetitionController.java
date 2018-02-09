@@ -28,7 +28,8 @@ import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.AdminModel;
 import com.sicc.console.model.CodeModel;
 import com.sicc.console.model.CompetitionExtModel;
-import com.sicc.console.model.CompetitionModel; 
+import com.sicc.console.model.CompetitionModel;
+import com.sicc.console.model.ContractExtModel;
 import com.sicc.console.service.CommonService;
 import com.sicc.console.service.CompetitionService;
 import com.sicc.console.service.UserService;
@@ -46,13 +47,33 @@ public class CompetitionController {
     
     private Integer rowPerPage = 10;
     
-
-    @GetMapping("/insCompetition") 
-    public String insCompetition(Model model) {
+    @ResponseBody
+    @RequestMapping("/searchCompetition") 
+    public List<ContractExtModel> searchCompetition(Model model, @RequestParam(value="searchType", required=false) String searchType, @RequestParam(value="searchValue", required=false) String searchValue) {
     	
+    	if(searchType == null) {
+    		searchType = "C";
+    	}
+    	
+    	List<ContractExtModel> contractList = commonService.searchContract(searchType, searchValue);
+    	
+    	//model.addAttribute("contractList", contractList);
+    	
+        return contractList; 
+    }
+    
+    @GetMapping("/insCompetition") 
+    public String insCompetition(Model model, @RequestParam(value="searchType", required=false) String searchType, @RequestParam(value="searchValue", required=false) String searchValue) {
+    	
+    	if(searchType == null) {
+    		searchType = "C";
+    	}
+    	
+    	List<ContractExtModel> contractList = commonService.searchContract(searchType, searchValue);
     	List<CodeModel> cpScaleCdList = commonService.selCode(CommonEnums.CP_SCALE_CD.getValue());
     	List<CodeModel> cpTypeCdList = commonService.selCode(CommonEnums.CP_TYPE_CD.getValue());
     	
+    	model.addAttribute("contractList", contractList);
     	model.addAttribute("cpScaleCdList", cpScaleCdList);
     	model.addAttribute("cpTypeCdList", cpTypeCdList);
     	
@@ -78,7 +99,7 @@ public class CompetitionController {
     	
     	CompetitionModel competitionModel= new CompetitionModel();
     	
-    	competitionModel.setTenantId(commonService.selTenantIdSeq());
+    	competitionModel.setTenantId(tenantId);
     	competitionModel.setCpCd(cpCd);
     	competitionModel.setCpNm(cpNm);
     	competitionModel.setCpStartDt(CommonUtil.removeSpecificStr(cpStartDt, CommonEnums.DASH_MARK.getValue()));
@@ -95,7 +116,7 @@ public class CompetitionController {
     	competitionService.insCompetition(competitionModel);
     	
     	
-    	return "/competition/insCompetition";
+    	return "redirect:/selListCompetition";
     	
     }
     
@@ -127,35 +148,21 @@ public class CompetitionController {
         return "/competition/selListCompetition";
     }
     
-    @RequestMapping("/selCompetition")
+    @GetMapping("/selCompetition")
     public String selCompetition(@RequestParam Map<String, String> param, 
-    								@RequestParam(value="hiddenTenantId", required=true) String hiddenTenantId, 
+    								@RequestParam(value="tenantId", required=true) String tenantId,
+    								@RequestParam(value="cpCd", required=true) String cpCd,
     								Model model, CompetitionModel competitionModel, HttpServletRequest req, HttpServletResponse res) {
     	
-    	String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
-		if(NumberUtils.toInt(page) < 1) page = "1";
-		
-		int rows = StringUtils.isNotEmpty( param.get("rowPerPage"))? NumberUtils.toInt(param.get("rowPerPage")) : rowPerPage;
 
-		competitionModel.setTenantId(hiddenTenantId);
-		competitionModel.setRowPerPage(rows);
-		competitionModel.setPage(NumberUtils.toInt(page));
-		competitionModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
+		competitionModel.setTenantId(tenantId);
+		competitionModel.setCpCd(cpCd);
 		
         CompetitionExtModel competition = competitionService.selCompetition(competitionModel);
         competition.setCpScaleCd(commonService.selCodeByCdId(CommonEnums.CP_SCALE_CD.getValue(), competition.getCpScaleCd()));
         competition.setCpTypeCd(commonService.selCodeByCdId(CommonEnums.CP_TYPE_CD.getValue(), competition.getCpTypeCd()));
-        
-        Pagination pagination = new Pagination();
-		if(competition != null){
-			pagination.setTotalRow(competition.getTotalCount()).setRowPerPage(rows).setCurrentPage(page);
-		} else {
-			pagination.setTotalRow(0);
-		}
 		
 		model.addAttribute("competition", competition);
-        model.addAttribute("competitionModel", competitionModel);
-		model.addAttribute("pagination", pagination);
 		
         return "/competition/selCompetition";
     }

@@ -56,6 +56,13 @@
 		WHERE cust_id =  #{custId}
     </select>
     
+    <select id="selListCustCnt" resultType="com.sicc.console.model.ContractExtModel">
+		SELECT COUNT(1) OVER() AS totalCount
+		FROM concustcontm 
+		WHERE cust_id =  #{custId}
+		LIMIT 1
+    </select>
+    
     <select id="selContract" resultType="com.sicc.console.model.ContractExtModel">
 		SELECT 	 cust.cust_id as custId 
 		       , cust.cust_nm as custNm 
@@ -127,5 +134,13 @@
 							  current_timestamp
 							  )
     </insert>
+    
+    <delete id="delCust" parameterType="com.sicc.console.model.ContractExtModel">
+        DELETE FROM concustm WHERE cust_id = '${custId}'
+    </delete>
+    
+    <delete id="delContract" parameterType="com.sicc.console.model.ContractExtModel">
+        DELETE FROM concustcontm WHERE tenant_id = '${tenantId}'
+    </delete>
     
 </mapper>

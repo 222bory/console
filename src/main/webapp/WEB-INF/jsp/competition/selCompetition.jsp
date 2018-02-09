@@ -17,22 +17,20 @@
 	} */
 	
 	$(document).ready(function(){ 
+		
+		var tenantId = $('#tenantId').text();
+		var cpCd = $('#cpCd').text();
+		
+		alert(tenantId+cpCd);
+		
 		$('#listButton').click(function(event){  
-			
-			$("#hiddenTenantId").val($("#tenantId").text());
-			
-			alert($("#tenantId").text());
-			alert($("#hiddenTenantId").val());
-			$("#frm").action = "/selListCompetition";
-			$("#frm").submit();  
+			location.href = "/selListCompetition";
 		});
 		$('#upButton').click(function(event){
-			$("#frm").action = "/upCompetition";
-			$("#frm").submit();  
+			location.href = "/upCompetition";
 		});
 		$('#delButton').click(function(event){
-			$("#frm").action = "/delCompetition";
-			$("#frm").submit();  
+			location.href = "/delCompetition";
 		});
 	});
 /* 	$("#selListCompetitionTable tr").click(function() {
@@ -96,7 +94,7 @@
                     <tbody>
                     	<tr><td>테넌트ID</td><td id="tenantId">${competition.tenantId}</td></tr>
                     	<tr><td>계약명</td><td>${competition.contNm}</td></tr>
-                    	<tr><td>대회 코드</td><td>${competition.cpCd}</td></tr>
+                    	<tr><td>대회 코드</td><td id="cpCd">${competition.cpCd}</td></tr>
                     	<tr><td>대회명</td><td>${competition.cpNm}</td></tr>
                     	<tr><td>대회 기간</td><td>${competition.cpStartDt} ~ ${competition.cpEndDt}</td></tr>
                     	<tr><td>대회 장소</td><td>${competition.cpPlaceNm}</td></tr>

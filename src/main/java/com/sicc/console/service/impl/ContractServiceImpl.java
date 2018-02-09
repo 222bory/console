@@ -30,6 +30,10 @@ public class ContractServiceImpl implements ContractService{
 		return contractDao.selListContractCnt(contractExtModel); 
 	};
 	
+	public List<ContractExtModel> selListCustCnt(ContractExtModel contractExtModel){
+		return contractDao.selListCustCnt(contractExtModel); 
+	};
+	
 	public List<ContractExtModel> selListCust(ContractExtModel contractExtModel){
 		return contractDao.selListCust(contractExtModel); 
 	};
@@ -47,7 +51,15 @@ public class ContractServiceImpl implements ContractService{
 	@Override
 	public void insContract(ContractModel contractModel) {
 		contractDao.insContract(contractModel);
-		
 	}
-
+	
+	@Override
+	public void delCust(ContractExtModel contractExtModel) {
+		contractDao.delCust(contractExtModel);
+	}
+	
+	@Override
+	public void delContract(ContractExtModel contractExtModel) {
+		contractDao.delContract(contractExtModel);
+	}
 }

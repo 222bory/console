@@ -12,6 +12,7 @@ import com.sicc.console.dao.CodeDao;
 import com.sicc.console.dao.UtilDao;
 import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.CodeModel;
+import com.sicc.console.model.ContractExtModel;
 import com.sicc.console.service.CommonService;
 
 @Service
@@ -37,5 +38,11 @@ public class CommonServiceImpl implements CommonService{
 	public String selTenantIdSeq() {
 		return CommonUtil.concatString(CommonUtil.getCurrentDate(CommonEnums.ONLY_YEAR_FORMAT.getValue()), CommonUtil.getPaddingZero(CommonEnums.DEFAULT_LENGTH_FOR_ZERO.getValue(), utilDao.selTenantIdSeq()));
 	}
+
+	@Override
+	public List<ContractExtModel> searchContract(String searchType, String searchValue) {
+		return utilDao.searchContract(searchType, searchValue);
+	}
+	
 	
 }
