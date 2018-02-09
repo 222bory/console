@@ -7,12 +7,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	
-	$('div[name=repColorCd]').colorpicker({
-        color: '#AA3399',
-        format: 'hex'
-    });
-	
+
     // 서비스 추가 버튼 클릭시
     $("#addRowBtn").click(function(){
      	var html ="";
@@ -65,6 +60,13 @@ $(document).ready(function(){
  	
  	//등록 
 	$("#btnRegister").on("click", function(e){
+		console.log($("#frm").serialize());
+		
+		//disabled 설정 해제
+		$("select[name=serviceCd]").removeAttr("disabled");
+		$("select[name=systemCd]").removeAttr("disabled");
+		
+		
 		$.ajax({
 			type : "POST",
 			url  : "/insServiceApply", 
@@ -179,21 +181,8 @@ $(document).ready(function(){
 
 <script>
 function redirectList(){
-	$("#frm").attr("action", "/insServiceApply");
-	
-	//disabled 설정 해제
-	$("select[name=serviceCd]").removeAttr("disabled");
-	$("select[name=systemCd]").removeAttr("disabled");
-	
-/* 	  $("#form").submit( function(eventObj) {
-	      $('<select />')
-          .attr('name', "serviceCdD")
-          .appendTo('#form');
-	      return true;
-	  }); */
-	$("#frm").append('<td name="serviceCdD"/>');
-	
-	  
+	$("#frm").attr("action", "/userList");
+
 	//$("input[name=page]").val("1");
 	$("#frm").submit();
 }
@@ -202,9 +191,10 @@ function addOptionTbl(serviceCd){
  	var html ="";
 
 	    html += "<tr>"; 
-	    html += "<td name='serviceCdD'>"+serviceCd+"</td>";
- 		html += "<td> <div name='repColorCd' class='input-group colorpicker-component'>"+
- 				"<input type='text' value='#00AABB' class='form-control' />"+
+	    html += "<td>"+serviceCd+"</td>";
+	    html += "<input type='hidden' name='serviceCdD' value='"+serviceCd+"'></div>";
+ 		html += "<td> <div name='colorGroup' class='input-group colorpicker-component'>"+
+ 				"<input name='repColorCd' type='text' value='#00AABB' class='form-control' />"+
  				"<span class='input-group-addon'><i></i></span></div></td>";
  		html += "<td> <div class='col-sm-5 select'> <select name='fstLangCd' class='form select'> <option value='0'>사용안함</option>" +
  			 	" <c:forEach items='${languageList}' var='list'> "+
@@ -225,12 +215,8 @@ function addOptionTbl(serviceCd){
 
 		$('tbody[name=configTbody]').append(html); 
 
-		//var originTbody = $('tbody[name=configTbody]:eq(0)').clone();
-	   // $('#configTable').append(originTbody);	
- 		
-	    
 	   //colorpicker 초기화
-		$('div[name=repColorCd]').each(function(){
+		$('div[name=colorGroup]').each(function(){
 			$(this).colorpicker({
 		        color: '#AA3399',
 		        format: 'hex'
@@ -262,11 +248,9 @@ function delOptionTbl(servicdCd){
 
 <section class="forms">
 	<div class="container-fluid">
-	
 	<header>
 		<h1 class="h3 display">서비스신청</h1>
 	</header>
-	
 	<div class="row">
 	<div class="col-lg-12">
 		<div class="card">
@@ -277,9 +261,9 @@ function delOptionTbl(servicdCd){
 				<label class="col-sm-2 form-control-label">* 대회선택</label>
 				<div class="row">
 					<div style="width: 60%; padding: 0.375rem 0.75rem;">
-						<input type="hidden" id="tenantId" name="tenantId" value="2018000000"/>
-						<input type="hidden" id="cpCd" name="cpCd" value="PC20180101"/>
-						<input type="text" class="form-control" id="cpNm" name="cpNm" value="평창동계올림픽1"/>
+						<input type="hidden" id="tenantId" name="tenantId" value="2018111111"/>
+						<input type="hidden" id="cpCd" name="cpCd" value="test11"/>
+						<input type="text" class="form-control" id="cpNm" name="cpNm" value="test"/>
 					</div>
 					<div style="width: 30%; padding: 0.375rem 0.75rem;">
 						<button type="button" id="searchCpBtn" class="btn btn-primary">검색</button>
@@ -341,6 +325,7 @@ function delOptionTbl(servicdCd){
 	                    </thead>
 						<tbody name='configTbody'> </tbody>
 					</table>
+
 
 				  </div> 
 				  

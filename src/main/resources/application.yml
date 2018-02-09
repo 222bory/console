@@ -11,10 +11,10 @@ spring:
   datasource:
     type: org.apache.tomcat.jdbc.pool.DataSource
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres?autoReconnect=true&useSSL=false
+    url: jdbc:postgresql://sport-saas-psql.cf37vedvxld3.ap-northeast-2.rds.amazonaws.com/sportsaas?autoReconnect=true&useSSL=false
     username: con_user
     #password: ENC(2L3MvBFx+sCd0DQ79sMY6wR0bJvSGq3R)
-    password: New1234!
+    password: new1234!
     
 mybatis:
   mapper-locations: classpath:mappers/**/*.xml
