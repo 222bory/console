@@ -62,4 +62,14 @@ public class ContractServiceImpl implements ContractService{
 	public void delContract(ContractExtModel contractExtModel) {
 		contractDao.delContract(contractExtModel);
 	}
+	
+	@Override
+	public void upCust(ContractExtModel contractExtModel) {
+		contractDao.upCust(contractExtModel);
+	}
+	
+	@Override
+	public void upContract(ContractExtModel contractExtModel) {
+		contractDao.upContract(contractExtModel);
+	}
 }

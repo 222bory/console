@@ -34,6 +34,11 @@ $(function () {
 		$("#frm").submit();
 	});
 	
+	$("#btnModify").on("click", function(e){
+		$("#frm").attr("action", "/upContractForm");
+		$("#frm").submit();
+	});
+	
 	$("#btnDelete").on("click", function(e){
 		var r = confirm("정말 삭제 하시겠습니까?");
 		
