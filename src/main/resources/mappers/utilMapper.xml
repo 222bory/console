@@ -42,7 +42,29 @@
 	     </if>
 	     </if>
 	     </if>
-	   order by udtDate desc   
+	   order by cont.udt_Date desc   
     </select>
+    
+    
+    <select id="searchCompetition" parameterType="java.util.Map" resultType="com.sicc.console.model.CompetitionModel">
+    	SELECT 
+		       cpm.tenant_id as tenantId
+		       , cpm.cp_cd as cpCd
+		       , cpm.cp_nm as cpNm
+		FROM con.concpm as cpm
+	   WHERE 1=1
+	     <if test='searchType!=null'>
+	     <if test='searchValue!=null'>
+	     <if test='searchType=="C"'>
+	     AND cp_cd like #{searchValue}||'%'
+	     </if>
+	     <if test='searchType=="N"'>
+	     AND cp_nm like #{searchValue}||'%'
+	     </if>
+	     </if>
+	     </if>
+	   order by cpm.udt_Date desc   
+    </select>
+    
     
 </mapper>

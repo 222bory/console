@@ -12,6 +12,7 @@ import com.sicc.console.dao.CodeDao;
 import com.sicc.console.dao.UtilDao;
 import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.CodeModel;
+import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.model.ContractExtModel;
 import com.sicc.console.service.CommonService;
 
@@ -42,6 +43,11 @@ public class CommonServiceImpl implements CommonService{
 	@Override
 	public List<ContractExtModel> searchContract(String searchType, String searchValue) {
 		return utilDao.searchContract(searchType, searchValue);
+	}
+
+	@Override
+	public List<CompetitionModel> searchCompetition(String searchType, String searchValue) {
+		return utilDao.searchCompetition(searchType, searchValue);
 	}
 	
 	

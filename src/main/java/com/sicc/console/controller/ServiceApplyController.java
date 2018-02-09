@@ -26,6 +26,7 @@ import com.sicc.console.common.CommonUtil;
 import com.sicc.console.common.Pagination;
 import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.CodeModel;
+import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.model.ServiceDetailModel;
 import com.sicc.console.model.ServiceExtModel;
 import com.sicc.console.model.ServiceModel;
@@ -45,6 +46,23 @@ public class ServiceApplyController {
 	
     private Integer rowPerPage = 10;
 	
+    @ResponseBody
+    @RequestMapping("/searchCompetitionService")
+    public List<CompetitionModel> searchCompetitionService(Model model,
+    		 @RequestParam(value="searchType", required=false) String searchType, 
+    		 @RequestParam(value="searchValue", required=false) String searchValue){
+    	
+    	if(searchType == null) {
+    		searchType = "N";
+    	}
+    	
+    	List<CompetitionModel> competitionList = commonService.searchCompetition(searchType, searchValue);
+    	
+    	return competitionList;
+    }
+    
+    
+    
     @GetMapping("/insServiceApply") 
     public String insServiceApply(Model model) {
     	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());

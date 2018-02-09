@@ -8,6 +8,26 @@
 
 $(document).ready(function(){
 
+	$("#btnCancel").click(function(){
+		location.href="/selListServiceApply";
+	});
+	
+	//검색어 입력
+	$("#searchValue").keyup(function(){
+	$.getJSON('searchCompetitionService', {"searchType" : $('#searchType').val(), "searchValue" : $('#searchValue').val()}, function(data){
+		var html;
+		$("#tenantId option").remove();
+		
+		var obj = $("#searchValue").offset();
+		
+		$(data).each(function(entryIndex, entry){
+			
+			$('#tenantId').append('<option value="'+entry.tenantId+'">'+entry.cpNm+' [ tenant id : '+entry.tenantId+' ]</option>');
+		});
+		
+	});
+});
+	
     // 서비스 추가 버튼 클릭시
     $("#addRowBtn").click(function(){
     	
@@ -331,13 +351,21 @@ function setDatepicker(){
 				<div class="form-group">
 				<label class="col-sm-2 form-control-label">* 대회선택</label>
 				<div class="row">
+                 <select id="searchType" name="searchType" class="form-control">
+                   <option value="C">대회코드</option>
+                   <option value="N">대회명</option>
+                 </select>
+                 <input id="searchValue" type="text" placeholder="유형 선택 후 검색어 입력" class="mx-sm-2 form-control form-control">
+					<select id="tenantId" name="tenantId" class="form-control">
+	                    <c:forEach items="${competitionList}" var="list" varStatus="parent">
+	                      <option value="${list.tenantId}">${list.cpNm} [ tenant id : ${list.tenantId} ]</option>
+	                    </c:forEach>
+                    </select>
+
 					<div style="width: 60%; padding: 0.375rem 0.75rem;">
 						<input type="hidden" id="tenantId" name="tenantId" value="2018111111"/>
 						<input type="hidden" id="cpCd" name="cpCd" value="test11"/>
 						<input type="text" class="form-control" id="cpNm" name="cpNm" value="test"/>
-					</div>
-					<div style="width: 30%; padding: 0.375rem 0.75rem;">
-						<button type="button" id="searchCpBtn" class="btn btn-primary">검색</button>
 					</div>
 				</div>
 				</div>

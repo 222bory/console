@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import com.sicc.console.dao.CodeDao;
 import com.sicc.console.dao.UtilDao;
 import com.sicc.console.model.CodeModel;
+import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.model.ContractExtModel;
 
 public class UtilDaoImpl implements UtilDao{
@@ -35,6 +36,15 @@ public class UtilDaoImpl implements UtilDao{
 		map.put("searchValue", searchValue);
 		
 		return sqlSessionTemplate.selectList("com.sicc.console.dao.UtilDao.searchContract", map);
+	}
+
+	@Override
+	public List<CompetitionModel> searchCompetition(String searchType, String searchValue) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchType", searchType);
+		map.put("searchValue", searchValue);
+
+		return sqlSessionTemplate.selectList("com.sicc.console.dao.UtilDao.searchCompetition", map);
 	}
 	
 }
