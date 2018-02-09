@@ -4,7 +4,29 @@
 
 <script type="text/javascript">
 	/* var flag = false; */
-
+	
+	$(document).ready(function(){
+		$("#btnCancel").click(function(){
+			location.href="/selListCompetition";
+		});
+		
+		$("#searchValue").keyup(function(){
+			$.getJSON('searchCompetition', {"searchType" : $('#searchType').val(), "searchValue" : $('#searchValue').val()}, function(data){
+				var html;
+				$("#tenantId option").remove();
+				
+				var obj = $("#searchValue").offset();
+				
+				$(data).each(function(entryIndex, entry){
+					
+					$('#tenantId').append('<option value="'+entry.tenantId+'">'+entry.contNm+' [ tenant id : '+entry.tenantId+' ]</option>');
+				});
+				
+			});
+		});
+	});
+	
+	
 	function fn_dupl() {
 		alert("test");
 		$.ajax({
@@ -49,8 +71,9 @@
 				$("#cpStartDt").datepicker("setDate", new Date());
 				$("#cpEndDt").datepicker("setDate", new Date());
 	});
-</script>
+	
 
+</script>
 
 <div class="breadcrumb-holder"> 
 	<div class="container-fluid">
@@ -74,58 +97,30 @@
 					<div class="card-body">
 						<form class="form-horizontal" id="frm" name="frm" method="POST" action="/insCompetition">
 							<div class="form-group">
+								<div class="card-header d-flex align-items-center">
+				                    <div class="form-group">
+				                        <select id="searchType" name="searchType" class="form-control">
+				                          <option value="C">계약명</option>
+				                          <option value="T">테넌트아이디</option>
+				                        </select>
+				                    </div>
+				                    <div class="form-group">
+				                      <input id="searchValue" type="text" placeholder="유형 선택 후 검색어 입력 -> 아래 고객계약 선택에서 확인" class="mx-sm-2 form-control form-control">
+				                    </div>
+				                </div>
 								<label class="col-sm-2 form-control-label">* 고객계약 선택</label>
-								<div class="col-md-6">
-										<div class="row">
-											<div style="width: 60%; padding: 0.375rem 0.75rem;">
-												<input type="text" class="form-control" id="tenantId" name="tenantId">
-											</div>
-											<div style="width: 30%; padding: 0.375rem 0.75rem;">
-												<button type="button" id="btnDupl" onclick="fnDupl()" class="btn btn-primary">중복확인</button>
-											</div>
-										</div>
-									</div>
+								<div class="form-group">
+			                        <div class="col-sm-5 select">
+			                          <select id="tenantId" name="tenantId" class="form-control">
+			                          <c:forEach items="${contractList}" var="list" varStatus="parent">
+			                            <option value="${list.tenantId}">${list.contNm} [ tenant id : ${list.tenantId} ]</option>
+			                          </c:forEach>
+			                          </select>
+			                        </div>
+								</div>
 								<div class="help-block with-errors"></div>
-
-								<!-- Modal -->
-								<!-- <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-									<div role="document" class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 id="exampleModalLabel" class="modal-title">중복확인</h5>
-												<button type="button" data-dismiss="modal" aria-label="Close" class="close">
-													<span aria-hidden="true">×</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<h2>아이디 중복확인 결과</h2>
-												<p id="duplResult"></p>
-											</div>
-											<div class="modal-footer">
-												<input type="button" data-dismiss="modal" class="btn btn-secondary" value="닫기" /> 
-												<input type="button" data-dismiss="modal" class="btn btn-primary" value="확인" />
-											</div>
-										</div>
-									</div>
-								</div> -->
-								<!-- Modal End-->
-
 							</div>
 							<div class="line"></div>
-							<!-- <div class="form-group">
-								<label class="col-sm-2 form-control-label">* 비밀번호</label>
-								<div class="col-md-5">
-									<input type="password" class="form-control" id="upw" name="upw" placeholder="영문+숫자+특수문자 10자리 이상">
-								</div>
-							</div>
-							<div class="line"></div>
-							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* 비밀번호 확인</label>
-								<div class="col-md-5">
-									<input type="password" class="form-control" id="upwConfirm" name="upwConfirm" placeholder="영문+숫자+특수문자 10자리 이상">
-								</div>
-							</div>
-							<div class="line"></div> -->
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 대회 코드</label>
 								<div class="col-md-5">

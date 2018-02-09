@@ -109,6 +109,7 @@
          WHERE cust.cust_id = cont.cust_id
            AND cont.tenant_id = cp.tenant_id
            AND cont.tenant_id = #{tenantId}
+           AND cp.cp_cd = #{cpCd}
     </select>
     
 </mapper>
