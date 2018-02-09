@@ -22,5 +22,8 @@ public interface ContractDao {
 	
 	public void delContract(ContractExtModel contractExtModel);
 	
+	public void upCust(ContractExtModel contractExtModel);
+	
+	public void upContract(ContractExtModel contractExtModel);
 }
 

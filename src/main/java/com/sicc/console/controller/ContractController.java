@@ -141,21 +141,105 @@ public class ContractController {
 		cem.setPasswordLodCd(commonService.selCodeByCdId(CommonEnums.PASSWORD_LOD_CD.getValue(), cem.getPasswordLodCd()));
 		cem.setPasswordRnwlCyclCd(commonService.selCodeByCdId(CommonEnums.RNWL_CYCL_CD.getValue(), cem.getPasswordRnwlCyclCd()));
 		
-		System.out.println("page : "+ param.get("page"));
-        model.addAttribute("cem", cem); 
+		model.addAttribute("cem", cem); 
        return "/contract/selContract";
     	
+    }
+	
+	@RequestMapping("/upContractForm")
+    public String upContractForm(@RequestParam Map<String, String> param, ContractExtModel contractExtModel, Model model) {
+		//코드 조회
+    	List<CodeModel> contStatCdList = commonService.selCode(CommonEnums.CONT_STAT_CD.getValue());
+    	List<CodeModel> networkFgCdList = commonService.selCode(CommonEnums.NETWORK_FG_CD.getValue());
+    	List<CodeModel> passwordLodCdList = commonService.selCode(CommonEnums.PASSWORD_LOD_CD.getValue());
+    	List<CodeModel> rnwlCyclCd = commonService.selCode(CommonEnums.RNWL_CYCL_CD.getValue());
+    	
+    	model.addAttribute("contStatCdList", contStatCdList);         //계약상태코드
+    	model.addAttribute("networkFgCdList", networkFgCdList);		  //네트워크구분코드
+    	model.addAttribute("passwordLodCdList", passwordLodCdList);	  //비밀번호난이도코드
+    	model.addAttribute("rnwlCyclCd", rnwlCyclCd);				  //비밀번호갱신주기코드
+    	
+    	// 페이징 처리
+		String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
+		if(NumberUtils.toInt(page) < 1) page = "1";
+		
+		int rows = StringUtils.isNotEmpty( param.get("rowPerPagePop"))? NumberUtils.toInt(param.get("rowPerPagePop")) : rowPerPagePop;
+		
+		contractExtModel.setRowPerPage(rows);
+		contractExtModel.setPage(NumberUtils.toInt(page));
+		contractExtModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
+    	
+		
+        List<ContractExtModel> list = contractService.selListCust(contractExtModel);  
+        
+        System.out.println("list : "+ list.get(0));
+        //페이징 처리
+        Pagination pagination = new Pagination();
+		if(list != null && !list.isEmpty() ){
+			pagination.setTotalRow(list.get(0).getTotalCount()).setRowPerPage(rows).setCurrentPage(page);
+		} else {
+			pagination.setTotalRow(0);
+		}
+		
+		System.out.println("addate : "+list.get(0).getAdDate());
+		
+		model.addAttribute("list", list);
+        model.addAttribute("adminModel", contractExtModel); 
+		model.addAttribute("pagination", pagination);
+    	
+		
+		//모달팝업 페이징을 위한 플레그 처리 
+		String mf = StringUtils.defaultIfEmpty(param.get("modalFlag"), "N");   
+		if(mf.equals("Y")){
+			model.addAttribute("modalFlag", "popshow");
+		}else {
+			model.addAttribute("modalFlag", "pophide");
+		}
+    			
+		ContractExtModel cem = contractService.selContract(contractExtModel);  
+        
+		cem.setContStatCd(commonService.selCodeByCdId(CommonEnums.CONT_STAT_CD.getValue(), cem.getContStatCd()));
+		cem.setNetworkFgCd(commonService.selCodeByCdId(CommonEnums.NETWORK_FG_CD.getValue(), cem.getNetworkFgCd()));
+		cem.setPasswordLodCd(commonService.selCodeByCdId(CommonEnums.PASSWORD_LOD_CD.getValue(), cem.getPasswordLodCd()));
+		cem.setPasswordRnwlCyclCd(commonService.selCodeByCdId(CommonEnums.RNWL_CYCL_CD.getValue(), cem.getPasswordRnwlCyclCd()));
+		
+		model.addAttribute("cem", cem); 
+       return "/contract/upContract";
+    	
+    }
+	
+	@RequestMapping("/upContract")
+    public String upContract(@RequestParam Map<String, String> param, ContractExtModel contractExtModel, Model model,@RequestParam("validStartDt") String validStartDt,
+    		@RequestParam("validEndDt") String validEndDt) {
+		
+		//contractExtModel.getCustId();
+		//contractExtModel.getTenantId();
+		System.out.println("map : "+param.toString());
+		
+		//유효일 처리
+    	validStartDt = validStartDt.replaceAll("-", "");
+    	validEndDt = validEndDt.replaceAll("-", "");
+		
+    	contractExtModel.setValidStartDt(validStartDt);
+    	contractExtModel.setValidEndDt(validEndDt);
+    	
+		//고객 업데이트
+		contractService.upCust(contractExtModel);
+		
+		//계약 업데이트
+		contractService.upContract(contractExtModel);
+		//업데이트 완료 플레그 
+    	model.addAttribute("result", "1");
+    	
+    	return "jsonView";
     }
 	
 	@RequestMapping("/delContract")
     public String delContract(@RequestParam Map<String, String> param, ContractExtModel contractExtModel, Model model) {
 		
-		contractExtModel.getCustId();
-		contractExtModel.getTenantId();
+		//contractExtModel.getCustId();
+		//contractExtModel.getTenantId();
 		
-		System.out.println("딜리트 시작~");
-		System.out.println("getCustId : "+ contractExtModel.getCustId());
-		System.out.println("getTenantId :"+ contractExtModel.getTenantId());
 		//계약 삭제
 		contractService.delContract(contractExtModel);
 		System.out.println("계약 삭제 완료!");

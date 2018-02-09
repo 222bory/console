@@ -143,4 +143,36 @@
         DELETE FROM concustcontm WHERE tenant_id = '${tenantId}'
     </delete>
     
+    <update id="upCust" parameterType="com.sicc.console.model.ContractExtModel">
+    	 UPDATE concustm
+    	   SET cust_nm = #{custNm},
+			   rep_fax_no = #{repFaxNo},
+			   rep_tel_no = #{repTelNo},
+			   corp_ad_no = #{corpAdNo},
+			   mgr_nm = #{mgrNm},
+			   mgr_email_addr = #{mgrEmailAddr},
+			   mgr_tel_no = #{mgrTelNo},
+			   udt_id = #{udtId},
+			   udt_ip = #{udtIp},
+			   udt_date = current_timestamp
+         WHERE cust_id = #{custId}		   
+    </update>
+    
+    <update id="upContract" parameterType="com.sicc.console.model.ContractExtModel">
+    	 UPDATE concustcontm
+    	   SET cont_nm = #{contNm},
+			   valid_start_dt = #{validStartDt},
+			   valid_end_dt = #{validEndDt},
+			   cont_stat_cd = #{contStatCd},
+			   network_fg_cd = #{networkFgCd},
+			   password_lod_cd = #{passwordLodCd},
+			   password_min_len = #{passwordMinLen},
+			   password_rnwl_cycl_cd = #{passwordRnwlCyclCd},
+			   password_use_lmt_yn= #{passwordUseLmtYn},
+			   password_pose_yn= #{passwordPoseYn},
+			   udt_id = #{udtId},
+			   udt_ip = #{udtIp},
+			   udt_date = current_timestamp
+         WHERE tenant_id = #{tenantId}			   
+    </update>
 </mapper>

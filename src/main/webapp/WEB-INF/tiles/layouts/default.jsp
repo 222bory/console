@@ -122,7 +122,7 @@
               </ul>
             </li>
             
-          <!--   <li> <a href="#pages-nav-list2" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>테넌트 관리</span>
+            <li> <a href="#pages-nav-list2" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>테넌트 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list2" class="collapse list-unstyled">
                 <li> <a href="#">Page 1</a></li>
@@ -150,7 +150,7 @@
                 <li> <a href="#">Page 3</a></li>
                 <li> <a href="#">Page 4</a></li>
               </ul>
-            </li> -->
+            </li>
            
             <li> <a href="#pages-nav-list5" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>시스템 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>

@@ -46,6 +46,13 @@ public class ContractDaoImpl implements ContractDao{
 	public void delContract(ContractExtModel contractExtModel) {
 		sqlSessionTemplate.delete("com.sicc.console.dao.ContractDao.delContract", contractExtModel);
 	}
-
+	@Override
+	public void upCust(ContractExtModel contractExtModel) {
+		sqlSessionTemplate.delete("com.sicc.console.dao.ContractDao.upCust", contractExtModel);
+	}
+	@Override
+	public void upContract(ContractExtModel contractExtModel) {
+		sqlSessionTemplate.delete("com.sicc.console.dao.ContractDao.upContract", contractExtModel);
+	}
 }
 

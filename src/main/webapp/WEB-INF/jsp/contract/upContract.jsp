@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="crt" uri="http://java.sun.com/jstl/core_rt"%>
 
 <script type="text/javascript">
 $(function () {
@@ -27,35 +30,34 @@ $(function () {
 	 	
 		$("#myModal").modal('hide');
     });
-
-
-	$("#btnList").on("click", function(e){
+	
+	$("#btnCancel").on("click", function(e){
 		$("#frm").attr("action", "/selListContract");
 		$("#frm").submit();
 	});
-	
-	$("#btnModify").on("click", function(e){
-		$("#frm").attr("action", "/upContractForm");
-		$("#frm").submit();
-	});
-	
-	$("#btnDelete").on("click", function(e){
-		var r = confirm("정말 삭제 하시겠습니까?");
+
+
+	$("#btnUpdate").on("click", function(e){
+		
+		var r = confirm("정말 수정 하시겠습니까?");
 		
 		if (r == true) {
+			$("input[name=custId]").attr('disabled', false);
+			$("input[name=tenantId]").attr('disabled', false);
+			
 			$.ajax({
 				type : "POST",
-				url  : "/delContract", 
+				url  : "/upContract", 
 				dataType : "json",
 				data : $("#frm").serialize(),
 				success : function(data, status) {
 					try{
 						if( data.result == '1'){
-							alert("삭제 성공!");
+							alert("수정 성공!");
 							redirectList();
 						} else {
 							//alert(makeMessage(INSERT_FAIL, '<br>' + 'RETURN CODE : ' + data.result + '<br>' + 'RETURN MESSAGE : ' + data.message));
-							alert("RETURN CODE : "+ data.result+' , '+"삭제 실패!");
+							alert("RETURN CODE : "+ data.result+' , '+"수정 실패!");
 						}
 					}catch(e) {	
 						alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
@@ -70,11 +72,10 @@ $(function () {
 					}
 					return;
 				}
-			}); 
-	    } else {
+			});
+		} else {
 	        //취소 처리 
 	    }
-		
 	});
 	
 	$('#cp3').colorpicker({
@@ -113,36 +114,7 @@ function goPage(page) {
 
 function submit(){
 	$("#frm1").submit();
-	/* $.ajax({
-		type : "POST",
-		url  : "/selCustId", 
-		dataType : "json",
-		data : $("#frm1").serialize(),
-		success : function(data, status) {
-			try{
-				if( data.result == '1'){
-					alert("조회 성공!");
-					//redirectList();
-					$('#myModal').modal('hide');
-					$("#myModal").modal('show');
-				} else {
-					//alert(makeMessage(INSERT_FAIL, '<br>' + 'RETURN CODE : ' + data.result + '<br>' + 'RETURN MESSAGE : ' + data.message));
-					alert("RETURN CODE : "+ data.result+' , '+"등록 실패!");
-				}
-			}catch(e) {	
-				alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
-			}
-		},
-		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			if(XMLHttpRequest.status == '901'){
-				sessionTimeOut();			
-			} else {
-				//console.log(XMLHttpRequest.code + ":" + textStatus + ":" + errorThrown);
-				alert('서비스에 문제가 있습니다. 관리자에게 문의 하세요.');
-			}
-			return;
-		}
-	}); */
+	
 	
 }
 </script>
@@ -152,48 +124,75 @@ function submit(){
 	<div class="container-fluid">
 		<ul class="breadcrumb">
 			<li class="breadcrumb-item"><a href="index.html">서비스관리</a></li>
-			<li class="breadcrumb-item active">계약 상세</li>
+			<li class="breadcrumb-item active">계약 수정</li>
 		</ul>
 	</div>
 </div>
 <section class="forms">
-	<form class="form-horizontal" id="frm" name="frm" method="POST" action="/insContract">
-	<input type="hidden" name="page" value="${contractExtModel.page}" />
+	<form class="form-horizontal" id="frm" name="frm" method="POST" action="">
 	<div class="container-fluid">
 		<header>
-			<h1 class="h3 display">계약 상세</h1>
+			<h1 class="h3 display">계약 수정</h1>
 		</header>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header d-flex align-items-center">
-						<h2 class="h5 display">고객 정보 상세</h2>
+						<h2 class="h5 display">고객 정보 수정</h2>
 					</div>
 					<div class="card-body">
 						
 							<div class="form-group row has-success">
-		                      <label class="col-sm-2 form-control-label">* 고객ID </label>
-		                      <div class="col-md-4">
-		                      <input type="hidden" name="custId" value="${cem.custId}" />
-		                        ${cem.custId}
+		                      <label class="col-sm-2 form-control-label">* 고객ID</label>
+		                      <div class="col-md-3">
+		                        <input type="text" class="form-control" id="custId" name="custId" value="${cem.custId}" disabled>
 		                      </div>
 		                      
-		                     
+		                      <div class="form-group">
+		                      	<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">검색</button>
+			                      <!-- <input type="button" value="검색" class="mx-sm-3 btn btn-primary"> -->
+			                    </div>
+			                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			                  <label class="col-sm-2 form-control-label">* 고객명</label>
 		                      <div class="col-md-4">
-		                        ${cem.custNm}
+		                        <input type="text" class="form-control" id="custNm" name="custNm" value="${cem.custNm}">
 		                      </div>  
 		                    </div>
+							
+
+								<!-- Modal -->
+								<!-- <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+									<div role="document" class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 id="exampleModalLabel" class="modal-title">중복확인</h5>
+												<button type="button" data-dismiss="modal" aria-label="Close" class="close">
+													<span aria-hidden="true">×</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<h2>아이디 중복확인 결과</h2>
+												<p id="duplResult"></p>
+											</div>
+											<div class="modal-footer">
+												<input type="button" data-dismiss="modal" class="btn btn-secondary" value="닫기" /> 
+												<input type="button" data-dismiss="modal" class="btn btn-primary" value="확인" />
+											</div>
+										</div>
+									</div>
+								</div> -->
+								<!-- Modal End-->
+
 							
 		                    <div class="line"></div>
 		                    <div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 대표팩스번호</label>
 		                      <div class="col-md-4">
-		                        ${cem.repFaxNo}
+		                        <input type="text" class="form-control" id="repFaxNo" name="repFaxNo" value="${cem.repFaxNo}">
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 대표전화번호</label>
 		                      <div class="col-md-4">
-		                        ${cem.repTelNo}
+		                        <input type="text" class="form-control" id="repTelNo" name="repTelNo" value="${cem.repTelNo}">
 		                      </div>
 		                    </div>
 		                   
@@ -201,11 +200,11 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 법인등록번호</label>
 		                      <div class="col-md-4">
-		                        ${cem.corpAdNo}
+		                        <input type="text" class="form-control" id="corpAdNo" name="corpAdNo" value="${cem.corpAdNo}">
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 담당자명</label>
 		                      <div class="col-md-4">
-		                        ${cem.mgrNm}
+		                        <input type="text" class="form-control" id="mgrNm" name="mgrNm" value="${cem.mgrNm}">
 		                      </div>
 		                    </div>
 		                    
@@ -213,13 +212,16 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 담당자이메일주소</label>
 		                      <div class="col-md-4">
-		                        ${cem.mgrEmailAddr}
+		                        <input type="text" class="form-control" id="mgrEmailAddr" name="mgrEmailAddr" value="${cem.mgrEmailAddr}">
 		                      </div>
 		                        <label class="col-sm-2 form-control-label">* 담당자전화번호</label>
 		                      <div class="col-md-4">
-		                        ${cem.mgrTelNo}
+		                        <input type="text" class="form-control" id="mgrTelNo" name="mgrTelNo" value="${cem.mgrTelNo}">
 		                      </div>
 		                    </div>
+		                    
+							
+							
 		         	</div>
 				</div>
 			</div>
@@ -232,18 +234,17 @@ function submit(){
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header d-flex align-items-center">
-						<h2 class="h5 display">계약 정보 상세</h2>
+						<h2 class="h5 display">계약 정보 수정</h2>
 					</div>
 					<div class="card-body">
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">테넌트ID</label>
 		                      <div class="col-md-4">
-		                      <input type="hidden" name="tenantId" value="${cem.tenantId}" /> 
-		                        ${cem.tenantId}
+		                        <input type="text" class="form-control" id="tenantId" name="tenantId" value="${cem.tenantId}" disabled>
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 계약명</label>
 		                      <div class="col-md-4">
-		                        ${cem.contNm}
+		                        <input type="text" class="form-control" id="contNm" name="contNm" value="${cem.contNm}">
 		                      </div>
 		                    </div>
 		                  
@@ -251,24 +252,32 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 유효시작일자</label>
 		                      <div class="col-md-4">
-		                        ${cem.validStartDt}
+		                        <input type="text" class="form-control" id="validStartDt" name="validStartDt" value="${cem.validStartDt}">
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 유효종료일자</label>
 		                      <div class="col-md-4">
-		                        ${cem.validEndDt}
+		                        <input type="text" class="form-control" id="validEndDt" name="validEndDt" value="${cem.validEndDt}">
 		                      </div>
 		                    </div>
 		                   
-							
-		                    <div class="line"></div>
+							<div class="line"></div>
 		                    <div class="form-group row has-success">
 								<label class="col-sm-2 form-control-label">* 계약상태</label>
 		                        <div class="col-sm-4 select">
-		                        ${cem.contStatCd}
+		                          <select id="contStatCd" name="contStatCd" class="form-control">
+		                          <c:forEach items="${contStatCdList}" var="list" varStatus="parent">
+		                            <option value="${list.cdId}" ${list.cdNm == cem.contStatCd ? 'selected="selected"' : '' }>${list.cdNm}</option>
+		                            
+		                          </c:forEach> 
+		                          </select>
 		                        </div>
 		                        <label class="col-sm-2 form-control-label">* 네트워크구분</label>
 		                        <div class="col-sm-4 select">
-		                        ${cem.networkFgCd}
+		                          <select id="networkFgCd" name="networkFgCd" class="form-control">
+		                          <c:forEach items="${networkFgCdList}" var="list" varStatus="parent">
+		                            <option value="${list.cdId}" ${list.cdNm == cem.networkFgCd ? 'selected="selected"' : '' }>${list.cdNm}</option>
+		                          </c:forEach> 
+		                          </select>
 		                        </div>
 							</div>
 		                    
@@ -276,19 +285,36 @@ function submit(){
 							<div class="form-group row has-success">
 								<label class="col-sm-2 form-control-label">* 비밀번호난이도</label>
 		                        <div class="col-sm-4 select">
-		                        ${cem.passwordLodCd}
+		                          <select id="passwordLodCd" name="passwordLodCd" class="form-control">
+		                          <c:forEach items="${passwordLodCdList}" var="list" varStatus="parent">
+		                            <option value="${list.cdId}" ${list.cdNm == cem.passwordLodCd ? 'selected="selected"' : '' }>${list.cdNm}</option>
+		                          </c:forEach> 
+		                          </select>
 		                        </div>
 		                        <label class="col-sm-2 form-control-label">* 비밀번호갱신주기</label>
 		                        <div class="col-sm-4 select">
-		                        ${cem.passwordRnwlCyclCd}
+		                          <select id="passwordRnwlCyclCd" name="passwordRnwlCyclCd" class="form-control">
+		                          <c:forEach items="${rnwlCyclCd}" var="list" varStatus="parent">
+		                            <option value="${list.cdId}" ${list.cdNm == cem.passwordRnwlCyclCd ? 'selected="selected"' : '' }>${list.cdNm}</option>
+		                          </c:forEach> 
+		                          </select>
 		                        </div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 비밀번호최소길이</label>
 		                      <div class="col-sm-10">
-		                      ${cem.passwordMinLen}
-		                        
+		                        <div>
+		                          <input id="passwordMinLen1" type="radio" ${8 == cem.passwordMinLen ? 'checked="checked"' : '' } value="8" name="passwordMinLen">
+		                          <label for="passwordMinLen1">8자리</label>
+		                          <input id="passwordMinLen2" type="radio" ${10 == cem.passwordMinLen ? 'checked="checked"' : '' } value="10" name="passwordMinLen">
+		                          <label for="passwordMinLen2">10자리</label>
+		                          <input id="passwordMinLen2" type="radio" ${12 == cem.passwordMinLen ? 'checked="checked"' : '' } value="12" name="passwordMinLen">
+		                          <label for="passwordMinLen2">12자리</label>
+		                          <input id="passwordMinLen2" type="radio" ${16 == cem.passwordMinLen ? 'checked="checked"' : '' }value="16" name="passwordMinLen">
+		                          <label for="passwordMinLen2">16자리</label>
+		                        </div>
+		                       
 		                      </div>
 		                    </div>
 		                   
@@ -297,16 +323,13 @@ function submit(){
 						   <div class="form-group row">
 		                      <label class="col-sm-2 form-control-label">* 비밀번호사용제한여부</label>
 		                      <div class="col-sm-10">
-		                      
-		                      <c:choose>
-		                      	<c:when test="${cem.passwordUseLmtYn eq 'Y'}">
-		                      		사용
-		                      	</c:when>
-		                      	<c:otherwise>
-		                      	    미사용
-		                      </c:otherwise>
-		                      </c:choose>
-		                      
+		                        <div>
+		                          <input id="passwordUseLmtYn1" type="radio" ${'Y' == cem.passwordUseLmtYn ? 'checked="checked"' : '' } value="Y" name="passwordUseLmtYn">
+		                          <label for="optionsRadios1">사용</label>
+		                          <input id="passwordUseLmtYn2" type="radio" ${'N' == cem.passwordUseLmtYn ? 'checked="checked"' : '' } value="N" name="passwordUseLmtYn">
+		                          <label for="optionsRadios2">미사용</label>
+		                        </div>
+		                       
 		                      </div>
 		                    </div>	
 							
@@ -316,14 +339,10 @@ function submit(){
 		                      <label class="col-sm-2 form-control-label">* 비밀번호일시정지여부</label>
 		                      <div class="col-sm-10">
 		                        <div>
-		                        <c:choose>
-		                      	<c:when test="${cem.passwordPoseYn eq 'Y'}">
-		                      		사용
-		                      	</c:when>
-		                      	<c:otherwise>
-		                      	    미사용
-		                      </c:otherwise>
-		                      </c:choose>
+		                          <input id="passwordPoseYn1" type="radio" ${'Y' == cem.passwordPoseYn ? 'checked="checked"' : '' } value="Y" name="passwordPoseYn">
+		                          <label for="optionsRadios1">사용</label>
+		                          <input id="passwordPoseYn2" type="radio" ${'N' == cem.passwordPoseYn ? 'checked="checked"' : '' }value="N" name="passwordPoseYn">
+		                          <label for="optionsRadios2">미사용</label>
 		                        </div>
 		                     
 		                      </div>
@@ -332,10 +351,8 @@ function submit(){
 							<div class="line"></div> 
 							<div class="form-group">
 								<div class="col-sm-4 offset-sm-2">
-									
-									<button type="button" id="btnDelete" class="btn btn-secondary" >삭제</button>
-									<button type="button" id="btnModify" class="btn btn-primary" >수정</button>
-									<button type="button" id="btnList" class="btn btn-primary" >목록</button>
+									<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
+									<button type="button" id="btnUpdate" class="btn btn-primary" >수정</button>
 								</div>
 							</div>
 							
