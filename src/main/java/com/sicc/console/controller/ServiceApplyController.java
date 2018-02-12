@@ -53,7 +53,7 @@ public class ServiceApplyController {
     		 @RequestParam(value="searchValue", required=false) String searchValue){
     	
     	if(searchType == null) {
-    		searchType = "N";
+    		searchType = "C";
     	}
     	
     	List<CompetitionModel> competitionList = commonService.searchCompetition(searchType, searchValue);
@@ -64,10 +64,19 @@ public class ServiceApplyController {
     
     
     @GetMapping("/insServiceApply") 
-    public String insServiceApply(Model model) {
+    public String insServiceApply(Model model,
+    		@RequestParam(value="searchType", required=false) String searchType, 
+   		 @RequestParam(value="searchValue", required=false) String searchValue){
     	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());
     	List<CodeModel> languageList = commonService.selCode(CommonEnums.LANG_CD.getValue());
 
+    	if(searchType == null) {
+    		searchType = "C";
+    	}
+    	
+    	List<CompetitionModel> competitionList = commonService.searchCompetition(searchType, searchValue);
+    	
+    	model.addAttribute("competitionList",competitionList);
     	model.addAttribute("serviceList",serviceList);
     	model.addAttribute("languageList",languageList);
     	
@@ -110,6 +119,8 @@ public class ServiceApplyController {
     		@RequestParam(value="fithLangCd", required=false) String[] fithLangCd,
     		HttpServletRequest req, HttpServletResponse res) {
     	
+    		System.out.println("tenantId --> "+tenantId +", cpCd --> "+cpCd);
+    	
 	    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    	String crtId = principal.getUsername(); //현재 사용자
 	    	String crtIp = req.getRemoteAddr(); //현재 사용자 ip
@@ -119,10 +130,10 @@ public class ServiceApplyController {
     	
 	    	int upCount=0;
 	    	int downCount=0;
-	    	
+
+    		System.out.println("serviceCd.length-->"+serviceCd.length);
+    		System.out.println("serviceCdD.length-->"+serviceCdD.length);
 	    	for(int i=0; i<serviceCd.length; i++) {
-	    		System.out.println("serviceCd.length-->"+serviceCd.length);
-	    		System.out.println("serviceCdD.length-->"+serviceCdD.length);
 	    		
 	    		//하위서비스가 대표서비스인 경우 --> 상위서비스 insert
 	    		if(systemCd[i].equals("default")){

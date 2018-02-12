@@ -3,10 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<link rel="stylesheet" href="css/custom.css"> 
 <script type="text/javascript">
 
 $(document).ready(function(){
+
 
 	$("#btnCancel").click(function(){
 		location.href="/selListServiceApply";
@@ -14,23 +14,23 @@ $(document).ready(function(){
 	
 	//검색어 입력
 	$("#searchValue").keyup(function(){
-	$.getJSON('searchCompetitionService', {"searchType" : $('#searchType').val(), "searchValue" : $('#searchValue').val()}, function(data){
-		var html;
-		$("#tenantId option").remove();
-		
-		var obj = $("#searchValue").offset();
-		
-		$(data).each(function(entryIndex, entry){
+		$.getJSON('searchCompetitionService', {"searchType" : $('#searchType').val(), "searchValue" : $('#searchValue').val()}, function(data){
+			var html;
+			$("#competition option").remove();
 			
-			$('#tenantId').append('<option value="'+entry.tenantId+'">'+entry.cpNm+' [ tenant id : '+entry.tenantId+' ]</option>');
+			var obj = $("#searchValue").offset();
+			
+			$(data).each(function(entryIndex, entry){
+				
+				$('#competition').append('<option value="'+entry.tenantId+'.'+entry.cpCd+'">'+entry.cpNm+' [ tenant id : '+entry.tenantId+' 대회코드 : '+entry.cpCd+' ]</option>');
+			});
+			
 		});
-		
 	});
-});
 	
     // 서비스 추가 버튼 클릭시
     $("#addRowBtn").click(function(){
-    	
+
     	addServiceTbl('btn');
     	
     	// 달력 초기화
@@ -48,7 +48,7 @@ $(document).ready(function(){
 	            "todayHighlight":true
 	    });
 	    $('input[name=serviceEndDt]').datepicker("setDate", new Date());
-	 	
+	    
     });
     
 			
@@ -62,6 +62,13 @@ $(document).ready(function(){
  	
  	//등록 
 	$("#btnRegister").on("click", function(e){
+		//테넌트 ID, 대회코드 setting
+		var competitionStr = $("#competition").val().split('.');
+		var tenantId = competitionStr[0];
+		var cpCd = competitionStr[1];
+
+		$("#tenantId").val(tenantId);	
+		$("#cpCd").val(cpCd);
 		console.log($("#frm").serialize());
 		
 		//disabled 설정 해제
@@ -83,7 +90,7 @@ $(document).ready(function(){
 			$(this).next().val('N');
 		});
 		
-		
+
 		$.ajax({
 			type : "POST",
 			url  : "/insServiceApply", 
@@ -350,24 +357,22 @@ function setDatepicker(){
 				
 				<div class="form-group">
 				<label class="col-sm-2 form-control-label">* 대회선택</label>
-				<div class="row">
-                 <select id="searchType" name="searchType" class="form-control">
-                   <option value="C">대회코드</option>
-                   <option value="N">대회명</option>
-                 </select>
-                 <input id="searchValue" type="text" placeholder="유형 선택 후 검색어 입력" class="mx-sm-2 form-control form-control">
-					<select id="tenantId" name="tenantId" class="form-control">
-	                    <c:forEach items="${competitionList}" var="list" varStatus="parent">
-	                      <option value="${list.tenantId}">${list.cpNm} [ tenant id : ${list.tenantId} ]</option>
-	                    </c:forEach>
-                    </select>
 
-					<div style="width: 60%; padding: 0.375rem 0.75rem;">
-						<input type="hidden" id="tenantId" name="tenantId" value="2018111111"/>
-						<input type="hidden" id="cpCd" name="cpCd" value="test11"/>
-						<input type="text" class="form-control" id="cpNm" name="cpNm" value="test"/>
-					</div>
-				</div>
+				 	<div class="row">
+	                 <select id="searchType" name="searchType" class="form-control-sm">
+	                   <option value="C">대회코드</option>
+	                   <option value="N">대회명</option>
+	                 </select>
+	                 <input id="searchValue" type="text" placeholder="유형 선택 후 검색어 입력" class="mx-sm-2">
+	                 
+					 <select id="competition" name="competition" style="width: 40%; padding: 0.375rem 0.75rem;">
+	                    <c:forEach items="${competitionList}" var="list" varStatus="parent">
+	                      <option value="${list.tenantId}.${list.cpCd}">${list.cpNm} [ tenant id : ${list.tenantId}, 대회코드 : ${list.cpCd} ]</option>
+	                    </c:forEach>
+	                  </select>
+	                  <input type="hidden" id="tenantId" name="tenantId" value=""/>
+	                  <input type="hidden" id="cpCd" name="cpCd" value=""/>
+                   	</div>
 				</div>
 				<div class="line"></div>
 				<div class="form-group">
