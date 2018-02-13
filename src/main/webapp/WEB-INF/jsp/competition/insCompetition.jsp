@@ -132,7 +132,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 대회 규모</label>
 		                        <div class="col-sm-5 select">
-		                          <select id="cpScaleCd" name="cpScaleCd" class="form-control">
+		                          <select id="cpScaleCd" name="cpScaleCd" class="form-control form-control-sm">
 		                          <c:forEach items="${cpScaleCdList}" var="list" varStatus="parent">
 		                            <option value="${list.cdId}">${list.cdNm}</option>
 		                          </c:forEach>
