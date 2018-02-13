@@ -7,7 +7,7 @@
 
 <script>
 $(function () {
-	$("table tr").click(function(){
+	$("table tr[class^='tr']").click(function(){
         tr = $(this);
         var td = tr.children();
 		var custId = td.eq(1).text();
@@ -97,7 +97,7 @@ $(function () {
                     <c:set var="no" value="${pagination.totalRow - (pagination.currentPage - 1) * pagination.rowPerPage }"/>
 					<c:set var="countNo" value="0"/>
                     <c:forEach items="${list}" var="list" varStatus="parent">
-                      <tr>
+                      <tr class="tr">
                         <th scope="row">${no - countNo}</th>
                         <td>${list.custId}</td>
                         <td>${list.custNm}</td>
