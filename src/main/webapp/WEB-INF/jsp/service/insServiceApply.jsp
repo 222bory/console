@@ -251,7 +251,7 @@ function addOptionTbl(serviceCd){
 	    html += "<td>"+serviceCd+"</td>";
 	    html += "<input type='hidden' name='serviceCdD' value='"+serviceCd+"'></div>";
  		html += "<td> <div name='colorGroup' class='input-group colorpicker-component'>"+
- 				"<input name='repColorCd' type='text' class='form-control' />"+
+ 				"<input name='repColorValue' type='text' class='form-control' />"+
  				"<span class='input-group-addon'><i></i></span></div></td>";
  		html += "<td> <div class='col-sm-5 select'> <select name='fstLangCd' class='form select'> <option value='0'>사용안함</option>" +
  			 	" <c:forEach items='${languageList}' var='list'> "+
@@ -435,7 +435,7 @@ function setDatepicker(){
 				<div class="form-group">
 					<div class="col-sm-4 offset-sm-2">
 						<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
-						<input type="button" id="btnRegister" class="btn btn-primary" value="등록"></button>
+						<input type="button" id="btnRegister" class="btn btn-primary" value="등록"></input>
 					</div>
 				</div>
 				</form>

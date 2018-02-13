@@ -26,11 +26,14 @@ import com.sicc.console.common.CommonUtil;
 import com.sicc.console.common.Pagination;
 import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.CodeModel;
+import com.sicc.console.model.CompetitionExtModel;
 import com.sicc.console.model.CompetitionModel;
+import com.sicc.console.model.ServiceDetailExtModel;
 import com.sicc.console.model.ServiceDetailModel;
 import com.sicc.console.model.ServiceExtModel;
 import com.sicc.console.model.ServiceModel;
 import com.sicc.console.service.CommonService;
+import com.sicc.console.service.CompetitionService;
 import com.sicc.console.service.ServiceApplyService;
 
 @Controller
@@ -43,6 +46,9 @@ public class ServiceApplyController {
 	
 	@Autowired
 	CommonService commonService;
+	
+	@Autowired
+	CompetitionService competitionService;
 	
     private Integer rowPerPage = 10;
 	
@@ -111,7 +117,7 @@ public class ServiceApplyController {
     		@RequestParam(value="testEventAddYn", required=true) String[] testEventAddYn,
     		@RequestParam(value="testEventRemarkDesc", required=false) String[] testEventRemarkDesc,
     		@RequestParam(value="serviceCdD", required=true) String[] serviceCdD,
-    		@RequestParam(value="repColorCd", required=false) String[] repColorCd,
+    		@RequestParam(value="repColorValue", required=false) String[] repColorValue,
     		@RequestParam(value="fstLangCd", required=false) String[] fstLangCd,
     		@RequestParam(value="scndLangCd", required=false) String[] scndLangCd,
     		@RequestParam(value="thrdLangCd", required=false) String[] thrdLangCd,
@@ -151,7 +157,7 @@ public class ServiceApplyController {
 	    			for(int j=0; j< serviceCdD.length;j++ ) {
 		    			if(serviceCd[i].equals(serviceCdD[j])) {
 		    				System.out.println("serviceCdD --> "+serviceCdD[j]);
-		    				serviceModel.setRepColorCd(repColorCd[j]);
+		    				serviceModel.setRepColorValue(repColorValue[j]);
 		    				serviceModel.setFstLangCd(fstLangCd[j]);
 		    				serviceModel.setScndLangCd(scndLangCd[j]);
 		    				serviceModel.setThrdLangCd(thrdLangCd[j]);
@@ -219,6 +225,36 @@ public class ServiceApplyController {
 		model.addAttribute("pagination", pagination);
 		
     	return "/service/selListServiceApply";
+    }
+    
+    
+    @GetMapping("/selServiceApply")
+    public String setServiceApply(@RequestParam Map<String,String> param,
+				@RequestParam(value="tenantId", required=true) String tenantId,
+				@RequestParam(value="cpCd", required=true) String cpCd,
+				Model model, ServiceModel serviceModel,
+				HttpServletRequest req, HttpServletResponse res) {
+    	
+    	serviceModel.setTenantId(tenantId);
+    	serviceModel.setCpCd(cpCd);
+    	
+    	CompetitionModel competitionModel = new CompetitionModel();
+    	competitionModel.setTenantId(tenantId);
+    	competitionModel.setCpCd(cpCd);
+    	//대회정보
+    	CompetitionExtModel competition = competitionService.selCompetition(competitionModel);
+
+    	//서비스정보
+    	List<ServiceExtModel> selServiceApply = serviceApplyService.selServiceApply(serviceModel);
+    	List<ServiceDetailExtModel> selServiceApplyDetail = serviceApplyService.selServiceApplyDetail(serviceModel);
+    	
+    	System.out.println(selServiceApplyDetail);
+    	
+    	model.addAttribute("competition",competition);
+    	model.addAttribute("selServiceApply",selServiceApply);
+    	model.addAttribute("selServiceApplyDetail",selServiceApplyDetail);
+    	
+    	return "/service/selServiceApply";
     }
 
 }

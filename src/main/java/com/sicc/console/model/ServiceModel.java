@@ -10,7 +10,7 @@ public class ServiceModel {
 	private String serviceStartDt;
 	private String serviceEndDt;
 	private String serviceUrlAddr;
-	private String repColorCd;
+	private String repColorValue;
 	private String fstLangCd;
 	private String scndLangCd;
 	private String thrdLangCd;
@@ -92,11 +92,12 @@ public class ServiceModel {
 	public void setServiceUrlAddr(String serviceUrlAddr) {
 		this.serviceUrlAddr = serviceUrlAddr;
 	}
-	public String getRepColorCd() {
-		return repColorCd;
+
+	public String getRepColorValue() {
+		return repColorValue;
 	}
-	public void setRepColorCd(String repColorCd) {
-		this.repColorCd = repColorCd;
+	public void setRepColorValue(String repColorValue) {
+		this.repColorValue = repColorValue;
 	}
 	public String getFstLangCd() {
 		return fstLangCd;

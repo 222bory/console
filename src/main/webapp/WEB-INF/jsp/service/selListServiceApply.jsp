@@ -14,13 +14,13 @@
 	
 	$(document).ready(function(){
 		
-		/* $('#selListServiceTable tr').click(function(event){
+	 $('#selListServiceTable tr').click(function(event){
 		 if(event.target.nodeName.toLowerCase() == 'td') {
-				//var tenantId = $(this).children().eq(1).text();
-				//var cpCd = $(this).children().eq(3).text();
-				//location.href='/selCompetition?tenantId='+tenantId+'&cpCd='+cpCd;
+			var tenantId = $(this).children().eq(1).text();
+			var cpCd = $(this).children().eq(2).text();
+			location.href='/selServiceApply?tenantId='+tenantId+'&cpCd='+cpCd;
 			} 
-		}); */
+		});
 	});
 </script>
 
