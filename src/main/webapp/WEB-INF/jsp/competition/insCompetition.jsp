@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
 
 <script type="text/javascript">
-	/* var flag = false; */
-	
+
 	$(document).ready(function(){
 		$("#btnCancel").click(function(){
 			location.href="/selListCompetition";
@@ -18,7 +17,6 @@
 				var obj = $("#searchValue").offset();
 				
 				$(data).each(function(entryIndex, entry){
-					
 					$('#tenantId').append('<option value="'+entry.tenantId+'">'+entry.contNm+' [ tenant id : '+entry.tenantId+' ]</option>');
 				});
 				
@@ -26,35 +24,11 @@
 		});
 	});
 	
-	
-	function fn_dupl() {
-		alert("test");
-		$.ajax({
-			type : 'POST',
-			url : '/userDuplCheck',
-			//파리미터 변수 이름 : 값
-			data : {
-				userID : userID
-			}, 
-			success : function(result) {
-				alert(result); 
-			}
-		}); 
-		
-	}
-	
-	/*
-	function fn_idCheck(){
-		flag=false;
-	} */
- 
 	$(function () {
 		$('#cp3').colorpicker({
 	        color: '#AA3399',
 	        format: 'hex'
 	    });
-		
-		
 			$('#cpStartDt').datepicker({
 					"format" :'yyyy-mm-dd',
 					"setDate": new Date(),
@@ -67,12 +41,10 @@
 		        "autoclose": true,
 		        "todayHighlight":true
 			});
-				
 				$("#cpStartDt").datepicker("setDate", new Date());
 				$("#cpEndDt").datepicker("setDate", new Date());
 	});
 	
-
 </script>
 
 <div class="breadcrumb-holder"> 
@@ -97,58 +69,63 @@
 					<div class="card-body">
 						<form class="form-horizontal" id="frm" name="frm" method="POST" action="/insCompetition">
 							<div class="form-group">
+								<label class="col-sm-2 form-control-label">* 계약 선택</label>
 								<div class="card-header d-flex align-items-center">
 				                    <div class="form-group">
-				                        <select id="searchType" name="searchType" class="form-control">
+				                        <select id="searchType" name="searchType" class="form-control form-control-sm">
 				                          <option value="C">계약명</option>
 				                          <option value="T">테넌트아이디</option>
 				                        </select>
 				                    </div>
-				                    <div class="form-group">
-				                      <input id="searchValue" type="text" placeholder="유형 선택 후 검색어 입력 -> 아래 고객계약 선택에서 확인" class="mx-sm-2 form-control form-control">
+				                    <div class="form-group col-md-3">
+				                      <input id="searchValue" type="text" placeholder="유형 선택 후 검색어 입력 -> 아래 고객계약 선택에서 확인" class="mx-sm-5 form-control form-control form-control-sm">
 				                    </div>
 				                </div>
-								<label class="col-sm-2 form-control-label">* 고객계약 선택</label>
-								<div class="form-group">
-			                        <div class="col-sm-5 select">
-			                          <select id="tenantId" name="tenantId" class="form-control">
-			                          <c:forEach items="${contractList}" var="list" varStatus="parent">
-			                            <option value="${list.tenantId}">${list.contNm} [ tenant id : ${list.tenantId} ]</option>
-			                          </c:forEach>
-			                          </select>
-			                        </div>
-								</div>
-								<div class="help-block with-errors"></div>
+				            </div>    
+							<label class="col-sm-2 form-control-label">* 고객계약 선택</label>
+							<div class="form-group">
+			                    <div class="col-sm-5 select">
+			                       <select id="tenantId" name="tenantId" class="form-control form-control-sm">
+			                       <c:forEach items="${contractList}" var="list" varStatus="parent">
+			                         <option value="${list.tenantId}">${list.contNm} [ tenant id : ${list.tenantId} ]</option>
+			                       </c:forEach>
+			                       </select>
+			                     </div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 대회 코드</label>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="cpCd" name="cpCd">
+									<input type="text" class="form-control form-control-sm" id="cpCd" name="cpCd">
 								</div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 대회명</label>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="cpNm" name="cpNm">
+									<input type="text" class="form-control form-control-sm" id="cpNm" name="cpNm">
 								</div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* 대회 기간</label>
-								<div class="col-md-2">
-									<input type="text" class="form-control" id="cpStartDt" name="cpStartDt"> ~
+							<label class="col-sm-3 form-control-label">* 대회 기간</label>
+							<div class="card-header d-flex align-items-center">
+								<div class="form-group">
+									<input type="text" class="form-control form-control-sm" id="cpStartDt" name="cpStartDt">
 								</div>
-								<div class="col-md-2">
-									<input type="text" class="form-control" id="cpEndDt" name="cpEndDt">
+								<div class="form-group">
+								&nbsp;~&nbsp;
 								</div>
+								<div class="form-group">
+									<input type="text" class="form-control form-control-sm" id="cpEndDt" name="cpEndDt">
+								</div>
+							</div>	
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 대회 장소</label>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="cpPlaceNm" name="cpPlaceNm">
+									<input type="text" class="form-control form-control-sm" id="cpPlaceNm" name="cpPlaceNm">
 								</div>
 							</div>
 							<div class="line"></div>
@@ -166,7 +143,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 대회 유형</label>
 								<div class="col-sm-5 select">
-		                          <select id="cpTypeCd" name="cpTypeCd" class="form-control">
+		                          <select id="cpTypeCd" name="cpTypeCd" class="form-control form-control-sm">
 		                          <c:forEach items="${cpTypeCdList}" var="list" varStatus="parent">
 		                            <option value="${list.cdId}">${list.cdNm}</option>
 		                          </c:forEach>  
@@ -177,7 +154,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 예상 이용자수</label>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="expectUserNum" name="expectUserNum">
+									<input type="text" class="form-control form-control-sm" id="expectUserNum" name="expectUserNum">
 								</div>
 							</div>
 							<div class="line"></div>
@@ -187,7 +164,6 @@
 									<button type="submit" id="btnRegister" class="btn btn-primary" >등록</button>
 								</div>
 							</div>
-
 						</form>
 					</div>
 				</div>
