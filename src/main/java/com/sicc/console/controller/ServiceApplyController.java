@@ -28,7 +28,6 @@ import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.CodeModel;
 import com.sicc.console.model.CompetitionExtModel;
 import com.sicc.console.model.CompetitionModel;
-import com.sicc.console.model.ServiceDetailExtModel;
 import com.sicc.console.model.ServiceDetailModel;
 import com.sicc.console.model.ServiceExtModel;
 import com.sicc.console.model.ServiceModel;
@@ -234,6 +233,8 @@ public class ServiceApplyController {
 				@RequestParam(value="cpCd", required=true) String cpCd,
 				Model model, ServiceModel serviceModel,
 				HttpServletRequest req, HttpServletResponse res) {
+    	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());
+    	List<CodeModel> languageList = commonService.selCode(CommonEnums.LANG_CD.getValue());
     	
     	serviceModel.setTenantId(tenantId);
     	serviceModel.setCpCd(cpCd);
@@ -246,15 +247,40 @@ public class ServiceApplyController {
 
     	//서비스정보
     	List<ServiceExtModel> selServiceApply = serviceApplyService.selServiceApply(serviceModel);
-    	List<ServiceDetailExtModel> selServiceApplyDetail = serviceApplyService.selServiceApplyDetail(serviceModel);
-    	
-    	System.out.println(selServiceApplyDetail);
-    	
+    	//하위서비스정보
+    	List<ServiceDetailModel> selServiceApplyDetail = serviceApplyService.selServiceApplyDetail(serviceModel);
+
+    	model.addAttribute("serviceList", serviceList);
+    	model.addAttribute("languageList", languageList);
     	model.addAttribute("competition",competition);
     	model.addAttribute("selServiceApply",selServiceApply);
     	model.addAttribute("selServiceApplyDetail",selServiceApplyDetail);
     	
     	return "/service/selServiceApply";
+    }
+    
+    
+    @RequestMapping("/delServiceApply")
+    public String delServiceApply(@RequestParam Map<String,String> param,
+ 					ServiceModel serviceModel,
+ 					Model model) {
+    	String result = "";
+    	
+    	try {
+    		serviceApplyService.delServiceApply(serviceModel);
+    		System.out.println("상위서비스 삭제 완료!");
+    		
+    		serviceApplyService.delServiceApplyDetail(serviceModel);
+    		System.out.println("하위서비스 삭제 완료!");
+    		result = "1";
+    	}
+    	catch(Exception e){
+    		result = "0";
+    	}
+    	
+    	model.addAttribute("result", result);
+    	
+    	return "jsonView";
     }
 
 }

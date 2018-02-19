@@ -111,6 +111,25 @@
 		SELECT tenant_id AS tenantId, 
 		    cp_cd AS cpCd, 
 		    service_cd AS serviceCd,
+		    service_start_dt AS serviceStartDt, 
+		    service_end_dt AS serviceEndDt, 
+		    service_url_addr AS serviceUrlAddr, 
+		    rep_color_value AS repColorValue, 
+            fst_lang_cd AS fstLangCd,
+            scnd_lang_cd AS scndLangCd,
+            thrd_lang_cd AS thrdLangCd,
+            foth_lang_cd AS fothLangCd,
+            fith_lang_cd AS fithLangCd,
+		    test_lab_use_yn AS testLabUseYn, 
+		    test_lab_remark_desc AS testLabRemarkDesc, 
+		    test_event_add_yn AS testEventAddYn, 
+		    test_event_remark_desc AS testEventRemarkDesc
+		FROM con.concpservicem servicem
+		WHERE servicem.tenant_id = #{tenantId} 
+			AND servicem.cp_cd = #{cpCd}
+		<!-- SELECT tenant_id AS tenantId, 
+		    cp_cd AS cpCd, 
+		    service_cd AS serviceCd,
 		    servicecd.cd_nm AS serviceNm,
 		    service_start_dt AS serviceStartDt, 
 		    service_end_dt AS serviceEndDt, 
@@ -128,15 +147,14 @@
 		FROM con.concpservicem AS servicem
 		INNER JOIN con.concdd AS servicecd
 		ON servicem.service_cd = servicecd.cd_id AND servicecd.cd_group_id='SERVICE_CD'
-		WHERE servicem.tenant_id = #{tenantId} AND servicem.cp_cd = #{cpCd}
+		WHERE servicem.tenant_id = #{tenantId} AND servicem.cp_cd = #{cpCd} -->
 	</select>
 	
 	
-	<select id="selServiceApplyDetail" parameterType="com.sicc.console.model.ServiceModel" resultType="com.sicc.console.model.ServiceDetailExtModel">
-	SELECT tenant_id AS tenantId, 
+	<select id="selServiceApplyDetail" parameterType="com.sicc.console.model.ServiceModel" resultType="com.sicc.console.model.ServiceDetailModel">
+ 	SELECT tenant_id AS tenantId, 
 	    cp_cd AS cpCd, 
 	    service_cd AS serviceCd,
-	    scdd.cd_nm AS serviceNm,
 	    system_cd AS systemCd,
 	    cdd.cd_nm AS systemNm,
 	    service_start_dt AS serviceStartDt, 
@@ -145,9 +163,20 @@
 	FROM con.concpserviced serviced
     	LEFT OUTER JOIN con.concdd cdd
    	 	ON serviced.system_cd = cdd.cd_id AND cdd.cd_group_id = serviced.service_cd ||'_SYSTEM_CD'
-  	  	LEFT OUTER JOIN con.concdd scdd
-    	ON serviced.service_cd = scdd.cd_id AND scdd.cd_group_id = 'SERVICE_CD'
-	WHERE serviced.tenant_id = #{tenantId} AND serviced.cp_cd = #{cpCd}
+	WHERE serviced.tenant_id = #{tenantId} 
+		AND serviced.cp_cd = #{cpCd}
 	</select>
+	
+	<delete id="delServiceApply" parameterType="com.sicc.console.model.ServiceModel">
+	DELETE FROM con.concpservicem
+	WHERE tenant_id = #{tenantId} 
+		AND cp_cd = #{cpCd}
+	</delete>
+	
+	<delete id="delServiceApplyDetail" parameterType="com.sicc.console.model.ServiceModel">
+	DELETE FROM con.concpserviced
+	WHERE tenant_id = #{tenantId} 
+		AND cp_cd = #{cpCd}
+	</delete>
 
 </mapper>

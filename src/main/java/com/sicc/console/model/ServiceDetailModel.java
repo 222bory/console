@@ -8,6 +8,7 @@ public class ServiceDetailModel {
 	private String cpCd;
 	private String serviceCd;
 	private String systemCd;
+	private String systemNm;
 	private String serviceStartDt;
 	private String serviceEndDt;
 	private String serviceUrlAddr;
@@ -18,6 +19,12 @@ public class ServiceDetailModel {
 	private String udtIp;
 	private Date udtDate;
 	
+	public String getSystemNm() {
+		return systemNm;
+	}
+	public void setSystemNm(String systemNm) {
+		this.systemNm = systemNm;
+	}
 	public String getTenantId() {
 		return tenantId;
 	}

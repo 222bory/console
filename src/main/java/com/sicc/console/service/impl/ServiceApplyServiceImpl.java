@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sicc.console.dao.ServiceApplyDao;
-import com.sicc.console.model.ServiceDetailExtModel;
 import com.sicc.console.model.ServiceDetailModel;
 import com.sicc.console.model.ServiceExtModel;
 import com.sicc.console.model.ServiceModel;
@@ -43,9 +42,19 @@ public class ServiceApplyServiceImpl implements ServiceApplyService{
 	}
 
 	@Override
-	public List<ServiceDetailExtModel> selServiceApplyDetail(ServiceModel serviceModel) {
-		List<ServiceDetailExtModel> selServiceApplyDetail = serviceApplyDao.selServiceApplyDetail(serviceModel);
+	public List<ServiceDetailModel> selServiceApplyDetail(ServiceModel serviceModel) {
+		List<ServiceDetailModel> selServiceApplyDetail = serviceApplyDao.selServiceApplyDetail(serviceModel);
 		return selServiceApplyDetail;
+	}
+
+	@Override
+	public void delServiceApply(ServiceModel serviceModel) {
+		serviceApplyDao.delServiceApply(serviceModel);
+	}
+
+	@Override
+	public void delServiceApplyDetail(ServiceModel serviceModel) {
+		serviceApplyDao.delServiceApplyDetail(serviceModel);
 	}
 
 }

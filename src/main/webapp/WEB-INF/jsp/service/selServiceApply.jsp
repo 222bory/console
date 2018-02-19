@@ -7,13 +7,62 @@
 
 $(document).ready(function(){
 
-	$("#btnCancel").click(function(){
-		location.href="/selListServiceApply";
+	$("#btnList").on("click", function(e){
+		//location.href="/selListServiceApply";
+		$("#frm").attr("action", "/selListServiceApply");
+		$("#frm").submit();
 	});
 	
+	$("#btnDelete").on("click", function(e){
+		var r = confirm("서비스정보를 삭제 하시겠습니까?");
+		
+		if (r == true) {
+			$.ajax({
+				type : "POST",
+				url  : "/delServiceApply", 
+				dataType : "json",
+				data : $("#frm").serialize(),
+				success : function(data, status) {
+					try{
+						if( data.result == '1'){
+							alert("삭제 성공!");
+							redirectList();
+						} else {
+							//alert(makeMessage(INSERT_FAIL, '<br>' + 'RETURN CODE : ' + data.result + '<br>' + 'RETURN MESSAGE : ' + data.message));
+							alert("RETURN CODE : "+ data.result+' , '+"삭제 실패!");
+						}
+					}catch(e) {	
+						alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					if(XMLHttpRequest.status == '901'){
+						sessionTimeOut();			
+					} else {
+						//console.log(XMLHttpRequest.code + ":" + textStatus + ":" + errorThrown);
+						alert('서비스에 문제가 있습니다. 관리자에게 문의 하세요.');
+					}
+					return;
+				}
+			}); 
+	    } else {
+	        //취소 처리 
+	    }
+	});
 
+	$('div[name=colorGroup]').each(function(){
+		$(this).colorpicker({
+	        format: 'hex'
+		});
+	});
 
 });
+
+function redirectList(){
+	$("#frm").attr("action", "/selListServiceApply");
+	$("input[name=page]").val("1");
+	$("#frm").submit();
+}
 </script>
 
 
@@ -30,18 +79,21 @@ $(document).ready(function(){
 <section class="forms">
 	<div class="container-fluid">
 	<header>
-		<h1 class="h3 display">서비스신청</h1>
+		<h1 class="h3 display">서비스신청 상세</h1>
 	</header>
 	<div class="row">
 	<div class="col-lg-12">
 		<div class="card">
 			<div class="card-body">
 			<form class="form-horizontal" id="frm" name="frm" method="POST">
+				<input type="hidden" name="page" value="${serviceModel.page}" />
+				<input type="hidden" id="tenantId" name="tenantId" value="${competition.tenantId}"/>
+				<input type="hidden" id="cpCd" name="cpCd" value="${competition.cpCd}"/>
 				
 				<div class="form-group">
 					<div class="row">
 						<label class="col-sm-2 form-control-label">테넌트ID</label>
-						<p id="tenantId">${competition.tenantId}</p>
+						<p>${competition.tenantId}</p>
 					</div>
 				</div>
 				
@@ -50,14 +102,13 @@ $(document).ready(function(){
 				<div class="form-group">
 					<div class="row">
 						<label class="col-sm-2 form-control-label">대회정보</label>
-						<p id="cpCd">[ 대회코드 : ${competition.cpCd} ] ${competition.cpNm}</p>
+						<p>[ 대회코드 : ${competition.cpCd} ] ${competition.cpNm}</p>
 					</div>
 				</div>
 				
 				<div class="line"></div>
 				
 				<div class="form-group">
-					<div class="col-md-15">
 					<label class="col-sm-4 form-control-label">서비스별 상세정보 </label>
 					<table  class="table">
 						<thead>
@@ -74,18 +125,30 @@ $(document).ready(function(){
 						<tbody name="serviceTbody">
 							<c:forEach items="${selServiceApply}" var ="list">
 								<tr>
-									<td> ${list.serviceNm} </td>
+									<td> 
+									<c:forEach items="${serviceList}" var="svc">
+										<c:if test="${list.serviceCd == svc.cdId}">
+											${svc.cdNm}
+										</c:if> 
+									</c:forEach>
+									</td>
 									<td> 대표서비스 </td>
 									<td> ${list.serviceStartDt} </td>
 									<td> ${list.serviceEndDt} </td>
 									<td> ${list.serviceUrlAddr} </td>
-									<td> ${list.testLabUseYn} / ${list.testLabRemarkDesc}</td>
-									<td> ${list.testEventAddYn} / ${list.testEventRemarkDesc}</td>
+									<td> ${list.testLabUseYn} ${list.testLabRemarkDesc}</td>
+									<td> ${list.testEventAddYn} ${list.testEventRemarkDesc}</td>
 								</tr>
 							</c:forEach>
 							<c:forEach items="${selServiceApplyDetail}" var ="list">
 							<tr>
-								<td> ${list.serviceNm} </td>
+								<td> 
+									<c:forEach items="${serviceList}" var="svc">
+										<c:if test="${list.serviceCd == svc.cdId}">
+											${svc.cdNm}
+										</c:if> 
+									</c:forEach>
+								</td>
 								<td> ${list.systemNm} </td>
 								<td> ${list.serviceStartDt} </td>
 								<td> ${list.serviceEndDt} </td>
@@ -96,49 +159,89 @@ $(document).ready(function(){
 							</c:forEach> 
 	                    </tbody>
 					</table>
-				  	</div>
                  </div>
 
              <div class="line"></div>
              
               <div class="form-group">
-				<div class="row">
-					<label class="col-sm-2 form-control-label">서비스별 설정</label>
-				</div>
-                <div class="col-md-15">
-					<table class="table" id="configTable">
-						<thead>
-	                      <tr>
-	                        <th>서비스명</th>
-	                        <th>컬러</th>
-	                        <th>1차언어</th>
-	                        <th>2차언어</th>
-	                        <th>3차언어</th>
-	                        <th>4차언어</th>
-	                        <th>5차언어</th>
-	                      </tr>
-	                    </thead>
-						<tbody name='configTbody'>
-							<c:forEach items="${selServiceApply}" var ="list">
-								<tr>
-									<td> ${list.serviceNm} </td>
-									<td> ${list.repColorValue} </td>
-									<td> ${list.fstLangNm} </td>
-									<td> ${list.scndLangNm} </td>
-									<td> ${list.thrdLangNm} </td>
-									<td> ${list.fothLangNm} </td>
-									<td> ${list.fithLangNm}</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				  </div> 
+				<label class="col-sm-2 form-control-label">서비스별 설정</label>
+
+				<table class="table" id="configTable">
+					<thead>
+                      <tr>
+                        <th>서비스명</th>
+                        <th>컬러</th>
+                        <th>1차언어</th>
+                        <th>2차언어</th>
+                        <th>3차언어</th>
+                        <th>4차언어</th>
+                        <th>5차언어</th>
+                      </tr>
+					</thead>
+					
+					<tbody name='configTbody'>
+						<c:forEach items="${selServiceApply}" var ="list">
+							<tr>
+								<td>
+								<c:forEach items="${serviceList}" var="svc">
+									<c:if test="${list.serviceCd == svc.cdId}">
+										${svc.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+								<td style='width:20%'>
+									<div name='colorGroup' class='input-group' >
+									<input name='repColorValue' type='text' class='form-control form-control-sm' readonly='true' value="${list.repColorValue}" />
+									 <span class='input-group-addon'><i></i></span> 
+									</div>
+								</td>
+								<td>
+								<c:forEach items="${languageList}" var="lang">
+									<c:if test="${list.fstLangCd == lang.cdId}">
+										${lang.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+								<td> 
+								<c:forEach items="${languageList}" var="lang">
+									<c:if test="${list.scndLangCd == lang.cdId}">
+										${lang.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+								<td>
+								<c:forEach items="${languageList}" var="lang">
+									<c:if test="${list.thrdLangCd == lang.cdId}">
+										${lang.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+								<td>
+								<c:forEach items="${languageList}" var="lang">
+									<c:if test="${list.fothLangCd == lang.cdId}">
+										${lang.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+								<td>
+								<c:forEach items="${languageList}" var="lang">
+									<c:if test="${list.fithLangCd == lang.cdId}">
+										${lang.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				  
 				  
 	  			<div class="line"></div>
 				<div class="form-group">
 					<div class="col-sm-4 offset-sm-2">
-						<input type="button" id="btnCancel" class="btn btn-secondary" value="취소"/>
-						<input type="button" id="btnRegister" class="btn btn-primary" value="등록"/>
+						<input type="button" id="btnList" class="btn btn-secondary" value="목록"/>
+						<input type="button" id="btnModify" class="btn btn-primary" value="수정"/>
+						<input type="button" id="btnDelete" class="btn btn-primary" value="삭제"/>
 					</div>
 				</div>
 				</form>

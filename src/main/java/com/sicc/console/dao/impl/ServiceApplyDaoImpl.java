@@ -6,7 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sicc.console.dao.ServiceApplyDao;
-import com.sicc.console.model.ServiceDetailExtModel;
 import com.sicc.console.model.ServiceDetailModel;
 import com.sicc.console.model.ServiceExtModel;
 import com.sicc.console.model.ServiceModel;
@@ -40,10 +39,20 @@ public class ServiceApplyDaoImpl implements ServiceApplyDao{
 	}
 
 	@Override
-	public List<ServiceDetailExtModel> selServiceApplyDetail(ServiceModel serviceModel) {
-		List<ServiceDetailExtModel> selServiceApplyDetail =
+	public List<ServiceDetailModel> selServiceApplyDetail(ServiceModel serviceModel) {
+		List<ServiceDetailModel> selServiceApplyDetail =
 				sqlSessionTemplate.selectList("com.sicc.console.dao.ServiceApplyDao.selServiceApplyDetail", serviceModel);
 		return selServiceApplyDetail;
+	}
+
+	@Override
+	public void delServiceApply(ServiceModel serviceModel) {
+		sqlSessionTemplate.delete("com.sicc.console.dao.ServiceApplyDao.delServiceApply", serviceModel);
+	}
+
+	@Override
+	public void delServiceApplyDetail(ServiceModel serviceModel) {
+		sqlSessionTemplate.delete("com.sicc.console.dao.ServiceApplyDao.delServiceApplyDetail", serviceModel);
 	}
 
 }

@@ -33,7 +33,7 @@
 
     <!-- Bootstrap CSS-->
 <!--     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css"> -->
-    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css">
      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-colorpicker.min.css"> 
      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-datepicker3.min.css">
     <!-- Font Awesome CSS-->
