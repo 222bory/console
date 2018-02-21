@@ -41,6 +41,8 @@ public class IndexController {
     
     @GetMapping("/login") 
     public String index() {
+    	//로그인시 세션 초기화 
+    	SecurityContextHolder.getContext().setAuthentication(null);
         return "login";
     }
     

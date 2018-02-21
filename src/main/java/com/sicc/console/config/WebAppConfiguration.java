@@ -4,21 +4,21 @@ import java.nio.charset.Charset;
 
 import javax.servlet.Filter;
 
-import org.apache.catalina.connector.Connector;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+
+import com.sicc.console.common.CertificationInterceptor;
 
 
 @Configuration
@@ -81,6 +81,18 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter{
 		return characterEncodingFilter;
 	}
 	
+	/*
+     * 로그인 인증 Interceptor 설정
+     * */
+    @Autowired
+    CertificationInterceptor certificationInterceptor;
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(certificationInterceptor)
+                .addPathPatterns("/*").excludePathPatterns("/login");
+    }
+    
 	/*@Bean
 	public EmbeddedServletContainerFactory servletContainer() {
 		

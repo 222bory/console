@@ -6,7 +6,7 @@
 $(function () {
 	
 	if("${modalFlag}"=="popshow"){
-		$("#myModal").modal('show');
+		$("#myModal2").modal('show');
 	}
 	
 	$("table tr").click(function(){
@@ -17,15 +17,20 @@ $(function () {
         var repFaxNo = td.eq(3).text();
         var repTelNo = td.eq(4).text();
         var corpAdNo = td.eq(5).text();
-        
+        var mgrNm = td.eq(6).text();
+        var mgrEmailAddr = td.eq(7).text();
+        var mgrTelNo = td.eq(8).text();
         
         $("input[name=custId]").val(custId);
 	 	$("input[name=custNm]").val(custNm);
 	 	$("input[name=repFaxNo]").val(repFaxNo);
 	 	$("input[name=repTelNo]").val(repTelNo);
 	 	$("input[name=corpAdNo]").val(corpAdNo);
+	 	$("input[name=mgrNm]").val(mgrNm);
+	 	$("input[name=mgrEmailAddr]").val(mgrEmailAddr);
+	 	$("input[name=mgrTelNo]").val(mgrTelNo);
 	 	
-		$("#myModal").modal('hide');
+		$("#myModal2").modal('hide');
     });
 	
 	$("#btnCancel").on("click", function(e){
@@ -173,7 +178,8 @@ function submit(){
 		                      </div>
 		                      
 		                      <div class="form-group">
-		                      	<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">검색</button>
+		                      	<!-- <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">검색</button> -->
+		                      	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2">검색</button>
 			                      <!-- <input type="button" value="검색" class="mx-sm-3 btn btn-primary"> -->
 			                    </div>
 			                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -389,8 +395,8 @@ function submit(){
 	</form>
 	
 	<!-- Modal-->
-    <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-      <div role="document" class="modal-dialog">
+  <%--   <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+      <div role="document" class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 id="exampleModalLabel" class="modal-title">고객ID 조회</h5>
@@ -409,7 +415,7 @@ function submit(){
                         <th>팩스번호</th>
                         <th>전화번호</th>
                         <th>법인번호</th>
-                     <!--    <th>담당자명</th>
+                        <!-- <th>담당자명</th>
                         <th>담당자이메일</th>
                         <th>담당자전화번호</th> -->
                       </tr>
@@ -425,11 +431,12 @@ function submit(){
                         <td>${list.repFaxNo}</td>
                         <td>${list.repTelNo}</td>
                         <td>${list.corpAdNo}</td>
-                       <%--  <td>${list.mgrNm}</td>
+                        <td>${list.mgrNm}</td>
                         <td>${list.mgrEmailAddr}</td>
-                        <td>${list.mgrTelNo}</td> --%>
-                        
+                        <td>${list.mgrTelNo}</td>
                       </tr>
+                      
+                        
                     <c:set var="countNo" value="${countNo+1 }" />
                     </c:forEach>  
                     </tbody>
@@ -451,5 +458,71 @@ function submit(){
         </div>
       </div>
     </div>
+     --%>
     
+    
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	       <h5 id="exampleModalLabel" class="modal-title">고객ID 조회</h5>
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+		  </div>
+	      <div class="modal-body">
+		  	<form action="" method="post" id="frm1">
+                <input type="hidden" name="page" value="${ContractExtModel.page}" />
+                <input type="hidden" name="modalFlag" value="Y" />
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>고객ID</th>
+                        <th>고객명</th>
+                        <th>팩스번호</th>
+                        <th>전화번호</th>
+                        <th>법인번호</th>
+                        <th>담당자명</th>
+                        <th>담당자이메일</th>
+                        <th>담당자전화번호</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <c:set var="no" value="${pagination.totalRow - (pagination.currentPage - 1) * pagination.rowPerPage }"/>
+					<c:set var="countNo" value="0"/>
+                    <c:forEach items="${list}" var="list" varStatus="parent">
+                      <tr id="javaScript:dataSet">
+                        <th scope="row">${no - countNo}</th>
+                        <td>${list.custId}</td>
+                        <td>${list.custNm}</td>
+                        <td>${list.repFaxNo}</td>
+                        <td>${list.repTelNo}</td>
+                        <td>${list.corpAdNo}</td>
+                        <td>${list.mgrNm}</td>
+                        <td>${list.mgrEmailAddr}</td>
+                        <td>${list.mgrTelNo}</td>
+                      </tr>
+                      
+                        
+                    <c:set var="countNo" value="${countNo+1 }" />
+                    </c:forEach>  
+                    </tbody>
+                  </table>
+              	  </form>
+                  <!-- //Pagenate -->
+				 	<div class="pagination">
+					  <ul>
+					  	<c:import url="/WEB-INF/jsp/paging/paging.jsp"></c:import>
+					  </ul>
+					</div>
+            
+            
+	      </div>
+<!-- 	      <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		<button type="button" class="btn btn-primary">Save changes</button>
+	      </div> -->
+	    </div>
+	  </div>
+	</div>
+	
 </section>
