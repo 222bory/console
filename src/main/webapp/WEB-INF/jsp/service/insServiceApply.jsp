@@ -30,6 +30,13 @@ $(document).ready(function(){
 	
     // 서비스 추가 버튼 클릭시
     $("#addRowBtn").click(function(){
+    	
+    	if($('tbody[name=serviceTbody] > tr').length == 0){
+    		
+    		alert("사용하실 서비스를 선택해주세요");
+    	
+    		return;
+    	}
 
     	addServiceTbl('btn');
     	
@@ -405,7 +412,7 @@ function setDatepicker(){
 
 			<div class="row">
 				<label class="col-sm-2 form-control-label">* 서비스선택</label>
-				<div class="form-group">
+				<div class="form-group col-sm-8">
                    	<c:forEach items="${serviceList}" var="list" varStatus="status">
                    		<input type="checkbox" id="serviceChkBox+${status.index}" name="serviceChkBox" value="${list.cdId}" class="form-control-custom">
                    		<label for="serviceChkBox+${status.index}">${list.cdNm}</label>
