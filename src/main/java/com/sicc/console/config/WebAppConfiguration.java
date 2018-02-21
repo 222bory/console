@@ -18,7 +18,7 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import com.sicc.console.common.CertificationInterceptor;
+//import com.sicc.console.common.CertificationInterceptor;
 
 
 @Configuration
@@ -84,14 +84,14 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter{
 	/*
      * 로그인 인증 Interceptor 설정
      * */
-    @Autowired
-    CertificationInterceptor certificationInterceptor;
-    
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(certificationInterceptor)
-                .addPathPatterns("/*").excludePathPatterns("/login");
-    }
+//    @Autowired
+//    CertificationInterceptor certificationInterceptor;
+//    
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(certificationInterceptor)
+//                .addPathPatterns("/*").excludePathPatterns("/login");
+//    }
     
 	/*@Bean
 	public EmbeddedServletContainerFactory servletContainer() {
