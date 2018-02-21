@@ -424,8 +424,8 @@ function setDatepicker(){
                 <div class="card-body">	
 					<label class="col-sm-4 form-control-label">서비스별 상세정보 입력</label>
 					<div style="float:right;">
-						<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn-sm btn-primary"/>
-	                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn-sm btn-primary"/>
+						<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-primary"/>
+	                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn btn-primary"/>
                 	</div>
 					<table id="serviceTbl" name="serviceTbl" class="table">
 						<thead>
