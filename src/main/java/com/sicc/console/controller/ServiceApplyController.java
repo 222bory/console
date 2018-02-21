@@ -110,11 +110,11 @@ public class ServiceApplyController {
     		@RequestParam(value="systemCd", required=true) String[] systemCd,
     		@RequestParam(value="serviceStartDt", required=true) String[] serviceStartDt,
     		@RequestParam(value="serviceEndDt", required=true) String[] serviceEndDt,
-    		@RequestParam(value="serviceUrlAddr", required=false) String[] serviceUrlAddr,
+    		@RequestParam(value="serviceUrlAddr", required=false, defaultValue="" ) String[] serviceUrlAddr,
     		@RequestParam(value="testLabUseYn", required=true) String[] testLabUseYn,
-    		@RequestParam(value="testLabRemarkDesc", required=false) String[] testLabRemarkDesc,
+    		@RequestParam(value="testLabRemarkDesc", required=false, defaultValue="") String[] testLabRemarkDesc,
     		@RequestParam(value="testEventAddYn", required=true) String[] testEventAddYn,
-    		@RequestParam(value="testEventRemarkDesc", required=false) String[] testEventRemarkDesc,
+    		@RequestParam(value="testEventRemarkDesc", required=false, defaultValue="") String[] testEventRemarkDesc,
     		@RequestParam(value="serviceCdD", required=true) String[] serviceCdD,
     		@RequestParam(value="repColorValue", required=false) String[] repColorValue,
     		@RequestParam(value="fstLangCd", required=false) String[] fstLangCd,
@@ -138,8 +138,9 @@ public class ServiceApplyController {
 
     		System.out.println("serviceCd.length-->"+serviceCd.length);
     		System.out.println("serviceCdD.length-->"+serviceCdD.length);
-	    	for(int i=0; i<serviceCd.length; i++) {
-	    		
+	    	for(int i=0; i < serviceCd.length; i++) {
+
+
 	    		//하위서비스가 대표서비스인 경우 --> 상위서비스 insert
 	    		if(systemCd[i].equals("default")){
 	    			serviceModel.setTenantId(tenantId);

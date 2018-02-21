@@ -39,16 +39,14 @@ $(document).ready(function(){
 	            "autoclose": true,
 	            "todayHighlight":true
 	    });
-	    //$('input[name=serviceStartDt]').datepicker("setDate", new Date());
-	 	
+ 	
 	 	// 달력 초기화
 	    $('input[name=serviceEndDt]').datepicker({
 	    		"format" :'yyyy-mm-dd',
 	            "autoclose": true,
 	            "todayHighlight":true
 	    });
-	    //$('input[name=serviceEndDt]').datepicker("setDate", new Date());
-	    
+
     });
     
 			
@@ -69,7 +67,17 @@ $(document).ready(function(){
 
 		$("#tenantId").val(tenantId);	
 		$("#cpCd").val(cpCd);
-		console.log($("#frm").serialize());
+		console.log($("#frm").serializeArray());
+		
+		if($("input[name=serviceUrlAddr]").length == 1 && $("input[name=serviceUrlAddr]").val()==''){
+			$("input[name=serviceUrlAddr]").val(' ');
+		}
+		if($("input[name=testLabRemarkDesc]").length == 1 && $("input[name=testLabRemarkDesc]").val()==''){
+			$("input[name=testLabRemarkDesc]").val(' ');
+		}
+		if($("input[name=testEventRemarkDesc]").length == 1 && $("input[name=testEventRemarkDesc]").val()==''){
+			$("input[name=testEventRemarkDesc]").val(' ');
+		}
 		
 		//disabled 설정 해제
 		$("select[name=serviceCd]").removeAttr("disabled");
@@ -77,11 +85,9 @@ $(document).ready(function(){
 		
 		$("input[name=testLabCheck]:checked").each(function(){
 			$(this).next().val('Y');
-			console.log($(this).next().val());
 		});
 		$("input[name=testLabCheck]").not(":checked").each(function(){
 			$(this).next().val('N');
-			console.log($(this).next().val());
 		});
 		$("input[name=testEventCheck]:checked").each(function(){
 			$(this).next().val('Y');
@@ -90,12 +96,11 @@ $(document).ready(function(){
 			$(this).next().val('N');
 		});
 		
-
 		$.ajax({
 			type : "POST",
 			url  : "/insServiceApply", 
 			dataType : "json",
-			data : $("#frm").serialize(),
+			data : $("#frm").serializeArray(),
 			success : function(data, status) {
 				try{
 					if( data.result == '1'){
@@ -113,7 +118,7 @@ $(document).ready(function(){
 					sessionTimeOut();			
 				} else {
 					//console.log(XMLHttpRequest.code + ":" + textStatus + ":" + errorThrown);
-					alert('서비스에 문제가 있습니다. 관리자에게 문의 하세요.');
+					alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
 				}
 				return;
 			}
@@ -155,9 +160,13 @@ $(document).ready(function(){
 				} 
 			},
 			error:function(){
-				alert("에러");
+				alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
 			}
 		});
+		
+		
+		
+		
 	});
  	
 	//체크박스 서비스 선택
@@ -222,21 +231,21 @@ function addServiceTbl(flag){
 			 " <c:forEach items='${serviceList}' var='list'> "+
 			 " <option value='${list.cdId}'>${list.cdNm}</option></c:forEach> </select> </td>";
 	html += "<td> <select name='systemCd' class='form-control form-control-sm'> <option value='0'>서비스선택</option> </select> </td>";
-	html += "<td> <input name='serviceStartDt' type='text' class='form-control form-control-sm' /> </td>";
+	html += "<td> <input name='serviceStartDt' type='text' class='form-control form-control-sm'/> </td>";
 	html += "<td> <input name='serviceEndDt' type='text' class='form-control form-control-sm' /> </td>";
-	html += "<td> <input name='serviceUrlAddr' type='text' class='form-control form-control-sm' placeholder=''/> </td>";
+	html += "<td> <input name='serviceUrlAddr' type='text' class='form-control form-control-sm'/> </td>";
 	
 	if(flag == 'chk'){ //체크박스로 서비스 선택 및 추가
 		html += "<td > <input name='testLabCheck' type='checkbox' class='form-check-input'>";
 		html +=	"<input type='hidden' name='testLabUseYn' value='N'/>";
-		html += "<input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)'/> </td>";
+		html += "<input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' /> </td>";
 		html += "<td><input name='testEventCheck' type='checkbox' class='form-check-input'>";
 		html += "<input type='hidden' name='testEventAddYn' value='N'/>";
-		html += " <input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)'/></td>";
+		html += "<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)'/></td>";
 	}
 	else if(flag == 'btn'){ //추가 버튼 클릭으로 하위서비스 추가
 		html += "<td><input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testLabUseYn' value='N'/></td>";
-		html += "<td><input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testEventAddYn' value='N'/></td>";
+		html += "<td><input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testEventAddYn' value='N'/></td>";
 	}
 
 	html += "</tr>"; 
@@ -330,7 +339,7 @@ function setDatepicker(){
             "autoclose": true,
             "todayHighlight":true
     });
-    $('input[name=serviceStartDt]').datepicker("setDate", new Date());
+    //$('input[name=serviceStartDt]').datepicker("setDate", new Date());
  	
  	// 달력 초기화
     $('input[name=serviceEndDt]').datepicker({
@@ -338,7 +347,7 @@ function setDatepicker(){
             "autoclose": true,
             "todayHighlight":true
     });
-    $('input[name=serviceEndDt]').datepicker("setDate", new Date());
+   // $('input[name=serviceEndDt]').datepicker("setDate", new Date());
 	
 }
 </script>
@@ -357,42 +366,45 @@ function setDatepicker(){
 	<header>
 		<h1 class="h3 display">서비스신청</h1>
 	</header>
-	<div class="row">
+
+
+<form class="form-horizontal" id="frm" name="frm" method="POST">
 	<div class="col-lg-12">
 		<div class="card">
 			<div class="card-header d-flex align-items-center">
 				<h2 class="h5 display">서비스 정보 입력</h2>
 			</div>
 			<div class="card-body">
-			<form class="form-horizontal" id="frm" name="frm" method="POST">
-			 
-			<div class="form-group">
-			 <div class="card-header d-flex align-items-center">
+
+				 <div class="row">
 				 <label class="col-sm-2 form-control-label">* 대회선택</label>
 				 <div class="form-group">
-	                 <select id="searchType" name="searchType" class="form-control-sm">
+	                 <select id="searchType" name="searchType" class="form-control form-control-sm">
 	                   <option value="C">대회코드</option>
 	                   <option value="N">대회명</option>
 	                 </select>
                  </div>
                  
-                 <div class="form-group col-md-3">
+                 <div class="form-group col-sm-2">
                  <input id="searchValue" type="text" placeholder="유형 선택 후 검색어 입력" class="form-control form-control-sm">
                  </div>
-                 
-                 <div class="form-group col-md-5">
+                 <div class="form-group col-sm-6">
 					 <select id="competition" name="competition" class="form-control form-control-sm">
 	                    <c:forEach items="${competitionList}" var="list" varStatus="parent">
 	                      <option value="${list.tenantId}.${list.cpCd}">${list.cpNm} [ tenant id : ${list.tenantId}, 대회코드 : ${list.cpCd} ]</option>
 	                    </c:forEach>
 	                  </select>
-                  </div>
-                  <input type="hidden" id="tenantId" name="tenantId" value=""/>
-                  <input type="hidden" id="cpCd" name="cpCd" value=""/>
-             </div>
+                 </div>
+                 </div>
+                 
+                 <input type="hidden" id="tenantId" name="tenantId" value=""/>
+                 <input type="hidden" id="cpCd" name="cpCd" value=""/>
+             
+             <div class="line"></div>
 
-			<div class="card-header d-flex align-items-center">
-			<label class="col-sm-2 form-control-label">* 서비스선택</label>
+
+			<div class="row">
+				<label class="col-sm-2 form-control-label">* 서비스선택</label>
 				<div class="form-group">
                    	<c:forEach items="${serviceList}" var="list" varStatus="status">
                    		<input type="checkbox" id="serviceChkBox+${status.index}" name="serviceChkBox" value="${list.cdId}" class="form-control-custom">
@@ -400,15 +412,21 @@ function setDatepicker(){
                    	</c:forEach>
 				</div>	
 			</div>
+
 		</div>
+		</div>
+	</div>
 	
-	
+
+	<div class="col-lg-12">
 		<div class="form-group">
               <div class="card">
                 <div class="card-body">	
-					<label class="col-sm-4 form-control-label">* 서비스별 상세정보 입력</label>
-					<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-secondary"/>
-                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn btn-secondary"/>
+					<label class="col-sm-4 form-control-label">서비스별 상세정보 입력</label>
+					<div style="float:right;">
+						<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn-sm btn-primary"/>
+	                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn-sm btn-primary"/>
+                	</div>
 					<table id="serviceTbl" name="serviceTbl" class="table">
 						<thead>
 	                      <tr>
@@ -417,8 +435,8 @@ function setDatepicker(){
 	                        <th>시작일자</th>
 	                        <th>종료일자</th>
 	                        <th>서비스URL</th>
-	                        <th>테스트랩<br>사용여부</th>
-	                        <th>테스트이벤트<br>사용여부</th>
+	                        <th>테스트랩 사용여부</th>
+	                        <th>테스트이벤트 사용여부</th>
 	                      </tr>
 	                    </thead>
 						<tbody name="serviceTbody"></tbody>
@@ -430,7 +448,7 @@ function setDatepicker(){
         <div class="form-group">
            <div class="card">
              <div class="card-body">	
-				<label class="col-sm-4 form-control-label">* 서비스별 설정</label>
+				<label class="col-sm-4 form-control-label">서비스별 설정</label>
 					<table  id="configTable" name="configTable" class="table">
 						<thead>
 	                      <tr>
@@ -446,22 +464,19 @@ function setDatepicker(){
 						<tbody name="configTbody"></tbody>
 					</table>
 				</div>
-				</div>
+			</div>
 		</div>
-				  
-
+		
 		<div class="form-group">
 			<div class="col-sm-4 offset-sm-2">
 				<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
 				<input type="button" id="btnRegister" class="btn btn-primary" value="등록"></input>
 			</div>
-		</div>
-				
-		</form>
-		</div>
-		</div>
+		</div>		
+		
 	</div>
-	</div>	
-	</div>
+	
+</form>
+</div>
 
 </section>

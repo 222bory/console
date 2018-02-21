@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.sicc.console.enums.CommonEnums" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
+<c:set var="useCd" value="<%=CommonEnums.USE_CD.getCode()%>"/>
+<c:set var="useValue" value="<%=CommonEnums.USE_CD.getValue()%>"/>
+<c:set var="NUseCd" value="<%=CommonEnums.NUSE_CD.getCode()%>"/>
+<c:set var="NUseValue" value="<%=CommonEnums.NUSE_CD.getValue()%>"/>
 
 <script type="text/javascript">
 
@@ -136,8 +143,32 @@ function redirectList(){
 									<td> ${list.serviceStartDt} </td>
 									<td> ${list.serviceEndDt} </td>
 									<td> ${list.serviceUrlAddr} </td>
-									<td> ${list.testLabUseYn} ${list.testLabRemarkDesc}</td>
-									<td> ${list.testEventAddYn} ${list.testEventRemarkDesc}</td>
+									<td>
+										<c:choose>
+											<c:when test="${list.testLabUseYn == useCd}">
+												${useValue}
+												<c:if test="${list.testLabRemarkDesc!=''}">
+													/ ${list.testLabRemarkDesc}
+												</c:if>
+											</c:when>
+											<c:otherwise>
+												${NUseValue} 
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td> 
+										<c:choose>
+											<c:when test="${list.testEventAddYn == useCd}">
+												${useValue} 
+												<c:if test="${list.testEventRemarkDesc!=''}">
+													/ ${list.testEventRemarkDesc} 
+												</c:if>
+											</c:when>
+											<c:otherwise>
+												${NUseValue} 
+											</c:otherwise>
+										</c:choose>
+									</td>
 								</tr>
 							</c:forEach>
 							<c:forEach items="${selServiceApplyDetail}" var ="list">
@@ -239,9 +270,10 @@ function redirectList(){
 	  			<div class="line"></div>
 				<div class="form-group">
 					<div class="col-sm-4 offset-sm-2">
-						<input type="button" id="btnList" class="btn btn-secondary" value="목록"/>
+						<input type="button" id="btnDelete" class="btn btn-secondary" value="삭제"/>
+						<input type="button" id="btnList" class="btn btn-primary" value="목록"/>
 						<input type="button" id="btnModify" class="btn btn-primary" value="수정"/>
-						<input type="button" id="btnDelete" class="btn btn-primary" value="삭제"/>
+
 					</div>
 				</div>
 				</form>

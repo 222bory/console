@@ -36,7 +36,7 @@
 		</ul>
 	</div>
 </div>
-	  <section class="charts">
+	  <section class="forms">
         <div class="container-fluid">
           <header> 
             <h1 class="h3">대회관리</h1>
@@ -69,9 +69,9 @@
                   </table>
                   <div class="form-group">
 					<div class="col-sm-4 offset-sm-2">
+						<input type="button" id="delButton" class="btn btn-secondary" value="삭제" />
 						<input type="button" id="listButton" class="btn btn-primary" value="목록" />
 						<input type="button" id="upButton" class="btn btn-primary" value="수정" />
-						<input type="button" id="delButton" class="btn btn-primary" value="삭제" />
 					</div>
 				  </div>
               	  </form>
