@@ -165,6 +165,20 @@
 								</div>
 							</div>
 						</form>
+						<form action="/upCompetitionImage" method="post" enctype="multipart/form-data">
+						   <div class="form-group">
+								<label class="col-sm-2 form-control-label">* 파일 업로드</label>
+								<div class="col-md-5">
+									<input multiple="multiple"  type="file" id="fileName" name="fileName[]" class="form-control form-control-sm"/>
+								</div>
+							</div>
+							<div class="line"></div>
+							<div class="form-group">
+								<div class="col-sm-4 offset-sm-2">
+									<button type="submit" id="btnRegister" class="btn btn-primary" >이미지 등록</button>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

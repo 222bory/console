@@ -69,6 +69,8 @@ dependencies {
 	compile 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	runtime 'org.postgresql:postgresql:42.1.1'
 	// https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4' 
+	compile group: 'commons-io', name: 'commons-io', version: '2.5'
 	compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.1.0'
 	// https://mvnrepository.com/artifact/org.apache.directory.studio/org.apache.commons.lang
 	compile group: 'org.apache.directory.studio', name: 'org.apache.commons.lang', version: '2.6'
