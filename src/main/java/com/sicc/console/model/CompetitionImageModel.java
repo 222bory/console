@@ -4,14 +4,16 @@ public class CompetitionImageModel {
 	public String tenantId;
 	public String cpCd;
 	public String imgFgCd;
-	public String img_seq;
+	public String imgSeq;
 	public String filePathNm;
 	public String imgFileNm;
 	public String repImgYn;
 	public String crtId;
 	public String crtIp;
+	public String adDate;
 	public String udtId;
 	public String udtIp;
+	public String udtDate;
 	
 	public String getTenantId() {
 		return tenantId;
@@ -31,11 +33,11 @@ public class CompetitionImageModel {
 	public void setImgFgCd(String imgFgCd) {
 		this.imgFgCd = imgFgCd;
 	}
-	public String getImg_seq() {
-		return img_seq;
+	public String getImgSeq() {
+		return imgSeq;
 	}
-	public void setImg_seq(String img_seq) {
-		this.img_seq = img_seq;
+	public void setImgSeq(String imgSeq) {
+		this.imgSeq = imgSeq;
 	}
 	public String getFilePathNm() {
 		return filePathNm;
@@ -78,6 +80,18 @@ public class CompetitionImageModel {
 	}
 	public void setUdtIp(String udtIp) {
 		this.udtIp = udtIp;
+	}
+	public String getAdDate() {
+		return adDate;
+	}
+	public void setAdDate(String adDate) {
+		this.adDate = adDate;
+	}
+	public String getUdtDate() {
+		return udtDate;
+	}
+	public void setUdtDate(String udtDate) {
+		this.udtDate = udtDate;
 	}
 	
 }

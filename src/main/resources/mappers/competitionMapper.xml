@@ -118,4 +118,24 @@
            AND cp_cd = #{cpCd}		   
     </delete>
     
+    <select id="selListCompetitionImage" parameterType="com.sicc.console.model.CompetitionImageModel" resultType="com.sicc.console.model.CompetitionImageModel">
+    	SELECT tenant_id as tenantId,
+    		   cp_cd as cpCd,
+    		   img_fg_cd as imgFgCd,
+    		   img_seq as imgSeq,
+    		   file_path_nm as filePathNm,
+    		   img_file_nm as imgFileNm,
+    		   rep_img_yn as repImgYn,
+    		   crt_id as crtId,
+    		   crt_id as crtId,
+			   crt_ip as crtIp,
+			   ad_date as adDate,
+			   udt_id as udtId,
+			   udt_ip as udtIp,
+			   udt_date as udtDate
+		  FROM concpimgm
+		 WHERE tenant_id = #{tenantId}
+		   AND cp_cd = #{cpCd}	   
+    </select>
+    
 </mapper>

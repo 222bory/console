@@ -102,7 +102,8 @@ public class CompetitionController {
     		@RequestParam("cpScaleCd") String cpScaleCd,
     		@RequestParam("cpTypeCd") String cpTypeCd,
     		@RequestParam("expectUserNum") String expectUserNum,
-    		HttpServletRequest req, HttpServletResponse res) {
+    		@RequestPart MultipartFile file[],
+    		HttpServletRequest req, HttpServletResponse res) throws IllegalStateException, IOException {
     	
     	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	String userId = principal.getUsername();
@@ -123,9 +124,32 @@ public class CompetitionController {
     	competitionModel.setUdtId(userId);
     	competitionModel.setUdtIp(req.getRemoteAddr());
     	
-    	competitionService.insCompetition(competitionModel);
+    	//competitionService.insCompetition(competitionModel);
     	
+    	for(int i = 0 ; i < file.length ; i ++) {
+    		System.out.println("test ::: file originname : "+file[i].getOriginalFilename());
+    		System.out.println("test ::: file contenttype : "+file[i].getContentType());
+    		System.out.println("test ::: file name : "+file[i].getName());
+    		System.out.println("test ::: file size : "+file[i].getSize());
+    		
+    		String sourceFileName = file[i].getOriginalFilename(); 
+            String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
+            File destinationFile; 
+            String destinationFileName;
+            String fileUrl = "c://upload//";
+     
+            
+            do { 
+                //destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
+            	destinationFileName = file[i].getOriginalFilename();
+                destinationFile = new File(fileUrl + destinationFileName); 
+            } while (destinationFile.exists()); 
+            
+            destinationFile.getParentFile().mkdirs(); 
+            file[i].transferTo(destinationFile); 
+    	}
     	
+
     	return "redirect:/selListCompetition";
     	
     }
@@ -171,8 +195,19 @@ public class CompetitionController {
         CompetitionExtModel competition = competitionService.selCompetition(competitionModel);
         competition.setCpScaleCd(commonService.selCodeByCdId(CommonEnums.CP_SCALE_CD.getValue(), competition.getCpScaleCd()));
         competition.setCpTypeCd(commonService.selCodeByCdId(CommonEnums.CP_TYPE_CD.getValue(), competition.getCpTypeCd()));
+        
+        CompetitionImageModel competitionImage = new CompetitionImageModel();
+        
+        competitionImage.setTenantId(competition.getTenantId());
+        competitionImage.setCpCd(competition.getCpCd());
+        
+        List<CompetitionImageModel> competitionImageList = competitionService.selListCompetitionImage(competitionImage);
+        for(int i = 0 ; i < competitionImageList.size() ; i ++) {
+        	competitionImageList.get(i).setImgFgCd(commonService.selCodeByCdId(CommonEnums.IMG_FG_CD.getValue(), competitionImageList.get(i).getImgFgCd()));
+        }
 		
 		model.addAttribute("competition", competition);
+		model.addAttribute("competitionImageList", competitionImageList);
 		
         return "/competition/selCompetition";
     }

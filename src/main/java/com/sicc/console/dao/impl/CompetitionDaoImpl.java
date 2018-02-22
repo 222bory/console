@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sicc.console.dao.CompetitionDao;
 import com.sicc.console.model.CompetitionExtModel;
+import com.sicc.console.model.CompetitionImageModel;
 import com.sicc.console.model.CompetitionModel; 
 
 public class CompetitionDaoImpl implements CompetitionDao{
@@ -37,6 +38,11 @@ public class CompetitionDaoImpl implements CompetitionDao{
 	@Override
 	public void delCompetition(CompetitionModel competitionModel) {
 		sqlSessionTemplate.delete("com.sicc.console.dao.CompetitionDao.delCompetition", competitionModel);
+	}
+
+	@Override
+	public List<CompetitionImageModel> selListCompetitionImage(CompetitionImageModel competitionImageModel) {
+		return sqlSessionTemplate.selectList("com.sicc.console.dao.CompetitionDao.selListCompetitionImage", competitionImageModel);
 	}
 	
 }
