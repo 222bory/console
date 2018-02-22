@@ -155,10 +155,10 @@
             <li> <a href="#pages-nav-list5" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>시스템 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list5" class="collapse list-unstyled">
+                <li> <a href="#">코드 등록</a></li>
                 <li> <a href="#">코드 관리</a></li>
-                <li> <a href="#">모니터링 등록</a></li>
-                <li> <a href="#">모니터링 관리</a></li>
-                <li> <a href="/insMonitorForm">모니터링 조회</a></li>
+                <li> <a href="/insMonitorForm">모니터링 등록</a></li> 
+                <li> <a href="#">모니터링 조회</a></li> 
               </ul>
             </li>
             
