@@ -93,7 +93,7 @@ public class CUDInterceptor implements Interceptor{
 					 
 					histSql = "INSERT INTO concpservicem_log(tenant_id, cp_cd, service_cd, service_start_dt, service_end_dt, service_url_addr, rep_color_value, fst_lang_cd, scnd_lang_cd, thrd_lang_cd, foth_lang_cd, fith_lang_cd, test_lab_use_yn, test_lab_remark_desc, test_event_add_yn, test_event_remark_desc, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date) values('"+rs.getString("tenant_id")+"', '"+rs.getString("cp_cd")+"', '"+rs.getString("service_cd")+"', '"+rs.getString("service_start_dt")+"', '"+rs.getString("service_end_dt")+"', '"+rs.getString("service_url_addr")+"', '"+rs.getString("rep_color_value")+"', '"+rs.getString("fst_lang_cd")+"', "+rs.getString("scnd_lang_cd")+", '"+rs.getString("thrd_lang_cd")+"', '"+rs.getString("foth_lang_cd")+"', '"+rs.getString("fith_lang_cd")+"', '"+rs.getString("test_lab_use_yn")+"', '"+rs.getString("test_lab_remark_desc")+"', '"+rs.getString("test_event_add_yn")+"', '"+rs.getString("test_event_remark_desc")+"', '"+rs.getString("crt_id")+"', '"+rs.getString("crt_ip")+"', current_timestamp, '"+rs.getString("udt_id")+"', '"+rs.getString("udt_ip")+"', current_timestamp)";
 					
-					psmt = con.prepareStatement(histSql);
+					psmt = con.prepareStatement(histSql); 
 					psmt.execute();
 			}
 		}
