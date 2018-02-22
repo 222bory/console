@@ -20,7 +20,7 @@ import org.springframework.context.ApplicationListener;
 public class SessionUtils implements ApplicationListener<SessionDestroyedEvent>, HttpSessionListener{
 	
     @Autowired
-    private SessionRegistry sessionRegistry;
+    private SessionRegistry sessionRegistry; 
     
     public void expireUserSessions(String username) {
     	
