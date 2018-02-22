@@ -39,20 +39,22 @@ public class CUDInterceptor implements Interceptor{
 		
 		List<ParameterMapping> pmList = bs.getParameterMappings();
 		
-		PreparedStatement psmt = null;
+		//PreparedStatement psmt = null;
 		
-		if(param instanceof Member){
+		/*if(param instanceof Member){
 			for(int i = 0 ; i < pmList.size() ; i ++) {
 				String key = pmList.get(i).getProperty();
 				System.out.println("interceptor test ::::::::::: "+ key);
 				
 			}
-		}else if(param instanceof ContractModel) {
+		}else*/ 
+			
+		if(param instanceof ContractModel) {
 			Statement st = (Statement) (invocation.getArgs())[0];
 			Connection con = st.getConnection();
 			String orginSql = "select tenant_id, cust_id, cont_nm, valid_start_dt, valid_end_dt, cont_stat_cd, network_fg_cd, password_lod_cd, password_min_len, password_rnwl_cycl_cd, password_use_lmt_yn, password_pose_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date from concustcontm where tenant_id = '"+((ContractModel) param).getTenantId()+"'" ;
 			
-			psmt = con.prepareStatement(orginSql);
+			PreparedStatement psmt = con.prepareStatement(orginSql);
 			psmt.execute();
 			ResultSet rs = psmt.getResultSet();
 			
@@ -68,7 +70,7 @@ public class CUDInterceptor implements Interceptor{
 			Connection con = st.getConnection();
 			String orginSql = "select tenant_id, cp_cd, cp_nm, cp_start_dt, cp_end_dt, cp_place_nm, cp_scale_cd, cp_type_cd, expect_user_num, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date from concpm where tenant_id = '"+((CompetitionModel) param).getTenantId()+"'" ;
 			
-			psmt = con.prepareStatement(orginSql);
+			PreparedStatement psmt = con.prepareStatement(orginSql);
 			psmt.execute();
 			ResultSet rs = psmt.getResultSet();
 			
@@ -84,7 +86,7 @@ public class CUDInterceptor implements Interceptor{
 			Connection con = st.getConnection();
 			String orginSql = "select tenant_id, cp_cd, service_cd, service_start_dt, service_end_dt, service_url_addr, rep_color_value, fst_lang_cd, scnd_lang_cd, thrd_lang_cd, foth_lang_cd, fith_lang_cd, test_lab_use_yn, test_lab_remark_desc, test_event_add_yn, test_event_remark_desc, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date from concpservicem where tenant_id = '"+((ServiceModel) param).getTenantId()+"' and cp_cd = '"+((ServiceModel) param).getCpCd()+ "' and service_cd = '"+((ServiceModel) param).getServiceCd()+ "'" ;
 			
-			psmt = con.prepareStatement(orginSql);
+			PreparedStatement psmt = con.prepareStatement(orginSql);
 			psmt.execute();
 			ResultSet rs = psmt.getResultSet();
 			
@@ -102,28 +104,17 @@ public class CUDInterceptor implements Interceptor{
 			Connection con = st.getConnection();
 			String orginSql = "select tenant_id, cp_cd, service_cd, system_cd, service_start_dt, service_end_dt, service_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date from concpserviced where tenant_id = '"+((ServiceDetailModel) param).getTenantId()+"' and cp_cd = '"+((ServiceDetailModel) param).getCpCd()+"' and service_cd = '"+((ServiceDetailModel) param).getServiceCd()+"' and system_cd = '"+((ServiceDetailModel) param).getSystemCd()+ "'" ;
 			
-			psmt = con.prepareStatement(orginSql);
+			PreparedStatement psmt = con.prepareStatement(orginSql);
 			psmt.execute();
 			
-			System.out.println("psmt :" + psmt.getResultSet());
-			
-			 
 			ResultSet rs = psmt.getResultSet();
 			
-			System.out.println("rs :" + rs.getConcurrency());
 			String histSql = "";
-			
-			System.out.println("test ServiceDetailModel : "+orginSql);
 			if(rs.next()) {
-				histSql = "INSERT INTO concpserviced_log(tenant_id, cp_cd, service_cd, system_cd, service_start_dt, service_end_dt, service_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date) values('"+rs.getString("tenant_id")+"', '"+rs.getString("cp_cd")+"', '"+rs.getString("service_cd")+"', '"+rs.getString("system_cd")+"', '"+rs.getString("service_start_dt")+"', '"+rs.getString("service_end_dt")+"', '"+rs.getString("service_url_addr")+rs.getString("crt_id")+"', '"+rs.getString("crt_ip")+"', current_timestamp, '"+rs.getString("udt_id")+"', '"+rs.getString("udt_ip")+"', current_timestamp)";
-				
-				psmt = con.prepareStatement(histSql);
+				histSql = "INSERT INTO concpserviced_log(tenant_id, cp_cd, service_cd, system_cd, service_start_dt, service_end_dt, service_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date) values('"+rs.getString("tenant_id")+"', '"+rs.getString("cp_cd")+"', '"+rs.getString("service_cd")+"', '"+rs.getString("system_cd")+"', '"+rs.getString("service_start_dt")+"', '"+rs.getString("service_end_dt")+"', '"+rs.getString("service_url_addr")+"', '"+rs.getString("crt_id")+"', '"+rs.getString("crt_ip")+"', current_timestamp, '"+rs.getString("udt_id")+"', '"+rs.getString("udt_ip")+"', current_timestamp)";
+				psmt = con.prepareStatement(histSql); 
 				psmt.execute();
-				
 			}
-		}
-		if(psmt != null) {
-			psmt.close();
 		}
 		
 		return invocation.proceed();
