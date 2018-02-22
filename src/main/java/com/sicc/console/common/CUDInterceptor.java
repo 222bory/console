@@ -107,7 +107,7 @@ public class CUDInterceptor implements Interceptor{
 			
 			System.out.println("psmt :" + psmt.getResultSet());
 			
-			
+			 
 			ResultSet rs = psmt.getResultSet();
 			
 			System.out.println("rs :" + rs.getConcurrency());
