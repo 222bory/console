@@ -113,7 +113,6 @@ public class CUDInterceptor implements Interceptor{
 			System.out.println("rs :" + rs.getConcurrency());
 			String histSql = "";
 			
-			
 			System.out.println("test ServiceDetailModel : "+orginSql);
 			if(rs.next()) {
 				histSql = "INSERT INTO concpserviced_log(tenant_id, cp_cd, service_cd, system_cd, service_start_dt, service_end_dt, service_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date) values('"+rs.getString("tenant_id")+"', '"+rs.getString("cp_cd")+"', '"+rs.getString("service_cd")+"', '"+rs.getString("system_cd")+"', '"+rs.getString("service_start_dt")+"', '"+rs.getString("service_end_dt")+"', '"+rs.getString("service_url_addr")+rs.getString("crt_id")+"', '"+rs.getString("crt_ip")+"', current_timestamp, '"+rs.getString("udt_id")+"', '"+rs.getString("udt_ip")+"', current_timestamp)";
