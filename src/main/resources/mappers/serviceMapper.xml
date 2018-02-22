@@ -171,14 +171,14 @@
 	DELETE FROM con.concpservicem
 	WHERE tenant_id = #{tenantId} 
 		AND cp_cd = #{cpCd}
-		AND servicd_cd = #{serviceCd}
+		AND service_cd = #{serviceCd}
 	</delete>
 	
 	<delete id="delServiceApplyDetail" parameterType="com.sicc.console.model.ServiceDetailModel">
 	DELETE FROM con.concpserviced
 	WHERE tenant_id = #{tenantId} 
 		AND cp_cd = #{cpCd}
-		AND servicd_cd = #{serviceCd}
+		AND service_cd = #{serviceCd}
 		AND system_cd = #{systemCd}
 	</delete>
 
