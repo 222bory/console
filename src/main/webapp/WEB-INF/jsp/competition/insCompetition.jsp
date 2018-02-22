@@ -22,6 +22,25 @@
 				
 			});
 		});
+		
+		$("#addRowBtn").click(function(){
+			var html ='<tr><td><input type="file" name="file" class="form-control form-control-sm"/></td></tr>';
+			//alert(html);
+			$('tbody[name=serviceTbody]').append(html); 
+	    });
+		
+		$("#delRowBtn").click(function(){
+			var rowNum = $('tbody[name=serviceTbody] tr').length;
+			var removeRow ="";
+			
+			for( i=rowNum-1; i>=0; i--){
+				removeRow = removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
+				if(removeRow.find('td:eq(1) select').val() != 'default'){ 
+						removeRow.remove();
+						return;
+				}
+			}
+	    });
 	});
 	
 	$(function () {
@@ -44,7 +63,7 @@
 				$("#cpStartDt").datepicker("setDate", new Date());
 				$("#cpEndDt").datepicker("setDate", new Date());
 	});
-	
+
 </script>
 
 <div class="breadcrumb-holder"> 
@@ -67,7 +86,7 @@
 						<h2 class="h5 display">사용자 정보 입력</h2>
 					</div>
 					<div class="card-body">
-						<form class="form-horizontal" id="frm" name="frm" method="POST" action="/insCompetition">
+						<form class="form-horizontal" id="frm" name="frm" method="POST" action="/insCompetition" enctype="multipart/form-data">
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 계약 선택</label>
 								<div class="card-header d-flex align-items-center">
@@ -121,7 +140,6 @@
 								</div>
 							</div>	
 							</div>
-							<div class="line"></div>
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 대회 장소</label>
 								<div class="col-md-5">
@@ -159,13 +177,28 @@
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
+								<label class="col-sm-2 form-control-label">* 파일 업로드</label>
+								<div style="float:right;">
+									<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-primary"/>
+				                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn btn-primary"/>
+			                	</div>
+			                	<table id="serviceTbl" name="serviceTbl" class="table">
+									<tbody name="serviceTbody"></tbody>
+								</table>
+								<div class="col-md-5">
+									<input type="file" name="file" class="form-control form-control-sm"/>
+									<!-- <input multiple="multiple"  type="file" id="file" name="file[]" class="form-control form-control-sm"/> -->
+								</div>
+							</div>
+							<div class="line"></div>
+							<div class="form-group">
 								<div class="col-sm-4 offset-sm-2">
 									<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
 									<button type="submit" id="btnRegister" class="btn btn-primary" >등록</button>
 								</div>
 							</div>
 						</form>
-						<form action="/upCompetitionImage" method="post" enctype="multipart/form-data">
+						<!-- <form action="/upCompetitionImage" method="post" enctype="multipart/form-data">
 						   <div class="form-group">
 								<label class="col-sm-2 form-control-label">* 파일 업로드</label>
 								<div class="col-md-5">
@@ -178,7 +211,7 @@
 									<button type="submit" id="btnRegister" class="btn btn-primary" >이미지 등록</button>
 								</div>
 							</div>
-						</form>
+						</form> -->
 					</div>
 				</div>
 			</div>

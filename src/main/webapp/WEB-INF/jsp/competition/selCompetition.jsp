@@ -67,6 +67,29 @@
                     	<tr><td>예상 이용자수</td><td>${competition.expectUserNum}</td></tr>
                     </tbody>
                   </table>
+                  
+                  <table class="table">
+                  	<thead>
+                      <tr>
+                        <th>이미지명</th>
+                        <th>파일 경로</th>
+                        <th>이미지 종류</th>
+                        <th>이미지 순서</th>
+                        <th>등록 일자</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <c:forEach items="${competitionImageList}" var="list" varStatus="parent">
+                      <tr>
+                        <td>${list.imgFileNm}</td>
+                        <td>${list.filePathNm}</td>
+                        <td>${list.imgFgCd}</td>
+                        <td>${list.imgSeq}</td>
+                        <td>${list.adDate}</td>
+                      </tr>
+                      </c:forEach>  
+                    </tbody>
+                  </table>
                   <div class="form-group">
 					<div class="col-sm-4 offset-sm-2">
 						<input type="button" id="delButton" class="btn btn-secondary" value="삭제" />

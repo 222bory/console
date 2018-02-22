@@ -363,7 +363,8 @@ function setDatepicker(){
 	<div class="container-fluid">
 		<ul class="breadcrumb">
 			<li class="breadcrumb-item"><a href="/selListServiceApply">서비스관리</a></li>
-			<li class="breadcrumb-item active">서비스신청</li>
+			<li class="breadcrumb-item">서비스상세</li>
+			<li class="breadcrumb-item active">서비스수정</li>
 		</ul>
 	</div>
 </div>
@@ -371,16 +372,13 @@ function setDatepicker(){
 <section class="forms">
 	<div class="container-fluid">
 	<header>
-		<h1 class="h3 display">서비스신청</h1>
+		<h1 class="h3 display">서비스수정</h1>
 	</header>
 
 
 <form class="form-horizontal" id="frm" name="frm" method="POST">
 	<div class="col-lg-12">
 		<div class="card">
-			<div class="card-header d-flex align-items-center">
-				<h2 class="h5 display">서비스 정보 입력</h2>
-			</div>
 			<div class="card-body">
 
 				 <div class="row">
@@ -446,7 +444,65 @@ function setDatepicker(){
 	                        <th>테스트이벤트 사용여부</th>
 	                      </tr>
 	                    </thead>
-						<tbody name="serviceTbody"></tbody>
+						<tbody name="serviceTbody">
+						
+						<c:forEach items="${selServiceApply}" var="selList">
+							<tr>
+							<td> <select name='serviceCd' class='form-control form-control-sm'> 
+								<c:forEach items='${serviceList}' var='list'> 
+									<c:choose>
+									<c:when test='${selList.serviceCd == list.cdId}'>
+									 	<option value='${list.cdId}' selected>${list.cdNm}</option>
+									</c:when>
+									<c:otherwise>
+										<option value='${list.cdId}'>${list.cdNm}</option>
+									</c:otherwise>
+									</c:choose>
+								</c:forEach> 
+								</select> 
+							</td>
+							<td> <input name='systemCd' class='form-control form-control-sm' value="대표서비스" readOnly='true'/></td>
+							<td> <input name='serviceStartDt' type='text' class='form-control form-control-sm' value="${selList.serviceStartDt}"/> </td>
+							<td> <input name='serviceEndDt' type='text' class='form-control form-control-sm' value="${selList.serviceEndDt}"/> </td>
+							<td> <input name='serviceUrlAddr' type='text' class='form-control form-control-sm' value="${selList.serviceUrlAddr}"/> </td>
+	
+							<td> <input name='testLabCheck' type='checkbox' class='form-check-input'>
+								<input type='hidden' name='testLabUseYn' value="${selList.testLabUseYn}"/>
+								<input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' value="${selList.testLabRemarkDesc}" /> </td>
+							<td><input name='testEventCheck' type='checkbox' class='form-check-input' >
+							<input type='hidden' name='testEventAddYn' value="${selList.testEventAddYn}"/>
+							<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' value="${selList.testEventRemarkDesc}"/></td>
+							</tr>
+						</c:forEach>
+						
+						<c:forEach items="${selServiceApplyDetail}" var="selList">
+							<tr>
+							<td> <select name='serviceCd' class='form-control form-control-sm'> 
+								<c:forEach items='${serviceList}' var='list'> 
+									<c:choose>
+									<c:when test='${selList.serviceCd == list.cdId}'>
+									 	<option value='${list.cdId}' selected>${list.cdNm}</option>
+									</c:when>
+									<c:otherwise>
+										<option value='${list.cdId}'>${list.cdNm}</option>
+									</c:otherwise>
+									</c:choose>
+								</c:forEach> 
+								</select> 
+							</td>
+							<td> 
+								<select name='systemCd' class='form-control form-control-sm'> 
+									<option value="selList.systemCd" selected> </option>
+								</select> 
+							</td>
+							<td> <input name='serviceStartDt' type='text' class='form-control form-control-sm' value="${selList.serviceStartDt}"/> </td>
+							<td> <input name='serviceEndDt' type='text' class='form-control form-control-sm' value="${selList.serviceEndDt}"/> </td>
+							<td> <input name='serviceUrlAddr' type='text' class='form-control form-control-sm' value="${selList.serviceUrlAddr}"/> </td>
+							<td><input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testLabUseYn' value='N'/></td>
+							<td><input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testEventAddYn' value='N'/></td>
+							</tr>
+						</c:forEach>
+					</tbody>
 					</table>
 				</div>
               </div>

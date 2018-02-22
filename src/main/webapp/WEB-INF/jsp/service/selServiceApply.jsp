@@ -20,6 +20,12 @@ $(document).ready(function(){
 		$("#frm").submit();
 	});
 	
+	$("#btnModify").on("click", function(e){
+		//location.href="/selListServiceApply";
+		$("#frm").attr("action", "/upServiceApply");
+		$("#frm").submit();
+	});
+	
 	$("#btnDelete").on("click", function(e){
 		var r = confirm("서비스정보를 삭제 하시겠습니까?");
 		

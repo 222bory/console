@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.sicc.console.dao.CompetitionDao;
 import com.sicc.console.model.CompetitionExtModel;
+import com.sicc.console.model.CompetitionImageModel;
 import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.service.CompetitionService;
 
@@ -41,4 +42,9 @@ public class CompetitionServiceImpl implements CompetitionService{
 		competitionDao.delCompetition(competitionModel);
 	}
 
+	@Override
+	public List<CompetitionImageModel> selListCompetitionImage(CompetitionImageModel competitionImageModel) {
+		return competitionDao.selListCompetitionImage(competitionImageModel);
+	}
+	
 }

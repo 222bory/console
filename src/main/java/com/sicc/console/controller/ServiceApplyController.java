@@ -228,7 +228,7 @@ public class ServiceApplyController {
     
     
     @GetMapping("/selServiceApply")
-    public String setServiceApply(@RequestParam Map<String,String> param,
+    public String selServiceApply(@RequestParam Map<String,String> param,
 				@RequestParam(value="tenantId", required=true) String tenantId,
 				@RequestParam(value="cpCd", required=true) String cpCd,
 				Model model, ServiceModel serviceModel,
@@ -304,5 +304,43 @@ public class ServiceApplyController {
     	
     	return "jsonView";
     }
+    
+    
+    
+    @RequestMapping("/upServiceApply")
+    public String upServiceApply(@RequestParam Map<String,String> param,
+				@RequestParam(value="tenantId", required=true) String tenantId,
+				@RequestParam(value="cpCd", required=true) String cpCd,
+				Model model, HttpServletRequest req, HttpServletResponse res) 
+    		{
+		    	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());
+		    	List<CodeModel> languageList = commonService.selCode(CommonEnums.LANG_CD.getValue());
+
+		    	ServiceModel serviceModel = new ServiceModel();
+		    	serviceModel.setTenantId(tenantId);
+		    	serviceModel.setCpCd(cpCd);
+		    	
+		    	CompetitionModel competitionModel = new CompetitionModel();
+		    	competitionModel.setTenantId(tenantId);
+		    	competitionModel.setCpCd(cpCd);
+		    	
+		    	//대회정보
+		    	CompetitionExtModel competition = competitionService.selCompetition(competitionModel);
+		
+		    	//서비스정보
+		    	List<ServiceExtModel> selServiceApply = serviceApplyService.selServiceApply(serviceModel);
+		    	//하위서비스정보
+		    	List<ServiceDetailModel> selServiceApplyDetail = serviceApplyService.selServiceApplyDetail(serviceModel);
+
+		    	model.addAttribute("serviceList", serviceList);
+		    	model.addAttribute("languageList", languageList);
+		    	model.addAttribute("competition",competition);
+		    	model.addAttribute("selServiceApply",selServiceApply);
+		    	model.addAttribute("selServiceApplyDetail",selServiceApplyDetail);
+		    	
+		    	return "/service/upServiceApply";	
+    		}
+    
+    
 
 }
