@@ -21,7 +21,12 @@
         <appender-ref ref="STDOUT"/>
     </logger>
     
-	<logger name="com.sicc.admin.dao" level="DEBUG"></logger>
+    <logger name="org.springframework.security" level="error" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    
+	<logger name="com.sicc.console" level="DEBUG"></logger>
+	<logger name="com.sicc.console" level="error"></logger>
 
     <root level="error">
         <appender-ref ref="STDOUT"/>
