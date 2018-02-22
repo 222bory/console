@@ -51,8 +51,8 @@ public class ServiceApplyDaoImpl implements ServiceApplyDao{
 	}
 
 	@Override
-	public void delServiceApplyDetail(ServiceModel serviceModel) {
-		sqlSessionTemplate.delete("com.sicc.console.dao.ServiceApplyDao.delServiceApplyDetail", serviceModel);
+	public void delServiceApplyDetail(ServiceDetailModel serviceDetailModel) {
+		sqlSessionTemplate.delete("com.sicc.console.dao.ServiceApplyDao.delServiceApplyDetail", serviceDetailModel);
 	}
 
 }

@@ -53,8 +53,8 @@ public class ServiceApplyServiceImpl implements ServiceApplyService{
 	}
 
 	@Override
-	public void delServiceApplyDetail(ServiceModel serviceModel) {
-		serviceApplyDao.delServiceApplyDetail(serviceModel);
+	public void delServiceApplyDetail(ServiceDetailModel serviceDetailModel) {
+		serviceApplyDao.delServiceApplyDetail(serviceDetailModel);
 	}
 
 }
