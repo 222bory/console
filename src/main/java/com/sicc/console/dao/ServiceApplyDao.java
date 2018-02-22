@@ -19,5 +19,5 @@ public interface ServiceApplyDao {
 
 	public void delServiceApply(ServiceModel serviceModel);
 	
-	public void delServiceApplyDetail(ServiceModel serviceModel);
+	public void delServiceApplyDetail(ServiceDetailModel serviceDetailModel);
 }

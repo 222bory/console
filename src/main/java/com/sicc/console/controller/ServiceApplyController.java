@@ -102,7 +102,6 @@ public class ServiceApplyController {
     
     
     @PostMapping("/insServiceApply")
-    @Transactional(rollbackFor=Exception.class)
     public String insServiceApply(Model model,
     		@RequestParam(value="tenantId", required=true) String tenantId,
     		@RequestParam(value="cpCd", required=true) String cpCd,
@@ -262,17 +261,33 @@ public class ServiceApplyController {
     
     
     @RequestMapping("/delServiceApply")
+    @Transactional(rollbackFor=Exception.class)
     public String delServiceApply(@RequestParam Map<String,String> param,
+    				@RequestParam(value="serviceCd") String[] serviceCd,
+    				@RequestParam(value="serviceCdd") String[] serviceCdd,
  					ServiceModel serviceModel,
+ 					ServiceDetailModel serviceDetailModel,
  					Model model) {
     	String result = "";
     	
+    	serviceDetailModel.setServiceCd("");
+
     	try {
-    		serviceApplyService.delServiceApply(serviceModel);
-    		System.out.println("상위서비스 삭제 완료!");
     		
-    		serviceApplyService.delServiceApplyDetail(serviceModel);
-    		System.out.println("하위서비스 삭제 완료!");
+    		for(int i=0 ; i< serviceCdd.length ; i++) {
+    			serviceDetailModel.setServiceCd(serviceCdd[i]);
+    			
+        		serviceApplyService.delServiceApplyDetail(serviceDetailModel);
+        		System.out.println("하위서비스 삭제 완료!");
+ 
+    		}
+    		
+    		for(int i=0 ; i< serviceCd.length ; i++) {
+
+    			serviceApplyService.delServiceApply(serviceModel);
+        		System.out.println("상위서비스 삭제 완료!");
+    		}
+    		
     		result = "1";
     	}
     	catch(Exception e){

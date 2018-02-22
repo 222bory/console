@@ -139,6 +139,7 @@ function redirectList(){
 										</c:if> 
 									</c:forEach>
 									</td>
+									<input type="hidden" name="serviceCd" value="${list.serviceCd}"/>
 									<td> 대표서비스 </td>
 									<td> ${list.serviceStartDt} </td>
 									<td> ${list.serviceEndDt} </td>
@@ -180,6 +181,8 @@ function redirectList(){
 										</c:if> 
 									</c:forEach>
 								</td>
+								<input type="hidden" name="serviceCdd" value="${list.serviceCd}"/>
+								<input type="hidden" name="systemCd" value="${list.systemCd}"/>
 								<td> ${list.systemNm} </td>
 								<td> ${list.serviceStartDt} </td>
 								<td> ${list.serviceEndDt} </td>
