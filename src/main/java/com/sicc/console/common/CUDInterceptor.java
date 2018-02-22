@@ -18,7 +18,9 @@ import org.apache.ibatis.plugin.Signature;
 
 import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.model.ContractModel;
-import com.sicc.console.model.Member; 
+import com.sicc.console.model.Member;
+import com.sicc.console.model.ServiceDetailModel;
+import com.sicc.console.model.ServiceModel; 
 
 @Intercepts({
 		@Signature(type=StatementHandler.class, method="update", args= {Statement.class}),
