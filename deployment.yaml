@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: gsp-console-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: gsp-console
   ports:
