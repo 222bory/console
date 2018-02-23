@@ -158,7 +158,7 @@
                 <li> <a href="#">코드 등록</a></li>
                 <li> <a href="#">코드 관리</a></li>
                 <li> <a href="/insMonitorForm">모니터링 등록</a></li> 
-                <li> <a href="#">모니터링 조회</a></li> 
+                <li> <a href="/selListMonitor">모니터링 조회</a></li> 
               </ul>
             </li>
             

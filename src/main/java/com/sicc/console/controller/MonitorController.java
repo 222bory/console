@@ -1,130 +1,173 @@
 package com.sicc.console.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sicc.console.model.Member;
-import com.sicc.console.service.UserService;
-import com.sicc.console.service.impl.CustomUserDetailsService;
+import com.sicc.console.common.Pagination;
+import com.sicc.console.enums.CommonEnums;
+import com.sicc.console.model.CodeModel;
+import com.sicc.console.model.ContractExtModel;
+import com.sicc.console.model.MonitorModel;
+import com.sicc.console.service.CommonService;
+import com.sicc.console.service.MonitorService;
 
 @Controller
 public class MonitorController {
 
-    private final Logger logger = LoggerFactory.getLogger(IndexController.class);
-    UserService userService;
-    CustomUserDetailsService customUserDetailsService;
+    private final Logger logger = LoggerFactory.getLogger(MonitorController.class);
+    @Autowired
+    CommonService commonService;
     
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
+    MonitorService monitorService;
+    
+   
     @GetMapping("/insMonitorForm")
-    public String insertMonitorForm() {
-    	System.out.println("모니터링 고고!!");
+    public String insertMonitorForm(Model model, @RequestParam(value="searchType", required=false) String searchType, @RequestParam(value="searchValue", required=false) String searchValue) {
+    	if(searchType == null) {
+    		searchType = "C";
+    	}
+    	
+    	List<ContractExtModel> contractList = commonService.searchContract(searchType, searchValue);
+    	List<CodeModel> cpScaleCdList = commonService.selCode(CommonEnums.CP_SCALE_CD.getValue());
+    	List<CodeModel> cpTypeCdList = commonService.selCode(CommonEnums.CP_TYPE_CD.getValue());
+    	
+    	model.addAttribute("contractList", contractList);
+    	model.addAttribute("cpScaleCdList", cpScaleCdList);
+    	model.addAttribute("cpTypeCdList", cpTypeCdList);
+    	
         return "/monitor/insMonitor";
     }
     
-    /*@RequestMapping(value="/insMonitor",method=RequestMethod.POST)
-    public String insertMonitor(Model model , HttpServletRequest req, HttpServletResponse res) {
-    	System.out.println("submit!!");
-    	String hUrl = (String) req.getAttribute("hystricx");
-    	String zUrl	= (String) req.getAttribute("zipkin");
-    	System.out.println("hystrix : "+hUrl);
-    	System.out.println("zipkin : "+zUrl);
-    	
-    	
-        return "";
-    }*/
-    
     @RequestMapping(value="/insMonitor",method=RequestMethod.POST)
-    public String insertMonitor(Model model , HttpServletRequest req, HttpServletResponse res) {
-    	System.out.println("submit!!");
-    	String hUrl = (String) req.getParameter("hystricx");
-    	String zUrl	= (String) req.getParameter("zipkin");
-    
-    	System.out.println("hystrix1 : "+hUrl);
-    	System.out.println("zipkin1 : "+zUrl);
+    @Transactional(rollbackFor=Exception.class)
+    public String insContract(Model model,MonitorModel monitorModel ,HttpServletRequest req, HttpServletResponse res) throws Exception {
+    	String tenantId = req.getParameter("tenantId");
+    	String [] montrnUrlAddr = req.getParameterValues("montrnUrlAddr");
+        
+    	//로그인정보 
+    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String userId = principal.getUsername();
     	
+    	monitorModel.setTenantId(tenantId);
+    	monitorModel.setCrtId(userId);
+    	monitorModel.setCrtIp(req.getRemoteAddr());
+    	monitorModel.setUdtId(userId);
+    	monitorModel.setUdtIp(req.getRemoteAddr());
     	
-        return "";
+    	for(int i=0; i<montrnUrlAddr.length;i++) {
+    		if(i == 0) {
+    			monitorModel.setMontrnFgCd("SERVICE");
+    		}else {
+    			monitorModel.setMontrnFgCd("FLOW");
+    		}
+    		monitorModel.setMontrnUrlAddr(montrnUrlAddr[i]);
+    	
+    		//모니터링 URL 등록
+    		monitorService.insMonitor(monitorModel);
+    	}
+        	//등록 완료 플레그 
+        	model.addAttribute("result", "1");
+        	
+    	return "jsonView";
+    	
     }
     
-/*    @PostMapping("/login")
-    public String login(Model model , @RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest req, HttpServletResponse res) {
+    @RequestMapping("/selListMonitor")
+    public String selListMonitor(@RequestParam Map<String, String> param, MonitorModel monitorModel, Model model) {
+		// 페이징 처리
+//		String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
+//		if(NumberUtils.toInt(page) < 1) page = "1";
+//		
+//		int rows = StringUtils.isNotEmpty( param.get("rowPerPage"))? NumberUtils.toInt(param.get("rowPerPage")) : rowPerPage;
+//		
+//		contractExtModel.setRowPerPage(rows);
+//		contractExtModel.setPage(NumberUtils.toInt(page));
+//		contractExtModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
+    	
 		
-    	System.out.println("test" + username);
-    	customUserDetailsService.loadUserByUsername(username);
+        List<MonitorModel> list = monitorService.selListMonitor(monitorModel);  
+        
+        System.out.println("list : "+ list.get(0));
+        //페이징 처리
+//        Pagination pagination = new Pagination();
+//		if(list != null && !list.isEmpty() ){
+//			pagination.setTotalRow(list.get(0).getTotalCount()).setRowPerPage(rows).setCurrentPage(page);
+//		} else {
+//			pagination.setTotalRow(0);
+//		}
+//		
+//		System.out.println("addate : "+list.get(0).getAdDate());
+		
+		model.addAttribute("list", list);
+        model.addAttribute("monitorModel", monitorModel); 
+//		model.addAttribute("pagination", pagination);
     	
-    	return "/admin/admin";
+    	return "/monitor/selListMonitor";
     	
-    }*/
+    }
     
-/*    @GetMapping("/test")
-    public String admin(Model model) {
+    @RequestMapping("/selMonitorView")
+    public String selMonitorView(@RequestParam Map<String, String> param, MonitorModel monitorModel, Model model) {
+		System.out.println(param.get("tenantId"));
     	
-    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	Member member = userService.findByUserNameOrEmail(principal.getUsername());
+    	MonitorModel mm = monitorService.selMonitor(monitorModel);  
+        
+		
+		model.addAttribute("mm", mm); 
+       return "/monitor/selMonitor";
     	
-    	System.out.println(member.getId());
-    	System.out.println(member.getUid());
-    	System.out.println(member.getUemail());
-    	
-    	model.addAttribute("member", member);
-    	model.addAttribute("roles", member.getRoles());
-    	
-        return "/admin/test";
-    }*/
+    }
     
-/*    @GetMapping("/regUser")
-    public String regUserPage() {
+    @RequestMapping("/delMonitor")
+    public String delMonitor(@RequestParam Map<String, String> param, MonitorModel monitorModel, Model model) {
+		
+    	System.out.println(">>>>>>>>>>>>>>>>>>>>>> tenantId : "+monitorModel.getTenantId());
+		//모니터 삭제
+    	monitorService.delMonitor(monitorModel);
+		System.out.println("계약 삭제 완료!");
+		
+		//등록 완료 플레그 
+    	model.addAttribute("result", "1");
     	
-    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	
-    	System.out.println(principal.getUsername());
-    	System.out.println(principal.getPassword());
-    	
-    	Iterator it = principal.getAuthorities().iterator();
-    	
-    	while(it.hasNext()) {
-    		GrantedAuthority g = (GrantedAuthority) it.next();
-    		System.out.println(g.getAuthority());
+    	return "jsonView";
+    }
+    
+    @RequestMapping("/upMonitorForm")
+    public String upMonitorForm(Model model, @RequestParam(value="searchType", required=false) String searchType, @RequestParam(value="searchValue", required=false) String searchValue, MonitorModel monitorModel) {
+    	if(searchType == null) {
+    		searchType = "C";
     	}
     	
-    	return "/regUser/regUser";
+    	List<ContractExtModel> contractList = commonService.searchContract(searchType, searchValue);
+    	List<CodeModel> cpScaleCdList = commonService.selCode(CommonEnums.CP_SCALE_CD.getValue());
+    	List<CodeModel> cpTypeCdList = commonService.selCode(CommonEnums.CP_TYPE_CD.getValue());
+				
+		MonitorModel mm = monitorService.selMonitor(monitorModel);  
+        
+		model.addAttribute("contractList", contractList);
+    	model.addAttribute("cpScaleCdList", cpScaleCdList);
+    	model.addAttribute("cpTypeCdList", cpTypeCdList);
+		model.addAttribute("mm", mm); 
+       return "/monitor/upMonitor";
     	
-    }*/
-    
-//    @PostMapping("/regUser")
-//    public String regUser(Model model , @RequestParam("id") String id, @RequestParam("upw") String upw,
-//    		@RequestParam("uemail") String uemail, HttpServletRequest req, HttpServletResponse res) {
-//		
-//    	System.out.println("test : " + id + " "+upw + " "+uemail);
-//    	
-//    	Member member = new Member();
-//		
-//		member.setId(id);
-//		member.setUid(id+"1");
-//		member.setUpw(upw);
-//		member.setUemail(uemail);
-//		
-//    	userService.createMember(member);
-//    	
-//    	return "/login/login";
-//    	
-//    }
-
+    }
 }

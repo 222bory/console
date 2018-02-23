@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.sicc.console.dao.MonitorDao">
+
+    <select id="selListMonitor" resultType="com.sicc.console.model.MonitorModel">
+		SELECT gmo.tenantId as tenantId,
+		       gmo.contNm as contNm,
+		       (CASE WHEN max(gmo.url1) is null THEN max(url2) ELSE max(url1) END) as url1,
+		       (CASE WHEN max(gmo.url2) is null THEN max(url1) ELSE max(url2) END) as url2
+		  FROM (
+			SELECT mo.tenant_id as tenantId
+			      ,mo.cont_nm as contNm
+				  ,(CASE WHEN mo.montrn_fg_cd= 'SERVICE' THEN montrn_url_addr ELSE null END) as url1
+				  ,(CASE WHEN mo.montrn_fg_cd= 'FLOW' THEN montrn_url_addr ELSE null END) as url2
+			 FROM (
+				  SELECT b.tenant_id,a.cont_nm, b.montrn_fg_cd, b.montrn_url_addr 
+				    FROM concustcontm a, concustcontmontrnm b
+				    WHERE a.tenant_id = b.tenant_id ) mo
+			 ) gmo
+		GROUP BY tenantId,contNm
+    </select>
+    
+    <select id="selMonitor" resultType="com.sicc.console.model.MonitorModel">
+		SELECT gmo.tenantId as tenantId,
+		       gmo.contNm as contNm,
+		       (CASE WHEN max(gmo.url1) is null THEN max(url2) ELSE max(url1) END) as url1,
+		       (CASE WHEN max(gmo.url2) is null THEN max(url1) ELSE max(url2) END) as url2
+		  FROM (
+			SELECT mo.tenant_id as tenantId
+			      ,mo.cont_nm as contNm
+				  ,(CASE WHEN mo.montrn_fg_cd= 'SERVICE' THEN montrn_url_addr ELSE null END) as url1
+				  ,(CASE WHEN mo.montrn_fg_cd= 'FLOW' THEN montrn_url_addr ELSE null END) as url2
+			 FROM (
+				  SELECT b.tenant_id,a.cont_nm, b.montrn_fg_cd, b.montrn_url_addr 
+				    FROM concustcontm a, concustcontmontrnm b
+				    WHERE a.tenant_id = b.tenant_id ) mo
+		     where mo.tenant_id=#{tenantId}
+			 ) gmo
+		GROUP BY tenantId,contNm
+    </select>
+    
+    <insert id="insMonitor" parameterType="com.sicc.console.model.MonitorModel">
+    	INSERT INTO concustcontmontrnm(
+						      tenant_id,
+							  montrn_fg_cd,
+							  montrn_url_addr,
+							  crt_id,
+							  crt_ip,
+							  ad_date,
+							  udt_id,
+							  udt_ip,
+							  udt_date
+							  )
+					VALUES (
+							  #{tenantId},
+							  #{montrnFgCd},
+							  #{montrnUrlAddr},
+							  #{crtId},
+							  #{crtIp},
+							  current_timestamp,
+							  #{udtId},
+							  #{udtIp},
+							  current_timestamp
+							  )
+    </insert>
+	
+	<delete id="delMonitor" parameterType="com.sicc.console.model.MonitorModel">
+        DELETE FROM concustcontmontrnm WHERE tenant_id = #{tenantId}
+    </delete>
+</mapper>
