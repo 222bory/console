@@ -7,6 +7,7 @@ public class CompetitionImageModel {
 	public int imgSeq;
 	public String filePathNm;
 	public String imgFileNm;
+	public String sourceImgFileNm;
 	public String repImgYn;
 	public String crtId;
 	public String crtIp;
@@ -92,6 +93,12 @@ public class CompetitionImageModel {
 	}
 	public void setUdtDate(String udtDate) {
 		this.udtDate = udtDate;
+	}
+	public String getSourceImgFileNm() {
+		return sourceImgFileNm;
+	}
+	public void setSourceImgFileNm(String sourceImgFileNm) {
+		this.sourceImgFileNm = sourceImgFileNm;
 	}
 	
 }
