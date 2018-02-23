@@ -139,8 +139,8 @@ public class CompetitionController {
             String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
             File destinationFile; 
             String destinationFileName;
-            String fileUrl = "c://images/";
-            //String fileUrl = "/images/"; 
+            //String fileUrl = "c://images/";
+            String fileUrl = "/images/"; 
      
             
             do {  
