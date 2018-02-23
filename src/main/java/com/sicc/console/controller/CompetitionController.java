@@ -148,7 +148,7 @@ public class CompetitionController {
             
             destinationFile.getParentFile().mkdirs(); 
             file[i].transferTo(destinationFile); 
-    	}
+    	} 
     	
 
     	return "redirect:/selListCompetition";
