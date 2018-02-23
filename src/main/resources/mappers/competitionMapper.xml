@@ -138,4 +138,36 @@
 		   AND cp_cd = #{cpCd}	   
     </select>
     
+    <insert id="insCompetitionImage" parameterType="com.sicc.console.model.CompetitionImageModel">
+    	INSERT INTO concpimgm(
+						      tenant_id,
+							  cp_cd,
+							  img_fg_cd,
+							  img_seq,
+							  file_path_nm,
+							  img_file_nm,
+							  rep_img_yn, 
+							  crt_id,
+							  crt_ip,
+							  ad_date,
+							  udt_id,
+							  udt_ip,
+							  udt_date
+							  )
+					VALUES (
+							  #{tenantId},
+							  #{cpCd},
+							  #{imgFgCd},
+							  #{imgSeq},
+							  #{filePathNm},
+							  #{imgFileNm},
+							  #{repImgYn},
+							  #{crtId},
+							  #{crtIp},
+							  current_timestamp,
+							  #{udtId},
+							  #{udtIp},
+							  current_timestamp
+							  )
+    </insert>
 </mapper>

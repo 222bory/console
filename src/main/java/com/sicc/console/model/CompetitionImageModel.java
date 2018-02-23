@@ -4,7 +4,7 @@ public class CompetitionImageModel {
 	public String tenantId;
 	public String cpCd;
 	public String imgFgCd;
-	public String imgSeq;
+	public int imgSeq;
 	public String filePathNm;
 	public String imgFileNm;
 	public String repImgYn;
@@ -33,10 +33,10 @@ public class CompetitionImageModel {
 	public void setImgFgCd(String imgFgCd) {
 		this.imgFgCd = imgFgCd;
 	}
-	public String getImgSeq() {
+	public int getImgSeq() {
 		return imgSeq;
 	}
-	public void setImgSeq(String imgSeq) {
+	public void setImgSeq(int imgSeq) {
 		this.imgSeq = imgSeq;
 	}
 	public String getFilePathNm() {

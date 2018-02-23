@@ -24,8 +24,18 @@
 		});
 		
 		$("#addRowBtn").click(function(){
-			var html ='<tr><td><input type="file" name="file" class="form-control form-control-sm"/></td></tr>';
-			//alert(html);
+			var html ='<tr>'
+						+	'<td>'
+						+		'<div class="col-sm-5 select">'
+					    +          '<select name="imgFgCd" class="form-control form-control-sm">'
+					    +          '<c:forEach items="${imgFgCdList}" var="list" varStatus="parent">'
+					    +            '<option value="${list.cdId}">${list.cdNm}</option>'
+					    +          '</c:forEach>'
+					    +          '</select>'
+					    +          '<input type="file" name="file" class="form-control form-control-sm"/>'
+					    +        '</div>'
+						+	'</td>'
+						+'</tr>';
 			$('tbody[name=serviceTbody]').append(html); 
 	    });
 		
@@ -172,7 +182,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 예상 이용자수</label>
 								<div class="col-md-5">
-									<input type="text" class="form-control form-control-sm" id="expectUserNum" name="expectUserNum">
+									<input type="text" class="form-control form-control-sm" id="expectUserNum" name="expectUserNum" value="0">
 								</div>
 							</div>
 							<div class="line"></div>
@@ -183,12 +193,25 @@
 				                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn btn-primary"/>
 			                	</div>
 			                	<table id="serviceTbl" name="serviceTbl" class="table">
-									<tbody name="serviceTbody"></tbody>
+									<tbody name="serviceTbody">
+										<tr>
+											<td>
+												<div class="col-sm-5 select">
+						                          <select name="imgFgCd" class="form-control form-control-sm">
+						                          <c:forEach items="${imgFgCdList}" var="list" varStatus="parent">
+						                            <option value="${list.cdId}">${list.cdNm}</option>
+						                          </c:forEach>
+						                          </select>
+						                          <input type="file" name="file" class="form-control form-control-sm"/>
+						                        </div>
+											</td>
+										</tr>
+									</tbody>
 								</table>
-								<div class="col-md-5">
+								<!-- <div class="col-md-5">
 									<input type="file" name="file" class="form-control form-control-sm"/>
-									<!-- <input multiple="multiple"  type="file" id="file" name="file[]" class="form-control form-control-sm"/> -->
-								</div>
+									<input multiple="multiple"  type="file" id="file" name="file[]" class="form-control form-control-sm"/>
+								</div> -->
 							</div>
 							<div class="line"></div>
 							<div class="form-group">

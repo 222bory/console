@@ -46,5 +46,11 @@ public class CompetitionServiceImpl implements CompetitionService{
 	public List<CompetitionImageModel> selListCompetitionImage(CompetitionImageModel competitionImageModel) {
 		return competitionDao.selListCompetitionImage(competitionImageModel);
 	}
+
+	@Override
+	public void insCompetitionImage(CompetitionImageModel competitionImageModel) {
+		competitionDao.insCompetitionImage(competitionImageModel);
+	}
+	
 	
 }

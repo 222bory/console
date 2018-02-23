@@ -44,6 +44,11 @@ public class CompetitionDaoImpl implements CompetitionDao{
 	public List<CompetitionImageModel> selListCompetitionImage(CompetitionImageModel competitionImageModel) {
 		return sqlSessionTemplate.selectList("com.sicc.console.dao.CompetitionDao.selListCompetitionImage", competitionImageModel);
 	}
+
+	@Override
+	public void insCompetitionImage(CompetitionImageModel competitionImageModel) {
+		sqlSessionTemplate.insert("com.sicc.console.dao.CompetitionDao.insCompetitionImage", competitionImageModel);
+	}
 	
 }
 
