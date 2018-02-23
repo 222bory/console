@@ -41,10 +41,10 @@ spec:
         - name: http
           containerPort: 8080
         volumeMounts:
-        - mountPath: /test-pd
+        - mountPath: /tmp
           name: test-volume  
       volumes:
       - name: test-volume
         hostPath:
-          path: /test-pd
+          path: /tmp
           type: Directory    

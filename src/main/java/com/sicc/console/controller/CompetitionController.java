@@ -137,7 +137,7 @@ public class CompetitionController {
             File destinationFile; 
             String destinationFileName;
             //String fileUrl = "c://upload//";
-            String fileUrl = "/test-pd/"; 
+            String fileUrl = "/tmp/"; 
      
             
             do {  
