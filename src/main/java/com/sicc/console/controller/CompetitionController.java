@@ -129,7 +129,7 @@ public class CompetitionController {
     	
     	//competitionService.insCompetition(competitionModel);
     	
-    	for(int i = 0 ; i < file.length ; i ++) {
+    	for(int i = 0 ; i < file.length ; i ++) { 
     		/*System.out.println("test ::: file originname : "+file[i].getOriginalFilename());
     		System.out.println("test ::: file contenttype : "+file[i].getContentType());
     		System.out.println("test ::: file name : "+file[i].getName());
