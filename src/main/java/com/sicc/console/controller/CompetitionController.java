@@ -139,8 +139,8 @@ public class CompetitionController {
             String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
             File destinationFile; 
             String destinationFileName;
-            //String fileUrl = "c://upload/";
-            String fileUrl = "/images/"; 
+            String fileUrl = "c://images/";
+            //String fileUrl = "/images/"; 
      
             
             do {  
@@ -154,6 +154,7 @@ public class CompetitionController {
             
             CompetitionImageModel competitionImage = new CompetitionImageModel();
     		competitionImage.setImgFileNm(file[i].getOriginalFilename());
+    		competitionImage.setSourceImgFileNm(destinationFileName);
     		competitionImage.setTenantId(tenantId);
     		competitionImage.setCpCd(cpCd);
     		competitionImage.setImgFgCd(imgFgCd[i]);
@@ -323,28 +324,4 @@ public class CompetitionController {
     	
     }
     
-    @ResponseBody
-    @PostMapping("/upCompetitionImage") 
-    public ResponseEntity<?> uploadAttachment(@RequestPart MultipartFile fileName) throws IOException { 
-    	String sourceFileName = fileName.getOriginalFilename(); 
-    	String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
-    	File destinationFile; 
-    	String destinationFileName; 
-    	do { 
-    		destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension; 
-    		//destinationFile = new File("C:/attachments/" + destinationFileName); 
-    		destinationFile = new File("/tmp" + destinationFileName);
-    	} while (destinationFile.exists()); 
-    	destinationFile.getParentFile().mkdirs(); 
-    	fileName.transferTo(destinationFile); 
-    	
-    	CompetitionImageModel competitionImageModel = new CompetitionImageModel(); 
-    	
-    	competitionImageModel.setImgFileNm(fileName.getOriginalFilename()); 
-    	competitionImageModel.setFilePathNm("http://localhost:8080/attachments/" + destinationFileName); 
-    	
-    	return new ResponseEntity<>(competitionImageModel, HttpStatus.OK); 
-    }
-    
-
 }
