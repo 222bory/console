@@ -40,11 +40,3 @@ spec:
         ports:
         - name: http
           containerPort: 8080
-        volumeMounts:
-        - mountPath: /app/tmp
-          name: test-volume  
-      volumes:
-      - name: test-volume
-        hostPath:
-          path: /home/smadmin/tmp
-          type: Directory    
