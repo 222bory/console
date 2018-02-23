@@ -46,5 +46,5 @@ spec:
       volumes:
       - name: test-volume
         hostPath:
-          path: /app/tmp
+          path: /home/smadmin/tmp
           type: Directory    
