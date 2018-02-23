@@ -231,6 +231,17 @@ function redirectList(){
 	$("#frm").submit();
 }
 
+/* function checkValid(){
+
+	$('select[name=serviceCd]').each(function(){
+		
+	});
+	
+	
+	
+}  */
+
+
 function addServiceTbl(flag){
 	var html ="";
     html += "<tr>"; 
@@ -260,6 +271,7 @@ function addServiceTbl(flag){
 	$('tbody[name=serviceTbody]').append(html); 
 	
 }
+
 
 function addOptionTbl(serviceCd){
  	var html ="";
@@ -382,7 +394,6 @@ function setDatepicker(){
 				<h2 class="h5 display">서비스 정보 입력</h2>
 			</div>
 			<div class="card-body">
-
 				 <div class="row">
 				 <label class="col-sm-2 form-control-label">* 대회선택</label>
 				 <div class="form-group">
@@ -408,8 +419,7 @@ function setDatepicker(){
                  <input type="hidden" id="cpCd" name="cpCd" value=""/>
              
              <div class="line"></div>
-
-
+             
 			<div class="row">
 				<label class="col-sm-2 form-control-label">* 서비스선택</label>
 				<div class="form-group col-sm-8">
@@ -424,12 +434,41 @@ function setDatepicker(){
 		</div>
 	</div>
 	
+	<div class="col-lg-12">
+		<div class="form-group">
+           <div class="card">
+                <div class="card-header d-flex align-items-center">
+					<h2 class="h5 display">서비스별 설정</h2>
+				</div>
+             <div class="card-body">	
+				<!-- <label class="col-sm-4 form-control-label">서비스별 설정</label> -->
+					<table  id="configTable" name="configTable" class="table">
+						<thead>
+	                      <tr>
+	                        <th>서비스명</th>
+	                        <th>컬러선택</th>
+	                        <th>1차언어</th>
+	                        <th>2차언어</th>
+	                        <th>3차언어</th>
+	                        <th>4차언어</th>
+	                        <th>5차언어</th>
+	                      </tr>
+	                    </thead>
+						<tbody name="configTbody"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="col-lg-12">
 		<div class="form-group">
               <div class="card">
+              	<div class="card-header d-flex align-items-center">
+					<h2 class="h5 display">서비스별 상세정보 입력</h2>
+				</div>
                 <div class="card-body">	
-					<label class="col-sm-4 form-control-label">서비스별 상세정보 입력</label>
+
 					<div style="float:right;">
 						<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-primary"/>
 	                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn btn-primary"/>
@@ -452,27 +491,7 @@ function setDatepicker(){
               </div>
            </div>
       
-        <div class="form-group">
-           <div class="card">
-             <div class="card-body">	
-				<label class="col-sm-4 form-control-label">서비스별 설정</label>
-					<table  id="configTable" name="configTable" class="table">
-						<thead>
-	                      <tr>
-	                        <th>서비스명</th>
-	                        <th>컬러선택</th>
-	                        <th>1차언어</th>
-	                        <th>2차언어</th>
-	                        <th>3차언어</th>
-	                        <th>4차언어</th>
-	                        <th>5차언어</th>
-	                      </tr>
-	                    </thead>
-						<tbody name="configTbody"></tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+        
 		
 		<div class="form-group">
 			<div class="col-sm-4 offset-sm-2">

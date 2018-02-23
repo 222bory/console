@@ -174,18 +174,18 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 고객ID</label>
 		                      <div class="col-md-3">
-		                        <input type="text" class="form-control" id="custId" name="custId">
+		                        <input type="text" class="form-control form-control-sm" id="custId" name="custId">
 		                      </div>
 		                      
-		                      <div class="form-group">
+		                      <div class="form-group col-md-1">
 		                      	<!-- <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">검색</button> -->
-		                      	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2">검색</button>
+		                      	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">검색</button>
 			                      <!-- <input type="button" value="검색" class="mx-sm-3 btn btn-primary"> -->
 			                    </div>
-			                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			                  <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
 			                  <label class="col-sm-2 form-control-label">* 고객명</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="custNm" name="custNm">
+		                        <input type="text" class="form-control form-control-sm" id="custNm" name="custNm">
 		                      </div>  
 		                    </div>
 							
@@ -218,11 +218,11 @@ function submit(){
 		                    <div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 대표팩스번호</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="repFaxNo" name="repFaxNo">
+		                        <input type="text" class="form-control form-control-sm" id="repFaxNo" name="repFaxNo">
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 대표전화번호</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="repTelNo" name="repTelNo">
+		                        <input type="text" class="form-control form-control-sm" id="repTelNo" name="repTelNo">
 		                      </div>
 		                    </div>
 		                   
@@ -230,11 +230,11 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 법인등록번호</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="corpAdNo" name="corpAdNo">
+		                        <input type="text" class="form-control form-control-sm" id="corpAdNo" name="corpAdNo">
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 담당자명</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="mgrNm" name="mgrNm">
+		                        <input type="text" class="form-control form-control-sm" id="mgrNm" name="mgrNm">
 		                      </div>
 		                    </div>
 		                    
@@ -242,11 +242,11 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 담당자이메일주소</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="mgrEmailAddr" name="mgrEmailAddr">
+		                        <input type="text" class="form-control form-control-sm" id="mgrEmailAddr" name="mgrEmailAddr">
 		                      </div>
 		                        <label class="col-sm-2 form-control-label">* 담당자전화번호</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="mgrTelNo" name="mgrTelNo">
+		                        <input type="text" class="form-control form-control-sm" id="mgrTelNo" name="mgrTelNo">
 		                      </div>
 		                    </div>
 		                    
@@ -270,11 +270,11 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">테넌트ID</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="tenantId" name="tenantId" value="${tid}">
+		                        <input type="text" class="form-control form-control-sm" id="tenantId" name="tenantId" value="${tid}">
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 계약명</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="contNm" name="contNm">
+		                        <input type="text" class="form-control form-control-sm" id="contNm" name="contNm">
 		                      </div>
 		                    </div>
 		                  
@@ -282,11 +282,11 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 유효시작일자</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="validStartDt" name="validStartDt">
+		                        <input type="text" class="form-control form-control-sm" id="validStartDt" name="validStartDt">
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 유효종료일자</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="validEndDt" name="validEndDt">
+		                        <input type="text" class="form-control form-control-sm" id="validEndDt" name="validEndDt">
 		                      </div>
 		                    </div>
 		                   
@@ -295,7 +295,7 @@ function submit(){
 		                    <div class="form-group row has-success">
 								<label class="col-sm-2 form-control-label">* 계약상태</label>
 		                        <div class="col-sm-4 select">
-		                          <select id="contStatCd" name="contStatCd" class="form-control">
+		                          <select id="contStatCd" name="contStatCd" class="form-control form-control-sm">
 		                          <c:forEach items="${contStatCdList}" var="list" varStatus="parent">
 		                            <option value="${list.cdId}">${list.cdNm}</option>
 		                          </c:forEach> 
@@ -303,7 +303,7 @@ function submit(){
 		                        </div>
 		                        <label class="col-sm-2 form-control-label">* 네트워크구분</label>
 		                        <div class="col-sm-4 select">
-		                          <select id="networkFgCd" name="networkFgCd" class="form-control">
+		                          <select id="networkFgCd" name="networkFgCd" class="form-control form-control-sm">
 		                          <c:forEach items="${networkFgCdList}" var="list" varStatus="parent">
 		                            <option value="${list.cdId}">${list.cdNm}</option>
 		                          </c:forEach> 
@@ -315,7 +315,7 @@ function submit(){
 							<div class="form-group row has-success">
 								<label class="col-sm-2 form-control-label">* 비밀번호난이도</label>
 		                        <div class="col-sm-4 select">
-		                          <select id="passwordLodCd" name="passwordLodCd" class="form-control">
+		                          <select id="passwordLodCd" name="passwordLodCd" class="form-control form-control-sm">
 		                          <c:forEach items="${passwordLodCdList}" var="list" varStatus="parent">
 		                            <option value="${list.cdId}">${list.cdNm}</option>
 		                          </c:forEach> 
@@ -323,7 +323,7 @@ function submit(){
 		                        </div>
 		                        <label class="col-sm-2 form-control-label">* 비밀번호갱신주기</label>
 		                        <div class="col-sm-4 select">
-		                          <select id="passwordRnwlCyclCd" name="passwordRnwlCyclCd" class="form-control">
+		                          <select id="passwordRnwlCyclCd" name="passwordRnwlCyclCd" class="form-control form-control-sm">
 		                          <c:forEach items="${rnwlCyclCd}" var="list" varStatus="parent">
 		                            <option value="${list.cdId}">${list.cdNm}</option>
 		                          </c:forEach> 
