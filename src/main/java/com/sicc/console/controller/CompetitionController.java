@@ -140,7 +140,7 @@ public class CompetitionController {
             String fileUrl = "/tmp/";
      
             
-            do { 
+            do {  
                 //destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
             	destinationFileName = file[i].getOriginalFilename();
                 destinationFile = new File(fileUrl + destinationFileName); 
