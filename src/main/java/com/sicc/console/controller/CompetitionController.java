@@ -314,7 +314,8 @@ public class CompetitionController {
     	String destinationFileName; 
     	do { 
     		destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension; 
-    		destinationFile = new File("C:/attachments/" + destinationFileName); 
+    		//destinationFile = new File("C:/attachments/" + destinationFileName); 
+    		destinationFile = new File("/tmp" + destinationFileName);
     	} while (destinationFile.exists()); 
     	destinationFile.getParentFile().mkdirs(); 
     	fileName.transferTo(destinationFile); 
