@@ -116,7 +116,7 @@
 									<div class="col-md-6">
 										<div class="row">
 											<div style="width: 60%; padding: 0.375rem 0.75rem;">
-												<input type="text" class="form-control" id="id" name="id" onchange="fnIdCheck();">
+												<input type="text" class="form-control form-control-sm" id="id" name="id" onchange="fnIdCheck();">
 											</div>
 											<div style="width: 30%; padding: 0.375rem 0.75rem;">
 												<button type="button" id="btnDupl" onclick="fnDupl()" data-toggle="modal" data-target="#myModal" class="btn btn-primary">중복확인</button>
@@ -152,28 +152,28 @@
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 비밀번호</label>
 								<div class="col-md-5">
-									<input type="password" class="form-control" id="upw" name="upw" placeholder="영문+숫자+특수문자 8자리 이상">
+									<input type="password" class="form-control form-control-sm" id="upw" name="upw" placeholder="영문+숫자+특수문자 8자리 이상">
 								</div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 비밀번호 확인</label>
 								<div class="col-md-5">
-									<input type="password" class="form-control" id="upwConfirm" name="upwConfirm" placeholder="영문+숫자+특수문자 8자리 이상">
+									<input type="password" class="form-control form-control-sm" id="upwConfirm" name="upwConfirm" placeholder="영문+숫자+특수문자 8자리 이상">
 								</div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 이름</label>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="uname" name="uname">
+									<input type="text" class="form-control form-control-sm" id="uname" name="uname">
 								</div>
 							</div>
 							<div class="line"></div>
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">이메일</label>
 								<div class="col-md-5">
-									<input type="input" id="uemail" name="uemail" placeholder="직접입력" class="form-control">
+									<input type="input" id="uemail" name="uemail" placeholder="직접입력" class="form-control form-control-sm">
 									<label class="error" for="uemail" generated="true" style="display:none; color: red;">error message</label>
 								</div>
 								
