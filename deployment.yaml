@@ -15,7 +15,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: gsp-console
+  name: gsp-console 
   labels:
     app: gsp-console
 spec:
@@ -27,11 +27,11 @@ spec:
     metadata:
       labels:
         app: gsp-console
-        version: "1.0.2"
+        version: "1.0.3"
     spec:
       containers:
       - name: gsp-console
-        image: docker.gsp.sicc.co.kr/console:1.0.1
+        image: docker.gsp.sicc.co.kr/console:1.0.3
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: prd
