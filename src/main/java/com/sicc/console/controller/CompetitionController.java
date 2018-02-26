@@ -127,7 +127,7 @@ public class CompetitionController {
     	competitionModel.setUdtId(userId);
     	competitionModel.setUdtIp(req.getRemoteAddr());
     	
-    	//competitionService.insCompetition(competitionModel);
+    	competitionService.insCompetition(competitionModel);
     	
     	for(int i = 0 ; i < file.length ; i ++) { 
     		/*System.out.println("test ::: file originname : "+file[i].getOriginalFilename());
@@ -139,8 +139,8 @@ public class CompetitionController {
             String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
             File destinationFile; 
             String destinationFileName;
-            //String fileUrl = "c://images/";
-            String fileUrl = "/images/"; 
+            String fileUrl = "c://images/";
+            //String fileUrl = "/images/"; 
      
             
             do {  
@@ -313,11 +313,15 @@ public class CompetitionController {
     		HttpServletRequest req, HttpServletResponse res) {
 		
     	CompetitionModel competitionModel= new CompetitionModel();
-    	
     	competitionModel.setTenantId(tenantId);
     	competitionModel.setCpCd(cpCd);
     	
+    	CompetitionImageModel competitionImageModel = new CompetitionImageModel();
+    	competitionImageModel.setTenantId(tenantId);
+    	competitionImageModel.setCpCd(cpCd);
+    	
     	competitionService.delCompetition(competitionModel);
+    	competitionService.delCompetitionImage(competitionImageModel);
     	
     	
     	return "redirect:/selListCompetition";

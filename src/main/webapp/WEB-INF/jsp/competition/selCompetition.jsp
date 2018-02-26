@@ -20,10 +20,13 @@
 			var result = confirm('대회정보를 삭제 하시겠습니까?'); 
 			
 			if(result) { 
-				alert("삭제");
-			} 
-
-			//location.href = "/delCompetition?tenantId="+tenantId+"&cpCd="+cpCd;
+				var frm = $("#frm"); 
+				frm.action="/delCompetition";
+				frm.method="Post";
+				frm.submit();  
+			}else{
+				return;
+			}
 		});
 	});
 </script>
@@ -48,12 +51,15 @@
                   <h2 class="h5 display" >대회상세</h2>
                 </div>
                 <div class="card-body">
-                <form action="/selCompetition" method="post" id="detailFrm">
-                	<%-- <input type="hidden" name="page" value="${competitionModel.page}" /> --%>
-                	<input type="hidden" id="hiddenTenantId" name="hiddenTenantId"/>
-                </form>
-                <form action="" method="post" id="frm">
+                <%-- <form action="/selCompetition" method="post" id="detailFrm">
+                	<input type="hidden" name="page" value="${competitionModel.page}" />
+                	<input type="hidden" id="hiddenTenantId" name="tenantId"/>
+                	<input type="hidden" id="hiddenCpCd" name="cpCd"/>
+                </form> --%>
+                <form action="delCompetition" method="post" id="frm">
                 <input type="hidden" name="page" value="${competitionModel.page}" />
+                <input type="hidden" name="tenantId" value="${competition.tenantId}"/>
+                <input type="hidden" name="cpCd" value="${competition.cpCd}"/>
                   <table class="table" id="selListCompetitionTable">
                     <tbody>
                     	<tr><td>테넌트ID</td><td id="tenantId">${competition.tenantId}</td></tr>

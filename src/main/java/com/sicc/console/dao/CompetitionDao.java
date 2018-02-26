@@ -20,5 +20,7 @@ public interface CompetitionDao {
 	public List<CompetitionImageModel> selListCompetitionImage(CompetitionImageModel competitionImageModel);
 	
 	public void insCompetitionImage(CompetitionImageModel competitionImageModel);
+	
+	public void delCompetitionImage(CompetitionImageModel competitionImageModel);
 }
 

@@ -49,6 +49,11 @@ public class CompetitionDaoImpl implements CompetitionDao{
 	public void insCompetitionImage(CompetitionImageModel competitionImageModel) {
 		sqlSessionTemplate.insert("com.sicc.console.dao.CompetitionDao.insCompetitionImage", competitionImageModel);
 	}
+
+	@Override
+	public void delCompetitionImage(CompetitionImageModel competitionImageModel) {
+		sqlSessionTemplate.delete("com.sicc.console.dao.CompetitionDao.delCompetitionImage", competitionImageModel);
+	}
 	
 }
 
