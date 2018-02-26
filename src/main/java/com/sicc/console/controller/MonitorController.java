@@ -103,7 +103,6 @@ public class MonitorController {
 		
         List<MonitorModel> list = monitorService.selListMonitor(monitorModel);  
         
-        System.out.println("list : "+ list.get(0));
         //페이징 처리
 //        Pagination pagination = new Pagination();
 //		if(list != null && !list.isEmpty() ){

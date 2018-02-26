@@ -61,9 +61,10 @@ $("button").click(function () {
             <h1 class="h3">모니터링 목록</h1>
           </header>
           <div class="row">
-          
+          <c:choose>
+			<c:when test="${fn:length(list) >0 }">
 	          <c:forEach items="${list}" var="list" varStatus="parent">
-		           <div class="col-lg-8">
+		           <div class="col-lg-12">
 		              <div class="card">
 		                
 		                
@@ -94,8 +95,20 @@ $("button").click(function () {
 		           
 		           
 		   
-	          </c:forEach>
-		  
+	          	</c:forEach>
+		 		 </c:when>
+				<c:otherwise>
+					<div class="col-lg-12">
+		              <div class="card">
+		                  <div class="card-body">
+		                  <form class="form-inline">
+		                    조회된 목록이 없습니다.
+		                  </form>
+		                </div>
+		              </div>
+		            </div>
+				</c:otherwise>
+			</c:choose>
           </div>
          <!--  </form> -->
         </div>
