@@ -90,10 +90,6 @@ $("button").click(function () {
 		                </div>
 		              </div>
 		            </div>
-		           
-		           
-		           
-		           
 		   
 	          	</c:forEach>
 		 		 </c:when>
