@@ -33,4 +33,9 @@ public class MonitorServiceImpl implements MonitorService {
 		monitorDao.delMonitor(monitorModel);
 	}
 	
+	@Override
+	public void upMonitor(MonitorModel monitorModel) {
+		monitorDao.upMonitor(monitorModel);
+	}
+	
 }

@@ -167,4 +167,44 @@ public class MonitorController {
        return "/monitor/upMonitor";
     	
     }
+    
+    @RequestMapping("/upMonitor")
+    public String upMonitor(@RequestParam Map<String, String> param, MonitorModel monitorModel, Model model,HttpServletRequest req, HttpServletResponse res) {
+		
+		//contractExtModel.getCustId();
+		//contractExtModel.getTenantId();
+		System.out.println("map : "+param.toString());
+		
+		//모니터 URL 업데이트
+		String tenantId = req.getParameter("tenantId");
+    	String [] montrnUrlAddr = req.getParameterValues("montrnUrlAddr");
+        
+    	System.out.println(">>>>>>>>>>>>>>>>>>>>>> tenantId : "+ tenantId);
+    	//로그인정보 
+    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String userId = principal.getUsername();
+    	
+    	monitorModel.setTenantId(tenantId);
+    	monitorModel.setCrtId(userId);
+    	monitorModel.setCrtIp(req.getRemoteAddr());
+    	monitorModel.setUdtId(userId);
+    	monitorModel.setUdtIp(req.getRemoteAddr());
+    	
+    	for(int i=0; i<montrnUrlAddr.length;i++) {
+    		if(i == 0) {
+    			monitorModel.setMontrnFgCd("SERVICE");
+    		}else {
+    			monitorModel.setMontrnFgCd("FLOW");
+    		}
+    		monitorModel.setMontrnUrlAddr(montrnUrlAddr[i]);
+    	
+    		//모니터링 URL 수정
+    		monitorService.upMonitor(monitorModel);
+    	}
+		
+		
+		model.addAttribute("result", "1");
+    	
+    	return "jsonView";
+    }
 }

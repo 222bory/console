@@ -30,4 +30,8 @@ public class MonitorDaoImpl implements MonitorDao{
 	public void delMonitor(MonitorModel monitorModel) {
 		sqlSessionTemplate.delete("com.sicc.console.dao.MonitorDao.delMonitor", monitorModel);
 	}
+	@Override
+	public void upMonitor(MonitorModel monitorModel) {
+		sqlSessionTemplate.delete("com.sicc.console.dao.MonitorDao.upMonitor", monitorModel);
+	}
 }
