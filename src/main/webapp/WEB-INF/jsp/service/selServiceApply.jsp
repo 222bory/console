@@ -121,6 +121,82 @@ function redirectList(){
 				
 				<div class="line"></div>
 				
+				
+				<div class="form-group">
+				<label class="col-sm-2 form-control-label">서비스별 설정</label>
+
+				<table class="table" id="configTable">
+					<thead>
+                      <tr>
+                        <th>서비스명</th>
+                        <th>컬러</th>
+                        <th>1차언어</th>
+                        <th>2차언어</th>
+                        <th>3차언어</th>
+                        <th>4차언어</th>
+                        <th>5차언어</th>
+                      </tr>
+					</thead>
+					
+					<tbody name='configTbody'>
+						<c:forEach items="${selServiceApply}" var ="list">
+							<tr>
+								<td>
+								<c:forEach items="${serviceList}" var="svc">
+									<c:if test="${list.serviceCd == svc.cdId}">
+										${svc.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+								<td style='width:20%'>
+									<div name='colorGroup' class='input-group' >
+									<input name='repColorValue' type='text' class='form-control form-control-sm' readonly='true' value="${list.repColorValue}" />
+									 <span class='input-group-addon'><i></i></span> 
+									</div>
+								</td>
+								<td>
+								<c:forEach items="${languageList}" var="lang">
+									<c:if test="${list.fstLangCd == lang.cdId}">
+										${lang.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+								<td> 
+								<c:forEach items="${languageList}" var="lang">
+									<c:if test="${list.scndLangCd == lang.cdId}">
+										${lang.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+								<td>
+								<c:forEach items="${languageList}" var="lang">
+									<c:if test="${list.thrdLangCd == lang.cdId}">
+										${lang.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+								<td>
+								<c:forEach items="${languageList}" var="lang">
+									<c:if test="${list.fothLangCd == lang.cdId}">
+										${lang.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+								<td>
+								<c:forEach items="${languageList}" var="lang">
+									<c:if test="${list.fithLangCd == lang.cdId}">
+										${lang.cdNm}
+									</c:if> 
+								</c:forEach>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				</div>
+				
+				<div class="line"></div>
+				
 				<div class="form-group">
 					<label class="col-sm-4 form-control-label">서비스별 상세정보 </label>
 					<table  class="table">
@@ -201,81 +277,7 @@ function redirectList(){
 					</table>
                  </div>
 
-             <div class="line"></div>
-             
-              <div class="form-group">
-				<label class="col-sm-2 form-control-label">서비스별 설정</label>
-
-				<table class="table" id="configTable">
-					<thead>
-                      <tr>
-                        <th>서비스명</th>
-                        <th>컬러</th>
-                        <th>1차언어</th>
-                        <th>2차언어</th>
-                        <th>3차언어</th>
-                        <th>4차언어</th>
-                        <th>5차언어</th>
-                      </tr>
-					</thead>
-					
-					<tbody name='configTbody'>
-						<c:forEach items="${selServiceApply}" var ="list">
-							<tr>
-								<td>
-								<c:forEach items="${serviceList}" var="svc">
-									<c:if test="${list.serviceCd == svc.cdId}">
-										${svc.cdNm}
-									</c:if> 
-								</c:forEach>
-								</td>
-								<td style='width:20%'>
-									<div name='colorGroup' class='input-group' >
-									<input name='repColorValue' type='text' class='form-control form-control-sm' readonly='true' value="${list.repColorValue}" />
-									 <span class='input-group-addon'><i></i></span> 
-									</div>
-								</td>
-								<td>
-								<c:forEach items="${languageList}" var="lang">
-									<c:if test="${list.fstLangCd == lang.cdId}">
-										${lang.cdNm}
-									</c:if> 
-								</c:forEach>
-								</td>
-								<td> 
-								<c:forEach items="${languageList}" var="lang">
-									<c:if test="${list.scndLangCd == lang.cdId}">
-										${lang.cdNm}
-									</c:if> 
-								</c:forEach>
-								</td>
-								<td>
-								<c:forEach items="${languageList}" var="lang">
-									<c:if test="${list.thrdLangCd == lang.cdId}">
-										${lang.cdNm}
-									</c:if> 
-								</c:forEach>
-								</td>
-								<td>
-								<c:forEach items="${languageList}" var="lang">
-									<c:if test="${list.fothLangCd == lang.cdId}">
-										${lang.cdNm}
-									</c:if> 
-								</c:forEach>
-								</td>
-								<td>
-								<c:forEach items="${languageList}" var="lang">
-									<c:if test="${list.fithLangCd == lang.cdId}">
-										${lang.cdNm}
-									</c:if> 
-								</c:forEach>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-				  
-				  
+ 
 	  			<div class="line"></div>
 				<div class="form-group">
 					<div class="col-sm-4 offset-sm-2">
@@ -287,7 +289,7 @@ function redirectList(){
 				</div>
 				</form>
 	
-				</div>
+			
 			</div>
 		</div>
 		</div>	

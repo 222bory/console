@@ -2,6 +2,7 @@ package com.sicc.console.dao;
 
 import java.util.List;
 
+import com.sicc.console.model.CodeModel;
 import com.sicc.console.model.ServiceDetailModel;
 import com.sicc.console.model.ServiceExtModel;
 import com.sicc.console.model.ServiceModel;
@@ -20,4 +21,6 @@ public interface ServiceApplyDao {
 	public void delServiceApply(ServiceModel serviceModel);
 	
 	public void delServiceApplyDetail(ServiceDetailModel serviceDetailModel);
+	
+	public List<CodeModel> selSystemList();
 }

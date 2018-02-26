@@ -31,7 +31,7 @@
 <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selCompetition">대회관리</a></li>
+			<li class="breadcrumb-item"><a href="/selCompetition">서비스관리</a></li>
 			<li class="breadcrumb-item active">대회관리</li>
 		</ul>
 	</div>
@@ -39,13 +39,13 @@
 	  <section class="forms">
         <div class="container-fluid">
           <header> 
-            <h1 class="h3">대회관리</h1>
+            <h1 class="h3">대회상세</h1>
           </header>
           <div class="row">
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-header d-flex align-items-center">
-                  <h2 class="h5 display" >대회상세</h2>
+                  <h2 class="h5 display" >대회정보상세</h2>
                 </div>
                 <div class="card-body">
                 <form action="/selCompetition" method="post" id="detailFrm">

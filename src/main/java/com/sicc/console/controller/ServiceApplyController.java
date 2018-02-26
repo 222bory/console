@@ -70,7 +70,7 @@ public class ServiceApplyController {
     
     @GetMapping("/insServiceApply") 
     public String insServiceApply(Model model,
-    		@RequestParam(value="searchType", required=false) String searchType, 
+    	 @RequestParam(value="searchType", required=false) String searchType, 
    		 @RequestParam(value="searchValue", required=false) String searchValue){
     	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());
     	List<CodeModel> languageList = commonService.selCode(CommonEnums.LANG_CD.getValue());
@@ -167,6 +167,8 @@ public class ServiceApplyController {
 	    			
 	    			serviceModel.setCrtId(crtId);
 	    			serviceModel.setCrtIp(crtIp);
+	    			serviceModel.setUdtId(crtId);
+	    			serviceModel.setUdtIp(crtIp);
 	    			
 	    			serviceApplyService.insServiceApply(serviceModel);
 	    			
@@ -183,6 +185,8 @@ public class ServiceApplyController {
 	    			serviceDetailModel.setServiceUrlAddr(serviceUrlAddr[i]);
 	    			serviceDetailModel.setCrtId(crtId);
 	    			serviceDetailModel.setCrtIp(crtIp);
+	    			serviceDetailModel.setUdtId(crtId);
+	    			serviceDetailModel.setUdtIp(crtIp);
 	    			
 	    			serviceApplyService.insServiceApplyDetail(serviceDetailModel);
 	    			downCount++;
@@ -307,7 +311,7 @@ public class ServiceApplyController {
     
     
     
-    @RequestMapping("/upServiceApply")
+    @GetMapping("/upServiceApply")
     public String upServiceApply(@RequestParam Map<String,String> param,
 				@RequestParam(value="tenantId", required=true) String tenantId,
 				@RequestParam(value="cpCd", required=true) String cpCd,
@@ -315,7 +319,8 @@ public class ServiceApplyController {
     		{
 		    	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());
 		    	List<CodeModel> languageList = commonService.selCode(CommonEnums.LANG_CD.getValue());
-
+		    	List<CodeModel> systemList = serviceApplyService.selSystemList();
+		    	
 		    	ServiceModel serviceModel = new ServiceModel();
 		    	serviceModel.setTenantId(tenantId);
 		    	serviceModel.setCpCd(cpCd);
@@ -334,6 +339,7 @@ public class ServiceApplyController {
 
 		    	model.addAttribute("serviceList", serviceList);
 		    	model.addAttribute("languageList", languageList);
+		    	model.addAttribute("systemList",systemList);
 		    	model.addAttribute("competition",competition);
 		    	model.addAttribute("selServiceApply",selServiceApply);
 		    	model.addAttribute("selServiceApplyDetail",selServiceApplyDetail);
@@ -341,6 +347,125 @@ public class ServiceApplyController {
 		    	return "/service/upServiceApply";	
     		}
     
-    
+    @PostMapping("/upServiceApply")
+    @Transactional(rollbackFor=Exception.class)
+    public String upServiceApply(Model model,
+	    		@RequestParam(value="tenantId", required=true) String tenantId, 
+	    		@RequestParam(value="cpCd", required=true) String cpCd,
+	    		@RequestParam(value="serviceCd", required=true) String[] serviceCd,
+	    		@RequestParam(value="systemCd", required=true) String[] systemCd,
+	    		@RequestParam(value="serviceStartDt", required=true) String[] serviceStartDt,
+	    		@RequestParam(value="serviceEndDt", required=true) String[] serviceEndDt,
+	    		@RequestParam(value="serviceUrlAddr", required=false, defaultValue="" ) String[] serviceUrlAddr,
+	    		@RequestParam(value="testLabUseYn", required=true) String[] testLabUseYn,
+	    		@RequestParam(value="testLabRemarkDesc", required=false, defaultValue="") String[] testLabRemarkDesc,
+	    		@RequestParam(value="testEventAddYn", required=true) String[] testEventAddYn,
+	    		@RequestParam(value="testEventRemarkDesc", required=false, defaultValue="") String[] testEventRemarkDesc,
+	    		@RequestParam(value="serviceCdD", required=true) String[] serviceCdD,
+	    		@RequestParam(value="repColorValue", required=false) String[] repColorValue,
+	    		@RequestParam(value="fstLangCd", required=false) String[] fstLangCd,
+	    		@RequestParam(value="scndLangCd", required=false) String[] scndLangCd,
+	    		@RequestParam(value="thrdLangCd", required=false) String[] thrdLangCd,
+	    		@RequestParam(value="fothLangCd", required=false) String[] fothLangCd,
+	    		@RequestParam(value="fithLangCd", required=false) String[] fithLangCd,
+	    		HttpServletRequest req, HttpServletResponse res) {
+
+	    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    	String crtId = principal.getUsername(); //현재 사용자
+	    	String crtIp = req.getRemoteAddr(); 	//현재 사용자 ip
+
+	    	//기존 서비스 정보 delete
+	    	try {
+	    		ServiceModel serviceModel = new ServiceModel();
+		    	ServiceDetailModel serviceDetailModel = new ServiceDetailModel();
+		    	
+	    		for(int i=0 ; i< serviceCdD.length ; i++) {
+	    			serviceDetailModel.setTenantId(tenantId);
+	    			serviceDetailModel.setCpCd(cpCd);
+	    			serviceDetailModel.setServiceCd(serviceCdD[i]);
+	    			serviceDetailModel.setSystemCd(systemCd[i]);
+	    			
+	        		serviceApplyService.delServiceApplyDetail(serviceDetailModel);
+	        		System.out.println("하위서비스 삭제 완료!");
+	    		}
+	    		
+	    		for(int i=0 ; i< serviceCd.length ; i++) {
+	    			serviceModel.setTenantId(tenantId);
+	    			serviceModel.setCpCd(cpCd);
+	    			serviceModel.setServiceCd(serviceCd[i]);
+
+	    			serviceApplyService.delServiceApply(serviceModel);
+	        		System.out.println("상위서비스 삭제 완료!");
+	    		}
+	    		
+	    		model.addAttribute("result", "1");
+	    	}
+	    	catch(Exception e){
+	    		model.addAttribute("result", "0");
+	    	}
+	    	
+	    	
+	    //수정한 내용 insert
+	    try {
+	    	ServiceModel serviceModel = new ServiceModel();
+	    	ServiceDetailModel serviceDetailModel = new ServiceDetailModel();
+	    	
+	    	for(int i=0; i < serviceCd.length; i++) {
+	    		//하위서비스가 대표서비스인 경우 --> 상위서비스 insert
+	    		if(systemCd[i].equals("default")){	//default = 대표서비스
+	    			serviceModel.setTenantId(tenantId);
+	    			serviceModel.setCpCd(cpCd);
+	    			serviceModel.setServiceCd(serviceCd[i]);
+	    			serviceModel.setServiceStartDt(CommonUtil.removeSpecificStr(serviceStartDt[i], CommonEnums.DASH_MARK.getValue()));
+	    			serviceModel.setServiceEndDt(CommonUtil.removeSpecificStr(serviceEndDt[i], CommonEnums.DASH_MARK.getValue()));
+	    			serviceModel.setServiceUrlAddr(serviceUrlAddr[i]);
+	    			serviceModel.setTestLabUseYn(testLabUseYn[i]);
+	    			serviceModel.setTestLabRemarkDesc(testLabRemarkDesc[i]);
+	    			serviceModel.setTestEventAddYn(testEventAddYn[i]);
+	    			serviceModel.setTestEventRemarkDesc(testEventRemarkDesc[i]);
+	    			
+	    			for(int j=0; j< serviceCdD.length;j++ ) {
+		    			if(serviceCd[i].equals(serviceCdD[j])) {
+		    				serviceModel.setRepColorValue(repColorValue[j]);
+		    				serviceModel.setFstLangCd(fstLangCd[j]);
+		    				serviceModel.setScndLangCd(scndLangCd[j]);
+		    				serviceModel.setThrdLangCd(thrdLangCd[j]);
+		    				serviceModel.setFothLangCd(fothLangCd[j]);
+		    				serviceModel.setFithLangCd(fithLangCd[j]);
+		    			}
+	    			}
+	    			serviceModel.setCrtId(crtId);
+	    			serviceModel.setCrtIp(crtIp);
+	    			serviceModel.setUdtId(crtId);
+	    			serviceModel.setUdtIp(crtIp);
+	    			
+	    			serviceApplyService.insServiceApply(serviceModel);
+	    		}
+	    		// 하위서비스 insert
+	    		else {
+	    			serviceDetailModel.setTenantId(tenantId);
+	    			serviceDetailModel.setCpCd(cpCd);
+	    			serviceDetailModel.setServiceCd(serviceCd[i]);
+	    			serviceDetailModel.setSystemCd(systemCd[i]);
+	    			serviceDetailModel.setServiceStartDt(CommonUtil.removeSpecificStr(serviceStartDt[i], CommonEnums.DASH_MARK.getValue()));
+	    			serviceDetailModel.setServiceEndDt(CommonUtil.removeSpecificStr(serviceEndDt[i], CommonEnums.DASH_MARK.getValue()));
+	    			serviceDetailModel.setServiceUrlAddr(serviceUrlAddr[i]);
+	    			serviceDetailModel.setCrtId(crtId);
+	    			serviceDetailModel.setCrtIp(crtIp);
+	    			serviceDetailModel.setUdtId(crtId);
+	    			serviceDetailModel.setUdtIp(crtIp);
+	    			
+	    			serviceApplyService.insServiceApplyDetail(serviceDetailModel);
+	    		}
+	    	}
+	    	
+	    	model.addAttribute("result", "1");
+	    }
+	    catch(Exception e) {
+	    	model.addAttribute("result", "0");
+	    }
+	    	
+    	return "jsonView";
+    }
 
 }

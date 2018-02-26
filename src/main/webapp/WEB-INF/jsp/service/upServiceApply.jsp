@@ -1,13 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.sicc.console.enums.CommonEnums" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<c:set var="useCd" value="<%=CommonEnums.USE_CD.getCode()%>"/>
+<c:set var="useValue" value="<%=CommonEnums.USE_CD.getValue()%>"/>
+<c:set var="NUseCd" value="<%=CommonEnums.NUSE_CD.getCode()%>"/>
+<c:set var="NUseValue" value="<%=CommonEnums.NUSE_CD.getValue()%>"/>
 
 <script type="text/javascript">
 
 $(document).ready(function(){
-
-
+	
+ 	// 달력 초기화
+    $('input[name=serviceStartDt]').each(function(){
+    	$(this).datepicker({
+    		 "format" :'yyyy-mm-dd',
+             "autoclose": true,
+             "todayHighlight":true
+    	});
+    });
+ 	
+ 	// 달력 초기화
+    $('input[name=serviceEndDt]').each(function(){
+    	$(this).datepicker({
+    		 "format" :'yyyy-mm-dd',
+             "autoclose": true,
+             "todayHighlight":true
+    	});
+    });
+ 	
+	//colorpicker 초기화
+	$('div[name=colorGroup]').each(function(){
+		$(this).colorpicker({
+	        color: '#AA3399',
+	        format: 'hex'
+		});
+	});
+	
+	/* 서비스 선택 checkbox 체크 */
+	$("input[name=serviceChkBox]").each(function(i,e){
+		<c:forEach items="${selServiceApply}" var="list">
+			if($(this).val() == "${list.serviceCd}"){
+				$(this).attr('checked', true);
+			}
+		</c:forEach>
+	});
+	
+	//취소(목록으로)
 	$("#btnCancel").click(function(){
 		location.href="/selListServiceApply";
 	});
@@ -30,50 +71,24 @@ $(document).ready(function(){
 	
     // 서비스 추가 버튼 클릭시
     $("#addRowBtn").click(function(){
-    	
     	if($('tbody[name=serviceTbody] > tr').length == 0){
-    		
     		alert("사용하실 서비스를 선택해주세요");
-    	
     		return;
     	}
-
     	addServiceTbl('btn');
-    	
-    	// 달력 초기화
-	    $('input[name=serviceStartDt]').datepicker({
-	    		"format" :'yyyy-mm-dd',
-	            "autoclose": true,
-	            "todayHighlight":true
-	    });
- 	
-	 	// 달력 초기화
-	    $('input[name=serviceEndDt]').datepicker({
-	    		"format" :'yyyy-mm-dd',
-	            "autoclose": true,
-	            "todayHighlight":true
-	    });
-
+    	setDatepicker();
     });
     
 			
  	// 서비스 삭제버튼 클릭시
     $("#delRowBtn").click(function(){  
-		//var rows= $('#serviceTbl > tbody:last > tr').length;
-		//$('#serviceTbl > tbody:last > tr:last').remove();
     	delServiceTbl('', 'btn');
     });
  	
  	
- 	//등록 
+ 	//수정 등록
 	$("#btnRegister").on("click", function(e){
-		//테넌트 ID, 대회코드 setting
-		var competitionStr = $("#competition").val().split('.');
-		var tenantId = competitionStr[0];
-		var cpCd = competitionStr[1];
 
-		$("#tenantId").val(tenantId);	
-		$("#cpCd").val(cpCd);
 		console.log($("#frm").serializeArray());
 		
 		if($("input[name=serviceUrlAddr]").length == 1 && $("input[name=serviceUrlAddr]").val()==''){
@@ -103,9 +118,9 @@ $(document).ready(function(){
 			$(this).next().val('N');
 		});
 		
-		$.ajax({
+ 		/* $.ajax({
 			type : "POST",
-			url  : "/insServiceApply", 
+			url  : "/upServiceApply", 
 			dataType : "json",
 			data : $("#frm").serializeArray(),
 			success : function(data, status) {
@@ -129,7 +144,7 @@ $(document).ready(function(){
 				}
 				return;
 			}
-		});
+		});  */
 	});
  	
 
@@ -147,8 +162,6 @@ $(document).ready(function(){
 
 	 	//하위서비스 clear
 	 	systemCd.find('option').remove();
-	 	//하위서비스 첫행
-	 	//systemCd.append("<option value='default'>대표서비스</option>");
 
 		$.ajax({
 			type : 'POST',
@@ -171,9 +184,6 @@ $(document).ready(function(){
 			}
 		});
 		
-		
-		
-		
 	});
  	
 	//체크박스 서비스 선택
@@ -182,8 +192,7 @@ $(document).ready(function(){
 		if($(this).is(":checked")){
 			var servicdCd="";
 			var systemCd="";
-			
-			//$("#addRowBtn").click();
+
 			addServiceTbl('chk');
 			setDatepicker();
 			
@@ -202,18 +211,6 @@ $(document).ready(function(){
 		}
 		//상위서비스 체크 해제
 		else{
-			/* var rowNum = $('tbody[name=serviceTbody] tr').length;
-			
-			for( i=0; i< rowNum; i++){
-				var removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
-				
-				if(removeRow.find('td:eq(1) select').val() == 'default'){
-					if( removeRow.find('td:eq(0) select').val() == $(this).val()){
-						
-						removeRow.remove();
-					}
-				}
-			} */
 			var checkService = $(this).val();
 			
 			delServiceTbl(checkService, 'chk'); //서비스 상세정보 입력 row 삭제
@@ -313,10 +310,11 @@ function delServiceTbl(checkService , flag){
 			}
 		}
 	}
-	
+
 	for( i=rowNum-1; i>=0; i--){
 		if(flag=='btn'){//삭제버튼
-			removeRow = removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
+			removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
+		
 			if(removeRow.find('td:eq(1) select').val() != 'default'){ 
 					removeRow.remove();
 					return;
@@ -346,7 +344,6 @@ function setDatepicker(){
             "autoclose": true,
             "todayHighlight":true
     });
-    //$('input[name=serviceStartDt]').datepicker("setDate", new Date());
  	
  	// 달력 초기화
     $('input[name=serviceEndDt]').datepicker({
@@ -354,9 +351,10 @@ function setDatepicker(){
             "autoclose": true,
             "todayHighlight":true
     });
-   // $('input[name=serviceEndDt]').datepicker("setDate", new Date());
 	
 }
+
+
 </script>
 
  <div class="breadcrumb-holder">
@@ -374,46 +372,36 @@ function setDatepicker(){
 	<header>
 		<h1 class="h3 display">서비스수정</h1>
 	</header>
-
-
 <form class="form-horizontal" id="frm" name="frm" method="POST">
 	<div class="col-lg-12">
 		<div class="card">
 			<div class="card-body">
-
-				 <div class="row">
-				 <label class="col-sm-2 form-control-label">* 대회선택</label>
-				 <div class="form-group">
-	                 <select id="searchType" name="searchType" class="form-control form-control-sm">
-	                   <option value="C">대회코드</option>
-	                   <option value="N">대회명</option>
-	                 </select>
-                 </div>
-                 
-                 <div class="form-group col-sm-2">
-                 <input id="searchValue" type="text" placeholder="유형 선택 후 검색어 입력" class="form-control form-control-sm">
-                 </div>
-                 <div class="form-group col-sm-6">
-					 <select id="competition" name="competition" class="form-control form-control-sm">
-	                    <c:forEach items="${competitionList}" var="list" varStatus="parent">
-	                      <option value="${list.tenantId}.${list.cpCd}">${list.cpNm} [ tenant id : ${list.tenantId}, 대회코드 : ${list.cpCd} ]</option>
-	                    </c:forEach>
-	                  </select>
-                 </div>
-                 </div>
-                 
-                 <input type="hidden" id="tenantId" name="tenantId" value=""/>
-                 <input type="hidden" id="cpCd" name="cpCd" value=""/>
+				<div class="form-group">
+					<div class="row">
+						<label class="col-sm-2 form-control-label">테넌트ID</label>
+						<p>${competition.tenantId}</p>
+					</div>
+				</div>
+				
+				<div class="line"></div>
+				
+				<div class="form-group">
+					<div class="row">
+						<label class="col-sm-2 form-control-label">대회정보</label>
+						<p>[ 대회코드 : ${competition.cpCd} ] ${competition.cpNm}</p>
+					</div>
+				</div>   
+                 <input type="hidden" id="tenantId" name="tenantId" value="${competition.tenantId}"/>
+                 <input type="hidden" id="cpCd" name="cpCd" value="${competition.cpCd}"/>
              
              <div class="line"></div>
-
 
 			<div class="row">
 				<label class="col-sm-2 form-control-label">* 서비스선택</label>
 				<div class="form-group col-sm-8">
                    	<c:forEach items="${serviceList}" var="list" varStatus="status">
-                   		<input type="checkbox" id="serviceChkBox+${status.index}" name="serviceChkBox" value="${list.cdId}" class="form-control-custom">
-                   		<label for="serviceChkBox+${status.index}">${list.cdNm}</label>
+              			<input type="checkbox" id="serviceChkBox+${status.index}" name="serviceChkBox" value="${list.cdId}" class="form-control-custom">
+               			<label for="serviceChkBox+${status.index}">${list.cdNm}</label>
                    	</c:forEach>
 				</div>	
 			</div>
@@ -422,6 +410,80 @@ function setDatepicker(){
 		</div>
 	</div>
 	
+	<div class="col-lg-12">
+		<div class="form-group">
+           <div class="card">
+             <div class="card-body">	
+				<label class="col-sm-4 form-control-label">서비스별 설정</label>
+					<table  id="configTable" name="configTable" class="table">
+						<thead>
+	                      <tr>
+	                        <th>서비스명</th>
+	                        <th>컬러선택</th>
+	                        <th>1차언어</th>
+	                        <th>2차언어</th>
+	                        <th>3차언어</th>
+	                        <th>4차언어</th>
+	                        <th>5차언어</th>
+	                      </tr>
+	                    </thead>
+						<tbody name="configTbody">
+						  <c:forEach items="${selServiceApply}" var="selList">
+							<tr>
+							 <td>${selList.serviceCd}</td>
+							  <input type='hidden' name='serviceCdD' value="${selList.serviceCd}"/>
+						 	    <td> <div name='colorGroup' class='input-group colorpicker-component'>
+					 				<input name='repColorValue' type='text' class='form-control form-control-sm' value="${selList.repColorValue}"/>
+					 				<span class='input-group-addon'><i></i></span></div>
+					 			</td>
+						 	 	<td><select name='fstLangCd' class='form-control form-control-sm'> 
+						 				<option value='0'>사용안함</option>
+						 			 	<c:forEach items='${languageList}' var='list'>
+						 			 		<c:if test="${selList.fstLangCd == list.cdId}">
+						 						<option value='${list.cdId}' selected>${list.cdNm}</option>
+						 					</c:if>
+						 					<c:if test="${selList.fstLangCd != list.cdId}">
+						 						<option value='${list.cdId}'>${list.cdNm}</option>
+						 					</c:if>
+						 				</c:forEach> 
+						 			</select>
+						 		</td> 
+								<td><select name='scndLangCd' class='form-control form-control-sm'> 
+										<option value='0'>사용안함</option>
+									 	<c:forEach items='${languageList}' var='list'>
+										<option value='${list.cdId}'>${list.cdNm}</option>
+										</c:forEach> 
+									</select>
+								</td>
+								<td><select name='thrdLangCd' class='form-control form-control-sm'> 
+										<option value='0'>사용안함</option>
+								 		<c:forEach items='${languageList}' var='list'>
+										<option value='${list.cdId}'>${list.cdNm}</option>
+										</c:forEach> 
+									</select>
+								</td>
+								<td> <select name='fothLangCd' class='form-control form-control-sm'>
+										 <option value='0'>사용안함</option>
+								 		<c:forEach items='${languageList}' var='list'>
+										<option value='${list.cdId}'>${list.cdNm}</option>
+										</c:forEach> 
+									</select>
+								</td>
+								<td> <select name='fithLangCd' class='form-control form-control-sm'>
+										 <option value='0'>사용안함</option>
+								 		<c:forEach items='${languageList}' var='list'>
+										<option value='${list.cdId}'>${list.cdNm}</option>
+										</c:forEach> 
+									</select>
+								</td> 
+							</tr>
+						</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="col-lg-12">
 		<div class="form-group">
@@ -448,28 +510,34 @@ function setDatepicker(){
 						
 						<c:forEach items="${selServiceApply}" var="selList">
 							<tr>
-							<td> <select name='serviceCd' class='form-control form-control-sm'> 
-								<c:forEach items='${serviceList}' var='list'> 
-									<c:choose>
-									<c:when test='${selList.serviceCd == list.cdId}'>
-									 	<option value='${list.cdId}' selected>${list.cdNm}</option>
-									</c:when>
-									<c:otherwise>
-										<option value='${list.cdId}'>${list.cdNm}</option>
-									</c:otherwise>
-									</c:choose>
-								</c:forEach> 
+							<td> <select name='serviceCd' class='form-control form-control-sm' readOnly='true'> 
+								<option value='${selList.serviceCd}'>${selList.serviceCd}</option>
 								</select> 
 							</td>
-							<td> <input name='systemCd' class='form-control form-control-sm' value="대표서비스" readOnly='true'/></td>
+							<td> <select name='systemCd' class='form-control form-control-sm' readOnly='true'> 
+									<option value="default" selected>대표서비스</option>
+								</select> 
+							</td>
 							<td> <input name='serviceStartDt' type='text' class='form-control form-control-sm' value="${selList.serviceStartDt}"/> </td>
 							<td> <input name='serviceEndDt' type='text' class='form-control form-control-sm' value="${selList.serviceEndDt}"/> </td>
 							<td> <input name='serviceUrlAddr' type='text' class='form-control form-control-sm' value="${selList.serviceUrlAddr}"/> </td>
 	
-							<td> <input name='testLabCheck' type='checkbox' class='form-check-input'>
+							<td> 
+								<c:if test="${selList.testLabUseYn == useCd}">
+									<input name='testLabCheck' type='checkbox' class='form-check-input' checked="checked">
+								</c:if>
+								<c:if test="${selList.testLabUseYn == NUseCd}">
+									<input name='testLabCheck' type='checkbox' class='form-check-input'>
+								</c:if>
 								<input type='hidden' name='testLabUseYn' value="${selList.testLabUseYn}"/>
 								<input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' value="${selList.testLabRemarkDesc}" /> </td>
-							<td><input name='testEventCheck' type='checkbox' class='form-check-input' >
+							<td>
+								<c:if test="${selList.testEventAddYn == useCd}">
+									<input name='testEventCheck' type='checkbox' class='form-check-input' checked="checked">
+								</c:if>
+								<c:if test="${selList.testEventAddYn == NUseCd}">
+									<input name='testEventCheck' type='checkbox' class='form-check-input'>
+								</c:if>
 							<input type='hidden' name='testEventAddYn' value="${selList.testEventAddYn}"/>
 							<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' value="${selList.testEventRemarkDesc}"/></td>
 							</tr>
@@ -477,7 +545,8 @@ function setDatepicker(){
 						
 						<c:forEach items="${selServiceApplyDetail}" var="selList">
 							<tr>
-							<td> <select name='serviceCd' class='form-control form-control-sm'> 
+							<td> 
+							<select name='serviceCd' class='form-control form-control-sm'> 
 								<c:forEach items='${serviceList}' var='list'> 
 									<c:choose>
 									<c:when test='${selList.serviceCd == list.cdId}'>
@@ -488,12 +557,23 @@ function setDatepicker(){
 									</c:otherwise>
 									</c:choose>
 								</c:forEach> 
-								</select> 
+							</select> 
 							</td>
 							<td> 
-								<select name='systemCd' class='form-control form-control-sm'> 
-									<option value="selList.systemCd" selected> </option>
-								</select> 
+							<select name='systemCd' class='form-control form-control-sm'> 
+								<c:forEach items='${systemList}' var='systemList'>
+									<c:if test='${selList.serviceCd == systemList.cdGroupId}'>
+										<c:choose>
+											<c:when test='${selList.systemCd == systemList.cdId}'>
+												<option value="${systemList.cdId}" selected>${systemList.cdNm} </option>
+											</c:when>
+											<c:otherwise>
+												<option value='${systemList.cdId}'>${systemList.cdNm}</option>
+											</c:otherwise>
+										</c:choose>
+									</c:if>	
+								</c:forEach>									
+							</select> 
 							</td>
 							<td> <input name='serviceStartDt' type='text' class='form-control form-control-sm' value="${selList.serviceStartDt}"/> </td>
 							<td> <input name='serviceEndDt' type='text' class='form-control form-control-sm' value="${selList.serviceEndDt}"/> </td>
@@ -507,28 +587,7 @@ function setDatepicker(){
 				</div>
               </div>
            </div>
-      
-        <div class="form-group">
-           <div class="card">
-             <div class="card-body">	
-				<label class="col-sm-4 form-control-label">서비스별 설정</label>
-					<table  id="configTable" name="configTable" class="table">
-						<thead>
-	                      <tr>
-	                        <th>서비스명</th>
-	                        <th>컬러선택</th>
-	                        <th>1차언어</th>
-	                        <th>2차언어</th>
-	                        <th>3차언어</th>
-	                        <th>4차언어</th>
-	                        <th>5차언어</th>
-	                      </tr>
-	                    </thead>
-						<tbody name="configTbody"></tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+     
 		
 		<div class="form-group">
 			<div class="col-sm-4 offset-sm-2">
