@@ -34,7 +34,6 @@ $(document).ready(function(){
 	//colorpicker 초기화
 	$('div[name=colorGroup]').each(function(){
 		$(this).colorpicker({
-	        color: '#AA3399',
 	        format: 'hex'
 		});
 	});
@@ -47,6 +46,42 @@ $(document).ready(function(){
 			}
 		</c:forEach>
 	});
+	
+	
+	$("select[name=systemCd]").each(function(i,e){
+		var serviceCd = $("select[name=serviceCd]")[i].value;
+		var selectSystemCd = $(this).val();
+		var selObj = $(this);
+
+		$.ajax({
+			type : 'POST',
+			url : '/selServicebySytem',
+			//파리미터 변수 이름 : 값
+			data : {
+				serviceId : serviceCd
+			},
+			cache:true,
+			success : function(data){
+				
+				if(data.length > 0 && selectSystemCd!='default'){
+					selObj.find('option').remove();
+						
+					for(var i=0; i <data.length; i++){
+						if(data[i].cdId == selectSystemCd){
+							selObj.append("<option value='"+data[i].cdId+"' selected>"+data[i].cdNm+"</option>");
+						}
+						else{
+							selObj.append("<option value='"+data[i].cdId+"'>"+data[i].cdNm+"</option>");
+						}
+					}	
+				} 
+			},
+			error:function(){
+				alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+			}
+		});
+	});
+	
 	
 	//취소(목록으로)
 	$("#btnCancel").click(function(){
@@ -118,7 +153,7 @@ $(document).ready(function(){
 			$(this).next().val('N');
 		});
 		
- 		/* $.ajax({
+ 		$.ajax({
 			type : "POST",
 			url  : "/upServiceApply", 
 			dataType : "json",
@@ -144,7 +179,7 @@ $(document).ready(function(){
 				}
 				return;
 			}
-		});  */
+		});  
 	});
  	
 
@@ -289,7 +324,7 @@ function addOptionTbl(serviceCd){
 	   //colorpicker 초기화
 		$('div[name=colorGroup]').each(function(){
 			$(this).colorpicker({
-		        color: '#AA3399',
+		        color: '#AAAAAA',
 		        format: 'hex'
 			});
 		});
@@ -388,7 +423,7 @@ function setDatepicker(){
 				<div class="form-group">
 					<div class="row">
 						<label class="col-sm-2 form-control-label">대회정보</label>
-						<p>[ 대회코드 : ${competition.cpCd} ] ${competition.cpNm}</p>
+						<p>[ ${competition.cpCd} ] ${competition.cpNm}</p>
 					</div>
 				</div>   
                  <input type="hidden" id="tenantId" name="tenantId" value="${competition.tenantId}"/>
@@ -450,30 +485,50 @@ function setDatepicker(){
 						 		</td> 
 								<td><select name='scndLangCd' class='form-control form-control-sm'> 
 										<option value='0'>사용안함</option>
-									 	<c:forEach items='${languageList}' var='list'>
-										<option value='${list.cdId}'>${list.cdNm}</option>
-										</c:forEach> 
+										<c:forEach items='${languageList}' var='list'>
+						 			 		<c:if test="${selList.scndLangCd == list.cdId}">
+						 						<option value='${list.cdId}' selected>${list.cdNm}</option>
+						 					</c:if>
+						 					<c:if test="${selList.scndLangCd != list.cdId}">
+						 						<option value='${list.cdId}'>${list.cdNm}</option>
+						 					</c:if>
+						 				</c:forEach> 
 									</select>
 								</td>
 								<td><select name='thrdLangCd' class='form-control form-control-sm'> 
 										<option value='0'>사용안함</option>
-								 		<c:forEach items='${languageList}' var='list'>
-										<option value='${list.cdId}'>${list.cdNm}</option>
-										</c:forEach> 
+										<c:forEach items='${languageList}' var='list'>
+						 			 		<c:if test="${selList.thrdLangCd == list.cdId}">
+						 						<option value='${list.cdId}' selected>${list.cdNm}</option>
+						 					</c:if>
+						 					<c:if test="${selList.thrdLangCd != list.cdId}">
+						 						<option value='${list.cdId}'>${list.cdNm}</option>
+						 					</c:if>
+						 				</c:forEach> 
 									</select>
 								</td>
 								<td> <select name='fothLangCd' class='form-control form-control-sm'>
 										 <option value='0'>사용안함</option>
 								 		<c:forEach items='${languageList}' var='list'>
-										<option value='${list.cdId}'>${list.cdNm}</option>
-										</c:forEach> 
+						 			 		<c:if test="${selList.fothLangCd == list.cdId}">
+						 						<option value='${list.cdId}' selected>${list.cdNm}</option>
+						 					</c:if>
+						 					<c:if test="${selList.fothLangCd != list.cdId}">
+						 						<option value='${list.cdId}'>${list.cdNm}</option>
+						 					</c:if>
+						 				</c:forEach> 
 									</select>
 								</td>
 								<td> <select name='fithLangCd' class='form-control form-control-sm'>
 										 <option value='0'>사용안함</option>
 								 		<c:forEach items='${languageList}' var='list'>
-										<option value='${list.cdId}'>${list.cdNm}</option>
-										</c:forEach> 
+						 			 		<c:if test="${selList.fithLangCd == list.cdId}">
+						 						<option value='${list.cdId}' selected>${list.cdNm}</option>
+						 					</c:if>
+						 					<c:if test="${selList.fithLangCd != list.cdId}">
+						 						<option value='${list.cdId}'>${list.cdNm}</option>
+						 					</c:if>
+						 				</c:forEach>  
 									</select>
 								</td> 
 							</tr>
@@ -561,18 +616,7 @@ function setDatepicker(){
 							</td>
 							<td> 
 							<select name='systemCd' class='form-control form-control-sm'> 
-								<c:forEach items='${systemList}' var='systemList'>
-									<c:if test='${selList.serviceCd == systemList.cdGroupId}'>
-										<c:choose>
-											<c:when test='${selList.systemCd == systemList.cdId}'>
-												<option value="${systemList.cdId}" selected>${systemList.cdNm} </option>
-											</c:when>
-											<c:otherwise>
-												<option value='${systemList.cdId}'>${systemList.cdNm}</option>
-											</c:otherwise>
-										</c:choose>
-									</c:if>	
-								</c:forEach>									
+									<option value="${selList.systemCd}"></option>
 							</select> 
 							</td>
 							<td> <input name='serviceStartDt' type='text' class='form-control form-control-sm' value="${selList.serviceStartDt}"/> </td>

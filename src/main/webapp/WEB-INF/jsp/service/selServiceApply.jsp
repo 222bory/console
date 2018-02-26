@@ -22,7 +22,7 @@ $(document).ready(function(){
 	
 	$("#btnModify").on("click", function(e){
 		//location.href="/selListServiceApply";
-		$("#frm").attr("action", "/upServiceApply");
+		$("#frm").attr("action", "/upServiceApplyForm");
 		$("#frm").submit();
 	});
 	
@@ -115,7 +115,7 @@ function redirectList(){
 				<div class="form-group">
 					<div class="row">
 						<label class="col-sm-2 form-control-label">대회정보</label>
-						<p>[ 대회코드 : ${competition.cpCd} ] ${competition.cpNm}</p>
+						<p>[ ${competition.cpCd} ] ${competition.cpNm}</p>
 					</div>
 				</div>
 				
@@ -149,10 +149,12 @@ function redirectList(){
 								</c:forEach>
 								</td>
 								<td style='width:20%'>
+								<div class="col-md-12">
 									<div name='colorGroup' class='input-group' >
 									<input name='repColorValue' type='text' class='form-control form-control-sm' readonly='true' value="${list.repColorValue}" />
 									 <span class='input-group-addon'><i></i></span> 
 									</div>
+								</div>
 								</td>
 								<td>
 								<c:forEach items="${languageList}" var="lang">

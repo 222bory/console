@@ -231,7 +231,7 @@ public class ServiceApplyController {
     }
     
     
-    @GetMapping("/selServiceApply")
+    @RequestMapping("/selServiceApply")
     public String selServiceApply(@RequestParam Map<String,String> param,
 				@RequestParam(value="tenantId", required=true) String tenantId,
 				@RequestParam(value="cpCd", required=true) String cpCd,
@@ -278,7 +278,7 @@ public class ServiceApplyController {
     	ServiceDetailModel serviceDetailModel = new ServiceDetailModel();
     	
     	try {
-    		
+
     		for(int i=0 ; i< serviceCdd.length ; i++) {
     			serviceDetailModel.setTenantId(tenantId);
     			serviceDetailModel.setCpCd(cpCd);
@@ -311,15 +311,14 @@ public class ServiceApplyController {
     
     
     
-    @GetMapping("/upServiceApply")
-    public String upServiceApply(@RequestParam Map<String,String> param,
+    @RequestMapping("/upServiceApplyForm")
+    public String upServiceApply(@RequestParam Map<String, String> param,
 				@RequestParam(value="tenantId", required=true) String tenantId,
 				@RequestParam(value="cpCd", required=true) String cpCd,
 				Model model, HttpServletRequest req, HttpServletResponse res) 
     		{
 		    	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());
 		    	List<CodeModel> languageList = commonService.selCode(CommonEnums.LANG_CD.getValue());
-		    	List<CodeModel> systemList = serviceApplyService.selSystemList();
 		    	
 		    	ServiceModel serviceModel = new ServiceModel();
 		    	serviceModel.setTenantId(tenantId);
@@ -339,7 +338,6 @@ public class ServiceApplyController {
 
 		    	model.addAttribute("serviceList", serviceList);
 		    	model.addAttribute("languageList", languageList);
-		    	model.addAttribute("systemList",systemList);
 		    	model.addAttribute("competition",competition);
 		    	model.addAttribute("selServiceApply",selServiceApply);
 		    	model.addAttribute("selServiceApplyDetail",selServiceApplyDetail);
@@ -378,26 +376,29 @@ public class ServiceApplyController {
 	    	try {
 	    		ServiceModel serviceModel = new ServiceModel();
 		    	ServiceDetailModel serviceDetailModel = new ServiceDetailModel();
-		    	
-	    		for(int i=0 ; i< serviceCdD.length ; i++) {
-	    			serviceDetailModel.setTenantId(tenantId);
-	    			serviceDetailModel.setCpCd(cpCd);
-	    			serviceDetailModel.setServiceCd(serviceCdD[i]);
-	    			serviceDetailModel.setSystemCd(systemCd[i]);
-	    			
-	        		serviceApplyService.delServiceApplyDetail(serviceDetailModel);
-	        		System.out.println("하위서비스 삭제 완료!");
-	    		}
-	    		
-	    		for(int i=0 ; i< serviceCd.length ; i++) {
-	    			serviceModel.setTenantId(tenantId);
-	    			serviceModel.setCpCd(cpCd);
-	    			serviceModel.setServiceCd(serviceCd[i]);
 
-	    			serviceApplyService.delServiceApply(serviceModel);
-	        		System.out.println("상위서비스 삭제 완료!");
+		    	
+		    	for(int i=0 ; i< serviceCd.length ; i++) {
+		    		if(!systemCd[i].equals("default")) {
+		    			serviceDetailModel.setTenantId(tenantId);
+		    			serviceDetailModel.setCpCd(cpCd);
+		    			serviceDetailModel.setServiceCd(serviceCd[i]);
+		    			serviceDetailModel.setSystemCd(systemCd[i]);
+		    			
+		        		serviceApplyService.delServiceApplyDetail(serviceDetailModel);
+		        		System.out.println("하위서비스 삭제 완료!");
+		    		}
+		    		else {
+		    			serviceModel.setTenantId(tenantId);
+		    			serviceModel.setCpCd(cpCd);
+		    			serviceModel.setServiceCd(serviceCd[i]);
+
+		    			serviceApplyService.delServiceApply(serviceModel);
+		        		System.out.println("상위서비스 삭제 완료!");		
+		    		}
 	    		}
-	    		
+
+	
 	    		model.addAttribute("result", "1");
 	    	}
 	    	catch(Exception e){

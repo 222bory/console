@@ -279,9 +279,9 @@ function addOptionTbl(serviceCd){
 	    html += "<tr>"; 
 	    html += "<td>"+serviceCd+"</td>";
 	    html += "<input type='hidden' name='serviceCdD' value='"+serviceCd+"'/>";
- 		html += "<td> <div name='colorGroup' class='input-group colorpicker-component'>"+
+ 		html += "<td style='width:20%'> <div class='col-md-12'> <div name='colorGroup' class='input-group colorpicker-component'>"+
  				"<input name='repColorValue' type='text' class='form-control form-control-sm' />"+
- 				"<span class='input-group-addon'><i></i></span></div></td>";
+ 				"<span class='input-group-addon'><i></i></span></div></div></td>";
  		html += "<td> <select name='fstLangCd' class='form-control form-control-sm'> <option value='0'>사용안함</option>" +
  			 	" <c:forEach items='${languageList}' var='list'> "+
  				" <option value='${list.cdId}'>${list.cdNm}</option></c:forEach> </select></td>";

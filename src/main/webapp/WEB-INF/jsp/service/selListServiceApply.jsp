@@ -18,7 +18,14 @@
 		 if(event.target.nodeName.toLowerCase() == 'td') {
 			var tenantId = $(this).children().eq(1).text();
 			var cpCd = $(this).children().eq(2).text();
-			location.href='/selServiceApply?tenantId='+tenantId+'&cpCd='+cpCd;
+			
+		 	$("input[name=tenantId]").val(tenantId);
+		 	$("input[name=cpCd]").val(cpCd);
+			
+		 	$("#frm").attr("action", "/selServiceApply");
+		 	submit();
+		 	
+			//location.href='/selServiceApply?tenantId='+tenantId+'&cpCd='+cpCd;
 			} 
 		});
 	});
@@ -45,12 +52,14 @@
                   <h2 class="h5 display" >서비스신청 목록</h2>
                 </div>
                 <div class="card-body">
-                <form action="" method="post" id="detailFrm">
+                <form action="" method="POST" id="detailFrm">
                 	<input type="hidden" id="hiddenTenantId" name="hiddenTenantId" value="" />
                 </form>
                 
-                <form action="" method="post" id="frm">
+                <form action="" method="POST" id="frm">
                 <input type="hidden" name="page" value="${serviceModel.page}" />
+                <input type="hidden" name="tenantId" value="" />
+                <input type="hidden" name="cpCd" value="" />
                   <table class="table" id="selListServiceTable">
                     <thead>
                       <tr>

@@ -5,19 +5,6 @@
 
 <mapper namespace="com.sicc.console.dao.ServiceApplyDao">
 
-	<select id="selSystemList" resultType="com.sicc.console.model.CodeModel">
-		SELECT split_part(parent.cd_group_id, '_',1) as cdGroupId, 
-    		   parent.cd_group_nm as cdGroupNm, 
-    		   child.cd_id as cdId, 
-    		   child.cd_nm as cdNm, 
-    		   child.sort_ord as sortOrd, 
-    		   child.use_yn as useYn
-		  FROM concdm parent, concdd child 
-		  WHERE parent.cd_group_id = child.cd_group_id
-		  	AND split_part(parent.cd_group_id,'_',2) = 'SYSTEM'
-		  	AND split_part(parent.cd_group_id,'_',3) = 'CD'
-	</select>
-	
 	<insert id="insServiceApply" parameterType="com.sicc.console.model.ServiceModel">
 		INSERT INTO con.concpservicem(
 				tenant_id,
