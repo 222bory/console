@@ -70,4 +70,14 @@
 	<delete id="delMonitor" parameterType="com.sicc.console.model.MonitorModel">
         DELETE FROM concustcontmontrnm WHERE tenant_id = #{tenantId}
     </delete>
+    
+    <update id="upMonitor" parameterType="com.sicc.console.model.MonitorModel">
+    	 UPDATE concustcontmontrnm
+    	   SET montrn_url_addr = #{montrnUrlAddr},
+			   udt_id = #{udtId},
+			   udt_ip = #{udtIp},
+			   udt_date = current_timestamp
+         WHERE tenant_id = #{tenantId}	
+          AND  montrn_fg_cd = #{montrnFgCd}	   
+    </update>
 </mapper>

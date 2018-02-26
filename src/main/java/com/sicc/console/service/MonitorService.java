@@ -14,4 +14,6 @@ public interface MonitorService {
     
     public void delMonitor(MonitorModel monitorModel);
     
+    public void upMonitor(MonitorModel monitorModel);
+    
 }

@@ -13,6 +13,8 @@ public interface MonitorDao {
 	public void insMonitor(MonitorModel monitorModel);
 	
 	public void delMonitor(MonitorModel monitorModel);
+	
+	public void upMonitor(MonitorModel monitorModel);
 
 }
 

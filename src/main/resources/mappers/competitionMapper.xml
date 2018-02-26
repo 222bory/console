@@ -172,4 +172,10 @@
 							  current_timestamp
 							  )
     </insert>
+    
+    <delete id="delCompetitionImage" parameterType="com.sicc.console.model.CompetitionImageModel">
+    	DELETE FROM concpimgm
+         WHERE tenant_id = #{tenantId}	
+           AND cp_cd = #{cpCd}		   
+    </delete>
 </mapper>

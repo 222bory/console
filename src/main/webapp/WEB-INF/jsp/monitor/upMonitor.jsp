@@ -32,10 +32,8 @@ $(document).ready(function(){
 	$("#btnUpdate").on("click", function(e){
 		
 		var r = confirm("정말 수정 하시겠습니까?");
-		
+		$("#tenantId").attr('disabled', false);
 		if (r == true) {
-			$("input[name=tenantId]").attr('disabled', false);
-			
 			$.ajax({
 				type : "POST",
 				url  : "/upMonitor", 

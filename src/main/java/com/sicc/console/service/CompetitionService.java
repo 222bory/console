@@ -21,4 +21,6 @@ public interface CompetitionService {
     public List<CompetitionImageModel> selListCompetitionImage(CompetitionImageModel competitionImageModel);
     
     public void insCompetitionImage(CompetitionImageModel competitionImageModel);
+    
+    public void delCompetitionImage(CompetitionImageModel competitionImageModel);
 }
