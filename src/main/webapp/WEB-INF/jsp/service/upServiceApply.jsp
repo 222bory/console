@@ -53,33 +53,34 @@ $(document).ready(function(){
 		var selectSystemCd = $(this).val();
 		var selObj = $(this);
 
-		$.ajax({
-			type : 'POST',
-			url : '/selServicebySytem',
-			//파리미터 변수 이름 : 값
-			data : {
-				serviceId : serviceCd
-			},
-			cache:true,
-			success : function(data){
-				
-				if(data.length > 0 && selectSystemCd!='default'){
-					selObj.find('option').remove();
-						
-					for(var i=0; i <data.length; i++){
-						if(data[i].cdId == selectSystemCd){
-							selObj.append("<option value='"+data[i].cdId+"' selected>"+data[i].cdNm+"</option>");
-						}
-						else{
-							selObj.append("<option value='"+data[i].cdId+"'>"+data[i].cdNm+"</option>");
-						}
-					}	
-				} 
-			},
-			error:function(){
-				alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
-			}
-		});
+		if(selectSystemCd != 'default'){
+			selObj.find('option').remove();
+			
+			$.ajax({
+				type : 'POST',
+				url : '/selServicebySytem',
+				//파리미터 변수 이름 : 값
+				data : {
+					serviceId : serviceCd
+				},
+				cache:true,
+				success : function(data){
+					if(data.length > 0){
+						for(var i=0; i <data.length; i++){
+							if(data[i].cdId == selectSystemCd){
+								selObj.append("<option value='"+data[i].cdId+"' selected>"+data[i].cdNm+"</option>");
+							}
+							else{
+								selObj.append("<option value='"+data[i].cdId+"'>"+data[i].cdNm+"</option>");
+							}
+						}	
+					} 
+				},
+				error:function(){
+					alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+				}
+			});
+		}
 	});
 	
 	
@@ -403,13 +404,16 @@ function setDatepicker(){
 </div>
 
 <section class="forms">
-	<div class="container-fluid">
+<div class="container-fluid">
 	<header>
 		<h1 class="h3 display">서비스수정</h1>
 	</header>
 <form class="form-horizontal" id="frm" name="frm" method="POST">
 	<div class="col-lg-12">
 		<div class="card">
+			<div class="card-header d-flex align-items-center">
+				<h2 class="h5 display">대회서비스정보</h2>
+			</div>
 			<div class="card-body">
 				<div class="form-group">
 					<div class="row">
@@ -446,10 +450,11 @@ function setDatepicker(){
 	</div>
 	
 	<div class="col-lg-12">
-		<div class="form-group">
            <div class="card">
+           	<div class="card-header d-flex align-items-center">
+				<h2 class="h5 display">서비스별 설정</h2>
+			</div>
              <div class="card-body">	
-				<label class="col-sm-4 form-control-label">서비스별 설정</label>
 					<table  id="configTable" name="configTable" class="table">
 						<thead>
 	                      <tr>
@@ -537,14 +542,15 @@ function setDatepicker(){
 					</table>
 				</div>
 			</div>
-		</div>
+
 	</div>
 
 	<div class="col-lg-12">
-		<div class="form-group">
               <div class="card">
+               <div class="card-header d-flex align-items-center">
+				<h2 class="h5 display">서비스별 상세정보 입력</h2>
+				</div>
                 <div class="card-body">	
-					<label class="col-sm-4 form-control-label">서비스별 상세정보 입력</label>
 					<div style="float:right;">
 						<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-primary"/>
 	                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn btn-primary"/>
@@ -630,19 +636,15 @@ function setDatepicker(){
 					</table>
 				</div>
               </div>
-           </div>
-     
-		
+	</div>
+</form>
 		<div class="form-group">
 			<div class="col-sm-4 offset-sm-2">
 				<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
 				<input type="button" id="btnRegister" class="btn btn-primary" value="등록"></input>
 			</div>
-		</div>		
-		
-	</div>
-	
-</form>
+		</div>	
+
 </div>
 
 </section>

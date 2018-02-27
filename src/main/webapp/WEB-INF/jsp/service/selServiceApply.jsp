@@ -94,11 +94,13 @@ function redirectList(){
 	<header>
 		<h1 class="h3 display">서비스신청 상세</h1>
 	</header>
-	<div class="row">
+<form class="form-horizontal" id="frm" name="frm" method="POST">
 	<div class="col-lg-12">
 		<div class="card">
+			<div class="card-header d-flex align-items-center">
+				<h2 class="h5 display">대회정보</h2>
+			</div>
 			<div class="card-body">
-			<form class="form-horizontal" id="frm" name="frm" method="POST">
 				<input type="hidden" name="page" value="${serviceModel.page}" />
 				<input type="hidden" id="tenantId" name="tenantId" value="${competition.tenantId}"/>
 				<input type="hidden" id="cpCd" name="cpCd" value="${competition.cpCd}"/>
@@ -119,13 +121,17 @@ function redirectList(){
 					</div>
 				</div>
 				
-				<div class="line"></div>
+			</div>
+		</div>
+	</div>
 				
-				
-				<div class="form-group">
-				<label class="col-sm-2 form-control-label">서비스별 설정</label>
-
-				<table class="table" id="configTable">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-header d-flex align-items-center">
+				<h2 class="h5 display">서비스별 설정</h2>
+			</div>	
+			<div class="card-body">
+			<table class="table" id="configTable">
 					<thead>
                       <tr>
                         <th>서비스명</th>
@@ -195,12 +201,16 @@ function redirectList(){
 						</c:forEach>
 					</tbody>
 				</table>
-				</div>
+			</div>
+		</div>
+		</div>
 				
-				<div class="line"></div>
-				
-				<div class="form-group">
-					<label class="col-sm-4 form-control-label">서비스별 상세정보 </label>
+		<div class="col-lg-12">
+				<div class="card">
+					<div class="card-header d-flex align-items-center">
+						<h2 class="h5 display">서비스별 상세정보</h2>
+					</div>	
+					<div class="card-body">
 					<table  class="table">
 						<thead>
 	                      <tr>
@@ -278,23 +288,16 @@ function redirectList(){
 	                    </tbody>
 					</table>
                  </div>
-
- 
-	  			<div class="line"></div>
-				<div class="form-group">
-					<div class="col-sm-4 offset-sm-2">
-						<input type="button" id="btnDelete" class="btn btn-secondary" value="삭제"/>
-						<input type="button" id="btnList" class="btn btn-primary" value="목록"/>
-						<input type="button" id="btnModify" class="btn btn-primary" value="수정"/>
-
-					</div>
 				</div>
-				</form>
-	
-			
+			</div>
+ 		</form>
+		<div class="form-group">
+			<div class="col-sm-4 offset-sm-2">
+				<input type="button" id="btnDelete" class="btn btn-secondary" value="삭제"/>
+				<input type="button" id="btnList" class="btn btn-primary" value="목록"/>
+				<input type="button" id="btnModify" class="btn btn-primary" value="수정"/>
 			</div>
 		</div>
-		</div>	
-	</div>
+
 </div>
 </section>
