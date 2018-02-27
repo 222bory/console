@@ -96,18 +96,28 @@ $(function () {
                     <tbody>
                     <c:set var="no" value="${pagination.totalRow - (pagination.currentPage - 1) * pagination.rowPerPage }"/>
 					<c:set var="countNo" value="0"/>
-                    <c:forEach items="${list}" var="list" varStatus="parent">
-                      <tr class="tr">
-                        <th scope="row">${no - countNo}</th>
-                        <td>${list.custId}</td>
-                        <td>${list.custNm}</td>
-                        <td>${list.tenantId}</td>
-                        <td>${list.contNm}</td>
-                        <td>${list.adDate}</td>
-                        
-                      </tr>
-                    <c:set var="countNo" value="${countNo+1 }" />
-                    </c:forEach>  
+					
+					<c:choose>
+					<c:when test="${fn:length(list) >0 }">
+	                    <c:forEach items="${list}" var="list" varStatus="parent">
+	                      <tr class="tr">
+	                        <th scope="row">${no - countNo}</th>
+	                        <td>${list.custId}</td>
+	                        <td>${list.custNm}</td>
+	                        <td>${list.tenantId}</td>
+	                        <td>${list.contNm}</td>
+	                        <td>${list.adDate}</td>
+	                        
+	                      </tr>
+	                    <c:set var="countNo" value="${countNo+1 }" />
+	                    </c:forEach>  
+	                </c:when>
+					<c:otherwise>
+						<tr>
+	                        <td colspan="5"  class="tbl_listnodata" align='center'>조회된 목록이 없습니다.</td>
+						</tr>
+					</c:otherwise>
+					</c:choose>
                     </tbody>
                   </table>
               	  </form>
