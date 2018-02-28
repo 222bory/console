@@ -27,11 +27,11 @@ spec:
     metadata:
       labels:
         app: gsp-console
-        version: "1.0.3"
+        version: "1.0.4"
     spec:
       containers:
       - name: gsp-console
-        image: docker.gsp.sicc.co.kr/console:1.0.3
+        image: docker.gsp.sicc.co.kr/console:1.0.4
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: prd
