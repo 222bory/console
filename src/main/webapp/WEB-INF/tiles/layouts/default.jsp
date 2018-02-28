@@ -93,7 +93,7 @@
           	<img src="img/logo.png" alt="person" class="img-fluid rounded-circle">
             <h2 class="h5 text-uppercase">GSP</h2><span class="text-uppercase">CONSOLE</span>
           </div>
-          <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
+          <div class="sidenav-header-logo"><a href="#" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
         </div>
         <!-- <div class="main-menu">
           <ul id="side-main-menu" class="side-menu list-unstyled">                  
@@ -193,7 +193,7 @@
         <nav class="navbar">
           <div class="container-fluid">
             <div class="navbar-holder d-flex align-items-center justify-content-between">
-              <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="index.html" class="navbar-brand">
+              <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="#" class="navbar-brand">
                   <div class="brand-text d-none d-md-inline-block"><span>SICC </span><strong class="text-primary"> GSP CONSOLE</strong></div></a></div>
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 

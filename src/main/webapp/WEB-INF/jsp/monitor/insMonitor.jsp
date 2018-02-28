@@ -101,7 +101,7 @@ $("#btnRegister").on("click", function(e){
                   	<div class="row">
 						 <label class="col-sm-2 form-control-label">* 대회선택</label>
 						 <div class="col-sm-2 select">
-	                       <select id="searchType" name="searchType" class="form-control">
+	                       <select id="searchType" name="searchType" class="form-control form-control-sm">
 		                       <option value="C">대회코드</option>
 			                   <option value="N">대회명</option>
 	                       </select>
@@ -112,7 +112,7 @@ $("#btnRegister").on("click", function(e){
 	                    </div>
 	                    
 	                    <div class="col-sm-5 select">
-	                       <select id="tenantId" name="tenantId" class="form-control">
+	                       <select id="tenantId" name="tenantId" class="form-control form-control-sm">
 	                       <c:forEach items="${contractList}" var="list" varStatus="parent">
 	                         <option value="${list.tenantId}">${list.contNm} [ tenant id : ${list.tenantId} ]</option>
 	                       </c:forEach>
@@ -123,23 +123,22 @@ $("#btnRegister").on("click", function(e){
                     <div class="form-group row">
                       <label class="col-sm-2 form-control-label">hystricx URL</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" name="montrnUrlAddr"><span class="help-block-none">예) http://www.hystricx.com</span>
+                        <input type="text" class="form-control form-control-sm" name="montrnUrlAddr"><span class="help-block-none">예) http://www.hystricx.com</span>
                       </div>
                     </div>
                     <div class="line"></div>
                     <div class="form-group row">
                       <label class="col-sm-2 form-control-label">zipkin URL</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" name="montrnUrlAddr"><span class="help-block-none">예) http://www.zipkin.com</span>
+                        <input type="text" class="form-control form-control-sm" name="montrnUrlAddr"><span class="help-block-none">예) http://www.zipkin.com</span>
                       </div>
                     </div>
                     <div class="line"></div>
                     
-                    <div class="form-group row">
-                      <div class="col-sm-4 offset-sm-2">
+                    <div class="btn-center">
                         <button type="button" class="btn btn-secondary">취소</button>
                         <button type="button" id="btnRegister" class="btn btn-primary">등록</button>
-                      </div>
+                     
                     </div>
                   </form>
                 </div>
