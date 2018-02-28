@@ -452,14 +452,16 @@ function setDatepicker(){
 	                    </thead>
 						<tbody name="serviceTbody"></tbody>
 					</table>
-				</div>
-              </div>
-           </div>
-
+					
+			<div class="line"></div>
 			<div class="btn-center">
 				<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
 				<input type="button" id="btnRegister" class="btn btn-primary" value="등록" />
 			</div>
+				</div>
+              </div>
+           </div>
+
 
 	</div>
 	

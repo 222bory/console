@@ -292,15 +292,20 @@ function redirectList(){
 							</c:forEach> 
 	                    </tbody>
 					</table>
-                 </div>
-				</div>
-			</div>
- 		</form>
-		<div class="btn-center">
+					
+			<div class="line"></div>
+			<div class="btn-center">
 				<input type="button" id="btnDelete" class="btn btn-secondary" value="삭제"/>
 				<input type="button" id="btnList" class="btn btn-primary" value="목록"/>
 				<input type="button" id="btnModify" class="btn btn-primary" value="수정"/>
-		</div>
+			</div>
+					
+                 </div>
+				</div>
+
+			</div>
+ 		</form>
+		
 
 </div>
 </section>

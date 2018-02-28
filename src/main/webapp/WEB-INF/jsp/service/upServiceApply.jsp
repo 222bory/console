@@ -635,7 +635,11 @@ function setDatepicker(){
 					</tbody>
 					</table>
 					
-					
+				<div class="line"></div>
+				<div class="btn-center" >
+						<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
+						<input type="button" id="btnRegister" class="btn btn-primary" value="수정" />
+				</div>	
 					<!-- 삭제할 대상 (Original Data)  -->
 					<c:forEach items="${selServiceApply}" var="selList">
 						<input type='hidden' name='serivceOriginCd' value="${selList.serviceCd}"/>
@@ -649,10 +653,7 @@ function setDatepicker(){
               </div>
 	</div>
 </form>
-		<div class="btn-center" >
-				<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
-				<input type="button" id="btnRegister" class="btn btn-primary" value="수정" />
-		</div>	
+		
 
 </div>
 

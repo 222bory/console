@@ -241,11 +241,11 @@
 								</div> -->
 							</div>
 							<div class="line"></div>
-							<div class="form-group">
-								<div class="col-sm-4 offset-sm-2">
+							<div class="btn-center">
+
 									<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
 									<button type="submit" id="btnRegister" class="btn btn-primary" >등록</button>
-								</div>
+
 							</div>
 						</form>
 						<!-- <form action="/upCompetitionImage" method="post" enctype="multipart/form-data">

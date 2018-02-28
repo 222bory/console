@@ -145,17 +145,17 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 고객ID</label>
 		                      <div class="col-md-3">
-		                        <input type="text" class="form-control" id="custId" name="custId" value="${cem.custId}" disabled>
+		                        <input type="text" class="form-control form-control-sm" id="custId" name="custId" value="${cem.custId}" disabled>
 		                      </div>
 		                      
-		                      <div class="form-group">
+		                      <div class="form-group col-md-1">
 		                      	<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">검색</button>
 			                      <!-- <input type="button" value="검색" class="mx-sm-3 btn btn-primary"> -->
 			                    </div>
-			                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			                  <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
 			                  <label class="col-sm-2 form-control-label">* 고객명</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="custNm" name="custNm" value="${cem.custNm}">
+		                        <input type="text" class="form-control form-control-sm" id="custNm" name="custNm" value="${cem.custNm}">
 		                      </div>  
 		                    </div>
 							
@@ -188,11 +188,11 @@ function submit(){
 		                    <div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 대표팩스번호</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="repFaxNo" name="repFaxNo" value="${cem.repFaxNo}">
+		                        <input type="text" class="form-control form-control-sm" id="repFaxNo" name="repFaxNo" value="${cem.repFaxNo}">
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 대표전화번호</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="repTelNo" name="repTelNo" value="${cem.repTelNo}">
+		                        <input type="text" class="form-control form-control-sm" id="repTelNo" name="repTelNo" value="${cem.repTelNo}">
 		                      </div>
 		                    </div>
 		                   
@@ -200,11 +200,11 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 법인등록번호</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="corpAdNo" name="corpAdNo" value="${cem.corpAdNo}">
+		                        <input type="text" class="form-control form-control-sm" id="corpAdNo" name="corpAdNo" value="${cem.corpAdNo}">
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 담당자명</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="mgrNm" name="mgrNm" value="${cem.mgrNm}">
+		                        <input type="text" class="form-control form-control-sm" id="mgrNm" name="mgrNm" value="${cem.mgrNm}">
 		                      </div>
 		                    </div>
 		                    
@@ -212,11 +212,11 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 담당자이메일주소</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="mgrEmailAddr" name="mgrEmailAddr" value="${cem.mgrEmailAddr}">
+		                        <input type="text" class="form-control form-control-sm" id="mgrEmailAddr" name="mgrEmailAddr" value="${cem.mgrEmailAddr}">
 		                      </div>
 		                        <label class="col-sm-2 form-control-label">* 담당자전화번호</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="mgrTelNo" name="mgrTelNo" value="${cem.mgrTelNo}">
+		                        <input type="text" class="form-control form-control-sm" id="mgrTelNo" name="mgrTelNo" value="${cem.mgrTelNo}">
 		                      </div>
 		                    </div>
 		                    
@@ -240,11 +240,11 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">테넌트ID</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="tenantId" name="tenantId" value="${cem.tenantId}" disabled>
+		                        <input type="text" class="form-control form-control-sm" id="tenantId" name="tenantId" value="${cem.tenantId}" disabled>
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 계약명</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="contNm" name="contNm" value="${cem.contNm}">
+		                        <input type="text" class="form-control form-control-sm" id="contNm" name="contNm" value="${cem.contNm}">
 		                      </div>
 		                    </div>
 		                  
@@ -252,11 +252,11 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 유효시작일자</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="validStartDt" name="validStartDt" value="${cem.validStartDt}">
+		                        <input type="text" class="form-control form-control-sm" id="validStartDt" name="validStartDt" value="${cem.validStartDt}">
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 유효종료일자</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control" id="validEndDt" name="validEndDt" value="${cem.validEndDt}">
+		                        <input type="text" class="form-control form-control-sm" id="validEndDt" name="validEndDt" value="${cem.validEndDt}">
 		                      </div>
 		                    </div>
 		                   
@@ -264,7 +264,7 @@ function submit(){
 		                    <div class="form-group row has-success">
 								<label class="col-sm-2 form-control-label">* 계약상태</label>
 		                        <div class="col-sm-4 select">
-		                          <select id="contStatCd" name="contStatCd" class="form-control">
+		                          <select id="contStatCd" name="contStatCd" class="form-control form-control-sm">
 		                          <c:forEach items="${contStatCdList}" var="list" varStatus="parent">
 		                            <option value="${list.cdId}" ${list.cdNm == cem.contStatCd ? 'selected="selected"' : '' }>${list.cdNm}</option>
 		                            
@@ -273,7 +273,7 @@ function submit(){
 		                        </div>
 		                        <label class="col-sm-2 form-control-label">* 네트워크구분</label>
 		                        <div class="col-sm-4 select">
-		                          <select id="networkFgCd" name="networkFgCd" class="form-control">
+		                          <select id="networkFgCd" name="networkFgCd" class="form-control form-control-sm">
 		                          <c:forEach items="${networkFgCdList}" var="list" varStatus="parent">
 		                            <option value="${list.cdId}" ${list.cdNm == cem.networkFgCd ? 'selected="selected"' : '' }>${list.cdNm}</option>
 		                          </c:forEach> 
@@ -285,7 +285,7 @@ function submit(){
 							<div class="form-group row has-success">
 								<label class="col-sm-2 form-control-label">* 비밀번호난이도</label>
 		                        <div class="col-sm-4 select">
-		                          <select id="passwordLodCd" name="passwordLodCd" class="form-control">
+		                          <select id="passwordLodCd" name="passwordLodCd" class="form-control form-control-sm">
 		                          <c:forEach items="${passwordLodCdList}" var="list" varStatus="parent">
 		                            <option value="${list.cdId}" ${list.cdNm == cem.passwordLodCd ? 'selected="selected"' : '' }>${list.cdNm}</option>
 		                          </c:forEach> 
@@ -293,7 +293,7 @@ function submit(){
 		                        </div>
 		                        <label class="col-sm-2 form-control-label">* 비밀번호갱신주기</label>
 		                        <div class="col-sm-4 select">
-		                          <select id="passwordRnwlCyclCd" name="passwordRnwlCyclCd" class="form-control">
+		                          <select id="passwordRnwlCyclCd" name="passwordRnwlCyclCd" class="form-control form-control-sm">
 		                          <c:forEach items="${rnwlCyclCd}" var="list" varStatus="parent">
 		                            <option value="${list.cdId}" ${list.cdNm == cem.passwordRnwlCyclCd ? 'selected="selected"' : '' }>${list.cdNm}</option>
 		                          </c:forEach> 
@@ -349,11 +349,9 @@ function submit(){
 		                    </div>
 		                    
 							<div class="line"></div> 
-							<div class="form-group">
-								<div class="col-sm-4 offset-sm-2">
+							<div class="btn-center">
 									<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
 									<button type="button" id="btnUpdate" class="btn btn-primary" >수정</button>
-								</div>
 							</div>
 							
 						
