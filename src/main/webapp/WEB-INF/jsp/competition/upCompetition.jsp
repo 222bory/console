@@ -17,6 +17,35 @@
 				return;
 			}
 		});
+		
+		$("#addRowBtn").click(function(){
+			var html ='<tr>'
+						+	'<td>'
+						+		'<div class="col-sm-5 select">'
+					    +          '<select name="imgFgCd" class="form-control form-control-sm">'
+					    +          '<c:forEach items="${imgFgCdList}" var="list" varStatus="parent">'
+					    +            '<option value="${list.cdId}">${list.cdNm}</option>'
+					    +          '</c:forEach>'
+					    +          '</select>'
+					    +          '<input type="file" name="file" class="form-control form-control-sm"/>'
+					    +        '</div>'
+						+	'</td>'
+						+'</tr>';
+			$('tbody[name=serviceTbody]').append(html); 
+	    });
+		
+		$("#delRowBtn").click(function(){
+			var rowNum = $('tbody[name=serviceTbody] tr').length;
+			var removeRow ="";
+			
+			for( i=rowNum-1; i>=0; i--){
+				removeRow = removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
+				if(removeRow.find('td:eq(1) select').val() != 'default'){ 
+						removeRow.remove();
+						return;
+				}
+			}
+	    });
 	});
  
 	$(function () {
@@ -64,7 +93,7 @@
 						<h2 class="h5 display">사용자 정보 수정</h2>
 					</div>
 					<div class="card-body">
-						<form class="form-horizontal" id="frm" name="frm" method="POST" action="/upCompetition">
+						<form class="form-horizontal" id="frm" name="frm" method="POST" action="/upCompetition" enctype="multipart/form-data">
 							<div class="form-group">
 								<label class="col-sm-2 form-control-label">* 고객 계약</label>
 								<div class="form-group">
@@ -140,6 +169,66 @@
 								<div class="col-md-5">
 									<input type="text" class="form-control form-control-sm" id="expectUserNum" name="expectUserNum" value="${competition.expectUserNum}">
 								</div>
+							</div>
+							<div class="line"></div>
+							<div class="form-group">
+								<label class="col-sm-2 form-control-label">* 파일 업로드</label>
+			                	
+			                	<table class="table" id="selListCompetitionTable">
+			                    <thead>
+			                      <tr>
+			                        <th>#</th>
+			                        <th>Tenant ID</th>
+			                        <th>대회코드</th>
+			                        <th>이미지명</th>
+			                        <th>이미지경로</th>
+			                        <th>이미지유형</th>
+			                        <th>이미지번호</th>
+			                        <th>등록일</th>
+			                        <th></th>
+			                      </tr>
+			                    </thead>
+			                    <tbody>
+			                    <c:forEach items="${competitionImageList}" var="list" varStatus="parent">
+			                      <tr>
+			                        <th scope="row"></th>
+			                        <td>${list.tenantId}</td>
+			                        <td>${list.cpCd}</td>
+			                        <td>${list.imgFileNm}</td>
+			                        <td>${list.filePathNm}</td>
+			                        <td>${list.imgFgCd}</td>
+			                        <td>${list.imgSeq}</td>
+			                        <td>${list.adDate}</td>
+			                        <td><input type="button" name="delImgBtn" id="delImgBtn" value="삭제" class="btn btn-primary"/></td>
+			                      </tr>
+			                    </c:forEach>  
+			                    </tbody>
+			                  </table>
+			                	
+			                	<div style="float:right;">
+									<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-primary"/>
+				                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn btn-primary"/>
+			                	</div>
+			                	<table id="serviceTbl" name="serviceTbl" class="table">
+									<tbody name="serviceTbody">
+										<tr>
+											<td>
+												<div class="col-sm-5 select">
+						                          <select name="imgFgCd" class="form-control form-control-sm">
+						                          <c:forEach items="${imgFgCdList}" var="list" varStatus="parent">
+						                            <option value="${list.cdId}">${list.cdNm}</option>
+						                          </c:forEach>
+						                          </select>
+						                          <input type="file" name="file" class="form-control form-control-sm"/>
+						                        </div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- <div class="col-md-5">
+									<input type="file" name="file" class="form-control form-control-sm"/>
+									<input multiple="multiple"  type="file" id="file" name="file[]" class="form-control form-control-sm"/>
+								</div> -->
 							</div>
 							<div class="line"></div>
 							<div class="form-group">

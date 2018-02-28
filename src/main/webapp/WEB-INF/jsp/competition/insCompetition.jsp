@@ -2,9 +2,25 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
 
-<script type="text/javascript">
 
+<script type="text/javascript">
+	
+	var maxMSImgSeq;
+	var maxEMImgSeq;
+	
+	<c:forEach items="${competitionImageMaxSeqList}" var="list" varStatus="parent">
+		<c:if test="${list.imgfgcd == 'MS'}">  
+			maxMSImgSeq = ${list.imgseq}; 	
+			<c:set value="${list.imgseq}" var = "maxMSImgSeq"/>
+	    </c:if>
+	    <c:if test="${list.imgfgcd == 'EM'}">     
+	    	maxEMImgSeq = ${list.imgseq};	
+	    	<c:set value="${list.imgseq}" var = "maxEMImgSeq"/>
+	    </c:if>
+	</c:forEach>
+	
 	$(document).ready(function(){
+		
 		$("#btnCancel").click(function(){
 			location.href="/selListCompetition";
 		});
@@ -32,6 +48,7 @@
 					    +            '<option value="${list.cdId}">${list.cdNm}</option>'
 					    +          '</c:forEach>'
 					    +          '</select>'
+					    +		   '<input type="hidden" name="imgSeq" class="form-control form-control-sm"/>'	
 					    +          '<input type="file" name="file" class="form-control form-control-sm"/>'
 					    +        '</div>'
 						+	'</td>'
@@ -51,6 +68,33 @@
 				}
 			}
 	    });
+		
+		$("#btnRegister").click(function(){
+			var selectTag = $('select[name=imgFgCd]');
+			var hiddenTag = $('input[name=imgSeq]');
+			
+			var len = selectTag.length;
+			
+			var msSeq = 0 ;
+			var emSeq = 0 ;
+			
+			for(i = 0 ; i < len ; i ++){
+				if(selectTag[i].value == 'MS'){
+					$('input[name=imgSeq]:eq('+i+')').val(msSeq);
+					msSeq += 1;
+				}
+				if(selectTag[i].value == 'EM'){
+					$('input[name=imgSeq]:eq('+i+')').val(emSeq);
+					emSeq += 1;
+				}
+			}
+			
+			for(j = 0 ; j < len ; j ++){
+				alert("test : "+selectTag[j].value + " " +$('input[name=imgSeq]:eq('+j+')').val());
+				alert("test : "+hiddenTag[i].val());
+			}
+	    });
+		
 	});
 	
 	$(function () {
@@ -202,6 +246,7 @@
 						                            <option value="${list.cdId}">${list.cdNm}</option>
 						                          </c:forEach>
 						                          </select>
+						                          <input type="hidden" name="imgSeq" class="form-control form-control-sm"/>
 						                          <input type="file" name="file" class="form-control form-control-sm"/>
 						                        </div>
 											</td>

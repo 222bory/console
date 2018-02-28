@@ -49,6 +49,11 @@ public class CommonServiceImpl implements CommonService{
 	public List<CompetitionModel> searchCompetition(String searchType, String searchValue) {
 		return utilDao.searchCompetition(searchType, searchValue);
 	}
+
+	@Override
+	public List<HashMap<String, String>> selListCompetitionImageMaxSeq() {
+		return utilDao.selListCompetitionImageMaxSeq();
+	}
 	
 	
 }

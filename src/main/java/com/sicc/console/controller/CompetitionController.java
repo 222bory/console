@@ -2,6 +2,7 @@ package com.sicc.console.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +73,17 @@ public class CompetitionController {
         return contractList; 
     }
     
+    @ResponseBody
+    @RequestMapping("/selListCompetitionImageMaxSeq") 
+    public List<HashMap<String, String>> selListCompetitionImageMaxSeq(Model model) {
+    	
+    	List<HashMap<String, String>> competitionImageMaxSeqList = commonService.selListCompetitionImageMaxSeq();
+    	
+    	//model.addAttribute("contractList", contractList);
+    	
+        return competitionImageMaxSeqList; 
+    }
+    
     @GetMapping("/insCompetition") 
     public String insCompetition(Model model, @RequestParam(value="searchType", required=false) String searchType, @RequestParam(value="searchValue", required=false) String searchValue) {
     	
@@ -83,11 +95,13 @@ public class CompetitionController {
     	List<CodeModel> cpScaleCdList = commonService.selCode(CommonEnums.CP_SCALE_CD.getValue());
     	List<CodeModel> cpTypeCdList = commonService.selCode(CommonEnums.CP_TYPE_CD.getValue());
     	List<CodeModel> imgFgCdList = commonService.selCode(CommonEnums.IMG_FG_CD.getValue());
+    	List<HashMap<String, String>> competitionImageMaxSeqList = commonService.selListCompetitionImageMaxSeq();
     	
     	model.addAttribute("contractList", contractList);
     	model.addAttribute("cpScaleCdList", cpScaleCdList);
     	model.addAttribute("cpTypeCdList", cpTypeCdList);
     	model.addAttribute("imgFgCdList", imgFgCdList);
+    	model.addAttribute("competitionImageMaxSeqList", competitionImageMaxSeqList);
     	
         return "/competition/insCompetition"; 
     }
@@ -105,8 +119,14 @@ public class CompetitionController {
     		@RequestParam("cpTypeCd") String cpTypeCd,
     		@RequestParam("expectUserNum") String expectUserNum,
     		@RequestParam("imgFgCd") String imgFgCd[],
+    		@RequestParam("imgSeq") String imgSeq[],
     		@RequestPart MultipartFile file[],
     		HttpServletRequest req, HttpServletResponse res) throws IllegalStateException, IOException {
+    	
+    	for(int i = 0 ; i < imgSeq.length; i ++) {
+    		System.out.println("test : "+imgSeq[i]);
+    	}
+    	
     	
     	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	String userId = principal.getUsername();
@@ -158,7 +178,7 @@ public class CompetitionController {
     		competitionImage.setTenantId(tenantId);
     		competitionImage.setCpCd(cpCd);
     		competitionImage.setImgFgCd(imgFgCd[i]);
-    		competitionImage.setImgSeq(i);
+    		competitionImage.setImgSeq(Integer.parseInt(imgSeq[i]));
     		competitionImage.setFilePathNm(fileUrl);
     		competitionImage.setCrtId(userId);
     		competitionImage.setCrtIp(req.getRemoteAddr());
@@ -258,11 +278,24 @@ public class CompetitionController {
         CompetitionExtModel competition = competitionService.selCompetition(competitionModel);
         competition.setCpScaleCd(commonService.selCodeByCdId(CommonEnums.CP_SCALE_CD.getValue(), competition.getCpScaleCd()));
         competition.setCpTypeCd(commonService.selCodeByCdId(CommonEnums.CP_TYPE_CD.getValue(), competition.getCpTypeCd()));
+        
+        CompetitionImageModel competitionImage = new CompetitionImageModel();
+        competitionImage.setTenantId(competition.getTenantId());
+        competitionImage.setCpCd(competition.getCpCd());
+        
+        List<CompetitionImageModel> competitionImageList = competitionService.selListCompetitionImage(competitionImage);
+        for(int i = 0 ; i < competitionImageList.size() ; i ++) {
+        	competitionImageList.get(i).setImgFgCd(commonService.selCodeByCdId(CommonEnums.IMG_FG_CD.getValue(), competitionImageList.get(i).getImgFgCd()));
+        }
     	
+        List<CodeModel> imgFgCdList = commonService.selCode(CommonEnums.IMG_FG_CD.getValue());
+        
     	model.addAttribute("competition", competition);
     	model.addAttribute("contractList", contractList);
     	model.addAttribute("cpScaleCdList", cpScaleCdList);
     	model.addAttribute("cpTypeCdList", cpTypeCdList);
+    	model.addAttribute("competitionImageList", competitionImageList);
+    	model.addAttribute("imgFgCdList", imgFgCdList);
     	
         return "/competition/upCompetition"; 
     }
@@ -279,7 +312,9 @@ public class CompetitionController {
     		@RequestParam("cpScaleCd") String cpScaleCd,
     		@RequestParam("cpTypeCd") String cpTypeCd,
     		@RequestParam("expectUserNum") String expectUserNum,
-    		HttpServletRequest req, HttpServletResponse res) {
+    		@RequestParam("imgFgCd") String imgFgCd[],
+    		@RequestPart MultipartFile file[],
+    		HttpServletRequest req, HttpServletResponse res) throws IllegalStateException, IOException {
 		
     	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	String userId = principal.getUsername();
@@ -297,6 +332,45 @@ public class CompetitionController {
     	competitionModel.setExpectUserNum(Integer.parseInt(expectUserNum));
     	competitionModel.setUdtId(userId);
     	competitionModel.setUdtIp(req.getRemoteAddr());
+    	
+    	for(int i = 0 ; i < file.length ; i ++) { 
+    		/*System.out.println("test ::: file originname : "+file[i].getOriginalFilename());
+    		System.out.println("test ::: file contenttype : "+file[i].getContentType());
+    		System.out.println("test ::: file name : "+file[i].getName());
+    		System.out.println("test ::: file size : "+file[i].getSize());*/
+    		
+    		String sourceFileName = file[i].getOriginalFilename(); 
+            String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
+            File destinationFile; 
+            String destinationFileName;
+            String fileUrl = "c://images/";
+            //String fileUrl = "/images/"; 
+     
+            
+            do {  
+                destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
+            	//destinationFileName = file[i].getOriginalFilename();
+                destinationFile = new File(fileUrl + destinationFileName); 
+            } while (destinationFile.exists()); 
+            
+            destinationFile.getParentFile().mkdirs(); 
+            file[i].transferTo(destinationFile);
+            
+            CompetitionImageModel competitionImage = new CompetitionImageModel();
+    		competitionImage.setImgFileNm(file[i].getOriginalFilename());
+    		competitionImage.setSourceImgFileNm(destinationFileName);
+    		competitionImage.setTenantId(tenantId);
+    		competitionImage.setCpCd(cpCd);
+    		competitionImage.setImgFgCd(imgFgCd[i]);
+    		competitionImage.setImgSeq(5);
+    		competitionImage.setFilePathNm(fileUrl);
+    		competitionImage.setCrtId(userId);
+    		competitionImage.setCrtIp(req.getRemoteAddr());
+    		competitionImage.setUdtId(userId);
+    		competitionImage.setUdtIp(req.getRemoteAddr());
+    		
+    		competitionService.insCompetitionImage(competitionImage);
+    	} 
     	
     	competitionService.upCompetition(competitionModel);
     	

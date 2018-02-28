@@ -1,5 +1,6 @@
 package com.sicc.console.service;
 
+import java.util.HashMap;
 import java.util.List;
 import com.sicc.console.model.CodeModel;
 import com.sicc.console.model.CompetitionModel;
@@ -15,4 +16,6 @@ public interface CommonService {
     public List<ContractExtModel> searchContract(String searchType, String searchValue);
     
     public List<CompetitionModel> searchCompetition(String searchType, String searchValue);
+    
+    public List<HashMap<String, String>> selListCompetitionImageMaxSeq();
 }
