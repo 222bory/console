@@ -53,6 +53,9 @@ configurations {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	//compile('javax.cache:cache-api')
+	compile('org.ehcache:ehcache')
 	compile('org.springframework.boot:spring-boot-starter-web-services')
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

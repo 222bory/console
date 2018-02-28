@@ -21,6 +21,14 @@
         <appender-ref ref="STDOUT"/>
     </logger>
     
+    <logger name="org.ehcache" level="debug" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    
+    <logger name="com.sicc.console.dao" level="debug" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    
     <logger name="org.springframework.security" level="error" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>

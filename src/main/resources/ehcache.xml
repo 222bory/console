@@ -5,7 +5,7 @@
      maxEntriesLocalHeap="5000"
      eternal="false"
      timeToIdleSeconds="0"
-     timeToLiveSeconds="30"
+     timeToLiveSeconds="36000"
      maxEntriesLocalDisk="0"
      overflowToDisk="false"
      statistics="true"

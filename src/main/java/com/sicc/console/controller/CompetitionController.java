@@ -2,7 +2,9 @@ package com.sicc.console.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,8 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger; 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -217,12 +221,15 @@ public class CompetitionController {
         return "/competition/selListCompetition";
     }
     
+   /*@Autowired
+    private  CacheManager cacheManager; */
+    
+
     @GetMapping("/selCompetition")
     public String selCompetition(@RequestParam Map<String, String> param, 
     								@RequestParam(value="tenantId", required=true) String tenantId,
     								@RequestParam(value="cpCd", required=true) String cpCd,
     								Model model, CompetitionModel competitionModel, HttpServletRequest req, HttpServletResponse res) {
-    	
 
 		competitionModel.setTenantId(tenantId);
 		competitionModel.setCpCd(cpCd);
@@ -230,6 +237,11 @@ public class CompetitionController {
         CompetitionExtModel competition = competitionService.selCompetition(competitionModel);
         competition.setCpScaleCd(commonService.selCodeByCdId(CommonEnums.CP_SCALE_CD.getValue(), competition.getCpScaleCd()));
         competition.setCpTypeCd(commonService.selCodeByCdId(CommonEnums.CP_TYPE_CD.getValue(), competition.getCpTypeCd()));
+        
+        
+        /*Cache cache = cacheManager.getCache("code");
+        //cache.get("CP_SCALE_CD");
+       System.out.println("test::::: "+cache.get("CP_SCALE_CD"));*/
         
         CompetitionImageModel competitionImage = new CompetitionImageModel();
         
