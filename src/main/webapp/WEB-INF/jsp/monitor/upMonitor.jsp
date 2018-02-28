@@ -104,20 +104,20 @@ $(document).ready(function(){
                   <form id="frm" action="" method="post" class="form-horizontal">
                   
                   	<div class="row">
-						 <label class="col-sm-2 form-control-label">* 대회선택</label>
-						 <div class="col-sm-2 select">
-	                       <select id="searchType" name="searchType" class="form-control">
+ 						 <label class="col-sm-2 form-control-label">* 대회선택</label>
+						 <!--<div class="col-sm-2 select">
+	                       <select id="searchType" name="searchType" class="form-control form-control-sm">
 		                       <option value="C">대회코드</option>
 			                   <option value="N">대회명</option>
 	                       </select>
 	                    </div>
 	                    
 	                    <div class="col-sm-3">
-	                        <input type="text" id="searchValue" class="form-control" placeholder="유형 선택 후 검색어 입력">
+	                        <input type="text" id="searchValue" class="form-control form-control-sm" placeholder="유형 선택 후 검색어 입력">
 	                    </div>
-	                    
+	                     -->
 	                    <div class="col-sm-5 select">
-	                       <select id="tenantId" name="tenantId" class="form-control" disabled>
+	                       <select id="tenantId" name="tenantId" class="form-control form-control-sm" disabled>
 	                         <option value="${mm.tenantId}">${mm.contNm} [ tenant id : ${mm.tenantId} ]</option>
 	                       </select>
 	                    </div>
@@ -126,23 +126,21 @@ $(document).ready(function(){
                     <div class="form-group row">
                       <label class="col-sm-2 form-control-label">hystricx URL</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" name="montrnUrlAddr" value="${mm.url1}"><span class="help-block-none">예) http://www.hystricx.com</span>
+                        <input type="text" class="form-control form-control-sm" name="montrnUrlAddr" value="${mm.url1}"><span class="help-block-none">예) http://www.hystricx.com</span>
                       </div>
                     </div>
                     <div class="line"></div> 
                     <div class="form-group row">
                       <label class="col-sm-2 form-control-label">zipkin URL</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" name="montrnUrlAddr" value="${mm.url2}"><span class="help-block-none">예) http://www.zipkin.com</span>
+                        <input type="text" class="form-control form-control-sm" name="montrnUrlAddr" value="${mm.url2}"><span class="help-block-none">예) http://www.zipkin.com</span>
                       </div>
                     </div>
                     <div class="line"></div>
                     
-                    <div class="form-group row">
-                      <div class="col-sm-4 offset-sm-2">
+                    <div class="btn-center">
                         <button type="button" id="btnCancel" class="btn btn-secondary">취소</button>
                         <button type="button" id="btnUpdate" class="btn btn-primary">수정</button>
-                      </div>
                     </div>
                   </form>
                 </div>

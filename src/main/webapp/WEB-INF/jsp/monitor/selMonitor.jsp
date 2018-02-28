@@ -129,12 +129,11 @@ $(document).ready(function(){
                     </div>
                     <div class="line"></div>
                     
-                    <div class="form-group row">
-                      <div class="col-sm-4 offset-sm-2">
+                    <div class="btn-center">
                         <button type="button" id="btnDelete" class="btn btn-secondary" >삭제</button>
-						<button type="button" id="btnModify" class="btn btn-primary" >수정</button>
+						
 						<button type="button" id="btnList" class="btn btn-primary" >목록</button>
-                      </div>
+                    	 <button type="button" id="btnModify" class="btn btn-primary" >수정</button>
                     </div>
                   </form>
                 </div>
