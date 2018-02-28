@@ -32,7 +32,7 @@
       <div class="container">
         <div class="form-outer text-center d-flex align-items-center">
           <div class="form-inner">
-            <div class="logo text-uppercase"><span>GSP</span><strong class="text-primary">CONSOLE</strong></div>
+            <div class="logo text-uppercase"><span>GSP</span><strong class="text-primary"> CONSOLE</strong></div>
             <p> SICC GSP CONSOLE LOGIN </p>
             <form id="login-form" method="post">
               <div class="form-group">
