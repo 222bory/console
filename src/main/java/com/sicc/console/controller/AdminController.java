@@ -48,7 +48,7 @@ public class AdminController {
 			pagination.setTotalRow(0);
 		}
 		
-		model.addAttribute("list", list);
+		model.addAttribute("list", list); 
         model.addAttribute("adminModel", adminModel);
 		model.addAttribute("pagination", pagination);
     	
