@@ -41,12 +41,73 @@ $(function () {
 
 	$("#btnRegister").on("click", function(e){
 		
-		/* if(isEmpty($("input[name=titlNm]").val())){
-			alert("제목을 입력해 주세요!");
-			$("input[name=titlNm]").focus();
+		if($("#custId").val() == ''){
+			alert("고객ID를 입력해 주세요!");
+			$("input[name=custId]").focus();
 			return;
-		} */
-
+		} 
+		
+		if($("#custNm").val() == ''){
+			alert("고객명을 입력해 주세요!");
+			$("input[name=custNm]").focus();
+			return;
+		} 
+		
+		if($("#repFaxNo").val() == ''){
+			alert("대표팩스번호를 입력해 주세요!");
+			$("input[name=repFaxNo]").focus();
+			return;
+		}
+		
+		if($("#repTelNo").val() == ''){
+			alert("대표전화번호를 입력해 주세요!");
+			$("input[name=repTelNo]").focus();
+			return;
+		}
+		
+		if($("#corpAdNo").val() == ''){
+			alert("법인등록번호를 입력해 주세요!");
+			$("input[name=corpAdNo]").focus();
+			return;
+		}
+		
+		if($("#mgrNm").val() == ''){
+			alert("담당자명을 입력해 주세요!");
+			$("input[name=mgrNm]").focus(); 
+			return;
+		}
+		
+		if($("#mgrEmailAddr").val() == ''){
+			alert("담당자이메일을 입력해 주세요!");
+			$("input[name=mgrEmailAddr]").focus(); 
+			return;
+		}
+		
+		if($("#mgrTelNo").val() == ''){
+			alert("담당자전화번호를 입력해 주세요!");
+			$("input[name=mgrTelNo]").focus(); 
+			return;
+		}
+		
+		if($("#contNm").val() == ''){
+			alert("계약명을 입력해 주세요!");
+			$("input[name=contNm]").focus(); 
+			return;
+		}
+		
+		if($("#validStartDt").val() == ''){
+			alert("유효시작일을 입력해 주세요!");
+			$("input[name=validStartDt]").focus(); 
+			return;
+		}
+		
+		if($("#validEndDt").val() == ''){
+			alert("유효종료일을 입력해 주세요!");
+			$("input[name=validEndDt]").focus(); 
+			return;
+		}
+		
+		$("input[name=tenantId]").attr('disabled', false);
 		
 		$.ajax({
 			type : "POST",
@@ -113,38 +174,7 @@ function goPage(page) {
 }
 
 function submit(){
-	$("#frm1").submit();
-	/* $.ajax({
-		type : "POST",
-		url  : "/selCustId", 
-		dataType : "json",
-		data : $("#frm1").serialize(),
-		success : function(data, status) {
-			try{
-				if( data.result == '1'){
-					alert("조회 성공!");
-					//redirectList();
-					$('#myModal').modal('hide');
-					$("#myModal").modal('show');
-				} else {
-					//alert(makeMessage(INSERT_FAIL, '<br>' + 'RETURN CODE : ' + data.result + '<br>' + 'RETURN MESSAGE : ' + data.message));
-					alert("RETURN CODE : "+ data.result+' , '+"등록 실패!");
-				}
-			}catch(e) {	
-				alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
-			}
-		},
-		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			if(XMLHttpRequest.status == '901'){
-				sessionTimeOut();			
-			} else {
-				//console.log(XMLHttpRequest.code + ":" + textStatus + ":" + errorThrown);
-				alert('서비스에 문제가 있습니다. 관리자에게 문의 하세요.');
-			}
-			return;
-		}
-	}); */
-	
+	$("#frm1").submit();	
 }
 </script>
 
@@ -270,7 +300,7 @@ function submit(){
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">테넌트ID</label>
 		                      <div class="col-md-4">
-		                        <input type="text" class="form-control form-control-sm" id="tenantId" name="tenantId" value="${tid}">
+		                        <input type="text" class="form-control form-control-sm" id="tenantId" name="tenantId" value="${tid}" disabled>
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 계약명</label>
 		                      <div class="col-md-4">
