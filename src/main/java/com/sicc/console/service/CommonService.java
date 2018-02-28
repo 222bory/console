@@ -17,5 +17,5 @@ public interface CommonService {
     
     public List<CompetitionModel> searchCompetition(String searchType, String searchValue);
     
-    public List<HashMap<String, String>> selListCompetitionImageMaxSeq();
+    public List<HashMap<String, String>> selListCompetitionImageMaxSeq(HashMap<String, String> map);
 }

@@ -48,8 +48,8 @@ public class UtilDaoImpl implements UtilDao{
 	}
 
 	@Override
-	public List<HashMap<String, String>> selListCompetitionImageMaxSeq() {
-		return sqlSessionTemplate.selectList("com.sicc.console.dao.UtilDao.selListCompetitionImageMaxSeq");
+	public List<HashMap<String, String>> selListCompetitionImageMaxSeq(HashMap<String, String> map) {
+		return sqlSessionTemplate.selectList("com.sicc.console.dao.UtilDao.selListCompetitionImageMaxSeq", map);
 	}
 	
 	

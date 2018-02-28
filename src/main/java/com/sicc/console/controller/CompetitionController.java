@@ -73,7 +73,7 @@ public class CompetitionController {
         return contractList; 
     }
     
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping("/selListCompetitionImageMaxSeq") 
     public List<HashMap<String, String>> selListCompetitionImageMaxSeq(Model model) {
     	
@@ -82,7 +82,7 @@ public class CompetitionController {
     	//model.addAttribute("contractList", contractList);
     	
         return competitionImageMaxSeqList; 
-    }
+    }*/
     
     @GetMapping("/insCompetition") 
     public String insCompetition(Model model, @RequestParam(value="searchType", required=false) String searchType, @RequestParam(value="searchValue", required=false) String searchValue) {
@@ -95,13 +95,11 @@ public class CompetitionController {
     	List<CodeModel> cpScaleCdList = commonService.selCode(CommonEnums.CP_SCALE_CD.getValue());
     	List<CodeModel> cpTypeCdList = commonService.selCode(CommonEnums.CP_TYPE_CD.getValue());
     	List<CodeModel> imgFgCdList = commonService.selCode(CommonEnums.IMG_FG_CD.getValue());
-    	List<HashMap<String, String>> competitionImageMaxSeqList = commonService.selListCompetitionImageMaxSeq();
     	
     	model.addAttribute("contractList", contractList);
     	model.addAttribute("cpScaleCdList", cpScaleCdList);
     	model.addAttribute("cpTypeCdList", cpTypeCdList);
     	model.addAttribute("imgFgCdList", imgFgCdList);
-    	model.addAttribute("competitionImageMaxSeqList", competitionImageMaxSeqList);
     	
         return "/competition/insCompetition"; 
     }
@@ -122,11 +120,6 @@ public class CompetitionController {
     		@RequestParam("imgSeq") String imgSeq[],
     		@RequestPart MultipartFile file[],
     		HttpServletRequest req, HttpServletResponse res) throws IllegalStateException, IOException {
-    	
-    	for(int i = 0 ; i < imgSeq.length; i ++) {
-    		System.out.println("test : "+imgSeq[i]);
-    	}
-    	
     	
     	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	String userId = principal.getUsername();
@@ -271,6 +264,11 @@ public class CompetitionController {
     	List<CodeModel> cpScaleCdList = commonService.selCode(CommonEnums.CP_SCALE_CD.getValue());
     	List<CodeModel> cpTypeCdList = commonService.selCode(CommonEnums.CP_TYPE_CD.getValue());
     	
+    	HashMap<String, String> map = new HashMap<String, String>();
+    	map.put("tenantId", tenantId);
+    	map.put("cpCd", cpCd);
+    	
+    	List<HashMap<String, String>> competitionImageMaxSeqList = commonService.selListCompetitionImageMaxSeq(map);
     	
     	competitionModel.setTenantId(tenantId);
 		competitionModel.setCpCd(cpCd);
@@ -296,6 +294,7 @@ public class CompetitionController {
     	model.addAttribute("cpTypeCdList", cpTypeCdList);
     	model.addAttribute("competitionImageList", competitionImageList);
     	model.addAttribute("imgFgCdList", imgFgCdList);
+    	model.addAttribute("competitionImageMaxSeqList", competitionImageMaxSeqList);
     	
         return "/competition/upCompetition"; 
     }
@@ -313,6 +312,7 @@ public class CompetitionController {
     		@RequestParam("cpTypeCd") String cpTypeCd,
     		@RequestParam("expectUserNum") String expectUserNum,
     		@RequestParam("imgFgCd") String imgFgCd[],
+    		@RequestParam("imgSeq") String imgSeq[],
     		@RequestPart MultipartFile file[],
     		HttpServletRequest req, HttpServletResponse res) throws IllegalStateException, IOException {
 		
@@ -332,6 +332,11 @@ public class CompetitionController {
     	competitionModel.setExpectUserNum(Integer.parseInt(expectUserNum));
     	competitionModel.setUdtId(userId);
     	competitionModel.setUdtIp(req.getRemoteAddr());
+    	
+    	
+    	for(int i = 0 ; i < imgSeq.length; i ++) {
+    		System.out.println("test : "+imgSeq[i]);
+    	}
     	
     	for(int i = 0 ; i < file.length ; i ++) { 
     		/*System.out.println("test ::: file originname : "+file[i].getOriginalFilename());
@@ -362,7 +367,7 @@ public class CompetitionController {
     		competitionImage.setTenantId(tenantId);
     		competitionImage.setCpCd(cpCd);
     		competitionImage.setImgFgCd(imgFgCd[i]);
-    		competitionImage.setImgSeq(5);
+    		competitionImage.setImgSeq(Integer.parseInt(imgSeq[i]));
     		competitionImage.setFilePathNm(fileUrl);
     		competitionImage.setCrtId(userId);
     		competitionImage.setCrtIp(req.getRemoteAddr());

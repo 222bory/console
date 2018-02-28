@@ -66,9 +66,11 @@
 	   order by cpm.udt_Date desc   
     </select>
     
-    <select id="selListCompetitionImageMaxSeq" resultType="java.util.Map">
+    <select id="selListCompetitionImageMaxSeq" parameterType="java.util.Map" resultType="java.util.Map">
     	SELECT img_fg_cd as imgFgCd, max(img_seq) + 1 as imgSeq  
     	  FROM concpimgm 
+    	 WHERE tenant_id = #{tenantId}
+    	   AND cp_cd = #{cpCd}
     	 group by img_fg_cd   
     </select>
     

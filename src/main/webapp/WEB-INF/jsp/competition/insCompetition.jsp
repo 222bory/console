@@ -5,20 +5,6 @@
 
 <script type="text/javascript">
 	
-	var maxMSImgSeq;
-	var maxEMImgSeq;
-	
-	<c:forEach items="${competitionImageMaxSeqList}" var="list" varStatus="parent">
-		<c:if test="${list.imgfgcd == 'MS'}">  
-			maxMSImgSeq = ${list.imgseq}; 	
-			<c:set value="${list.imgseq}" var = "maxMSImgSeq"/>
-	    </c:if>
-	    <c:if test="${list.imgfgcd == 'EM'}">     
-	    	maxEMImgSeq = ${list.imgseq};	
-	    	<c:set value="${list.imgseq}" var = "maxEMImgSeq"/>
-	    </c:if>
-	</c:forEach>
-	
 	$(document).ready(function(){
 		
 		$("#btnCancel").click(function(){

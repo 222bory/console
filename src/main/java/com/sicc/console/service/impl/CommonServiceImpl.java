@@ -51,8 +51,8 @@ public class CommonServiceImpl implements CommonService{
 	}
 
 	@Override
-	public List<HashMap<String, String>> selListCompetitionImageMaxSeq() {
-		return utilDao.selListCompetitionImageMaxSeq();
+	public List<HashMap<String, String>> selListCompetitionImageMaxSeq(HashMap<String, String> map) {
+		return utilDao.selListCompetitionImageMaxSeq(map);
 	}
 	
 	

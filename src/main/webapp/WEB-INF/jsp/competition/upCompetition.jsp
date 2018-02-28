@@ -19,18 +19,9 @@
 	</c:forEach>
 
 	$(document).ready(function(){
+		
 		$("#btnCancel").click(function(){
 			location.href="/selListCompetition";
-		});
-		
-		$('#btnUpdate').click(function(event){
-			var result = confirm('대회정보를 수정 하시겠습니까?'); 
-			
-			if(result) { 
-				alert("수정");
-			}else{
-				return;
-			}
 		});
 		
 		$("#addRowBtn").click(function(){
@@ -62,30 +53,38 @@
 				}
 			}
 	    });
+		
+		$("#btnUpdate").click(function(){
+			var result = confirm('대회정보를 수정 하시겠습니까?'); 
+			
+			if(result) { 
+				alert("수정");
+			}else{
+				return;
+			}
+			
+			var selectTag = $('select[name=imgFgCd]');
+			var hiddenTag = $('input[name=imgSeq]');
+			
+			var len = selectTag.length;
+			
+			var msSeq = maxMSImgSeq ;
+			var emSeq = maxEMImgSeq ;
+			
+			for(i = 0 ; i < len ; i ++){
+				if(selectTag[i].value == 'MS'){
+					$('input[name=imgSeq]:eq('+i+')').val(msSeq);
+					msSeq += 1;
+				}
+				if(selectTag[i].value == 'EM'){
+					$('input[name=imgSeq]:eq('+i+')').val(emSeq);
+					emSeq += 1;
+				}
+			}
+			
+	    });
 	});
 	
-	$("#btnRegister").click(function(){
-		var selectTag = $('select[name=imgFgCd]');
-		var hiddenTag = $('input[name=imgSeq]');
-		
-		var len = selectTag.length;
-		
-		var msSeq = 0 ;
-		var emSeq = 0 ;
-		
-		for(i = 0 ; i < len ; i ++){
-			if(selectTag[i].value == 'MS'){
-				$('input[name=imgSeq]:eq('+i+')').val(msSeq);
-				msSeq += 1;
-			}
-			if(selectTag[i].value == 'EM'){
-				$('input[name=imgSeq]:eq('+i+')').val(emSeq);
-				emSeq += 1;
-			}
-		}
-		
-    });
- 
 	$(function () {
 		$('#cp3').colorpicker({
 	        color: '#AA3399',
