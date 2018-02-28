@@ -89,10 +89,6 @@
 				}
 			}
 			
-			for(j = 0 ; j < len ; j ++){
-				alert("test : "+selectTag[j].value + " " +$('input[name=imgSeq]:eq('+j+')').val());
-				alert("test : "+hiddenTag[i].val());
-			}
 	    });
 		
 	});
