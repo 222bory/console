@@ -68,6 +68,13 @@
 			
 			var len = selectTag.length;
 			
+			if(maxMSImgSeq==null){
+				maxMSImgSeq = 0;
+			}
+			if(maxEMImgSeq==null){
+				maxEMImgSeq = 0;
+			}
+			
 			var msSeq = maxMSImgSeq ;
 			var emSeq = maxEMImgSeq ;
 			

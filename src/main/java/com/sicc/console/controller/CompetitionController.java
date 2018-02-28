@@ -116,8 +116,8 @@ public class CompetitionController {
     		@RequestParam("cpScaleCd") String cpScaleCd,
     		@RequestParam("cpTypeCd") String cpTypeCd,
     		@RequestParam("expectUserNum") String expectUserNum,
-    		@RequestParam("imgFgCd") String imgFgCd[],
-    		@RequestParam("imgSeq") String imgSeq[],
+    		@RequestParam(value="imgFgCd", required=false) String imgFgCd[],
+    		@RequestParam(value="imgSeq", required=false) String imgSeq[],
     		@RequestPart MultipartFile file[],
     		HttpServletRequest req, HttpServletResponse res) throws IllegalStateException, IOException {
     	
@@ -142,44 +142,47 @@ public class CompetitionController {
     	
     	competitionService.insCompetition(competitionModel);
     	
-    	for(int i = 0 ; i < file.length ; i ++) { 
-    		/*System.out.println("test ::: file originname : "+file[i].getOriginalFilename());
-    		System.out.println("test ::: file contenttype : "+file[i].getContentType());
-    		System.out.println("test ::: file name : "+file[i].getName());
-    		System.out.println("test ::: file size : "+file[i].getSize());*/
-    		
-    		String sourceFileName = file[i].getOriginalFilename(); 
-            String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
-            File destinationFile; 
-            String destinationFileName;
-            String fileUrl = "c://images/";
-            //String fileUrl = "/images/"; 
-     
-            
-            do {  
-                destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
-            	//destinationFileName = file[i].getOriginalFilename();
-                destinationFile = new File(fileUrl + destinationFileName); 
-            } while (destinationFile.exists()); 
-            
-            destinationFile.getParentFile().mkdirs(); 
-            file[i].transferTo(destinationFile);
-            
-            CompetitionImageModel competitionImage = new CompetitionImageModel();
-    		competitionImage.setImgFileNm(file[i].getOriginalFilename());
-    		competitionImage.setSourceImgFileNm(destinationFileName);
-    		competitionImage.setTenantId(tenantId);
-    		competitionImage.setCpCd(cpCd);
-    		competitionImage.setImgFgCd(imgFgCd[i]);
-    		competitionImage.setImgSeq(Integer.parseInt(imgSeq[i]));
-    		competitionImage.setFilePathNm(fileUrl);
-    		competitionImage.setCrtId(userId);
-    		competitionImage.setCrtIp(req.getRemoteAddr());
-    		competitionImage.setUdtId(userId);
-    		competitionImage.setUdtIp(req.getRemoteAddr());
-    		
-    		competitionService.insCompetitionImage(competitionImage);
-    	} 
+    	
+    	if(imgSeq != null) {
+    		for(int i = 0 ; i < file.length ; i ++) { 
+        		/*System.out.println("test ::: file originname : "+file[i].getOriginalFilename());
+        		System.out.println("test ::: file contenttype : "+file[i].getContentType());
+        		System.out.println("test ::: file name : "+file[i].getName());
+        		System.out.println("test ::: file size : "+file[i].getSize());*/
+        		
+        		String sourceFileName = file[i].getOriginalFilename(); 
+                String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
+                File destinationFile; 
+                String destinationFileName;
+                String fileUrl = "c://images/";
+                //String fileUrl = "/images/"; 
+         
+                
+                do {  
+                    destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
+                	//destinationFileName = file[i].getOriginalFilename();
+                    destinationFile = new File(fileUrl + destinationFileName); 
+                } while (destinationFile.exists()); 
+                
+                destinationFile.getParentFile().mkdirs(); 
+                file[i].transferTo(destinationFile);
+                
+                CompetitionImageModel competitionImage = new CompetitionImageModel();
+        		competitionImage.setImgFileNm(file[i].getOriginalFilename());
+        		competitionImage.setSourceImgFileNm(destinationFileName);
+        		competitionImage.setTenantId(tenantId);
+        		competitionImage.setCpCd(cpCd);
+        		competitionImage.setImgFgCd(imgFgCd[i]);
+        		competitionImage.setImgSeq(Integer.parseInt(imgSeq[i]));
+        		competitionImage.setFilePathNm(fileUrl);
+        		competitionImage.setCrtId(userId);
+        		competitionImage.setCrtIp(req.getRemoteAddr());
+        		competitionImage.setUdtId(userId);
+        		competitionImage.setUdtIp(req.getRemoteAddr());
+        		
+        		competitionService.insCompetitionImage(competitionImage);
+        	} 
+    	}
     	
 
     	return "redirect:/selListCompetition";
@@ -311,8 +314,8 @@ public class CompetitionController {
     		@RequestParam("cpScaleCd") String cpScaleCd,
     		@RequestParam("cpTypeCd") String cpTypeCd,
     		@RequestParam("expectUserNum") String expectUserNum,
-    		@RequestParam("imgFgCd") String imgFgCd[],
-    		@RequestParam("imgSeq") String imgSeq[],
+    		@RequestParam(value="imgFgCd", required=false) String imgFgCd[],
+    		@RequestParam(value="imgSeq", required=false) String imgSeq[],
     		@RequestPart MultipartFile file[],
     		HttpServletRequest req, HttpServletResponse res) throws IllegalStateException, IOException {
 		
@@ -333,49 +336,46 @@ public class CompetitionController {
     	competitionModel.setUdtId(userId);
     	competitionModel.setUdtIp(req.getRemoteAddr());
     	
-    	
-    	for(int i = 0 ; i < imgSeq.length; i ++) {
-    		System.out.println("test : "+imgSeq[i]);
+    	if(imgSeq != null) {
+    		for(int i = 0 ; i < file.length ; i ++) { 
+        		/*System.out.println("test ::: file originname : "+file[i].getOriginalFilename());
+        		System.out.println("test ::: file contenttype : "+file[i].getContentType());
+        		System.out.println("test ::: file name : "+file[i].getName());
+        		System.out.println("test ::: file size : "+file[i].getSize());*/
+        		
+        		String sourceFileName = file[i].getOriginalFilename(); 
+                String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
+                File destinationFile; 
+                String destinationFileName;
+                String fileUrl = "c://images/";
+                //String fileUrl = "/images/"; 
+         
+                
+                do {  
+                    destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
+                	//destinationFileName = file[i].getOriginalFilename();
+                    destinationFile = new File(fileUrl + destinationFileName); 
+                } while (destinationFile.exists()); 
+                
+                destinationFile.getParentFile().mkdirs(); 
+                file[i].transferTo(destinationFile);
+                
+                CompetitionImageModel competitionImage = new CompetitionImageModel();
+        		competitionImage.setImgFileNm(file[i].getOriginalFilename());
+        		competitionImage.setSourceImgFileNm(destinationFileName);
+        		competitionImage.setTenantId(tenantId);
+        		competitionImage.setCpCd(cpCd);
+        		competitionImage.setImgFgCd(imgFgCd[i]);
+        		competitionImage.setImgSeq(Integer.parseInt(imgSeq[i]));
+        		competitionImage.setFilePathNm(fileUrl);
+        		competitionImage.setCrtId(userId);
+        		competitionImage.setCrtIp(req.getRemoteAddr());
+        		competitionImage.setUdtId(userId);
+        		competitionImage.setUdtIp(req.getRemoteAddr());
+        		
+        		competitionService.insCompetitionImage(competitionImage);
+        	} 
     	}
-    	
-    	for(int i = 0 ; i < file.length ; i ++) { 
-    		/*System.out.println("test ::: file originname : "+file[i].getOriginalFilename());
-    		System.out.println("test ::: file contenttype : "+file[i].getContentType());
-    		System.out.println("test ::: file name : "+file[i].getName());
-    		System.out.println("test ::: file size : "+file[i].getSize());*/
-    		
-    		String sourceFileName = file[i].getOriginalFilename(); 
-            String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
-            File destinationFile; 
-            String destinationFileName;
-            String fileUrl = "c://images/";
-            //String fileUrl = "/images/"; 
-     
-            
-            do {  
-                destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
-            	//destinationFileName = file[i].getOriginalFilename();
-                destinationFile = new File(fileUrl + destinationFileName); 
-            } while (destinationFile.exists()); 
-            
-            destinationFile.getParentFile().mkdirs(); 
-            file[i].transferTo(destinationFile);
-            
-            CompetitionImageModel competitionImage = new CompetitionImageModel();
-    		competitionImage.setImgFileNm(file[i].getOriginalFilename());
-    		competitionImage.setSourceImgFileNm(destinationFileName);
-    		competitionImage.setTenantId(tenantId);
-    		competitionImage.setCpCd(cpCd);
-    		competitionImage.setImgFgCd(imgFgCd[i]);
-    		competitionImage.setImgSeq(Integer.parseInt(imgSeq[i]));
-    		competitionImage.setFilePathNm(fileUrl);
-    		competitionImage.setCrtId(userId);
-    		competitionImage.setCrtIp(req.getRemoteAddr());
-    		competitionImage.setUdtId(userId);
-    		competitionImage.setUdtIp(req.getRemoteAddr());
-    		
-    		competitionService.insCompetitionImage(competitionImage);
-    	} 
     	
     	competitionService.upCompetition(competitionModel);
     	
