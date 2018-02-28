@@ -26,7 +26,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SICC Admin Console</title>
+    <title>SICC GSP CONSOLE</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -91,7 +91,7 @@
         <div class="sidenav-header d-flex align-items-center justify-content-center">
           <div class="sidenav-header-inner text-center">
           	<img src="img/logo.png" alt="person" class="img-fluid rounded-circle">
-            <h2 class="h5 text-uppercase">Admin</h2><span class="text-uppercase">Console</span>
+            <h2 class="h5 text-uppercase">GSP</h2><span class="text-uppercase">CONSOLE</span>
           </div>
           <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
         </div>
@@ -194,7 +194,7 @@
           <div class="container-fluid">
             <div class="navbar-holder d-flex align-items-center justify-content-between">
               <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="index.html" class="navbar-brand">
-                  <div class="brand-text d-none d-md-inline-block"><span>SICC </span><strong class="text-primary"> Admin Console</strong></div></a></div>
+                  <div class="brand-text d-none d-md-inline-block"><span>SICC </span><strong class="text-primary"> GSP CONSOLE</strong></div></a></div>
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 
                 <li class="nav-item">
@@ -269,7 +269,7 @@
               <p>SICC &copy; 2018-2019</p>
             </div>
             <div class="col-sm-6 text-right">
-              <p>SICC <a href="/index" class="external">Admin Console</a></p>
+              <p>SICC <a href="/index" class="external">GSP CONSOLE</a></p>
               <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
             </div>
           </div>

@@ -76,6 +76,7 @@ function redirectList(){
 	$("input[name=page]").val("1");
 	$("#frm").submit();
 }
+
 </script>
 
 
@@ -135,7 +136,7 @@ function redirectList(){
 					<thead>
                       <tr>
                         <th>서비스명</th>
-                        <th>컬러</th>
+                        <th style='width:20%'>컬러</th>
                         <th>1차언어</th>
                         <th>2차언어</th>
                         <th>3차언어</th>
@@ -154,7 +155,7 @@ function redirectList(){
 									</c:if> 
 								</c:forEach>
 								</td>
-								<td style='width:20%'>
+								<td >
 								<div class="col-md-12">
 									<div name='colorGroup' class='input-group' >
 									<input name='repColorValue' type='text' class='form-control form-control-sm' readonly='true' value="${list.repColorValue}" />
@@ -234,9 +235,11 @@ function redirectList(){
 									</c:forEach>
 									</td>
 									<input type="hidden" name="serviceCd" value="${list.serviceCd}"/>
+									<c:set var="startDt" value="${list.serviceStartDt}"/>
+									<c:set var="endDt" value="${list.serviceEndDt}"/>
 									<td> 대표서비스 </td>
-									<td> ${list.serviceStartDt} </td>
-									<td> ${list.serviceEndDt} </td>
+									<td> ${fn:substring(startDt,0,4)}-${fn:substring(startDt,4,6)}-${fn:substring(startDt,6,8)}</td>
+									<td> ${fn:substring(endDt,0,4)}-${fn:substring(endDt,4,6)}-${fn:substring(endDt,6,8)} </td>
 									<td> ${list.serviceUrlAddr} </td>
 									<td>
 										<c:choose>
@@ -278,8 +281,10 @@ function redirectList(){
 								<input type="hidden" name="serviceCdd" value="${list.serviceCd}"/>
 								<input type="hidden" name="systemCd" value="${list.systemCd}"/>
 								<td> ${list.systemNm} </td>
-								<td> ${list.serviceStartDt} </td>
-								<td> ${list.serviceEndDt} </td>
+								<c:set var="startDt" value="${list.serviceStartDt}"/>
+								<c:set var="endDt" value="${list.serviceEndDt}"/>
+								<td> ${fn:substring(startDt,0,4)}-${fn:substring(startDt,4,6)}-${fn:substring(startDt,6,8)}</td>
+								<td> ${fn:substring(endDt,0,4)}-${fn:substring(endDt,4,6)}-${fn:substring(endDt,6,8)} </td>
 								<td> ${list.serviceUrlAddr} </td>
 								<td> </td>
 								<td> </td>
@@ -291,12 +296,10 @@ function redirectList(){
 				</div>
 			</div>
  		</form>
-		<div class="form-group">
-			<div class="col-sm-4 offset-sm-2">
+		<div class="btn-center">
 				<input type="button" id="btnDelete" class="btn btn-secondary" value="삭제"/>
 				<input type="button" id="btnList" class="btn btn-primary" value="목록"/>
 				<input type="button" id="btnModify" class="btn btn-primary" value="수정"/>
-			</div>
 		</div>
 
 </div>

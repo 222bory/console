@@ -170,7 +170,7 @@
 	<delete id="delServiceApply" parameterType="com.sicc.console.model.ServiceModel">
 	DELETE FROM con.concpservicem
 	WHERE tenant_id = #{tenantId} 
-		AND cp_cd = #{cpCd}
+		AND cp_cd = #{cpCd}		
 		AND service_cd = #{serviceCd}
 	</delete>
 	

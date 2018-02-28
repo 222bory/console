@@ -81,7 +81,9 @@
                         <td>${list.tenantId}</td>
                         <td>${list.cpCd}</td>
                         <td>${list.cpNm}</td>
-                        <td>${list.cpStartDt} ~ ${list.cpEndDt}</td>
+                        <c:set var="cpStartDt" value="${list.cpStartDt}"/>
+						<c:set var="cpEndDt" value="${list.cpEndDt}"/>
+                        <td>${fn:substring(cpStartDt,0,4)}-${fn:substring(cpStartDt,4,6)}-${fn:substring(cpStartDt,6,8)} ~ ${fn:substring(cpEndDt,0,4)}-${fn:substring(cpEndDt,4,6)}-${fn:substring(cpEndDt,6,8)}</td>
                         <td>${list.serviceCd}</td>
                         <td>${list.adDate}</td>
                       </tr>

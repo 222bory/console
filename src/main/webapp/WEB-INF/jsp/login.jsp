@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SICC ADMIN Console Page</title>
+    <title>SICC GSP CONSOLE</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -32,8 +32,8 @@
       <div class="container">
         <div class="form-outer text-center d-flex align-items-center">
           <div class="form-inner">
-            <div class="logo text-uppercase"><span>SICC</span><strong class="text-primary">ADMIN</strong></div>
-            <p> SICC ADMIN Login Page </p>
+            <div class="logo text-uppercase"><span>GSP</span><strong class="text-primary">CONSOLE</strong></div>
+            <p> SICC GSP CONSOLE LOGIN </p>
             <form id="login-form" method="post">
               <div class="form-group">
                 <label for="login-username" class="label-custom">User ID</label>

@@ -2503,8 +2503,12 @@ h2:first-of-type { padding-top: 0; }
 ul { padding: 0; }
 
 
-
-
+.btn-center {
+  height: 36px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+}
 
 .pagination {
   height: 36px;

@@ -14,21 +14,28 @@
 $(document).ready(function(){
 	
  	// 달력 초기화
-    $('input[name=serviceStartDt]').each(function(){
+    $('input[name=serviceStartDt]').each(function(i,e){
+    	var dateVal = $(this).val();
+    	
     	$(this).datepicker({
     		 "format" :'yyyy-mm-dd',
              "autoclose": true,
              "todayHighlight":true
     	});
+    	//$(this).datepicker("setDate", dateVal);
     });
  	
+ 	
  	// 달력 초기화
-    $('input[name=serviceEndDt]').each(function(){
+    $('input[name=serviceEndDt]').each(function(i,e){
+    	var dateVal = $(this).val();
+    	//console.log(dateVal);
     	$(this).datepicker({
     		 "format" :'yyyy-mm-dd',
              "autoclose": true,
              "todayHighlight":true
     	});
+    	//$(this).datepicker("setDate", dateVal);
     });
  	
 	//colorpicker 초기화
@@ -89,22 +96,7 @@ $(document).ready(function(){
 		location.href="/selListServiceApply";
 	});
 	
-	//검색어 입력
-	$("#searchValue").keyup(function(){
-		$.getJSON('searchCompetitionService', 
-				{"searchType" : $('#searchType').val(), "searchValue" : $('#searchValue').val()}, function(data){
-			var html;
-			$("#competition option").remove();
-			
-			var obj = $("#searchValue").offset();
-			
-			$(data).each(function(entryIndex, entry){
-				$('#competition').append('<option value="'+entry.tenantId+'.'+entry.cpCd+'">'+entry.cpNm+' [ tenant id : '+entry.tenantId+' 대회코드 : '+entry.cpCd+' ]</option>');
-			});
-			
-		});
-	});
-	
+
     // 서비스 추가 버튼 클릭시
     $("#addRowBtn").click(function(){
     	if($('tbody[name=serviceTbody] > tr').length == 0){
@@ -115,13 +107,7 @@ $(document).ready(function(){
     	setDatepicker();
     });
     
-			
- 	// 서비스 삭제버튼 클릭시
-    $("#delRowBtn").click(function(){  
-    	delServiceTbl('', 'btn');
-    });
- 	
- 	
+		
  	//수정 등록
 	$("#btnRegister").on("click", function(e){
 
@@ -189,6 +175,12 @@ $(document).ready(function(){
 
 <!-- dynamic object event binding -->
 <script>
+
+	//삭제
+	$(document).on("click","input[name='delRowBtn']",function(){
+		$(this).parent().parent().remove();
+	});
+
 	//상위서비스 변경 이벤트
  	$(document).on("change","select[name='serviceCd']",function(){
  		var html="";
@@ -221,6 +213,16 @@ $(document).ready(function(){
 		});
 		
 	});
+	
+	
+	$("input[name=serviceChkBox]").each(function(i,e){
+		<c:forEach items="${selServiceApply}" var="list">
+		if($(this).val() == "${list.serviceCd}"){
+			$(this).attr('checked', true);
+	    	$(this).prop('checked', true);
+		}
+	</c:forEach>
+});
  	
 	//체크박스 서비스 선택
 	$(document).on("change","input[name='serviceChkBox']",function(){
@@ -249,9 +251,16 @@ $(document).ready(function(){
 		else{
 			var checkService = $(this).val();
 			
-			delServiceTbl(checkService, 'chk'); //서비스 상세정보 입력 row 삭제
+			var r = confirm("체크된 서비스를 해제하면 하위 서비스도 함께 삭제됩니다. \n해제하시겠습니까?");
 			
-			delOptionTbl(checkService); //서비스별 설정 row 삭제
+			if (r == true) {
+				delServiceTbl(checkService, 'chk'); //서비스 상세정보 입력 row 삭제
+				delOptionTbl(checkService); //서비스별 설정 row 삭제
+		    } else {
+		        //취소 처리 
+		    	$(this).attr('checked', true);
+		    	$(this).prop('checked', true);
+		    }
 		}
 	});
  	
@@ -282,10 +291,14 @@ function addServiceTbl(flag){
 		html += "<td><input name='testEventCheck' type='checkbox' class='form-check-input'>";
 		html += "<input type='hidden' name='testEventAddYn' value='N'/>";
 		html += "<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)'/></td>";
+	
+		html += "<td></td>";
 	}
 	else if(flag == 'btn'){ //추가 버튼 클릭으로 하위서비스 추가
 		html += "<td><input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testLabUseYn' value='N'/></td>";
 		html += "<td><input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testEventAddYn' value='N'/></td>";
+	
+		html += "<td><input type='button' name='delRowBtn' value='삭제' class='btn btn-primary'/></td>";
 	}
 
 	html += "</tr>"; 
@@ -332,47 +345,25 @@ function addOptionTbl(serviceCd){
 }
 
 function delServiceTbl(checkService , flag){
-	var rowNum = $('tbody[name=serviceTbody] tr').length;
-	var removeRow ="";
-
-	for( i=0; i< rowNum; i++){
-		removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
-			
-		if(flag=='chk'){//체크해제
-			if(removeRow.find('td:eq(1) select').val() == 'default'){
-				if( removeRow.find('td:eq(0) select').val() == checkService){
-					removeRow.remove();
-				}
-			}
+	$('#serviceTbl > tbody > tr').each(function(i,e){
+		if( $(this).find('td:eq(0) select').val() == checkService){
+			$(this).remove();
 		}
-	}
-
-	for( i=rowNum-1; i>=0; i--){
-		if(flag=='btn'){//삭제버튼
-			removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
 		
-			if(removeRow.find('td:eq(1) select').val() != 'default'){ 
-					removeRow.remove();
-					return;
-			}
-		}
-	}
-	
+	});
 }
 
 function delOptionTbl(checkService){
-	var rowNum = $('#configTable > tbody > tr').length;
-	
-	for( i=0; i< rowNum; i++){
-		var removeRow = $('tbody[name=configTbody] > tr:eq('+i+')');
-		
-		if( removeRow.find('td:eq(0)').text() == checkService){
-			removeRow.remove();
+	$('#configTable > tbody > tr').each(function(i,e){
+		if( $(this).find('td:eq(0)').text() == checkService){
+			$(this).remove();
 		}
-	}
+	});
 }
 
 function setDatepicker(){
+	
+	var rowNum = $('tbody[name=serviceTbody] > tr').length -1;
 	
 	// 달력 초기화
     $('input[name=serviceStartDt]').datepicker({
@@ -380,16 +371,19 @@ function setDatepicker(){
             "autoclose": true,
             "todayHighlight":true
     });
- 	
+	
+	$($('input[name=serviceStartDt]').get(rowNum)).datepicker("setDate",new Date());
+   
  	// 달력 초기화
-    $('input[name=serviceEndDt]').datepicker({
+    $('input[name=serviceEndDt').datepicker({
     		"format" :'yyyy-mm-dd',
             "autoclose": true,
             "todayHighlight":true
     });
+ 	
+    $($('input[name=serviceEndDt]').get(rowNum)).datepicker("setDate",new Date());
 	
 }
-
 
 </script>
 
@@ -440,7 +434,7 @@ function setDatepicker(){
 				<div class="form-group col-sm-8">
                    	<c:forEach items="${serviceList}" var="list" varStatus="status">
               			<input type="checkbox" id="serviceChkBox+${status.index}" name="serviceChkBox" value="${list.cdId}" class="form-control-custom">
-               			<label for="serviceChkBox+${status.index}">${list.cdNm}</label>
+               			<label for="serviceChkBox+${status.index}"> ${list.cdNm} </label>
                    	</c:forEach>
 				</div>	
 			</div>
@@ -459,7 +453,7 @@ function setDatepicker(){
 						<thead>
 	                      <tr>
 	                        <th>서비스명</th>
-	                        <th>컬러선택</th>
+	                        <th style="width:20%">컬러선택</th>
 	                        <th>1차언어</th>
 	                        <th>2차언어</th>
 	                        <th>3차언어</th>
@@ -553,18 +547,18 @@ function setDatepicker(){
                 <div class="card-body">	
 					<div style="float:right;">
 						<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-primary"/>
-	                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn btn-primary"/>
                 	</div>
 					<table id="serviceTbl" name="serviceTbl" class="table">
 						<thead>
 	                      <tr>
 	                        <th>서비스명</th>
-	                        <th>하위서비스</th>
+	                        <th style="width:15%">하위서비스</th>
 	                        <th>시작일자</th>
 	                        <th>종료일자</th>
 	                        <th>서비스URL</th>
 	                        <th>테스트랩 사용여부</th>
 	                        <th>테스트이벤트 사용여부</th>
+	                        <th></th>
 	                      </tr>
 	                    </thead>
 						<tbody name="serviceTbody">
@@ -600,7 +594,9 @@ function setDatepicker(){
 									<input name='testEventCheck' type='checkbox' class='form-check-input'>
 								</c:if>
 							<input type='hidden' name='testEventAddYn' value="${selList.testEventAddYn}"/>
-							<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' value="${selList.testEventRemarkDesc}"/></td>
+							<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' value="${selList.testEventRemarkDesc}"/>
+							</td>
+							<td></td>
 							</tr>
 						</c:forEach>
 						
@@ -618,31 +614,44 @@ function setDatepicker(){
 									</c:otherwise>
 									</c:choose>
 								</c:forEach> 
+								
 							</select> 
 							</td>
 							<td> 
 							<select name='systemCd' class='form-control form-control-sm'> 
 									<option value="${selList.systemCd}"></option>
 							</select> 
+							
 							</td>
-							<td> <input name='serviceStartDt' type='text' class='form-control form-control-sm' value="${selList.serviceStartDt}"/> </td>
+							<td> <input name='serviceStartDt' type='text' class='form-control form-control-sm' value="${selList.serviceStartDt}" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"/> </td>
 							<td> <input name='serviceEndDt' type='text' class='form-control form-control-sm' value="${selList.serviceEndDt}"/> </td>
 							<td> <input name='serviceUrlAddr' type='text' class='form-control form-control-sm' value="${selList.serviceUrlAddr}"/> </td>
 							<td><input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testLabUseYn' value='N'/></td>
 							<td><input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testEventAddYn' value='N'/></td>
+							<td><input type="button" name="delRowBtn" value="삭제" class="btn btn-primary"/></td>
+							
 							</tr>
 						</c:forEach>
 					</tbody>
 					</table>
+					
+					
+					<!-- 삭제할 대상 (Original Data)  -->
+					<c:forEach items="${selServiceApply}" var="selList">
+						<input type='hidden' name='serivceOriginCd' value="${selList.serviceCd}"/>
+						<input type='hidden' name='systemOriginCd' value='default'/>
+					</c:forEach>
+					<c:forEach items="${selServiceApplyDetail}" var="selList">
+						<input type='hidden' name='serivceOriginCd' value="${selList.serviceCd}"/>
+						<input type='hidden' name='systemOriginCd' value="${selList.systemCd}"/>
+					</c:forEach>
 				</div>
               </div>
 	</div>
 </form>
-		<div class="form-group">
-			<div class="col-sm-4 offset-sm-2">
+		<div class="btn-center" >
 				<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
-				<input type="button" id="btnRegister" class="btn btn-primary" value="등록"></input>
-			</div>
+				<input type="button" id="btnRegister" class="btn btn-primary" value="수정" />
 		</div>	
 
 </div>

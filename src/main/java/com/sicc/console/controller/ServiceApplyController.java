@@ -366,6 +366,8 @@ public class ServiceApplyController {
 	    		@RequestParam(value="thrdLangCd", required=false) String[] thrdLangCd,
 	    		@RequestParam(value="fothLangCd", required=false) String[] fothLangCd,
 	    		@RequestParam(value="fithLangCd", required=false) String[] fithLangCd,
+	    		@RequestParam(value="serivceOriginCd", required=true) String[] serivceOriginCd,
+	    		@RequestParam(value="systemOriginCd", required=true) String[] systemOriginCd,
 	    		HttpServletRequest req, HttpServletResponse res) {
 
 	    	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -377,13 +379,12 @@ public class ServiceApplyController {
 	    		ServiceModel serviceModel = new ServiceModel();
 		    	ServiceDetailModel serviceDetailModel = new ServiceDetailModel();
 
-		    	
-		    	for(int i=0 ; i< serviceCd.length ; i++) {
-		    		if(!systemCd[i].equals("default")) {
+		    	for(int i=0 ; i< serivceOriginCd.length ; i++) {
+		    		if(!systemOriginCd[i].equals("default")) {
 		    			serviceDetailModel.setTenantId(tenantId);
 		    			serviceDetailModel.setCpCd(cpCd);
-		    			serviceDetailModel.setServiceCd(serviceCd[i]);
-		    			serviceDetailModel.setSystemCd(systemCd[i]);
+		    			serviceDetailModel.setServiceCd(serivceOriginCd[i]);
+		    			serviceDetailModel.setSystemCd(systemOriginCd[i]);
 		    			
 		        		serviceApplyService.delServiceApplyDetail(serviceDetailModel);
 		        		System.out.println("하위서비스 삭제 완료!");
@@ -391,13 +392,12 @@ public class ServiceApplyController {
 		    		else {
 		    			serviceModel.setTenantId(tenantId);
 		    			serviceModel.setCpCd(cpCd);
-		    			serviceModel.setServiceCd(serviceCd[i]);
+		    			serviceModel.setServiceCd(serivceOriginCd[i]);
 
 		    			serviceApplyService.delServiceApply(serviceModel);
 		        		System.out.println("상위서비스 삭제 완료!");		
 		    		}
 	    		}
-
 	
 	    		model.addAttribute("result", "1");
 	    	}

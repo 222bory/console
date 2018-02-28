@@ -40,31 +40,11 @@ $(document).ready(function(){
 
     	addServiceTbl('btn');
     	
-    	// 달력 초기화
-	    $('input[name=serviceStartDt]').datepicker({
-	    		"format" :'yyyy-mm-dd',
-	            "autoclose": true,
-	            "todayHighlight":true
-	    });
- 	
-	 	// 달력 초기화
-	    $('input[name=serviceEndDt]').datepicker({
-	    		"format" :'yyyy-mm-dd',
-	            "autoclose": true,
-	            "todayHighlight":true
-	    });
-
+    	setDatepicker();
+	
     });
     
-			
- 	// 서비스 삭제버튼 클릭시
-    $("#delRowBtn").click(function(){  
-		//var rows= $('#serviceTbl > tbody:last > tr').length;
-		//$('#serviceTbl > tbody:last > tr:last').remove();
-    	delServiceTbl('', 'btn');
-    });
- 	
- 	
+
  	//등록 
 	$("#btnRegister").on("click", function(e){
 		//테넌트 ID, 대회코드 setting
@@ -138,6 +118,12 @@ $(document).ready(function(){
 
 <!-- dynamic object event binding -->
 <script>
+
+	//삭제
+	$(document).on("click","input[name='delRowBtn']",function(){
+		$(this).parent().parent().remove();
+	});
+	
 	//상위서비스 변경 이벤트
  	$(document).on("change","select[name='serviceCd']",function(){
  		var html="";
@@ -170,10 +156,6 @@ $(document).ready(function(){
 				alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
 			}
 		});
-		
-		
-		
-		
 	});
  	
 	//체크박스 서비스 선택
@@ -214,11 +196,11 @@ $(document).ready(function(){
 					}
 				}
 			} */
-			var checkService = $(this).val();
+			var checkServiceNm = $(this).val();
 			
-			delServiceTbl(checkService, 'chk'); //서비스 상세정보 입력 row 삭제
+			delServiceTbl(checkServiceNm, 'chk'); //서비스 상세정보 입력 row 삭제
 			
-			delOptionTbl(checkService); //서비스별 설정 row 삭제
+			delOptionTbl(checkServiceNm); //서비스별 설정 row 삭제
 		}
 	});
  	
@@ -260,10 +242,13 @@ function addServiceTbl(flag){
 		html += "<td><input name='testEventCheck' type='checkbox' class='form-check-input'>";
 		html += "<input type='hidden' name='testEventAddYn' value='N'/>";
 		html += "<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)'/></td>";
+		html += "<td></td>";
 	}
 	else if(flag == 'btn'){ //추가 버튼 클릭으로 하위서비스 추가
 		html += "<td><input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testLabUseYn' value='N'/></td>";
 		html += "<td><input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' readonly='true'/> <input type='hidden' name='testEventAddYn' value='N'/></td>";
+	
+		html += "<td><input type='button' name='delRowBtn' value='삭제' class='btn btn-primary'/></td>";
 	}
 
 	html += "</tr>"; 
@@ -310,47 +295,27 @@ function addOptionTbl(serviceCd){
 		});
 }
 
-function delServiceTbl(checkService , flag){
-	var rowNum = $('tbody[name=serviceTbody] tr').length;
-	var removeRow ="";
-
-	for( i=0; i< rowNum; i++){
-		removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
-			
-		if(flag=='chk'){//체크해제
-			if(removeRow.find('td:eq(1) select').val() == 'default'){
-				if( removeRow.find('td:eq(0) select').val() == checkService){
-					removeRow.remove();
-				}
-			}
+function delServiceTbl(checkServiceNm , flag){
+	$('#serviceTbl > tbody > tr').each(function(i,e){
+		if( $(this).find('td:eq(1) select').val() == 'default'){
+		if( $(this).find('td:eq(0) select').val() == checkServiceNm){
+			$(this).remove();
 		}
-	}
-	
-	for( i=rowNum-1; i>=0; i--){
-		if(flag=='btn'){//삭제버튼
-			removeRow = removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
-			if(removeRow.find('td:eq(1) select').val() != 'default'){ 
-					removeRow.remove();
-					return;
-			}
 		}
-	}
-	
+	});
 }
 
-function delOptionTbl(checkService){
-	var rowNum = $('#configTable > tbody > tr').length;
-	
-	for( i=0; i< rowNum; i++){
-		var removeRow = $('tbody[name=configTbody] > tr:eq('+i+')');
-		
-		if( removeRow.find('td:eq(0)').text() == checkService){
-			removeRow.remove();
+function delOptionTbl(checkServiceNm){
+	$('#configTable > tbody > tr').each(function(i,e){
+		if( $(this).find('td:eq(0)').text() == checkServiceNm){
+			$(this).remove();
 		}
-	}
+	});
 }
 
 function setDatepicker(){
+	
+	var rowNum = $('tbody[name=serviceTbody] > tr').length -1;
 	
 	// 달력 초기화
     $('input[name=serviceStartDt]').datepicker({
@@ -358,15 +323,17 @@ function setDatepicker(){
             "autoclose": true,
             "todayHighlight":true
     });
-    //$('input[name=serviceStartDt]').datepicker("setDate", new Date());
- 	
+	
+	$($('input[name=serviceStartDt]').get(rowNum)).datepicker("setDate",new Date());
+   
  	// 달력 초기화
-    $('input[name=serviceEndDt]').datepicker({
+    $('input[name=serviceEndDt').datepicker({
     		"format" :'yyyy-mm-dd',
             "autoclose": true,
             "todayHighlight":true
     });
-   // $('input[name=serviceEndDt]').datepicker("setDate", new Date());
+ 	
+    $($('input[name=serviceEndDt]').get(rowNum)).datepicker("setDate",new Date());
 	
 }
 </script>
@@ -441,7 +408,6 @@ function setDatepicker(){
 					<h2 class="h5 display">서비스별 설정</h2>
 				</div>
              <div class="card-body">	
-				<!-- <label class="col-sm-4 form-control-label">서비스별 설정</label> -->
 					<table  id="configTable" name="configTable" class="table">
 						<thead>
 	                      <tr>
@@ -467,22 +433,21 @@ function setDatepicker(){
               	<div class="card-header d-flex align-items-center">
 					<h2 class="h5 display">서비스별 상세정보 입력</h2>
 				</div>
-                <div class="card-body">	
-
-					<div style="float:right;">
+               		<div class="card-body">	
+               		<div style="float:right">
 						<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-primary"/>
-	                	<input type="button" name="delRowBtn" id="delRowBtn" value="삭제" class="btn btn-primary"/>
                 	</div>
 					<table id="serviceTbl" name="serviceTbl" class="table">
 						<thead>
 	                      <tr>
 	                        <th>서비스명</th>
-	                        <th>하위서비스</th>
+	                        <th style="width:15%">하위서비스</th>
 	                        <th>시작일자</th>
 	                        <th>종료일자</th>
 	                        <th>서비스URL</th>
 	                        <th>테스트랩 사용여부</th>
 	                        <th>테스트이벤트 사용여부</th>
+	                        <th></th>
 	                      </tr>
 	                    </thead>
 						<tbody name="serviceTbody"></tbody>
@@ -490,16 +455,12 @@ function setDatepicker(){
 				</div>
               </div>
            </div>
-      
-        
-		
-		<div class="form-group">
-			<div class="col-sm-4 offset-sm-2">
+
+			<div class="btn-center">
 				<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
-				<input type="button" id="btnRegister" class="btn btn-primary" value="등록"></input>
+				<input type="button" id="btnRegister" class="btn btn-primary" value="등록" />
 			</div>
-		</div>		
-		
+
 	</div>
 	
 </form>
