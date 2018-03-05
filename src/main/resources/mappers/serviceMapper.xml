@@ -47,10 +47,10 @@
 		 		#{testEventRemarkDesc}, 
 		 		#{crtId},
 		 		#{crtIp},
-		 		current_timestamp, 
+		 		clock_timestamp(), 
 				#{udtId},
 				#{udtIp},
-				current_timestamp)
+				clock_timestamp())
 	</insert>
 
 	<insert id="insServiceApplyDetail" parameterType="com.sicc.console.model.ServiceDetailModel">
@@ -77,10 +77,10 @@
 				#{serviceUrlAddr}, 
 				#{crtId},
 		 		#{crtIp},
-		 		current_timestamp, 
+		 		clock_timestamp(), 
 				#{udtId},
 				#{udtIp},
-				current_timestamp)
+				clock_timestamp())
 	</insert>
 
 	<select id="selListServiceApply" parameterType="com.sicc.console.model.ServiceModel" resultType="com.sicc.console.model.ServiceExtModel">
@@ -102,7 +102,7 @@
 	    	 con.concpm AS cpm
 	    ON servicem.tenant_id = cpm.tenant_id 
 	    	AND servicem.cp_cd = cpm.cp_cd
-		ORDER BY cpm.tenant_id desc
+		ORDER BY servicem.ad_date desc
 		LIMIT #{rowPerPage} OFFSET #{skipCount}
 
 	</select>
@@ -127,6 +127,7 @@
 		FROM con.concpservicem servicem
 		WHERE servicem.tenant_id = #{tenantId} 
 			AND servicem.cp_cd = #{cpCd}
+			ORDER BY servicem.ad_date
 		<!-- SELECT tenant_id AS tenantId, 
 		    cp_cd AS cpCd, 
 		    service_cd AS serviceCd,
@@ -165,6 +166,7 @@
    	 	ON serviced.system_cd = cdd.cd_id AND cdd.cd_group_id = serviced.service_cd ||'_SYSTEM_CD'
 	WHERE serviced.tenant_id = #{tenantId} 
 		AND serviced.cp_cd = #{cpCd}
+	ORDER BY serviced.ad_date
 	</select>
 	
 	<delete id="delServiceApply" parameterType="com.sicc.console.model.ServiceModel">
