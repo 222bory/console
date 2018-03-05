@@ -148,10 +148,10 @@ $(document).ready(function(){
 			success : function(data, status) {
 				try{
 					if( data.result == '1'){
-						alert("등록 성공!");
+						alert("수정 성공!");
 						redirectList();
 					} else {
-						alert("RETURN CODE : "+ data.result+' , '+"등록 실패!");
+						alert("RETURN CODE : "+ data.result+' , '+"수정 실패!");
 					}
 				}catch(e) {	
 					alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
