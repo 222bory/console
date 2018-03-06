@@ -165,7 +165,7 @@
             <li> <a href="#pages-nav-list6" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>계정 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list6" class="collapse list-unstyled">
-                <li> <a href="/regUser">사용자계정 등록</a></li>
+                <li> <a href="/insAdmin">사용자계정 등록</a></li>
                 <li> <a href="/selectListAdmin">사용자계정 관리</a></li>
               </ul>
             </li>

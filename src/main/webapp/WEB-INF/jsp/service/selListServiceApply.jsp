@@ -60,7 +60,7 @@
                 <input type="hidden" name="page" value="${serviceModel.page}" />
                 <input type="hidden" name="tenantId" value="" />
                 <input type="hidden" name="cpCd" value="" />
-                  <table class="table" id="selListServiceTable">
+                  <table class="table table-hover" id="selListServiceTable">
                     <thead>
                       <tr>
                         <th>#</th>

@@ -14,18 +14,8 @@ public class AdminDaoImpl implements AdminDao{
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
-	public void insertAdminUser(Member member) {
-		sqlSessionTemplate.insert("com.sicc.console.dao.AdminDao.insertAdminUser", member);
-	}
-	
-	@Override
 	public Member getUser(String username) {
 		return sqlSessionTemplate.selectOne("com.sicc.console.dao.AdminDao.getMember");
-	}
-
-	@Override
-	public void createMember(Member member) {
-		
 	}
 
 	@Override
@@ -40,6 +30,16 @@ public class AdminDaoImpl implements AdminDao{
 
 	public List<AdminModel> selectListAdmin(AdminModel adminModel) {
 		return sqlSessionTemplate.selectList("com.sicc.console.dao.AdminDao.selectListAdmin", adminModel);
+	}
+
+	@Override
+	public void insAdmin(AdminModel adminModel) {
+		sqlSessionTemplate.insert("com.sicc.console.dao.AdminDao.insAdmin", adminModel);
+	}
+
+	@Override
+	public void delAdmin(String adminId) {
+		sqlSessionTemplate.delete("com.sicc.console.dao.AdminDao.delAdmin", adminId);
 	}
 
 

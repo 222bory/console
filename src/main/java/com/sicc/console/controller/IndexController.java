@@ -56,7 +56,7 @@ public class IndexController {
     	
     }
     
-    @GetMapping("/test")
+  /*  @GetMapping("/test")
     public String admin(Model model) {
     	
     	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -66,72 +66,7 @@ public class IndexController {
     	model.addAttribute("memberList", memberList);
     	
         return "/admin/test";
-    }
-    
-    @GetMapping("/regUser")
-    public String regUserPage() {
-    	
-    	/*User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	
-    	System.out.println(principal.getUsername());
-    	System.out.println(principal.getPassword());
-    	
-    	Iterator it = principal.getAuthorities().iterator();
-    	
-    	while(it.hasNext()) {
-    		GrantedAuthority g = (GrantedAuthority) it.next();
-    		System.out.println(g.getAuthority());
-    	}*/
-    	
-    	return "/regUser/regUser";
-    	
-    }
-    
-    @PostMapping("/regUser")
-    public String regUser(Model model , HttpServletRequest req, HttpServletResponse res,
-    		@RequestParam("id") String adminId, 
-    		@RequestParam("upw") String password,
-    		@RequestParam("uemail") String emailAddr,
-    		@RequestParam("radioRole") String adminPrivCd,
-    		@RequestParam("uname") String adminNm
-    		) {
-		
-    	System.out.println("test : " + adminId + " "+password + " "+emailAddr+ " "+adminPrivCd);
-    	
-    	Member member = new Member();
-		
-		member.setAdminId(adminId);
-		member.setPassword(password);
-		member.setAdminNm(adminNm);
-		member.setAdminPrivCd(adminPrivCd);
-		member.setEmailAddr(emailAddr);
-		
-    	userService.createMember(member);
-    	
-    	return "/login/login";
-    	
-    }
-    
-    @ResponseBody
-    @PostMapping("/userDuplCheck")
-    public String userDuplCheck(HttpServletRequest req, @RequestParam("userID") String userID) {
-    	String result="";
-    	 
-    	Member member = userService.findByUserNameOrEmail(userID);
-    	
-    	if(member==null) {
-    		result="0";
-    	}
-    	else {
-    		result="1";
-    	}
-    	
-    	return result;
-    }
-    
-    @GetMapping("/userList") 
-    public String userList() {
-        return "/regUser/userList";
-    }
+    }*/
+
 
 }

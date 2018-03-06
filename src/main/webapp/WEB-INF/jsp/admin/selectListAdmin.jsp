@@ -6,8 +6,6 @@
 	pageEncoding="UTF-8"%>
 
 <script>
-	
- 
 	function goPage(page) {
 		$("input[name=page]").val(page);
 		submit();
@@ -20,6 +18,40 @@
 	}
 	
 	
+	//계정 삭제
+	$(document).on("click","input[name='delRowBtn']",function(){
+		var delId = $(this).parent().parent().find('td:eq(0)').text();
+		
+		console.log(delId);
+			
+ 		$.ajax({
+			type : "POST",
+			url  : "/delAdmin", 
+			dataType : "json",
+			data : {"delId":delId},
+			success : function(data, status) {
+				try{
+					if( data.result == '1'){
+						alert("삭제 성공!");
+						goPage(1);
+					} else {
+						alert("RETURN CODE : "+ data.result+' , '+"등록 실패!");
+					}
+				}catch(e) {	
+					alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+				}
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				if(XMLHttpRequest.status == '901'){
+					sessionTimeOut();			
+				} else {
+					alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+				}
+				return;
+			}
+		}); 
+		
+	});
 </script>
 
 <div class="breadcrumb-holder">
@@ -31,12 +63,12 @@
 	</div>
 </div>
 
-<section class="charts">
+<section class="forms">
         <div class="container-fluid">
           <header> 
             <h1 class="h3">사용자계정관리</h1>
           </header>
-          <div class="row">
+
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-header d-flex align-items-center">
@@ -45,7 +77,7 @@
                 <div class="card-body">
                 <form action="" method="post" id="frm">
                 <input type="hidden" name="page" value="${adminModel.page}" />
-                  <table class="table">
+                  <table class="table table-hover">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -54,6 +86,7 @@
                         <th>이메일</th>
                         <th>권한</th>
                         <th>가입일자</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -67,7 +100,7 @@
                         <td>${list.emailAddr}</td>
                         <td>${list.adminPrivCd}</td>
                         <td>${list.adDate}</td>
-                        
+                        <td><input type="button" name="delRowBtn" value="삭제" class="btn btn-primary"/></td>
                       </tr>
                     <c:set var="countNo" value="${countNo+1 }" />
                     </c:forEach>  
@@ -90,6 +123,6 @@
                 </div>
               </div>
             </div>
-          </div>
+
         </div>
       </section>

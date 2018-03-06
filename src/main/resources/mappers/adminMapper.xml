@@ -5,50 +5,71 @@
         
 <mapper namespace="com.sicc.console.dao.AdminDao">
 
-<!--     <resultMap id="userResultMap" type="com.sicc.console.model.Member">
-	    <id property="id" column="id" />
-	    <result property="upw" column="upw"/>
-	    <result property="uemail" column="uemail"/>
-	    <collection property="roles" javaType="java.util.ArrayList" resultMap="roleMap"/>
-	</resultMap>
-	
-	<resultMap id="roleMap" type="com.sicc.console.model.MemberRole">
-	    <id property="rno" column="rno"/>
-	    <result property="rolename" column="rolename"/>
-	</resultMap> -->
-    
-    
     <select id="getMemberById" parameterType="String" resultType="com.sicc.console.model.Member">
-    	SELECT admin_id as adminId, admin_nm as adminNm, admin_priv_cd as adminPrivCd, email_addr as emailAddr, password as password
+    	SELECT admin_id as adminId, 
+    			admin_nm as adminNm, 
+    			admin_priv_cd as adminPrivCd, 
+    			email_addr as emailAddr, 
+    			password as password
     	  FROM 
     	   conadminm 
     	 WHERE admin_id = #{username} 
     </select>
     
     <select id="getMember" parameterType="String" resultType="com.sicc.console.model.Member">
-    	SELECT admin_id as adminId, admin_nm as adminNm, admin_priv_cd as adminPrivCd, email_addr as emailAddr, password as password
+    	SELECT admin_id as adminId, 
+    			admin_nm as adminNm, 
+    			admin_priv_cd as adminPrivCd, 
+    			email_addr as emailAddr, 
+    			password as password
     	  FROM 
     	   conadminm 
     	 order by udt_date desc
     </select>
     
     <select id="selectListAdmin" resultType="com.sicc.console.model.AdminModel">
-    	SELECT COUNT(1) OVER() AS totalCount, admin_id as adminId, admin_nm as adminNm, admin_priv_cd as adminPrivCd, email_addr as emailAddr, password as password, 
-    	to_char(ad_date,'yyyy-mm-dd') as adDate
+    	SELECT COUNT(1) OVER() AS totalCount, 
+    			admin_id as adminId, 
+    			admin_nm as adminNm, 
+    			admin_priv_cd as adminPrivCd, 
+    			email_addr as emailAddr, 
+    			password as password, 
+    			to_char(ad_date,'yyyy-mm-dd') as adDate
     	  FROM 
     	   conadminm 
     	 order by udt_date desc   
     	 LIMIT #{rowPerPage} OFFSET #{skipCount}
     </select>
-    
-    <insert id="insertAdminUser" parameterType="com.sicc.console.model.Member">
-    	insert into conadminm (admin_id, admin_nm, admin_priv_cd, email_addr, password, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
-    	values (#{adminId}, #{adminNm}, #{adminPrivCd}, #{emailAddr}, #{password}, 'ADMIN', '127.0.0.1', current_timestamp, 'ADMIN', '127.0.0.1', current_timestamp)
+
+    <insert id="insAdmin" parameterType="com.sicc.console.model.AdminModel">
+    	INSERT INTO con.conadminm (
+    			admin_id, 
+    			admin_nm, 
+    			admin_priv_cd, 
+    			email_addr, 
+    			password, 
+    			crt_id, 
+    			crt_ip, 
+    			ad_date,
+    			udt_id, 
+    			udt_ip, 
+    			udt_date)
+    	VALUES (#{adminId}, 
+    			#{adminNm}, 
+    			#{adminPrivCd}, 
+    			#{emailAddr}, 
+    			#{password}, 
+    			#{crtId}, 
+    			#{crtIp},
+    			current_timestamp, 
+    			#{udtId}, 
+    			#{udtIp},
+    			current_timestamp)
     </insert>
-    
-    <insert id ="createMember" parameterType="com.sicc.console.model.Member">
-    	insert into member (id, uid, upw, uemail, regdate, updatedate) values (#{id},#{uid},#{upw},#{uemail},null,null)
-    </insert>
-    
+	
+	<delete id="delAdmin" parameterType="String">
+		DELETE FROM con.conadminm
+		WHERE admin_id = #{adminId}
+	</delete>
 
 </mapper>

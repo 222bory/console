@@ -57,7 +57,7 @@
 	</div>
 </div>
 
-	  <section class="charts">
+	  <section class="forms">
         <div class="container-fluid">
           <header> 
             <h1 class="h3">대회관리</h1>
@@ -75,7 +75,7 @@
                 
                 <form action="" method="post" id="frm">
                 <input type="hidden" name="page" value="${competitionModel.page}" />
-                  <table class="table" id="selListCompetitionTable">
+                  <table class="table table-hover" id="selListCompetitionTable">
                     <thead>
                       <tr>
                         <th>#</th>
