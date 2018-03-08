@@ -12,9 +12,10 @@
     		   child.cd_nm as cdNm, 
     		   child.sort_ord as sortOrd, 
     		   child.use_yn as useYn
-		  FROM concdm parent, concdd child 
-		 WHERE parent.cd_group_id = child.cd_group_id
-		   AND parent.cd_group_id = #{cdGroupId};
+		  FROM concdm parent 
+		  LEFT OUTER JOIN concdd child 
+		  ON  parent.cd_group_id = child.cd_group_id
+		  WHERE parent.cd_group_id = #{cdGroupId}
     </select>
     
     <select id="selCodeByCdId" parameterType="java.util.Map" resultType="String">
@@ -25,4 +26,88 @@
 		   AND child.cd_id = #{cdId}
     </select>
     
+    <select id="selListCode" resultType="com.sicc.console.model.CodeModel">
+		SELECT COUNT(1) OVER() AS totalCount
+			   ,cd_group_id as cdGroupId
+		       ,cd_group_nm as cdGroupNm
+		       ,ad_date as adDate
+		       ,crt_id as crtId
+		       ,crt_ip as crtIp
+		  FROM concdm 
+		  WHERE 1=1
+		  <if test="serachNm !=null and serachNm !='' ">
+		  	<if test=" serachGroup == 'cdGroupId' " >
+		    	<![CDATA[
+		    	AND cd_group_id LIKE '%' || #{serachNm} || '%'
+		    	]]>
+		    </if>
+		    <if test=" serachGroup == 'cdGroupNm' " >
+		    	<![CDATA[
+		    	AND cd_group_nm LIKE '%' || #{serachNm} || '%'
+		    	]]>
+		    </if>
+		  </if> 
+		  ORDER BY ad_date desc
+		  LIMIT #{rowPerPage} OFFSET #{skipCount}
+    </select>
+    
+    <insert id="insCodeMaster" parameterType="com.sicc.console.model.CodeModel">
+    	INSERT INTO concdm(
+						      cd_group_id,
+							  cd_group_nm,
+							  use_yn,
+							  crt_id,
+							  crt_ip,
+							  ad_date,
+							  udt_id,
+							  udt_ip,
+							  udt_date
+							  )
+					VALUES (
+							  #{cdGroupId},
+							  #{cdGroupNm},
+							  'Y',
+							  #{crtId},
+							  #{crtIp},
+							  current_timestamp,
+							  #{udtId},
+							  #{udtIp},
+							  current_timestamp
+							  )
+    </insert>
+    
+    <insert id="insCodeDetail" parameterType="com.sicc.console.model.CodeModel">
+    	INSERT INTO concdd(
+						      cd_group_id,
+							  cd_id,
+							  cd_Nm,
+							  use_yn,
+							  crt_id,
+							  crt_ip,
+							  ad_date,
+							  udt_id,
+							  udt_ip,
+							  udt_date
+							  )
+					VALUES (
+							  #{cdGroupId},
+							  #{cdId},
+							  #{cdNm},
+							  'Y',
+							  #{crtId},
+							  #{crtIp},
+							  current_timestamp,
+							  #{udtId},
+							  #{udtIp},
+							  current_timestamp
+							  )
+    </insert>
+    
+    <delete id="delCodeMaster" parameterType="com.sicc.console.model.CodeModel">
+        DELETE FROM concdm WHERE cd_group_id = #{cdGroupId}
+    </delete>
+    
+    <delete id="delCodeDetail" parameterType="com.sicc.console.model.CodeModel">
+        DELETE FROM concdd WHERE cd_group_id = #{cdGroupId}
+    </delete>
 </mapper>
