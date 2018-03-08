@@ -45,7 +45,7 @@ $(function () {
 	</div>
 </div>
 
-<section class="charts">
+<section class="forms">
         <div class="container-fluid">
           <header> 
             <h1 class="h3">계약 목록</h1>
@@ -77,12 +77,12 @@ $(function () {
                     </div>
                 	</form>
                 </div> --%>
-                <div class="line"></div>        
+                    
                 <form action="" method="post" id="frm">
                 <input type="hidden" name="page" value="${contractExtModel.page}" />
                 <input type="hidden" name="custId" value="" />
                 <input type="hidden" name="tenantId" value="" />
-                  <table class="table">
+                  <table class="table table-hover">
                     <thead>
                       <tr>
                         <th>#</th>

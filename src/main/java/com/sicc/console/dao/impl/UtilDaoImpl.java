@@ -6,9 +6,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 
-import com.sicc.console.dao.CodeDao;
 import com.sicc.console.dao.UtilDao;
 import com.sicc.console.model.CodeModel;
 import com.sicc.console.model.CompetitionModel;
@@ -50,6 +48,11 @@ public class UtilDaoImpl implements UtilDao{
 	@Override
 	public List<HashMap<String, String>> selListCompetitionImageMaxSeq(HashMap<String, String> map) {
 		return sqlSessionTemplate.selectList("com.sicc.console.dao.UtilDao.selListCompetitionImageMaxSeq", map);
+	}
+
+	@Override
+	public List<String> selTenentIdByAllData(String tenantId) {
+		return sqlSessionTemplate.selectList("com.sicc.console.dao.UtilDao.selTenentIdByAllData", tenantId);
 	}
 	
 	

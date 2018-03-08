@@ -28,6 +28,37 @@
 			//location.href='/selServiceApply?tenantId='+tenantId+'&cpCd='+cpCd;
 			} 
 		});
+	 
+	 $('#btnDownload').click(function(event){
+			
+		 $.ajax({
+				type : "POST",
+				url  : "/exportData", 
+				dataType : "json",
+				data : {"tenantId":"2018000000"},
+				success : function(data, status) {
+					try{
+						 if( data == '1'){
+							alert("다운로드가 완료되었습니다");
+						} else {
+							alert("다운로드 중 문제가 발생하였습니다");
+						} 
+					}catch(e) {	
+						alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					if(XMLHttpRequest.status == '901'){
+						sessionTimeOut();			
+					} else {
+						
+						alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+					}
+					return;
+				}
+			});
+	 });
+	 
 	});
 </script>
 
@@ -97,6 +128,7 @@
 					  	<c:import url="/WEB-INF/jsp/paging/paging.jsp"></c:import>
 					  </ul>
 					</div>
+					<input type="button" value="다운로드" id="btnDownload" />
                 </div>
               </div>
             </div>

@@ -4,9 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <script type="text/javascript">
+var no = 0;
 
 $(document).ready(function(){
-
 
 	$("#btnCancel").click(function(){
 		location.href="/selListServiceApply";
@@ -30,17 +30,18 @@ $(document).ready(function(){
 	
     // 서비스 추가 버튼 클릭시
     $("#addRowBtn").click(function(){
+    	var addRowNum = $('tbody[name=serviceTbody] > tr').length;
     	
-    	if($('tbody[name=serviceTbody] > tr').length == 0){
+    	if(addRowNum == 0){
     		
     		alert("사용하실 서비스를 선택해주세요");
     	
     		return;
     	}
 
-    	addServiceTbl('btn');
+    	addServiceTbl('btn', no++);
     	
-    	setDatepicker();
+    	setDatepicker(addRowNum);
 	
     });
     
@@ -51,7 +52,12 @@ $(document).ready(function(){
 		var competitionStr = $("#competition").val().split('.');
 		var tenantId = competitionStr[0];
 		var cpCd = competitionStr[1];
-
+		var flag = false;
+		
+		flag = checkValid(flag);
+		
+		if(flag){
+			
 		$("#tenantId").val(tenantId);	
 		$("#cpCd").val(cpCd);
 		console.log($("#frm").serializeArray());
@@ -71,16 +77,16 @@ $(document).ready(function(){
 		$("select[name=systemCd]").removeAttr("disabled");
 		
 		$("input[name=testLabCheck]:checked").each(function(){
-			$(this).next().val('Y');
+			$(this).next().next().val('Y');
 		});
 		$("input[name=testLabCheck]").not(":checked").each(function(){
-			$(this).next().val('N');
+			$(this).next().next().val('N');
 		});
 		$("input[name=testEventCheck]:checked").each(function(){
-			$(this).next().val('Y');
+			$(this).next().next().val('Y');
 		});
 		$("input[name=testEventCheck]").not(":checked").each(function(){
-			$(this).next().val('N');
+			$(this).next().next().val('N');
 		});
 		
 		$.ajax({
@@ -93,6 +99,8 @@ $(document).ready(function(){
 					if( data.result == '1'){
 						alert("등록 성공!");
 						redirectList();
+					} else if(data.result == 'dupl'){
+						alert("이미 서비스를 신청한 대회입니다");
 					} else {
 						alert("RETURN CODE : "+ data.result+' , '+"등록 실패!");
 					}
@@ -110,8 +118,10 @@ $(document).ready(function(){
 				return;
 			}
 		});
+		
+		}
+		
 	});
- 	
 
 });
 </script>
@@ -164,10 +174,13 @@ $(document).ready(function(){
 		if($(this).is(":checked")){
 			var servicdCd="";
 			var systemCd="";
+			var addRowNum = $('tbody[name=serviceTbody] > tr').length;
 			
-			//$("#addRowBtn").click();
-			addServiceTbl('chk');
-			setDatepicker();
+			$("#configInfo").show();
+			$("#serviceInfo").show();
+
+			addServiceTbl('chk', no++);
+			setDatepicker(addRowNum);
 			
 			servicdCd = $('tbody[name=serviceTbody]:last > tr:last > td:eq(0) >select');
 			systemCd = $('tbody[name=serviceTbody]:last > tr:last > td:eq(1) >select');
@@ -213,18 +226,95 @@ function redirectList(){
 	$("#frm").submit();
 }
 
-/* function checkValid(){
+ function checkValid(){
+	var flag = false;
 
 	$('select[name=serviceCd]').each(function(){
-		
+		if($(this).val()=='0' || $(this).val()=='' || $(this).val()==null){
+			flag = false;
+			alert('서비스를 선택해주세요');
+			$(this).focus();
+			
+			return false;
+		}
+		else{
+			flag = true;
+		}
 	});
 	
+	if(flag){
+		$('select[name=systemCd]').each(function(){
+			if($(this).val()=='0' || $(this).val()=='' || $(this).val()==null){
+				flag = false;
+				alert('하위서비스를 선택해주세요');
+				$(this).focus();
+				
+				return false;
+			}
+			else{
+				flag = true;
+			}
+		});
+	}
+	
+	if(flag){
+		$('input[name=serviceStartDt]').each(function(){
+			if( $(this).val()=='' || $(this).val()==null){
+				flag = false;
+				alert('시작일자를 선택해주세요');
+				$(this).focus();
+				
+				return false;
+			}
+			else{
+				flag = true;
+			}
+		});
+	}
+	
+	if(flag){
+		$('input[name=serviceStartDt]').each(function(){
+			if( $(this).val()=='' || $(this).val()==null){
+				flag = false;
+				alert('종료일자를 선택해주세요');
+				$(this).focus();
+				
+				return false;
+			}
+			else{
+				flag = true;
+			}
+		});
+	}
+	
+	if(flag){
+		console.log(flag);
+		$('input[name=repColorValue]').each(function(){
+
+			if( $(this).val()=='' || $(this).val()==null){
+				flag = false;
+				alert('컬러를 선택해주세요');
+				$(this).focus();
+				
+				return false;
+			}
+			else{
+				flag = true;
+			}
+		});
+	}
+	
+	return flag;
+} 
+
+ 
+function dateCheck(){
 	
 	
-}  */
+	
+}
 
-
-function addServiceTbl(flag){
+function addServiceTbl(flag, no){
 	var html ="";
     html += "<tr>"; 
 	html += "<td> <select name='serviceCd' class='form-control form-control-sm'> <option value='0'>선택</option>"+
@@ -236,12 +326,14 @@ function addServiceTbl(flag){
 	html += "<td> <input name='serviceUrlAddr' type='text' class='form-control form-control-sm'/> </td>";
 	
 	if(flag == 'chk'){ //체크박스로 서비스 선택 및 추가
-		html += "<td > <input name='testLabCheck' type='checkbox' class='form-check-input'>";
+		html += "<td > <div class='row'> <input name='testLabCheck' id='testLabCheck"+no+"' type='checkbox' class='form-control-custom'>";
+		html += "<label for='testLabCheck"+no+"'/>";
 		html +=	"<input type='hidden' name='testLabUseYn' value='N'/>";
-		html += "<input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' /> </td>";
-		html += "<td><input name='testEventCheck' type='checkbox' class='form-check-input'>";
+		html += "<input name='testLabRemarkDesc' type='text' class='form-control form-control-sm col-md-9' placeholder='비고(용도)' /> </div></td>";
+		html += "<td> <div class='row'> <input name='testEventCheck' id='testEventCheck"+no+"' type='checkbox' class='form-control-custom'>";
+		html += "<label for='testEventCheck"+no+"'/>";
 		html += "<input type='hidden' name='testEventAddYn' value='N'/>";
-		html += "<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)'/></td>";
+		html += "<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm col-md-9' placeholder='비고(용도)'/></div></td>";
 		html += "<td></td>";
 	}
 	else if(flag == 'btn'){ //추가 버튼 클릭으로 하위서비스 추가
@@ -289,7 +381,7 @@ function addOptionTbl(serviceCd){
 	   //colorpicker 초기화
 		$('div[name=colorGroup]').each(function(){
 			$(this).colorpicker({
-		        color: '#AA3399',
+		        color: '#000000',
 		        format: 'hex'
 			});
 		});
@@ -306,34 +398,41 @@ function delServiceTbl(checkServiceNm , flag){
 }
 
 function delOptionTbl(checkServiceNm){
-	$('#configTable > tbody > tr').each(function(i,e){
+	$('#configTbl > tbody > tr').each(function(i,e){
 		if( $(this).find('td:eq(0)').text() == checkServiceNm){
 			$(this).remove();
 		}
 	});
 }
 
-function setDatepicker(){
-	
-	var rowNum = $('tbody[name=serviceTbody] > tr').length -1;
+function setDatepicker(addRowNum){
+	var rowNum = addRowNum;
+	var startDt =  $($('input[name=serviceStartDt]').get(rowNum));
+	var endDt = $($('input[name=serviceEndDt]').get(rowNum));
 	
 	// 달력 초기화
-    $('input[name=serviceStartDt]').datepicker({
+    startDt.datepicker({
     		"format" :'yyyy-mm-dd',
-            "autoclose": true,
-            "todayHighlight":true
+            "todayHighlight":true,
+            "autoclose": true
     });
 	
-	$($('input[name=serviceStartDt]').get(rowNum)).datepicker("setDate",new Date());
-   
+    startDt.datepicker("setDate",new Date());
+/* 	startDt.datepicker("option","onClose", function(selectedDate){
+		endDt.datepicker("option", "minDate", selectedDate);
+	}); */
+	
  	// 달력 초기화
-    $('input[name=serviceEndDt').datepicker({
+    endDt.datepicker({
     		"format" :'yyyy-mm-dd',
             "autoclose": true,
             "todayHighlight":true
     });
  	
-    $($('input[name=serviceEndDt]').get(rowNum)).datepicker("setDate",new Date());
+    endDt.datepicker("setDate",new Date());
+/*     endDt.datepicker("option","onClose", function(selectedDate){
+    	startDt.datepicker("option", "maxDate", selectedDate);
+	}); */
 	
 }
 </script>
@@ -373,6 +472,7 @@ function setDatepicker(){
                  <div class="form-group col-sm-2">
                  <input id="searchValue" type="text" placeholder="유형 선택 후 검색어 입력" class="form-control form-control-sm">
                  </div>
+                 
                  <div class="form-group col-sm-6">
 					 <select id="competition" name="competition" class="form-control form-control-sm">
 	                    <c:forEach items="${competitionList}" var="list" varStatus="parent">
@@ -407,8 +507,8 @@ function setDatepicker(){
                 <div class="card-header d-flex align-items-center">
 					<h2 class="h5 display">서비스별 설정</h2>
 				</div>
-             <div class="card-body">	
-					<table  id="configTable" name="configTable" class="table">
+             <div class="card-body" id="configInfo" style="display:none;">	
+					<table id="configTbl" name="configTbl" class="table" >
 						<thead>
 	                      <tr>
 	                        <th>서비스명</th>
@@ -433,11 +533,11 @@ function setDatepicker(){
               	<div class="card-header d-flex align-items-center">
 					<h2 class="h5 display">서비스별 상세정보 입력</h2>
 				</div>
-               		<div class="card-body">	
+               		<div class="card-body" id="serviceInfo" style="display:none;">	
                		<div style="float:right">
 						<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-primary"/>
                 	</div>
-					<table id="serviceTbl" name="serviceTbl" class="table">
+					<table id="serviceTbl" name="serviceTbl" class="table" >
 						<thead>
 	                      <tr>
 	                        <th>서비스명</th>

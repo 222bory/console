@@ -137,65 +137,78 @@ public class ServiceApplyController {
 
     		System.out.println("serviceCd.length-->"+serviceCd.length);
     		System.out.println("serviceCdD.length-->"+serviceCdD.length);
-	    	for(int i=0; i < serviceCd.length; i++) {
+    		
+    		
+    		serviceModel.setTenantId(tenantId);
+    		serviceModel.setCpCd(cpCd);
+    		
+    		List<ServiceExtModel> service= serviceApplyService.selServiceApply(serviceModel);
 
-
-	    		//하위서비스가 대표서비스인 경우 --> 상위서비스 insert
-	    		if(systemCd[i].equals("default")){
-	    			serviceModel.setTenantId(tenantId);
-	    			serviceModel.setCpCd(cpCd);
-	    			serviceModel.setServiceCd(serviceCd[i]);
-	    			serviceModel.setServiceStartDt(CommonUtil.removeSpecificStr(serviceStartDt[i], CommonEnums.DASH_MARK.getValue()));
-	    			serviceModel.setServiceEndDt(CommonUtil.removeSpecificStr(serviceEndDt[i], CommonEnums.DASH_MARK.getValue()));
-	    			serviceModel.setServiceUrlAddr(serviceUrlAddr[i]);
-	    			serviceModel.setTestLabUseYn(testLabUseYn[i]);
-	    			serviceModel.setTestLabRemarkDesc(testLabRemarkDesc[i]);
-	    			serviceModel.setTestEventAddYn(testEventAddYn[i]);
-	    			serviceModel.setTestEventRemarkDesc(testEventRemarkDesc[i]);
-	    			
-	    			for(int j=0; j< serviceCdD.length;j++ ) {
-		    			if(serviceCd[i].equals(serviceCdD[j])) {
-		    				System.out.println("serviceCdD --> "+serviceCdD[j]);
-		    				serviceModel.setRepColorValue(repColorValue[j]);
-		    				serviceModel.setFstLangCd(fstLangCd[j]);
-		    				serviceModel.setScndLangCd(scndLangCd[j]);
-		    				serviceModel.setThrdLangCd(thrdLangCd[j]);
-		    				serviceModel.setFothLangCd(fothLangCd[j]);
-		    				serviceModel.setFithLangCd(fithLangCd[j]);
+    		if(service.size() == 0) {
+		    	for(int i=0; i < serviceCd.length; i++) {
+		    		//하위서비스가 대표서비스인 경우 --> 상위서비스 insert
+		    		if(systemCd[i].equals("default")){
+		    			serviceModel.setTenantId(tenantId);
+		    			serviceModel.setCpCd(cpCd);
+		    			serviceModel.setServiceCd(serviceCd[i]);
+		    			serviceModel.setServiceStartDt(CommonUtil.removeSpecificStr(serviceStartDt[i], CommonEnums.DASH_MARK.getValue()));
+		    			serviceModel.setServiceEndDt(CommonUtil.removeSpecificStr(serviceEndDt[i], CommonEnums.DASH_MARK.getValue()));
+		    			serviceModel.setServiceUrlAddr(serviceUrlAddr[i]);
+		    			serviceModel.setTestLabUseYn(testLabUseYn[i]);
+		    			serviceModel.setTestLabRemarkDesc(testLabRemarkDesc[i]);
+		    			serviceModel.setTestEventAddYn(testEventAddYn[i]);
+		    			serviceModel.setTestEventRemarkDesc(testEventRemarkDesc[i]);
+		    			
+		    			for(int j=0; j< serviceCdD.length;j++ ) {
+			    			if(serviceCd[i].equals(serviceCdD[j])) {
+			    				System.out.println("serviceCdD --> "+serviceCdD[j]);
+			    				serviceModel.setRepColorValue(repColorValue[j]);
+			    				serviceModel.setFstLangCd(fstLangCd[j]);
+			    				serviceModel.setScndLangCd(scndLangCd[j]);
+			    				serviceModel.setThrdLangCd(thrdLangCd[j]);
+			    				serviceModel.setFothLangCd(fothLangCd[j]);
+			    				serviceModel.setFithLangCd(fithLangCd[j]);
+			    			}
 		    			}
-	    			}
-	    			
-	    			serviceModel.setCrtId(crtId);
-	    			serviceModel.setCrtIp(crtIp);
-	    			serviceModel.setUdtId(crtId);
-	    			serviceModel.setUdtIp(crtIp);
-	    			
-	    			serviceApplyService.insServiceApply(serviceModel);
-	    			
-	    			upCount++;
-	    		}
-	    		// 하위서비스 insert
-	    		else {
-	    			serviceDetailModel.setTenantId(tenantId);
-	    			serviceDetailModel.setCpCd(cpCd);
-	    			serviceDetailModel.setServiceCd(serviceCd[i]);
-	    			serviceDetailModel.setSystemCd(systemCd[i]);
-	    			serviceDetailModel.setServiceStartDt(CommonUtil.removeSpecificStr(serviceStartDt[i], CommonEnums.DASH_MARK.getValue()));
-	    			serviceDetailModel.setServiceEndDt(CommonUtil.removeSpecificStr(serviceEndDt[i], CommonEnums.DASH_MARK.getValue()));
-	    			serviceDetailModel.setServiceUrlAddr(serviceUrlAddr[i]);
-	    			serviceDetailModel.setCrtId(crtId);
-	    			serviceDetailModel.setCrtIp(crtIp);
-	    			serviceDetailModel.setUdtId(crtId);
-	    			serviceDetailModel.setUdtIp(crtIp);
-	    			
-	    			serviceApplyService.insServiceApplyDetail(serviceDetailModel);
-	    			downCount++;
-	    		}
-	    	}
-	    	System.out.println("upCount --> "+upCount);
-	    	System.out.println("downCount --> "+downCount);
-	    	
-	    	model.addAttribute("result", "1");
+		    			
+		    			serviceModel.setCrtId(crtId);
+		    			serviceModel.setCrtIp(crtIp);
+		    			serviceModel.setUdtId(crtId);
+		    			serviceModel.setUdtIp(crtIp);
+		    			
+		    			serviceApplyService.insServiceApply(serviceModel);
+		    			
+		    			upCount++;
+		    		}
+		    		// 하위서비스 insert
+		    		else {
+		    			serviceDetailModel.setTenantId(tenantId);
+		    			serviceDetailModel.setCpCd(cpCd);
+		    			serviceDetailModel.setServiceCd(serviceCd[i]);
+		    			serviceDetailModel.setSystemCd(systemCd[i]);
+		    			serviceDetailModel.setServiceStartDt(CommonUtil.removeSpecificStr(serviceStartDt[i], CommonEnums.DASH_MARK.getValue()));
+		    			serviceDetailModel.setServiceEndDt(CommonUtil.removeSpecificStr(serviceEndDt[i], CommonEnums.DASH_MARK.getValue()));
+		    			serviceDetailModel.setServiceUrlAddr(serviceUrlAddr[i]);
+		    			serviceDetailModel.setCrtId(crtId);
+		    			serviceDetailModel.setCrtIp(crtIp);
+		    			serviceDetailModel.setUdtId(crtId);
+		    			serviceDetailModel.setUdtIp(crtIp);
+		    			
+		    			serviceApplyService.insServiceApplyDetail(serviceDetailModel);
+		    			downCount++;
+		    		}
+		    	}
+		    	System.out.println("upCount --> "+upCount);
+		    	System.out.println("downCount --> "+downCount);
+		    	
+		    	model.addAttribute("result", "1");
+    		}
+    		else if(service.size() > 0){
+    			model.addAttribute("result", "dupl");
+    		}
+    		else {
+    			model.addAttribute("result", "0");
+    		}
 	    	
     	return "jsonView";
     }
@@ -267,38 +280,47 @@ public class ServiceApplyController {
     @RequestMapping("/delServiceApply")
     @Transactional(rollbackFor=Exception.class)
     public String delServiceApply(@RequestParam Map<String,String> param,
-    				@RequestParam(value="tenantId") String tenantId,
-    				@RequestParam(value="cpCd") String cpCd,
-    				@RequestParam(value="serviceCd") String[] serviceCd,
-    				@RequestParam(value="serviceCdd") String[] serviceCdd,
-    				@RequestParam(value="systemCd") String[] systemCd,
+    				@RequestParam(value="tenantId", required=true) String tenantId,
+    				@RequestParam(value="cpCd", required=true) String cpCd,
+    				@RequestParam(value="serviceCd", required=true) String[] serviceCd,
+    				@RequestParam(value="serviceCdd", required=false) String[] serviceCdd,
+    				@RequestParam(value="systemCd", required=false) String[] systemCd,
  					Model model) {
     	String result = "";
     	ServiceModel serviceModel = new ServiceModel();
     	ServiceDetailModel serviceDetailModel = new ServiceDetailModel();
     	
+    	if(serviceCdd == null) {
+    		serviceCdd = new String[0];
+    	}
+    	if(systemCd == null) {
+    		systemCd = new String[0];
+    	}
+    	
     	try {
-
-    		for(int i=0 ; i< serviceCdd.length ; i++) {
-    			serviceDetailModel.setTenantId(tenantId);
-    			serviceDetailModel.setCpCd(cpCd);
-    			serviceDetailModel.setServiceCd(serviceCdd[i]);
-    			serviceDetailModel.setSystemCd(systemCd[i]);
-    			
-        		serviceApplyService.delServiceApplyDetail(serviceDetailModel);
-        		System.out.println("하위서비스 삭제 완료!");
+    		if(serviceCdd.length > 0) {
+	    		for(int i=0 ; i< serviceCdd.length ; i++) {
+	    			serviceDetailModel.setTenantId(tenantId);
+	    			serviceDetailModel.setCpCd(cpCd);
+	    			serviceDetailModel.setServiceCd(serviceCdd[i]);
+	    			serviceDetailModel.setSystemCd(systemCd[i]);
+	    			
+	        		serviceApplyService.delServiceApplyDetail(serviceDetailModel);
+	        		System.out.println("하위서비스 삭제 완료!");
+	    		}
     		}
-    		
-    		for(int i=0 ; i< serviceCd.length ; i++) {
-    			serviceModel.setTenantId(tenantId);
-    			serviceModel.setCpCd(cpCd);
-    			serviceModel.setServiceCd(serviceCd[i]);
-
-    			serviceApplyService.delServiceApply(serviceModel);
-        		System.out.println("상위서비스 삭제 완료!");
+    		if(serviceCd.length > 0) {
+	    		for(int i=0 ; i< serviceCd.length ; i++) {
+	    			serviceModel.setTenantId(tenantId);
+	    			serviceModel.setCpCd(cpCd);
+	    			serviceModel.setServiceCd(serviceCd[i]);
+	
+	    			serviceApplyService.delServiceApply(serviceModel);
+	        		System.out.println("상위서비스 삭제 완료!");
+	    		}
+	    		
+	    		result = "1";
     		}
-    		
-    		result = "1";
     	}
     	catch(Exception e){
     		result = "0";

@@ -2,7 +2,6 @@ package com.sicc.console.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +52,11 @@ public class CommonServiceImpl implements CommonService{
 	@Override
 	public List<HashMap<String, String>> selListCompetitionImageMaxSeq(HashMap<String, String> map) {
 		return utilDao.selListCompetitionImageMaxSeq(map);
+	}
+
+	@Override
+	public List<String> selTenentIdByAllData(String tenantId) {
+		return utilDao.selTenentIdByAllData(tenantId);
 	}
 	
 	

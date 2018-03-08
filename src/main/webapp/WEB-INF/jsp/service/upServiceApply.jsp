@@ -10,32 +10,35 @@
 <c:set var="NUseValue" value="<%=CommonEnums.NUSE_CD.getValue()%>"/>
 
 <script type="text/javascript">
+var no = 0;
 
 $(document).ready(function(){
 	
  	// 달력 초기화
     $('input[name=serviceStartDt]').each(function(i,e){
     	var dateVal = $(this).val();
-    	
+    	var dateChar = dateVal.substring(0,4)+dateVal.substring(4,6)+dateVal.substring(6,8);
+
     	$(this).datepicker({
     		 "format" :'yyyy-mm-dd',
              "autoclose": true,
              "todayHighlight":true
     	});
-    	//$(this).datepicker("setDate", dateVal);
+    	$(this).datepicker("setDate", dateChar);
     });
  	
  	
  	// 달력 초기화
     $('input[name=serviceEndDt]').each(function(i,e){
     	var dateVal = $(this).val();
-    	//console.log(dateVal);
+    	var dateChar = dateVal.substring(0,4)+dateVal.substring(4,6)+dateVal.substring(6,8);
+    	
     	$(this).datepicker({
     		 "format" :'yyyy-mm-dd',
              "autoclose": true,
              "todayHighlight":true
     	});
-    	//$(this).datepicker("setDate", dateVal);
+    	$(this).datepicker("setDate", dateChar);
     });
  	
 	//colorpicker 초기화
@@ -99,11 +102,16 @@ $(document).ready(function(){
 
     // 서비스 추가 버튼 클릭시
     $("#addRowBtn").click(function(){
-    	if($('tbody[name=serviceTbody] > tr').length == 0){
+    	var tblLength = $('tbody[name=serviceTbody] > tr').length;
+    	
+    	if(tblLength == 0){
     		alert("사용하실 서비스를 선택해주세요");
     		return;
     	}
-    	addServiceTbl('btn');
+    	
+    	no = tblLength+1;
+    	
+    	addServiceTbl('btn', no);
     	setDatepicker();
     });
     
@@ -128,16 +136,16 @@ $(document).ready(function(){
 		$("select[name=systemCd]").removeAttr("disabled");
 		
 		$("input[name=testLabCheck]:checked").each(function(){
-			$(this).next().val('Y');
+			$(this).next().next().val('Y');
 		});
 		$("input[name=testLabCheck]").not(":checked").each(function(){
-			$(this).next().val('N');
+			$(this).next().next().val('N');
 		});
 		$("input[name=testEventCheck]:checked").each(function(){
-			$(this).next().val('Y');
+			$(this).next().next().val('Y');
 		});
 		$("input[name=testEventCheck]").not(":checked").each(function(){
-			$(this).next().val('N');
+			$(this).next().next().val('N');
 		});
 		
  		$.ajax({
@@ -231,7 +239,7 @@ $(document).ready(function(){
 			var servicdCd="";
 			var systemCd="";
 
-			addServiceTbl('chk');
+			addServiceTbl('chk', 0);
 			setDatepicker();
 			
 			servicdCd = $('tbody[name=serviceTbody]:last > tr:last > td:eq(0) >select');
@@ -273,7 +281,7 @@ function redirectList(){
 	$("#frm").submit();
 }
 
-function addServiceTbl(flag){
+function addServiceTbl(flag, no){
 	var html ="";
     html += "<tr>"; 
 	html += "<td> <select name='serviceCd' class='form-control form-control-sm'> <option value='0'>선택</option>"+
@@ -285,13 +293,14 @@ function addServiceTbl(flag){
 	html += "<td> <input name='serviceUrlAddr' type='text' class='form-control form-control-sm'/> </td>";
 	
 	if(flag == 'chk'){ //체크박스로 서비스 선택 및 추가
-		html += "<td > <input name='testLabCheck' type='checkbox' class='form-check-input'>";
+		html += "<td > <div class='row'> <input name='testLabCheck' id='testLabCheck"+no+"' type='checkbox' class='form-control-custom'>";
+		html += "<label for='testLabCheck"+no+"'/>";
 		html +=	"<input type='hidden' name='testLabUseYn' value='N'/>";
-		html += "<input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' /> </td>";
-		html += "<td><input name='testEventCheck' type='checkbox' class='form-check-input'>";
+		html += "<input name='testLabRemarkDesc' type='text' class='form-control form-control-sm col-md-9' placeholder='비고(용도)' /> </div></td>";
+		html += "<td> <div class='row'> <input name='testEventCheck' id='testEventCheck"+no+"' type='checkbox' class='form-control-custom'>";
+		html += "<label for='testEventCheck"+no+"'/>";
 		html += "<input type='hidden' name='testEventAddYn' value='N'/>";
-		html += "<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)'/></td>";
-	
+		html += "<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm col-md-9' placeholder='비고(용도)'/></div></td>";
 		html += "<td></td>";
 	}
 	else if(flag == 'btn'){ //추가 버튼 클릭으로 하위서비스 추가
@@ -563,7 +572,7 @@ function setDatepicker(){
 	                    </thead>
 						<tbody name="serviceTbody">
 						
-						<c:forEach items="${selServiceApply}" var="selList">
+						<c:forEach items="${selServiceApply}" var="selList" varStatus="status">
 							<tr>
 							<td> <select name='serviceCd' class='form-control form-control-sm' readOnly='true'> 
 								<option value='${selList.serviceCd}'>${selList.serviceCd}</option>
@@ -577,25 +586,30 @@ function setDatepicker(){
 							<td> <input name='serviceEndDt' type='text' class='form-control form-control-sm' value="${selList.serviceEndDt}"/> </td>
 							<td> <input name='serviceUrlAddr' type='text' class='form-control form-control-sm' value="${selList.serviceUrlAddr}"/> </td>
 	
-							<td> 
+							<td> <div class='row'>
 								<c:if test="${selList.testLabUseYn == useCd}">
-									<input name='testLabCheck' type='checkbox' class='form-check-input' checked="checked">
+									<input id='testLabCheck+${status.index}' name='testLabCheck' type='checkbox' class='form-control-custom' checked="checked">
+									<label for='testLabCheck+${status.index}' />
 								</c:if>
 								<c:if test="${selList.testLabUseYn == NUseCd}">
-									<input name='testLabCheck' type='checkbox' class='form-check-input'>
+									<input id='testLabCheck+${status.index}' name='testLabCheck' type='checkbox' class='form-control-custom'>
+									<label for='testLabCheck+${status.index}'/>
 								</c:if>
 								<input type='hidden' name='testLabUseYn' value="${selList.testLabUseYn}"/>
-								<input name='testLabRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' value="${selList.testLabRemarkDesc}" /> </td>
-							<td>
+								<input name='testLabRemarkDesc' type='text' class='form-control form-control-sm col-md-9' placeholder='비고(용도)' value="${selList.testLabRemarkDesc}" /> 
+							</div></td>
+							<td><div class='row'>
 								<c:if test="${selList.testEventAddYn == useCd}">
-									<input name='testEventCheck' type='checkbox' class='form-check-input' checked="checked">
+									<input id='testEventCheck+${status.index}' name='testEventCheck' type='checkbox' class='form-control-custom' checked="checked">
+									<label for='testEventCheck+${status.index}' />
 								</c:if>
 								<c:if test="${selList.testEventAddYn == NUseCd}">
-									<input name='testEventCheck' type='checkbox' class='form-check-input'>
+									<input id='testEventCheck+${status.index}' name='testEventCheck' type='checkbox' class='form-control-custom'>
+									<label for='testEventCheck+${status.index}' />
 								</c:if>
 							<input type='hidden' name='testEventAddYn' value="${selList.testEventAddYn}"/>
-							<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm' placeholder='비고(용도)' value="${selList.testEventRemarkDesc}"/>
-							</td>
+							<input name='testEventRemarkDesc' type='text' class='form-control form-control-sm col-md-9'  placeholder='비고(용도)' value="${selList.testEventRemarkDesc}"/>
+							</div></td>
 							<td></td>
 							</tr>
 						</c:forEach>
