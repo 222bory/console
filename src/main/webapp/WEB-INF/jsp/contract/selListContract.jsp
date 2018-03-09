@@ -19,7 +19,12 @@ $(function () {
 	 	$("#frm").attr("action", "/selContractView");
 	 	submit();
     });
-
+	
+	$("#btnSearch").on("click", function(e){
+		$("#frm").attr("action", "/selListContract");
+		$("#frm").submit();
+	});
+	
 });
 	
 	function goPage(page) {
@@ -45,7 +50,7 @@ $(function () {
 	</div>
 </div>
 
-<section class="forms">
+<section class="charts">
         <div class="container-fluid">
           <header> 
             <h1 class="h3">계약 목록</h1>
@@ -56,32 +61,29 @@ $(function () {
                 <div class="card-header d-flex align-items-center">
                   <h2 class="h5 display">계약 목록</h2>
                 </div>
-                <div class="card-body">
-                <%--          
-               <div class="card-header d-flex align-items-center">
-                   <form class="form-inline">
-                    <div class="form-group">
-                        <select name="account" class="form-control">
-                          <option>option 1</option>
-                          <option>option 2</option>
-                          <option>option 3</option>
-                          <option>option 4</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="inlineFormInputGroup" class="sr-only">Username</label>
-                      <input id="inlineFormInputGroup" type="text" placeholder="Username" class="mx-sm-2 form-control form-control">
-                    </div>
-                    <div class="form-group">
-                      <input type="button" value="검색" class="mx-sm-3 btn btn-primary">
-                    </div>
-                	</form>
-                </div> --%>
-                    
+                
                 <form action="" method="post" id="frm">
-                <input type="hidden" name="page" value="${contractExtModel.page}" />
-                <input type="hidden" name="custId" value="" />
-                <input type="hidden" name="tenantId" value="" />
+	                <input type="hidden" name="page" value="${contractExtModel.page}" />
+	                <input type="hidden" name="custId" value="" />
+	                <input type="hidden" name="tenantId" value="" />
+	                <div class="card-header d-flex">
+	                	  
+	                      <div class="col-md-2">
+	                        <select id="serachGroup" name="serachGroup" class="form-control form-control-sm">
+	                           <option value="custNm">고객명</option>
+	                           <option value="contNm">계약명</option>
+	                         </select>
+	                      </div>
+	                      <div class="col-md-3">
+	                        <input type="text" class="form-control form-control-sm" id="serachNm" name="serachNm">
+	                      </div>
+	                      <div class="col-md-1">
+	                     	<input type="button" class="form-control form-control-sm" id="btnSearch" name="btnSearch" value="검색">
+	                     </div> 
+	                </div>
+                </form>
+                
+                <div class="card-body">
                   <table class="table table-hover">
                     <thead>
                       <tr>
@@ -107,7 +109,6 @@ $(function () {
 	                        <td>${list.tenantId}</td>
 	                        <td>${list.contNm}</td>
 	                        <td>${list.adDate}</td>
-	                        
 	                      </tr>
 	                    <c:set var="countNo" value="${countNo+1 }" />
 	                    </c:forEach>  
@@ -120,7 +121,7 @@ $(function () {
 					</c:choose>
                     </tbody>
                   </table>
-              	  </form>
+              	 
                   <!-- //Pagenate -->
 				 	<div class="pagination">
 					  <ul>

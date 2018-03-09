@@ -35,6 +35,9 @@ public class ContractExtModel extends ContractModel{
     private int rowPerPage;
     private int skipCount;
     private Integer totalCount;
+    //검색
+    private String serachGroup;
+    private String serachNm;
     
 	public String getTenantId() {
 		return tenantId;
@@ -210,5 +213,17 @@ public class ContractExtModel extends ContractModel{
 	public void setTotalCount(Integer totalCount) {
 		this.totalCount = totalCount;
 	}
-
+	public String getSerachGroup() {
+		return serachGroup;
+	}
+	public void setSerachGroup(String serachGroup) {
+		this.serachGroup = serachGroup;
+	}
+	public String getSerachNm() {
+		return serachNm;
+	}
+	public void setSerachNm(String serachNm) {
+		this.serachNm = serachNm;
+	}
+	
 }
