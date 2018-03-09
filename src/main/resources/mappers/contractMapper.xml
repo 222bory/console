@@ -88,8 +88,13 @@
 		FROM con.concustm cust
 		INNER JOIN con.concustcontm cont
 		ON cust.cust_id=cont.cust_id
-		WHERE cust.cust_id = #{custId}
+		WHERE 1=1
+		<if test="custId != '' and custId != null">
+		AND cust.cust_id = #{custId}
+		</if>
+		<if test="tenantId != '' and tenantId != null">
 		AND   cont.tenant_id = #{tenantId}
+		</if>
     </select>
     
     <insert id="insContract" parameterType="com.sicc.console.model.ContractModel">

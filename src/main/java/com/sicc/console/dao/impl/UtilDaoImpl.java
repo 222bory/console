@@ -50,10 +50,7 @@ public class UtilDaoImpl implements UtilDao{
 		return sqlSessionTemplate.selectList("com.sicc.console.dao.UtilDao.selListCompetitionImageMaxSeq", map);
 	}
 
-	@Override
-	public List<String> selTenentIdByAllData(String tenantId) {
-		return sqlSessionTemplate.selectList("com.sicc.console.dao.UtilDao.selTenentIdByAllData", tenantId);
-	}
+
 	
 	
 }

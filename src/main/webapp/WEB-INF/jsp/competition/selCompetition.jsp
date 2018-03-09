@@ -66,7 +66,9 @@
                     	<tr><td>계약명</td><td>${competition.contNm}</td></tr>
                     	<tr><td>대회 코드</td><td id="cpCd">${competition.cpCd}</td></tr>
                     	<tr><td>대회명</td><td>${competition.cpNm}</td></tr>
-                    	<tr><td>대회 기간</td><td>${competition.cpStartDt} ~ ${competition.cpEndDt}</td></tr>
+                    	<c:set var="cpStartDt" value="${competition.cpStartDt}"/>
+						<c:set var="cpEndDt" value="${competition.cpEndDt}"/>
+                    	<tr><td>대회 기간</td><td>${fn:substring(cpStartDt,0,4)}-${fn:substring(cpStartDt,4,6)}-${fn:substring(cpStartDt,6,8)} ~ ${fn:substring(cpEndDt,0,4)}-${fn:substring(cpEndDt,4,6)}-${fn:substring(cpEndDt,6,8)}</td></tr>
                     	<tr><td>대회 장소</td><td>${competition.cpPlaceNm}</td></tr>
                     	<tr><td>대회 규모</td><td>${competition.cpScaleCd}</td></tr>
                     	<tr><td>대회 유형</td><td>${competition.cpTypeCd}</td></tr>

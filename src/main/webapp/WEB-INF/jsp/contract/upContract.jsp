@@ -78,11 +78,9 @@ $(function () {
 	    }
 	});
 	
-	$('#cp3').colorpicker({
-        color: '#AA3399',
-        format: 'hex'
-    });
 	
+		var validStartDt = $('#validStartDt').val().substring(0,4)+"-"+$('#validStartDt').val().substring(4,6)+"-"+$('#validStartDt').val().substring(6,8);
+		var validEndDt = $('#validEndDt').val().substring(0,4)+"-"+$('#validEndDt').val().substring(4,6)+"-"+$('#validEndDt').val().substring(6,8);
 	
 		$('#validStartDt').datepicker({
 				"format" :'yyyy-mm-dd',
@@ -90,6 +88,7 @@ $(function () {
 		        "autoclose": true,
 		        "todayHighlight":true
 			});
+		
 		$('#validEndDt').datepicker({
 			"format" :'yyyy-mm-dd',
 			"setDate": new Date(),
@@ -97,8 +96,8 @@ $(function () {
 	        "todayHighlight":true
 		});
 			
-			$("#validStartDt").datepicker("validStartDt", new Date());
-			$("#validEndDt").datepicker("validEndDt", new Date());
+		$("#validStartDt").datepicker("setDate", validStartDt);
+		$("#validEndDt").datepicker("setDate", validEndDt);
 });
 	
 function redirectList(){

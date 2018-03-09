@@ -54,10 +54,5 @@ public class CommonServiceImpl implements CommonService{
 		return utilDao.selListCompetitionImageMaxSeq(map);
 	}
 
-	@Override
-	public List<String> selTenentIdByAllData(String tenantId) {
-		return utilDao.selTenentIdByAllData(tenantId);
-	}
-	
-	
+
 }

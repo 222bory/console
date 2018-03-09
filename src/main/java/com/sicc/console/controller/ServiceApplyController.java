@@ -215,8 +215,12 @@ public class ServiceApplyController {
 	
 
     @RequestMapping("/selListServiceApply")
-    public String selListServiceApply(@RequestParam Map<String, String> param, Model model, 
-    		ServiceModel serviceModel,HttpServletRequest req, HttpServletResponse res) {
+    public String selListServiceApply(@RequestParam Map<String, String> param, 
+    		Model model, 
+    		ServiceModel serviceModel,
+    		@RequestParam(value="searchGroup" , required=false) String searchGroup,
+    		@RequestParam(value="searchNm" , required=false) String searchNm,
+    		HttpServletRequest req, HttpServletResponse res) {
     	
     	String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
 		if(NumberUtils.toInt(page) < 1) page = "1";
@@ -226,6 +230,15 @@ public class ServiceApplyController {
     	serviceModel.setRowPerPage(rows);
     	serviceModel.setPage(NumberUtils.toInt(page));
     	serviceModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
+    	
+    	if(searchGroup != null) {
+	    	if(searchGroup.equals("searchCpCd")) {
+	    		serviceModel.setSearchCpCd(searchNm);
+	    	}
+	    	else if(searchGroup.equals("searchCpNm")) {
+	    		serviceModel.setSearchCpNm(searchNm);
+	    	}
+    	}
     	
     	List<ServiceExtModel> serviceList = serviceApplyService.selListServiceApply(serviceModel);
     	

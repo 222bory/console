@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <script type="text/javascript">
 $(function () {
@@ -77,27 +78,6 @@ $(function () {
 		
 	});
 	
-	$('#cp3').colorpicker({
-        color: '#AA3399',
-        format: 'hex'
-    });
-	
-	
-		$('#validStartDt').datepicker({
-				"format" :'yyyy-mm-dd',
-				"setDate": new Date(),
-		        "autoclose": true,
-		        "todayHighlight":true
-			});
-		$('#validEndDt').datepicker({
-			"format" :'yyyy-mm-dd',
-			"setDate": new Date(),
-	        "autoclose": true,
-	        "todayHighlight":true
-		});
-			
-			$("#validStartDt").datepicker("validStartDt", new Date());
-			$("#validEndDt").datepicker("validEndDt", new Date());
 });
 	
 function redirectList(){
@@ -250,12 +230,14 @@ function submit(){
 		                    <div class="line"></div>
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 유효시작일자</label>
+		                      <c:set var="validStartDt" value="${cem.validStartDt}"/>
+							  <c:set var="validEndDt" value="${cem.validEndDt}"/>
 		                      <div class="col-md-4">
-		                        ${cem.validStartDt}
+		                      ${fn:substring(validStartDt,0,4)}-${fn:substring(validStartDt,4,6)}-${fn:substring(validStartDt,6,8)}
 		                      </div>
 		                      <label class="col-sm-2 form-control-label">* 유효종료일자</label>
 		                      <div class="col-md-4">
-		                        ${cem.validEndDt}
+		                      ${fn:substring(validEndDt,0,4)}-${fn:substring(validEndDt,4,6)}-${fn:substring(validEndDt,6,8)}
 		                      </div>
 		                    </div>
 		                   

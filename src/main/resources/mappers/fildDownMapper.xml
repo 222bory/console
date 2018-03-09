@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.sicc.console.dao.FileDownDao">
+
+
+	<select id="selTenantList" resultType="String">
+	    SELECT tenant_id as tenantId
+	    FROM con.concustcontm
+	    GROUP BY tenant_id
+    </select>
+    
+    <select id="selTenantIdByAllData" parameterType="String" resultType="String" >
+	    SELECT concat('INSERT INTO concustm(cust_id, cust_nm, rep_fax_no, rep_tel_no, corp_ad_no, mgr_nm, mgr_email_addr, mgr_tel_no, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
+			VALUES (''',cust.cust_id,''',''', cust.cust_nm,''',''', cust.rep_fax_no,''',''', cust.rep_tel_no,''',''', 
+					cust.corp_ad_no,''',''',cust.mgr_nm,''',''',cust.mgr_email_addr,''',''', cust.mgr_tel_no,''',''', 
+					cust.crt_id,''',''', cust.crt_ip ,''',',' clock_timestamp()',',''',
+	              	cust.udt_id,''',''', cust.udt_ip ,''',',' clock_timestamp()',');' ) rowdata
+		FROM con.concustcontm cont INNER JOIN con.concustm cust
+		ON cont.cust_id = cust.cust_id
+	    WHERE cont.tenant_id = #{tenantId}
+	    
+	    UNION ALL
+	   
+	    SELECT concat('INSERT INTO concustcontm(tenant_id, cust_id, cont_nm, valid_start_dt, valid_end_dt, cont_stat_cd, network_fg_cd, password_lod_cd, password_min_len, password_rnwl_cycl_cd, password_use_lmt_yn, password_pose_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
+			VALUES (''',tenant_id,''',''', cust_id,''',''', cont_nm,''',''', valid_start_dt,''',''', valid_end_dt,''',''',
+            		cont_stat_cd,''',''',network_fg_cd,''',''', password_lod_cd,''',''', password_min_len,''',''',
+            		password_rnwl_cycl_cd,''',''', password_use_lmt_yn, ''',''',password_pose_yn,''',''', 
+					crt_id,''',''', crt_ip ,''',',' clock_timestamp()',',''',
+	              	udt_id,''',''', udt_ip ,''',',' clock_timestamp()',');' ) rowdata
+		FROM con.concustcontm
+	    WHERE tenant_id = #{tenantId}
+	    
+	    UNION ALL
+	    
+	    SELECT concat('INSERT INTO concpm(tenant_id, cp_cd, cp_nm, cp_start_dt, cp_end_dt, cp_place_nm, cp_scale_cd, cp_type_cd, expect_user_num, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
+			VALUES (''',tenant_id,''',''', cp_cd,''',''', cp_nm,''',''', cp_start_dt,''',''', cp_end_dt,''',''',
+					cp_place_nm,''',''', cp_scale_cd,''',''', cp_type_cd,''',''', expect_user_num,''',''',
+					crt_id,''',''', crt_ip ,''',',' clock_timestamp()',',''',
+	              	udt_id,''',''', udt_ip ,''',',' clock_timestamp()',');' ) rowdata
+		FROM con.concpm
+	    WHERE tenant_id = #{tenantId}
+		
+		UNION ALL
+		
+		SELECT concat('INSERT INTO concpimgm(tenant_id, cp_cd, img_fg_cd, img_seq, file_path_nm, img_file_nm, source_img_file_nm, rep_img_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
+			VALUES (''',tenant_id,''',''', cp_cd,''',''', img_fg_cd,''',''', img_seq,''',''', file_path_nm,''',''',
+					img_file_nm,''',''', source_img_file_nm,''',''', rep_img_yn,''',''',
+					crt_id,''',''', crt_ip ,''',',' clock_timestamp()',',''',
+	              	udt_id,''',''', udt_ip ,''',',' clock_timestamp()',');' ) rowdata
+		FROM con.concpimgm
+		WHERE tenant_id = #{tenantId}
+		
+		UNION ALL
+		
+		SELECT concat('INSERT INTO con.concpservicem(tenant_id, cp_cd,service_cd, service_start_dt, service_end_dt, service_url_addr, rep_color_value,fst_lang_cd, scnd_lang_cd, thrd_lang_cd, foth_lang_cd, fith_lang_cd, test_lab_use_yn, test_lab_remark_desc, test_event_add_yn, test_event_remark_desc, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
+			VALUES (''',tenant_id,''',''', cp_cd,''',''', service_cd,''',''', service_start_dt,''',''', service_end_dt,''',''',
+				 service_url_addr,''',''', rep_color_value,''',''', fst_lang_cd,''',''', scnd_lang_cd,''',''',
+				 thrd_lang_cd,''',''', foth_lang_cd,''',''', fith_lang_cd,''',''', test_lab_use_yn,''',''',
+				 test_lab_remark_desc,''',''', test_event_add_yn,''',''', test_event_remark_desc,''',''', 
+					crt_id,''',''', crt_ip ,''',',' clock_timestamp()',',''',
+	              	udt_id,''',''', udt_ip ,''',',' clock_timestamp()',');' ) rowdata
+		FROM con.concpservicem
+	    WHERE tenant_id = #{tenantId}
+	    
+		UNION ALL
+		
+	    SELECT concat('INSERT INTO con.concpserviced(tenant_id, cp_cd, service_cd, system_cd, service_start_dt, service_end_dt, service_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
+			VALUES (''',tenant_id,''',''', cp_cd,''',''', service_cd,''',''', service_start_dt,''',''', 
+					service_end_dt,''',''',service_url_addr,''',''',
+					crt_id,''',''', crt_ip ,''',',' clock_timestamp()',',''',
+	              	udt_id,''',''', udt_ip ,''',',' clock_timestamp()',');' ) rowdata
+		FROM con.concpserviced
+	    WHERE tenant_id = #{tenantId}
+	    
+		UNION ALL
+
+		SELECT concat('INSERT INTO concustcontmontrnm(tenant_id, montrn_fg_cd, montrn_url_addr,	crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date)
+			VALUES (''',tenant_id,''',''', montrn_fg_cd,''',''', montrn_url_addr,''',''', 
+					crt_id,''',''', crt_ip ,''',',' clock_timestamp()',',''',
+	              	udt_id,''',''', udt_ip ,''',',' clock_timestamp()',');' ) rowdata
+		FROM con.concustcontmontrnm
+	    WHERE tenant_id = #{tenantId}
+    </select>
+    
+</mapper>

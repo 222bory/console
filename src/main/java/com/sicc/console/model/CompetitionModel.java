@@ -23,7 +23,32 @@ public class CompetitionModel {
     private int rowPerPage;
     private int skipCount;
     private Integer totalCount;
+    
+    //검색
+    private String searchCpCd;
+    private String searchCpNm;
+    private String searchContNm;
+    
+    
 	
+	public String getSearchContNm() {
+		return searchContNm;
+	}
+	public void setSearchContNm(String searchContNm) {
+		this.searchContNm = searchContNm;
+	}
+	public String getSearchCpCd() {
+		return searchCpCd;
+	}
+	public void setSearchCpCd(String searchCpCd) {
+		this.searchCpCd = searchCpCd;
+	}
+	public String getSearchCpNm() {
+		return searchCpNm;
+	}
+	public void setSearchCpNm(String searchCpNm) {
+		this.searchCpNm = searchCpNm;
+	}
 	public String getTenantId() {
 		return tenantId;
 	}

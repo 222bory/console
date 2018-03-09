@@ -84,6 +84,9 @@
 	</insert>
 
 	<select id="selListServiceApply" parameterType="com.sicc.console.model.ServiceModel" resultType="com.sicc.console.model.ServiceExtModel">
+		
+	SELECT COUNT(1) OVER() AS filterCount, s.* 
+	FROM (
 		SELECT  COUNT(1) OVER() AS totalCount,
 				servicem.tenant_id AS tenantId, 
 				servicem.cp_cd AS cpCd, 
@@ -101,10 +104,17 @@
 	    	 INNER JOIN 
 	    	 con.concpm AS cpm
 	    ON servicem.tenant_id = cpm.tenant_id 
-	    	AND servicem.cp_cd = cpm.cp_cd
+	    AND servicem.cp_cd = cpm.cp_cd
 		ORDER BY servicem.ad_date desc
-		LIMIT #{rowPerPage} OFFSET #{skipCount}
-
+	) s
+	WHERE 1=1
+	<if test = "searchCpCd != '' and searchCpCd != null">
+		AND cpCd like #{searchCpCd}||'%'
+	</if>
+	<if test = "searchCpNm != '' and searchCpNm != null">
+		AND cpNm like #{searchCpNm}||'%'
+	</if>
+	LIMIT #{rowPerPage} OFFSET #{skipCount}
 	</select>
 
 	<select id="selServiceApply" parameterType="com.sicc.console.model.ServiceModel" resultType="com.sicc.console.model.ServiceExtModel">
@@ -126,29 +136,10 @@
 		    test_event_remark_desc AS testEventRemarkDesc
 		FROM con.concpservicem servicem
 		WHERE servicem.tenant_id = #{tenantId} 
+			<if test="cpCd != '' and cpCd != null">
 			AND servicem.cp_cd = #{cpCd}
+			</if>
 			ORDER BY servicem.ad_date
-		<!-- SELECT tenant_id AS tenantId, 
-		    cp_cd AS cpCd, 
-		    service_cd AS serviceCd,
-		    servicecd.cd_nm AS serviceNm,
-		    service_start_dt AS serviceStartDt, 
-		    service_end_dt AS serviceEndDt, 
-		    service_url_addr AS serviceUrlAddr, 
-		    rep_color_value AS repColorValue, 
-		    coalesce((select cd_nm from con.concdd where cd_group_id='LANG_CD' and cd_id=fst_lang_cd),'') AS fstLangNm,
-		    coalesce((select cd_nm from con.concdd where cd_group_id='LANG_CD' and cd_id=scnd_lang_cd),'') AS scndLangNm,
-		    coalesce((select cd_nm from con.concdd where cd_group_id='LANG_CD' and cd_id=thrd_lang_cd),'') AS thrdLangNm,
-		    coalesce((select cd_nm from con.concdd where cd_group_id='LANG_CD' and cd_id=foth_lang_cd),'') AS fothLangNm,
-		    coalesce((select cd_nm from con.concdd where cd_group_id='LANG_CD' and cd_id=fith_lang_cd),'') AS fithLangNm,
-		    test_lab_use_yn AS testLabUseYn, 
-		    test_lab_remark_desc AS testLabRemarkDesc, 
-		    test_event_add_yn AS testEventAddYn, 
-		    test_event_remark_desc AS testEventRemarkDesc
-		FROM con.concpservicem AS servicem
-		INNER JOIN con.concdd AS servicecd
-		ON servicem.service_cd = servicecd.cd_id AND servicecd.cd_group_id='SERVICE_CD'
-		WHERE servicem.tenant_id = #{tenantId} AND servicem.cp_cd = #{cpCd} -->
 	</select>
 	
 	
@@ -163,9 +154,11 @@
 	    service_url_addr AS serviceUrlAddr
 	FROM con.concpserviced serviced
     	LEFT OUTER JOIN con.concdd cdd
-   	 	ON serviced.system_cd = cdd.cd_id AND cdd.cd_group_id = serviced.service_cd ||'_SYSTEM_CD'
+   	 	ON serviced.system_cd = cdd.cd_id AND cdd.cd_group_id = serviced.service_cd || '_SYSTEM_CD'
 	WHERE serviced.tenant_id = #{tenantId} 
-		AND serviced.cp_cd = #{cpCd}
+		<if test="cpCd != '' and cpCd != null">
+			AND serviced.cp_cd = #{cpCd}
+		</if>
 	ORDER BY serviced.ad_date
 	</select>
 	

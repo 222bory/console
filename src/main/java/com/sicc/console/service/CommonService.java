@@ -20,5 +20,5 @@ public interface CommonService {
     
     public List<HashMap<String, String>> selListCompetitionImageMaxSeq(HashMap<String, String> map);
     
-    public List<String> selTenentIdByAllData(String tenantId);
+
 }

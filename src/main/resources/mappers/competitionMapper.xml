@@ -58,7 +58,9 @@
            AND cp_cd = #{cpCd}		   
     </update>
     
-    <select id="selListCompetition" parameterType="com.sicc.console.model.CompetitionModel" resultType="com.sicc.console.model.CompetitionExtModel">
+    <select id="selListCompetition" parameterType="com.sicc.console.model.CompetitionModel" resultType="com.sicc.console.model.CompetitionExtModel">	
+    SELECT COUNT(1) OVER() AS filterCount, s.* 
+	FROM (	
     	SELECT COUNT(1) OVER() AS totalCount,
         	   cust.mgr_nm as mgrNm,
                cust.mgr_tel_no as mgrTelNo,
@@ -82,7 +84,18 @@
          WHERE cust.cust_id = cont.cust_id
            AND cont.tenant_id = cp.tenant_id
       order by cp.tenant_id desc  
-    	 LIMIT #{rowPerPage} OFFSET #{skipCount}   
+     ) s
+	WHERE 1=1
+	<if test = "searchCpCd != '' and searchCpCd != null">
+		AND cpCd like #{searchCpCd}||'%'
+	</if>
+	<if test = "searchCpNm != '' and searchCpNm != null">
+		AND cpNm like #{searchCpNm}||'%'
+	</if>
+	<if test = "searchContNm != '' and searchContNm != null">
+		AND contNm like #{searchContNm}||'%'
+	</if>
+    LIMIT #{rowPerPage} OFFSET #{skipCount}   
     </select>
     
     <select id="selCompetition" parameterType="com.sicc.console.model.CompetitionModel" resultType="com.sicc.console.model.CompetitionExtModel">

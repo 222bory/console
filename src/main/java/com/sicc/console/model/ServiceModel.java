@@ -26,12 +26,29 @@ public class ServiceModel {
 	private String udtId;
 	private String udtIp;
 	private Date udtDate;
-	
+	//페이징 처리
 	private Integer page;
     private int rowPerPage;
     private int skipCount;
     private Integer totalCount;
-	
+    //검색
+    private String searchCpCd;
+    private String searchCpNm;
+    
+    
+    public String getSearchCpCd() {
+		return searchCpCd;
+	}
+	public void setSearchCpCd(String searchCpCd) {
+		this.searchCpCd = searchCpCd;
+	}
+	public String getSearchCpNm() {
+		return searchCpNm;
+	}
+	public void setSearchCpNm(String searchCpNm) {
+		this.searchCpNm = searchCpNm;
+	}
+
 	public Integer getPage() {
 		return page;
 	}

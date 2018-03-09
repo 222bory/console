@@ -194,7 +194,11 @@ public class CompetitionController {
     }
     
     @RequestMapping("/selListCompetition")
-    public String selListCompetition(@RequestParam Map<String, String> param, Model model, CompetitionModel competitionModel, HttpServletRequest req, HttpServletResponse res) {
+    public String selListCompetition(@RequestParam Map<String, String> param, 
+    		Model model, CompetitionModel competitionModel, 
+    		@RequestParam(value="searchGroup" , required=false) String searchGroup,
+    		@RequestParam(value="searchNm" , required=false) String searchNm,
+    		HttpServletRequest req, HttpServletResponse res) {
     	
     	String page = StringUtils.defaultIfEmpty(param.get("page"), "1");
 		if(NumberUtils.toInt(page) < 1) page = "1";
@@ -204,6 +208,18 @@ public class CompetitionController {
 		competitionModel.setRowPerPage(rows);
 		competitionModel.setPage(NumberUtils.toInt(page));
 		competitionModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
+		
+		if(searchGroup != null) {
+	    	if(searchGroup.equals("searchCpCd")) {
+	    		competitionModel.setSearchCpCd(searchNm);
+	    	}
+	    	else if(searchGroup.equals("searchCpNm")) {
+	    		competitionModel.setSearchCpNm(searchNm);
+	    	}
+	    	else if(searchGroup.equals("searchContNm")) {
+	    		competitionModel.setSearchContNm(searchNm);
+	    	}
+    	}
 		
         List<CompetitionExtModel> competitionList = competitionService.selListCompetition(competitionModel);
         
@@ -225,7 +241,7 @@ public class CompetitionController {
     private  CacheManager cacheManager; */
     
 
-    @GetMapping("/selCompetition")
+    @PostMapping("/selCompetition")
     public String selCompetition(@RequestParam Map<String, String> param, 
     								@RequestParam(value="tenantId", required=true) String tenantId,
     								@RequestParam(value="cpCd", required=true) String cpCd,

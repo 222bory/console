@@ -1,10 +1,5 @@
 package com.sicc.console.controller;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,9 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sicc.console.service.CommonService;
 import com.sicc.console.service.UserService;
 import com.sicc.console.service.impl.CustomUserDetailsService;
 
@@ -29,10 +22,7 @@ public class IndexController {
     private final Logger logger = LoggerFactory.getLogger(IndexController.class);
     UserService userService;
     CustomUserDetailsService customUserDetailsService;
-    
-    @Autowired
-    CommonService commonService;
-    
+
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -71,61 +61,7 @@ public class IndexController {
     	
         return "/admin/test";
     }*/
-
     
-    @ResponseBody
-    @PostMapping("/exportData")
-    public String exportData(HttpServletRequest req, 
-    					HttpServletResponse res,
-    					@RequestParam("tenantId") String tenantId){
-    	String result = "";
-    	String fileName = "C:/download/myRowData.sql";
-    	BufferedWriter writer = null;
-
-    	List<String> rowdata= commonService.selTenentIdByAllData(tenantId);
-
-    	try {
-    		writer = new BufferedWriter( new FileWriter(fileName));
-
-	    	for(String m : rowdata) {
-	    		writer.write(m);
-	    		writer.newLine();
-	    	}
-	    	
-	    	writer.close();
-	    
-	    	result = "1";
-    	}
-    	catch(IOException io) {
-    		io.printStackTrace();
-    	}
-    	
-    	
-    	
-    	
-    	/*
-    	 * String fileName = "myRowData.csv";
-    	res.setContentType("text/csv");
-        // creates mock data
-        String headerKey = "Content-Disposition";
-        String headerValue = String.format("attachment; filename=\"%s\"",fileName);
-        res.setHeader(headerKey, headerValue);
-        
-        // uses the Super CSV API to generate CSV data from the model data
-        ICsvBeanWriter csvWriter = new CsvBeanWriter(res.getWriter(),
-                CsvPreference.EXCEL_PREFERENCE);
-        String[] header = { "rowdata" };
-        
-        csvWriter.writeHeader(header);
-
-    	for(String m : rowdata) {
-    		csvWriter.write(m, header);
-    	}
-    	
-    	csvWriter.close();
-    	*/
-    	
-    	return result;
-    }
+    
 
 }

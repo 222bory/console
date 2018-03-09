@@ -17,7 +17,7 @@ $(document).ready(function(){
  	// 달력 초기화
     $('input[name=serviceStartDt]').each(function(i,e){
     	var dateVal = $(this).val();
-    	var dateChar = dateVal.substring(0,4)+dateVal.substring(4,6)+dateVal.substring(6,8);
+    	var dateChar = dateVal.substring(0,4)+"-"+dateVal.substring(4,6)+"-"+dateVal.substring(6,8);
 
     	$(this).datepicker({
     		 "format" :'yyyy-mm-dd',
@@ -31,7 +31,7 @@ $(document).ready(function(){
  	// 달력 초기화
     $('input[name=serviceEndDt]').each(function(i,e){
     	var dateVal = $(this).val();
-    	var dateChar = dateVal.substring(0,4)+dateVal.substring(4,6)+dateVal.substring(6,8);
+    	var dateChar = dateVal.substring(0,4)+"-"+dateVal.substring(4,6)+"-"+dateVal.substring(6,8);
     	
     	$(this).datepicker({
     		 "format" :'yyyy-mm-dd',

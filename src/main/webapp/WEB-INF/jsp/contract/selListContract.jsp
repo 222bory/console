@@ -106,7 +106,7 @@ $(function () {
 	                        <td>${list.custNm}</td>
 	                        <td>${list.tenantId}</td>
 	                        <td>${list.contNm}</td>
-	                        <td>${list.adDate}</td>
+	                        <td><fmt:formatDate value='${list.adDate}' pattern='yyyy-MM-dd'/></td>
 	                        
 	                      </tr>
 	                    <c:set var="countNo" value="${countNo+1 }" />

@@ -11,6 +11,7 @@ import com.sicc.console.dao.CodeDao;
 import com.sicc.console.dao.CompetitionDao;
 import com.sicc.console.dao.ContractDao;
 import com.sicc.console.dao.CustomerDao;
+import com.sicc.console.dao.FileDownDao;
 import com.sicc.console.dao.MonitorDao;
 import com.sicc.console.dao.ServiceApplyDao;
 import com.sicc.console.dao.UtilDao;
@@ -19,6 +20,7 @@ import com.sicc.console.dao.impl.CodeDaoImpl;
 import com.sicc.console.dao.impl.CompetitionDaoImpl;
 import com.sicc.console.dao.impl.ContractDaoImpl;
 import com.sicc.console.dao.impl.CustomerDaoImpl;
+import com.sicc.console.dao.impl.FileDownDaoImpl;
 import com.sicc.console.dao.impl.MonitorDaoImpl;
 import com.sicc.console.dao.impl.ServiceApplyDaoImpl;
 import com.sicc.console.dao.impl.UtilDaoImpl; 
@@ -79,6 +81,11 @@ public class AdminConfiguration {
   @Bean
   public MonitorDao monitorDao() {
 	return new MonitorDaoImpl();
+  }
+  
+  @Bean
+  public FileDownDao fileDownDao() {
+	return new FileDownDaoImpl();
   }
 
 }

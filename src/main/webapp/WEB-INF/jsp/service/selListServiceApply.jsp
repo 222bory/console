@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -10,6 +11,17 @@
 	}
 	function submit(){
 		$("#frm").submit();  
+	}
+	
+	function search(){
+		$("#frmSearch").attr("action", "/selListServiceApply");
+		$("#frmSearch").submit();
+	}
+	
+	function fnEnterCheck(){
+		if(event.keyCode==13){ //엔터
+			search();
+		}
 	}
 	
 	$(document).ready(function(){
@@ -24,40 +36,12 @@
 			
 		 	$("#frm").attr("action", "/selServiceApply");
 		 	submit();
-		 	
-			//location.href='/selServiceApply?tenantId='+tenantId+'&cpCd='+cpCd;
 			} 
 		});
-	 
-	 $('#btnDownload').click(function(event){
-			
-		 $.ajax({
-				type : "POST",
-				url  : "/exportData", 
-				dataType : "json",
-				data : {"tenantId":"2018000000"},
-				success : function(data, status) {
-					try{
-						 if( data == '1'){
-							alert("다운로드가 완료되었습니다");
-						} else {
-							alert("다운로드 중 문제가 발생하였습니다");
-						} 
-					}catch(e) {	
-						alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
-					}
-				},
-				error : function(XMLHttpRequest, textStatus, errorThrown) {
-					if(XMLHttpRequest.status == '901'){
-						sessionTimeOut();			
-					} else {
-						
-						alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
-					}
-					return;
-				}
-			});
-	 });
+
+		$("#btnSearch").on("click", function(e){
+			search();
+		});
 	 
 	});
 </script>
@@ -70,7 +54,6 @@
 		</ul>
 	</div>
 </div>
-
 	  <section class="forms">
         <div class="container-fluid">
           <header> 
@@ -83,10 +66,30 @@
                   <h2 class="h5 display" >서비스신청 목록</h2>
                 </div>
                 <div class="card-body">
-                <form action="" method="POST" id="detailFrm">
-                	<input type="hidden" id="hiddenTenantId" name="hiddenTenantId" value="" />
-                </form>
-                
+
+
+				<form action="" method="post" id="frmSearch">
+	                <input type="hidden" name="page" value="${codeModel.page}" />
+	                <input type="hidden" name="cdGroupId" value="" />
+	                <div class="card-header d-flex">
+	                	  
+	                      <div class="col-md-2">
+	                        <select id="searchGroup" name="searchGroup" class="form-control form-control-sm">
+	                           <option value="searchCpCd">대회코드</option>
+	                           <option value="searchCpNm">대회명</option>
+	                         </select>
+	                      </div>
+	                      <div class="col-md-3">
+	                        <input type="text" class="form-control form-control-sm" id="searchNm" name="searchNm" onkeydown="fnEnterCheck();">
+	                      </div>
+	                      <div class="col-md-1">
+	                     	<input type="button" class="form-control form-control-sm" id="btnSearch" name="btnSearch" value="검색">
+	                     </div> 
+	                </div>
+				</form>
+
+
+
                 <form action="" method="POST" id="frm">
                 <input type="hidden" name="page" value="${serviceModel.page}" />
                 <input type="hidden" name="tenantId" value="" />
@@ -116,7 +119,7 @@
 						<c:set var="cpEndDt" value="${list.cpEndDt}"/>
                         <td>${fn:substring(cpStartDt,0,4)}-${fn:substring(cpStartDt,4,6)}-${fn:substring(cpStartDt,6,8)} ~ ${fn:substring(cpEndDt,0,4)}-${fn:substring(cpEndDt,4,6)}-${fn:substring(cpEndDt,6,8)}</td>
                         <td>${list.serviceCd}</td>
-                        <td>${list.adDate}</td>
+                        <td><fmt:formatDate value='${list.adDate}' pattern='yyyy-MM-dd'/></td>
                       </tr>
                     <c:set var="countNo" value="${countNo+1 }" />
                     </c:forEach>  
@@ -128,7 +131,7 @@
 					  	<c:import url="/WEB-INF/jsp/paging/paging.jsp"></c:import>
 					  </ul>
 					</div>
-					<input type="button" value="다운로드" id="btnDownload" />
+					
                 </div>
               </div>
             </div>

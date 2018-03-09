@@ -93,26 +93,25 @@
 	});
 	
 	$(function () {
-		$('#cp3').colorpicker({
-	        color: '#AA3399',
-	        format: 'hex'
-	    });
+		var cpStartDt = $('#cpStartDt').val().substring(0,4)+"-"+$('#cpStartDt').val().substring(4,6)+"-"+$('#cpStartDt').val().substring(6,8);
+		var cpEndDt = $('#cpEndDt').val().substring(0,4)+"-"+$('#cpEndDt').val().substring(4,6)+"-"+$('#cpEndDt').val().substring(6,8);
 		
-			$('#cpStartDt').datepicker({
-					"format" :'yyyy-mm-dd',
-					"setDate": new Date(),
-			        "autoclose": true,
-			        "todayHighlight":true
-				});
-			$('#cpEndDt').datepicker({
+		$('#cpStartDt').datepicker({
 				"format" :'yyyy-mm-dd',
 				"setDate": new Date(),
 		        "autoclose": true,
 		        "todayHighlight":true
 			});
-				
-				$("#cpStartDt").datepicker("setDate", new Date());
-				$("#cpEndDt").datepicker("setDate", new Date());
+		
+		$('#cpEndDt').datepicker({
+			"format" :'yyyy-mm-dd',
+			"setDate": new Date(),
+	        "autoclose": true,
+	        "todayHighlight":true
+		});
+			
+		$("#cpStartDt").datepicker("setDate", cpStartDt);
+		$("#cpEndDt").datepicker("setDate", cpEndDt);
 	});
 	
 </script>
