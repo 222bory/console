@@ -30,6 +30,19 @@
 		FROM con.concustm cust
 		INNER JOIN con.concustcontm cont
 		ON cust.cust_id=cont.cust_id
+		WHERE 1=1
+		  <if test="serachNm !=null and serachNm !='' ">
+		  	<if test=" serachGroup == 'custNm' " >
+		    	<![CDATA[
+		    	AND cust_nm LIKE '%' || #{serachNm} || '%'
+		    	]]>
+		    </if>
+		    <if test=" serachGroup == 'contNm' " >
+		    	<![CDATA[
+		    	AND cont_nm LIKE '%' || #{serachNm} || '%'
+		    	]]>
+		    </if>
+		  </if> 
 		order by udtDate desc   
 		LIMIT #{rowPerPage} OFFSET #{skipCount}
     </select>
@@ -88,8 +101,13 @@
 		FROM con.concustm cust
 		INNER JOIN con.concustcontm cont
 		ON cust.cust_id=cont.cust_id
-		WHERE cust.cust_id = #{custId}
+		WHERE 1=1
+		<if test="custId != '' and custId != null">
+		AND cust.cust_id = #{custId}
+		</if>
+		<if test="tenantId != '' and tenantId != null">
 		AND   cont.tenant_id = #{tenantId}
+		</if>
     </select>
     
     <insert id="insContract" parameterType="com.sicc.console.model.ContractModel">
