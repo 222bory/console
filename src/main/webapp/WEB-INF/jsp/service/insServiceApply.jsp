@@ -32,8 +32,6 @@ $(document).ready(function(){
     $("#addRowBtn").click(function(){
     	var addRowNum = $('tbody[name=serviceTbody] > tr').length;
     	
-    	duplCheck();
-    	
     	if(addRowNum == 0){
     		
     		alert("사용하실 서비스를 선택해주세요");
@@ -56,17 +54,21 @@ $(document).ready(function(){
 		var cpCd = competitionStr[1];
 		var flag = false;
 		
-		//필수 입력 요소 체크
+		var serviceCount = $('tbody[name=serviceTbody] > tr').length;
+		var configCount = $('tbody[name=configTbody] > tr').length;
+		
+		if(configCount==0 || serviceCount==0){
+			alert("최소 한개 이상의 서비스를 선택해주세요");
+			return;
+		}
+		
+		//validation check
 		flag = checkValid();
-		
-		//하위서비스 중복 체크
-		flag = duplCheck();
-		
+
 		if(flag){
 			
 		$("#tenantId").val(tenantId);	
 		$("#cpCd").val(cpCd);
-		console.log($("#frm").serializeArray());
 		
 		if($("input[name=serviceUrlAddr]").length == 1 && $("input[name=serviceUrlAddr]").val()==''){
 			$("input[name=serviceUrlAddr]").val(' ');
@@ -292,7 +294,6 @@ function redirectList(){
 	}
 	
 	if(flag){
-		console.log(flag);
 		$('input[name=repColorValue]').each(function(){
 
 			if( $(this).val()=='' || $(this).val()==null){
@@ -308,33 +309,51 @@ function redirectList(){
 		});
 	}
 	
+	//하위서비스 중복 체크
+	if(flag){
+		flag = !duplCheck();	
+	}
+
 	return flag;
 } 
 
  
 function dateCheck(){
+	var dateChk = false;
 	
 	
 	
+	return dateChk;
 }
 
 function duplCheck(){
-	
-	$('#serviceTbl > tbody > tr').each(function(){
+	var duplChk = false;
+	var tableRow = $('#serviceTbl > tbody > tr');
+
+	tableRow.each(function(){
 		var tr = $(this);
-		var service = $(this).find('td:eq(0) > select');
-		var system = $(this).find('td:eq(1) > select');
+		var serviceSystemNm1 = $(this).find('td:eq(0) > select').val()+'.'+$(this).find('td:eq(1) > select').val();
 		
-		if(system.val() != 'default'){
-			console.log(service.val());
-			console.log(system.val());
-				
-			
+		if(duplChk){
+			return false;
 		}
 		
+		if(system.val() != 'default'){
+			tableRow.each(function(){
+				var serviceSystemNm2 = $(this).find('td:eq(0) > select').val()+'.'+$(this).find('td:eq(1) > select').val();
+				
+				if(tr != $(this)){
+					if(serviceSystemNm1 == serviceSystemNm2){
+						alert('중복된 서비스가 있습니다. 다시 확인해주세요.');
+						duplChk = true;
+						return false;
+					}
+				}
+			});	
+		}
 	});
 	
-	
+	return duplChk;
 }
 
 function addServiceTbl(flag, no){
