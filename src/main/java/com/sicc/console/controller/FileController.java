@@ -92,8 +92,8 @@ public class FileController {
 				
 				ps = con.prepareStatement(query);
 				System.out.println("query --->"+query);
-				System.out.println("ps --->"+ps);
-				//ps.executeUpdate();
+				//System.out.println("ps --->"+ps);
+				ps.executeUpdate();
 	    	
 			}
 		} catch (SQLException e) {
