@@ -24,7 +24,7 @@
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="css/custom.css">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png"> 
 
   </head>
   <body>
@@ -33,7 +33,8 @@
         <div class="form-outer text-center d-flex align-items-center">
           <div class="form-inner">
             <div class="logo text-uppercase"><span>GSP</span><strong class="text-primary"> CONSOLE</strong></div>
-            <p> SICC GSP CONSOLE LOGIN </p>
+            <p> SICC GSP CONSOLE LOGIN</p>
+            <p>Enter your User ID and password. If you don't know your password, please contact your administrator.</p> 
             <form id="login-form" method="post">
               <div class="form-group">
                 <label for="login-username" class="label-custom">User ID</label>

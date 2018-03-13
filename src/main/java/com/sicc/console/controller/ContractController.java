@@ -70,7 +70,6 @@ public class ContractController {
 		
         List<ContractExtModel> list = contractService.selListCust(contractExtModel);  
         
-        System.out.println("list : "+ list.get(0));
         //페이징 처리
         Pagination pagination = new Pagination();
 		if(list != null && !list.isEmpty() ){
@@ -78,8 +77,6 @@ public class ContractController {
 		} else {
 			pagination.setTotalRow(0);
 		}
-		
-		System.out.println("addate : "+list.get(0).getAdDate());
 		
 		model.addAttribute("list", list);
         model.addAttribute("adminModel", contractExtModel); 
@@ -112,7 +109,6 @@ public class ContractController {
 		
         List<ContractExtModel> list = contractService.selListContract(contractExtModel);  
         
-        System.out.println("list : "+ list.get(0));
         //페이징 처리
         Pagination pagination = new Pagination();
 		if(list != null && !list.isEmpty() ){
@@ -120,8 +116,6 @@ public class ContractController {
 		} else {
 			pagination.setTotalRow(0);
 		}
-		
-		System.out.println("addate : "+list.get(0).getAdDate());
 		
 		model.addAttribute("list", list);
         model.addAttribute("contractExtModel", contractExtModel); 
@@ -180,8 +174,6 @@ public class ContractController {
 		} else {
 			pagination.setTotalRow(0);
 		}
-		
-		System.out.println("addate : "+list.get(0).getAdDate());
 		
 		model.addAttribute("list", list);
         model.addAttribute("adminModel", contractExtModel); 

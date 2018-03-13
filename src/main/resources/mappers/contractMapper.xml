@@ -30,6 +30,19 @@
 		FROM con.concustm cust
 		INNER JOIN con.concustcontm cont
 		ON cust.cust_id=cont.cust_id
+		WHERE 1=1
+		  <if test="serachNm !=null and serachNm !='' ">
+		  	<if test=" serachGroup == 'custNm' " >
+		    	<![CDATA[
+		    	AND cust_nm LIKE '%' || #{serachNm} || '%'
+		    	]]>
+		    </if>
+		    <if test=" serachGroup == 'contNm' " >
+		    	<![CDATA[
+		    	AND cont_nm LIKE '%' || #{serachNm} || '%'
+		    	]]>
+		    </if>
+		  </if> 
 		order by udtDate desc   
 		LIMIT #{rowPerPage} OFFSET #{skipCount}
     </select>
