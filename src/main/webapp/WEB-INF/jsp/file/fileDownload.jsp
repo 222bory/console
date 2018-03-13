@@ -36,20 +36,26 @@
 			});
 	 });
 	 
-	 $('#btnDataDownload').click(function(event){
-		 var tenantId = $('#tenantId').val();
-		 
+ 	 $('#btnScriptExecute').click(function(event){
+ 		 var form = $('#fileForm')[0];
+ 		 var formData = new FormData(form);
+ 		 
+ 		 formData.append("scriptFile", $("#scriptFile")[0].files[0]);
+/* 		 var scriptFile = $('#scriptFile').file;
+		 var scriptFilePath = $('#scriptFile').val().split('\\').pop(); */
+
 		 $.ajax({
 				type : "POST",
-				url  : "/exportData", 
-				dataType : "json",
-				data : {"tenantId": tenantId },
+				url  : "/executeQuery", 
+				processData: false,
+                contentType: false,
+				data : formData,
 				success : function(data, status) {
 					try{
 						 if( data == '1'){
-							alert("다운로드가 완료되었습니다");
+							alert("스크립트 실행이 완료되었습니다");
 						} else {
-							alert("다운로드 중 문제가 발생하였습니다");
+							alert("스크립트 실행 중 문제가 발생하였습니다");
 						} 
 					}catch(e) {	
 						alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
@@ -65,7 +71,7 @@
 					return;
 				}
 			});
-	 });
+	 }); 
 	 
 	});
 </script>
@@ -88,23 +94,39 @@
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-header d-flex align-items-center">
-                  <h2 class="h5 display" >테넌트ID 선택</h2>
+                  <h2 class="h5 display" >스크립트 다운로드/실행</h2>
                 </div>
                 <div class="card-body">
+                
+                
                 <div class="row">
-	                <label class="col-sm-2 form-control-label">* 테넌트ID</label>
-	                <select id='tenantId' class='form-control form-control-sm col-md-4'> 
+	                <label class="col-sm-2 form-control-label">테넌트 ID</label>
+	                <div class="col-md-4">
+	                <select id='tenantId' class='form-control'> 
 	 	         		<c:forEach items="${tenantList}" var="list" >
 							<option value="${list}">${list}</option> 
 						</c:forEach>	
 					</select> 	
-					<div class="col-md-2">
-					<input type="button" value="스크립트다운로드" id="btnScriptDownload" class="btn btn-primary"/> 
 					</div>
 					<div class="col-md-2">
-					<input type="button" value="데이터다운로드" id="btnDataDownload" class="btn btn-primary"/> 
+						<input type="button" value="스크립트다운로드" id="btnScriptDownload" class="btn btn-primary"/> 
 					</div>
                 </div>
+                
+                <div class="line"></div>
+                
+                <form id="fileForm"  method="POST" enctype="multipart/form-data" action="">
+                 <div class="row">
+                 	<label class="col-sm-2 form-control-label">스크립트 실행</label>
+                 	<div class="col-md-4">
+                    	<input type="file" id="scriptFile" class="form-control form-control-sm"/>
+					</div>
+					<div class="col-md-2">
+						<input type="button" value="스크립트실행" id="btnScriptExecute" class="btn btn-primary"/> 
+					</div>
+                </div>
+                </form>
+                
                 </div>
               </div>
             </div>

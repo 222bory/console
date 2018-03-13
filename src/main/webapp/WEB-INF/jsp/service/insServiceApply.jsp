@@ -32,6 +32,8 @@ $(document).ready(function(){
     $("#addRowBtn").click(function(){
     	var addRowNum = $('tbody[name=serviceTbody] > tr').length;
     	
+    	duplCheck();
+    	
     	if(addRowNum == 0){
     		
     		alert("사용하실 서비스를 선택해주세요");
@@ -54,7 +56,11 @@ $(document).ready(function(){
 		var cpCd = competitionStr[1];
 		var flag = false;
 		
-		flag = checkValid(flag);
+		//필수 입력 요소 체크
+		flag = checkValid();
+		
+		//하위서비스 중복 체크
+		flag = duplCheck();
 		
 		if(flag){
 			
@@ -143,8 +149,6 @@ $(document).ready(function(){
 
 	 	//하위서비스 clear
 	 	systemCd.find('option').remove();
-	 	//하위서비스 첫행
-	 	//systemCd.append("<option value='default'>대표서비스</option>");
 
 		$.ajax({
 			type : 'POST',
@@ -310,6 +314,25 @@ function redirectList(){
  
 function dateCheck(){
 	
+	
+	
+}
+
+function duplCheck(){
+	
+	$('#serviceTbl > tbody > tr').each(function(){
+		var tr = $(this);
+		var service = $(this).find('td:eq(0) > select');
+		var system = $(this).find('td:eq(1) > select');
+		
+		if(system.val() != 'default'){
+			console.log(service.val());
+			console.log(system.val());
+				
+			
+		}
+		
+	});
 	
 	
 }

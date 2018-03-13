@@ -1,31 +1,37 @@
 package com.sicc.console.controller;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sicc.console.common.ExportDataToFile;
-import com.sicc.console.model.ContractExtModel;
 import com.sicc.console.service.ContractService;
 import com.sicc.console.service.FileDownService;
 
 @Controller
 public class FileController {
 
+	@Autowired
+	SqlSessionFactory sqlSessionFactory;
+	
 	@Autowired 
 	FileDownService fileDownService;
 	
@@ -48,102 +54,56 @@ public class FileController {
     public String exportQuery (HttpServletRequest req, 
 			HttpServletResponse res,
 			@RequestParam("tenantId") String tenantId) {
+
+    	Connection con = sqlSessionFactory.openSession().getConnection();
+    	ExportDataToFile ef = new ExportDataToFile();
+
+    	String selQuery[] = {
+    	"SELECT cust.cust_id, cust.cust_nm, cust.rep_fax_no, cust.rep_tel_no, cust.corp_ad_no, cust.mgr_nm, cust.mgr_email_addr, cust.mgr_tel_no, cust.crt_id, cust.crt_ip, cust.ad_date, cust.udt_id, cust.udt_ip, cust.udt_date FROM con.concustcontm cont INNER JOIN con.concustm cust ON cont.cust_id = cust.cust_id WHERE cont.tenant_id = '"+tenantId+"';",
+    	"SELECT tenant_id, cust_id, cont_nm, valid_start_dt, valid_end_dt, cont_stat_cd, network_fg_cd, password_lod_cd, password_min_len, password_rnwl_cycl_cd, password_use_lmt_yn, password_pose_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date  FROM con.concustcontm WHERE tenant_id = '"+tenantId+"';",
+    	"SELECT tenant_id, cp_cd, cp_nm, cp_start_dt, cp_end_dt, cp_place_nm, cp_scale_cd, cp_type_cd, expect_user_num, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concpm WHERE tenant_id = '"+tenantId+"';",
+    	"SELECT tenant_id, cp_cd, img_fg_cd, img_seq, file_path_nm, img_file_nm, rep_img_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date, source_img_file_nm FROM con.concpimgm WHERE tenant_id = '"	+tenantId+ "';",	
+    	"SELECT tenant_id, cp_cd, service_cd, service_start_dt, service_end_dt, service_url_addr, rep_color_value, fst_lang_cd, scnd_lang_cd, thrd_lang_cd, foth_lang_cd, fith_lang_cd, test_lab_use_yn, test_lab_remark_desc, test_event_add_yn, test_event_remark_desc, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concpservicem WHERE tenant_id = '"+tenantId+"';",
+    	"SELECT tenant_id, cp_cd, service_cd, system_cd, service_start_dt, service_end_dt, service_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concpserviced WHERE tenant_id = '"	+tenantId+ "';",
+    	"SELECT tenant_id, montrn_fg_cd, montrn_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concustcontmontrnm WHERE tenant_id = '"	+tenantId+ "';"
+    	};
     	
-    	ContractExtModel contractExtModel = new ContractExtModel();
-    	contractExtModel.setTenantId(tenantId);
-    	
-    	ContractExtModel contractList = contractService.selContract(contractExtModel);
+		String tables[] = {"concustm","concustcontm","concpm","concpimgm","concpservicem","concpserviced","concustcontmontrnm"};
 
-    	
-        Map map = new HashMap();
-
-        map.put("tenant_id", contractList.getTenantId());
-        map.put("cust_id", contractList.getCustId());
-        map.put("cont_nm", contractList.getContNm());
-        map.put("valid_start_dt", contractList.getValidStartDt());
-        map.put("valid_end_dt", contractList.getValidEndDt());
-        map.put("cont_stat_cd", contractList.getContStatCd());
-        map.put("network_fg_cd", contractList.getNetworkFgCd());
-        map.put("password_lod_cd", contractList.getPasswordLodCd());
-        map.put("password_min_len", contractList.getPasswordMinLen());
-        map.put("password_rnwl_cycl_cd", contractList.getPasswordRnwlCyclCd());
-        map.put("password_use_lmt_yn", contractList.getPasswordUseLmtYn());
-        map.put("password_pose_yn", contractList.getPasswordPoseYn());
-        map.put("crt_id", contractList.getCrtId());
-        map.put("crt_ip", contractList.getCrtIp());
-        map.put("ad_date", contractList.getAdDate());
-        map.put("udt_id", contractList.getUdtId());
-        map.put("udt_ip", contractList.getUdtIp());
-        map.put("udt_date", contractList.getUdtDate());
-
-        ExportDataToFile ef = new ExportDataToFile();
-        
-        String query = ef.getInsertQueryString(map, "concustcontm");
-
-        System.out.println(query);
-        
-        return "1";
+        return ef.getQueryDataString(con, selQuery, tables, tenantId);
     	
     }
-    
-
     
     @ResponseBody
-    @PostMapping("/exportData")
-    public String exportData(HttpServletRequest req, 
-    					HttpServletResponse res,
-    					@RequestParam("tenantId") String tenantId){
-    	String result = "";
-    	String fileName = "C:/download/["+tenantId+"]InsertQuery.sql";
-    	BufferedWriter writer = null;
+    @PostMapping("/executeQuery")
+    public String executeQuery (@RequestPart MultipartFile scriptFile,
+    		HttpServletRequest req, HttpServletResponse res) {
 
-    	List<String> rowdata= fileDownService.selTenantIdByAllData(tenantId);
+    	Connection con = sqlSessionFactory.openSession().getConnection();
+    	ExportDataToFile ef = new ExportDataToFile();
+    	
+    	PreparedStatement ps;
 
-    	try {
-    		writer = new BufferedWriter( new FileWriter(fileName));
+		try {
 
-	    	for(String m : rowdata) {
-	    		writer.write(m);
-	    		writer.newLine();
-	    	}
+			List<String> insertQueryList = ef.fileReader(scriptFile.getInputStream());
+			
+			for(String query : insertQueryList) {
+				
+				ps = con.prepareStatement(query);
+				System.out.println("query --->"+query);
+				System.out.println("ps --->"+ps);
+				//ps.executeUpdate();
 	    	
-	    	writer.close();
-	    
-	    	result = "1";
-    	}
-    	catch(IOException io) {
-    		io.printStackTrace();
-    	}
-    	
-    	
-    	
-    	
-    	/*
-    	 * String fileName = "myRowData.csv";
-    	res.setContentType("text/csv");
-        // creates mock data
-        String headerKey = "Content-Disposition";
-        String headerValue = String.format("attachment; filename=\"%s\"",fileName);
-        res.setHeader(headerKey, headerValue);
-        
-        // uses the Super CSV API to generate CSV data from the model data
-        ICsvBeanWriter csvWriter = new CsvBeanWriter(res.getWriter(),
-                CsvPreference.EXCEL_PREFERENCE);
-        String[] header = { "rowdata" };
-        
-        csvWriter.writeHeader(header);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    	for(String m : rowdata) {
-    		csvWriter.write(m, header);
-    	}
-    	
-    	csvWriter.close();
-    	*/
-    	
-    	return result;
+        return "1";
     }
-	
-	
-	
+
 	
 }
