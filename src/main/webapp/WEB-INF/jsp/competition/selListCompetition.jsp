@@ -86,8 +86,7 @@
                 <div class="card-header d-flex align-items-center">
                   <h2 class="h5 display" >대회목록</h2>
                 </div>
-                <div class="card-body">
- 
+                
                 <form action="" method="post" id="frmSearch">
 	                <input type="hidden" name="page" value="${codeModel.page}" />
 	                <input type="hidden" name="cdGroupId" value="" />
@@ -108,7 +107,9 @@
 	                     </div> 
 	                </div>
 				</form>
-
+				
+                <div class="card-body">
+ 
                 <form action="/selCompetition" method="post" id="detailFrm">
                 	<input type="hidden" id="tenantId" name="tenantId" value="" />
                 	<input type="hidden" id="cpCd" name="cpCd" value="" />
@@ -120,7 +121,7 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Tenant ID</th>
+                        <th>테넌트ID</th>
                         <th>계약명</th>
                         <th>대회코드</th>
                         <th>대회명</th>

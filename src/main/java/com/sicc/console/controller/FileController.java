@@ -1,10 +1,8 @@
 package com.sicc.console.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -65,10 +63,12 @@ public class FileController {
     	"SELECT tenant_id, cp_cd, img_fg_cd, img_seq, file_path_nm, img_file_nm, rep_img_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date, source_img_file_nm FROM con.concpimgm WHERE tenant_id = '"	+tenantId+ "';",	
     	"SELECT tenant_id, cp_cd, service_cd, service_start_dt, service_end_dt, service_url_addr, rep_color_value, fst_lang_cd, scnd_lang_cd, thrd_lang_cd, foth_lang_cd, fith_lang_cd, test_lab_use_yn, test_lab_remark_desc, test_event_add_yn, test_event_remark_desc, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concpservicem WHERE tenant_id = '"+tenantId+"';",
     	"SELECT tenant_id, cp_cd, service_cd, system_cd, service_start_dt, service_end_dt, service_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concpserviced WHERE tenant_id = '"	+tenantId+ "';",
-    	"SELECT tenant_id, montrn_fg_cd, montrn_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concustcontmontrnm WHERE tenant_id = '"	+tenantId+ "';"
+    	"SELECT tenant_id, montrn_fg_cd, montrn_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concustcontmontrnm WHERE tenant_id = '"	+tenantId+ "';",
+    	"SELECT cd_group_id, cd_group_nm, use_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concdm; ",
+    	"SELECT cd_group_id, cd_id, cd_nm, sort_ord, use_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concdd;"
     	};
     	
-		String tables[] = {"concustm","concustcontm","concpm","concpimgm","concpservicem","concpserviced","concustcontmontrnm"};
+		String tables[] = {"concustm","concustcontm","concpm","concpimgm","concpservicem","concpserviced","concustcontmontrnm", "concdm", "concdd"};
 
         return ef.getQueryDataString(con, selQuery, tables, tenantId);
     	

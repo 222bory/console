@@ -129,7 +129,7 @@ $(function () {
 	                        <td>${list.cdGroupNm}</td>
 	                        <td>${list.crtId}</td>
 	                        <td>${list.crtIp}</td>
-	                        <td>${list.adDate}</td>
+	                        <td><fmt:formatDate value='${list.adDate}' pattern='yyyy-MM-dd'/></td>
 	                        
 	                      </tr>
 	                    <c:set var="countNo" value="${countNo+1 }" />

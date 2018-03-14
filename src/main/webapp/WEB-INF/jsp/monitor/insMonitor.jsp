@@ -108,7 +108,7 @@ $("#btnRegister").on("click", function(e){
 	                    </div>
 	                    
 	                    <div class="col-sm-3">
-	                        <input type="text" id="searchValue" class="form-control" placeholder="유형 선택 후 검색어 입력">
+	                        <input type="text" id="searchValue" class="form-control form-control-sm" placeholder="유형 선택 후 검색어 입력">
 	                    </div>
 	                    
 	                    <div class="col-sm-5 select">
@@ -136,7 +136,7 @@ $("#btnRegister").on("click", function(e){
                     <div class="line"></div>
                     
                     <div class="btn-center">
-                        <button type="button" class="btn btn-secondary">취소</button>
+                        <button type="button" id="btnCancel" class="btn btn-secondary">취소</button>
                         <button type="button" id="btnRegister" class="btn btn-primary">등록</button>
                      
                     </div>

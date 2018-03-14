@@ -65,10 +65,7 @@
                 <div class="card-header d-flex align-items-center">
                   <h2 class="h5 display" >서비스신청 목록</h2>
                 </div>
-                <div class="card-body">
-
-
-				<form action="" method="post" id="frmSearch">
+                <form action="" method="post" id="frmSearch">
 	                <input type="hidden" name="page" value="${codeModel.page}" />
 	                <input type="hidden" name="cdGroupId" value="" />
 	                <div class="card-header d-flex">
@@ -87,8 +84,8 @@
 	                     </div> 
 	                </div>
 				</form>
-
-
+                
+                <div class="card-body">
 
                 <form action="" method="POST" id="frm">
                 <input type="hidden" name="page" value="${serviceModel.page}" />
@@ -98,12 +95,12 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Tenant ID</th>
+                        <th>테넌트ID</th>
                         <th>대회코드</th>
                         <th>대회명</th>
                         <th>대회기간</th>
                         <th>신청서비스</th>
-                        <th>등록일</th>
+                        <th>등록일자</th>
                       </tr>
                     </thead>
                     <tbody>
