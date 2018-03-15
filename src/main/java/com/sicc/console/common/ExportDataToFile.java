@@ -125,7 +125,15 @@ public class ExportDataToFile {
   
   public String exportFile(List<String> insertQueryList, String tenantId) {
 
-  	String fileName = "C:/download/["+tenantId+"]InsertQuery.sql";
+  	String fileName = "C:/exportTemp/["+tenantId+"]InsertQuery.sql";
+  	String path = "C:/exportTemp/";
+  	
+  		File file = new File(path);
+  	
+		if(!file.exists()) {
+  			file.mkdirs();
+  		}
+  	
   	BufferedWriter writer = null;
 
   	try {
@@ -135,7 +143,6 @@ public class ExportDataToFile {
 	    		writer.write(m);
 	    		writer.newLine();
 	    	}
-	    	
 	    	writer.close();
   	}
   	catch(IOException io) {

@@ -258,9 +258,9 @@ public class ServiceApplyController {
     
     
     @RequestMapping("/selServiceApply")
-    public String selServiceApply(@RequestParam Map<String,String> param,
-				@RequestParam(value="tenantId", required=true) String tenantId,
-				@RequestParam(value="cpCd", required=true) String cpCd,
+    public String selServiceApply(
+				@RequestParam(value="tenantId", required=false) String tenantId,
+				@RequestParam(value="cpCd", required=false) String cpCd,
 				Model model, ServiceModel serviceModel,
 				HttpServletRequest req, HttpServletResponse res) {
     	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());
@@ -292,7 +292,7 @@ public class ServiceApplyController {
     
     @RequestMapping("/delServiceApply")
     @Transactional(rollbackFor=Exception.class)
-    public String delServiceApply(@RequestParam Map<String,String> param,
+    public String delServiceApply(
     				@RequestParam(value="tenantId", required=true) String tenantId,
     				@RequestParam(value="cpCd", required=true) String cpCd,
     				@RequestParam(value="serviceCd", required=true) String[] serviceCd,
@@ -347,9 +347,9 @@ public class ServiceApplyController {
     
     
     @RequestMapping("/upServiceApplyForm")
-    public String upServiceApply(@RequestParam Map<String, String> param,
-				@RequestParam(value="tenantId", required=true) String tenantId,
-				@RequestParam(value="cpCd", required=true) String cpCd,
+    public String upServiceApply(
+				@RequestParam(value="tenantId", required=false) String tenantId,
+				@RequestParam(value="cpCd", required=false) String cpCd,
 				Model model, HttpServletRequest req, HttpServletResponse res) 
     		{
 		    	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());

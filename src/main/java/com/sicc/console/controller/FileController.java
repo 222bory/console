@@ -65,10 +65,11 @@ public class FileController {
     	"SELECT tenant_id, cp_cd, service_cd, system_cd, service_start_dt, service_end_dt, service_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concpserviced WHERE tenant_id = '"	+tenantId+ "';",
     	"SELECT tenant_id, montrn_fg_cd, montrn_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concustcontmontrnm WHERE tenant_id = '"	+tenantId+ "';",
     	"SELECT cd_group_id, cd_group_nm, use_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concdm; ",
-    	"SELECT cd_group_id, cd_id, cd_nm, sort_ord, use_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concdd;"
+    	"SELECT cd_group_id, cd_id, cd_nm, sort_ord, use_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.concdd;",
+    	"SELECT admin_id, admin_nm, admin_priv_cd, email_addr, password, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date FROM con.conadminm WHERE admin_id='admin';"
     	};
     	
-		String tables[] = {"concustm","concustcontm","concpm","concpimgm","concpservicem","concpserviced","concustcontmontrnm", "concdm", "concdd"};
+		String tables[] = {"concustm","concustcontm","concpm","concpimgm","concpservicem","concpserviced","concustcontmontrnm", "concdm", "concdd", "conadminm"};
 
         return ef.getQueryDataString(con, selQuery, tables, tenantId);
     	
