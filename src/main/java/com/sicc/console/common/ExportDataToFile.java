@@ -3,7 +3,6 @@ package com.sicc.console.common;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,21 +24,21 @@ import java.util.Set;
 public class ExportDataToFile {
 
 
-  public String getQueryDataString(Connection con, String selQuery[], String tables[], String tenantId) {
+  public String getQueryDataString(Connection con, String selQuery[], String tables[], String tenantId, String fileDir) {
 
-  	PreparedStatement psmt;
+  	PreparedStatement psmt = null;
   	List<String> insertQueryList = new ArrayList<String>();
   	String result = "";
-  	
+  	ResultSet rs = null;
+	ResultSetMetaData rsmd = null;
+	
 	  try {
 			for(int j = 0 ; j < selQuery.length ; j++) {
-			
-				//System.out.println("sql --> "+selQuery[j]);
 				psmt = con.prepareStatement(selQuery[j]);
 				psmt.execute();
 				
-				ResultSet rs = psmt.getResultSet();
-				ResultSetMetaData rsmd = rs.getMetaData();
+				 rs = psmt.getResultSet();
+				 rsmd = rs.getMetaData();
 
 				Map<String, Object> map = new HashMap<String, Object>();
 				
@@ -57,20 +56,22 @@ public class ExportDataToFile {
 						}
 						
 					}
-				 	 //System.out.println("table ::: "+tables[j]);
 				     String query = getInsertQueryString(map, tables[j]);
 				     insertQueryList.add(query);
-				     //System.out.println(query);
 				}
 			}
 
-			result = exportFile(insertQueryList, tenantId);
-			
-			
+			result = exportFile(insertQueryList, tenantId , fileDir);
+						
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
+	  	finally {
+	  		if(psmt != null) try { psmt.close();} catch(SQLException e) {}
+	  		if(rs != null) try { rs.close();} catch(SQLException e) {}
+	  		if(con != null) try { con.close();} catch(SQLException e) {}
+	  	}
 	  
 	  	return result;
   }
@@ -123,42 +124,47 @@ public class ExportDataToFile {
 
   }
   
-  public String exportFile(List<String> insertQueryList, String tenantId) {
+  public String exportFile(List<String> insertQueryList, String tenantId, String fileDir) {
 
-  	String fileName = "C:/exportTemp/["+tenantId+"]InsertQuery.sql";
-  	String path = "C:/exportTemp/";
+  	String fileName = fileDir+"["+tenantId+"]InsertQuery.sql";
+  	//String path = "C:/exportTemp/";
   	
-  		File file = new File(path);
+  	File file = new File(fileDir);
   	
 		if(!file.exists()) {
   			file.mkdirs();
   		}
   	
-  	BufferedWriter writer = null;
+  	BufferedWriter bw = null;
+  	FileWriter fw = null;
 
   	try {
-  		writer = new BufferedWriter( new FileWriter(fileName));
+  		fw = new FileWriter(fileName);
+  		bw = new BufferedWriter(fw);
 
-	    	for(String m : insertQueryList) {
-	    		writer.write(m);
-	    		writer.newLine();
-	    	}
-	    	writer.close();
+    	for(String m : insertQueryList) {
+    		bw.write(m);
+    		bw.newLine();
+    	}
   	}
   	catch(IOException io) {
   		io.printStackTrace();
-  	}
-	  
+  	} finally{
+		if(bw != null) try{bw.close();}catch(IOException e){}
+		if(fw != null) try{fw.close();}catch(IOException e){}
+	}
 	  return "1";
   }
   
   
   public List<String> fileReader(InputStream scriptFileStream) throws IOException {
 	  List<String> insertQueryList = new ArrayList<String>();
+	  BufferedReader br = null;
+	  InputStreamReader ir = null;
 	  
 	  try {
-		  
-		BufferedReader br = new BufferedReader(new InputStreamReader(scriptFileStream,"UTF8"));
+		ir = new InputStreamReader(scriptFileStream,"UTF8");
+		br = new BufferedReader(ir);
 		
 		while(true){
 			String str = br.readLine();
@@ -167,17 +173,16 @@ public class ExportDataToFile {
 			
 			insertQueryList.add(str);
 		}
-		
-		br.close();
-	  
-	  } catch (UnsupportedEncodingException e) {
-		// TODO Auto-generated catch block
+
+	} catch (UnsupportedEncodingException e) {
 		e.printStackTrace();
 	} catch (FileNotFoundException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
+	}  finally{
+		if(ir != null) try{ir.close();}catch(IOException e){}
+		if(br != null) try{br.close();}catch(IOException e){}
 	}
-	  
+
 	  return insertQueryList;
   }
   

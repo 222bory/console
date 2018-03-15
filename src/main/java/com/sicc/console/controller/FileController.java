@@ -46,16 +46,19 @@ public class FileController {
     	return "/file/fileDownload";
     }
 
-    
-    @ResponseBody
+
     @PostMapping("/exportQuery")
     public String exportQuery (HttpServletRequest req, 
 			HttpServletResponse res,
-			@RequestParam("tenantId") String tenantId) {
+			@RequestParam("tenantId") String tenantId,
+			Model model) {
 
     	Connection con = sqlSessionFactory.openSession().getConnection();
     	ExportDataToFile ef = new ExportDataToFile();
-
+    	
+    	String fileDir = "C:/exportTemp/";
+    	String result = "";
+    	
     	String selQuery[] = {
     	"SELECT cust.cust_id, cust.cust_nm, cust.rep_fax_no, cust.rep_tel_no, cust.corp_ad_no, cust.mgr_nm, cust.mgr_email_addr, cust.mgr_tel_no, cust.crt_id, cust.crt_ip, cust.ad_date, cust.udt_id, cust.udt_ip, cust.udt_date FROM con.concustcontm cont INNER JOIN con.concustm cust ON cont.cust_id = cust.cust_id WHERE cont.tenant_id = '"+tenantId+"';",
     	"SELECT tenant_id, cust_id, cont_nm, valid_start_dt, valid_end_dt, cont_stat_cd, network_fg_cd, password_lod_cd, password_min_len, password_rnwl_cycl_cd, password_use_lmt_yn, password_pose_yn, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date  FROM con.concustcontm WHERE tenant_id = '"+tenantId+"';",
@@ -70,8 +73,13 @@ public class FileController {
     	};
     	
 		String tables[] = {"concustm","concustcontm","concpm","concpimgm","concpservicem","concpserviced","concustcontmontrnm", "concdm", "concdd", "conadminm"};
-
-        return ef.getQueryDataString(con, selQuery, tables, tenantId);
+		
+		result = ef.getQueryDataString(con, selQuery, tables, tenantId, fileDir);
+		
+		model.addAttribute("fileDir", fileDir);
+		model.addAttribute("result", result);
+		
+        return "jsonView";
     	
     }
     
@@ -79,30 +87,30 @@ public class FileController {
     @PostMapping("/executeQuery")
     public String executeQuery (@RequestPart MultipartFile scriptFile,
     		HttpServletRequest req, HttpServletResponse res) {
-
-    	Connection con = sqlSessionFactory.openSession().getConnection();
+    	Connection con = null;
+    	PreparedStatement ps = null;
     	ExportDataToFile ef = new ExportDataToFile();
-    	
-    	PreparedStatement ps;
 
 		try {
-
+			con = sqlSessionFactory.openSession().getConnection();
 			List<String> insertQueryList = ef.fileReader(scriptFile.getInputStream());
 			
 			for(String query : insertQueryList) {
-				
 				ps = con.prepareStatement(query);
 				System.out.println("query --->"+query);
-				//System.out.println("ps --->"+ps);
+				
 				ps.executeUpdate();
-	    	
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+	  		if(ps != null) try { ps.close();} catch(SQLException e) {}
+	  		if(con != null) try { con.close();} catch(SQLException e) {}
 		}
-
+		
         return "1";
     }
 

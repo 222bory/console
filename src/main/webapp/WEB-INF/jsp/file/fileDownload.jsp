@@ -15,8 +15,8 @@
 				data : {"tenantId": tenantId },
 				success : function(data, status) {
 					try{
-						 if( data == '1'){
-							alert("다운로드가 완료되었습니다");
+						if( data.result == '1'){
+							alert("'"+data.fileDir+"' 경로로 파일 다운로드가 완료되었습니다");
 						} else {
 							alert("다운로드 중 문제가 발생하였습니다");
 						} 
