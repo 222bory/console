@@ -26,6 +26,14 @@
 		   AND child.cd_id = #{cdId}
     </select>
     
+    <select id="selCdIdByCode" parameterType="java.util.Map" resultType="String">
+    	SELECT child.cd_id as cdId 
+		  FROM concdm parent, concdd child 
+		 WHERE parent.cd_group_id = child.cd_group_id
+		   AND child.cd_group_id = #{cdGroupId}
+		   AND child.cd_nm = #{cdNm}
+    </select>
+    
     <select id="selListCode" resultType="com.sicc.console.model.CodeModel">
 		SELECT COUNT(1) OVER() AS totalCount
 			   ,cd_group_id as cdGroupId

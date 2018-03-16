@@ -345,6 +345,9 @@ public class CompetitionController {
     		@RequestParam(value="imgFgCd", required=false) String imgFgCd[],
     		@RequestParam(value="imgSeq", required=false) String imgSeq[],
     		@RequestPart MultipartFile file[],
+    		@RequestParam(value="delImgYn", required=false) String delImgYn[],
+    		@RequestParam(value="delImgFgCd", required=false) String delImgFgCd[],
+    		@RequestParam(value="delImgSeq", required=false) String delImgSeq[],
     		HttpServletRequest req, HttpServletResponse res) throws IllegalStateException, IOException {
 		
     	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -363,6 +366,20 @@ public class CompetitionController {
     	competitionModel.setExpectUserNum(Integer.parseInt(expectUserNum));
     	competitionModel.setUdtId(userId);
     	competitionModel.setUdtIp(req.getRemoteAddr());
+    	
+    	if(delImgSeq != null) {
+    		for(int i = 0 ; i < delImgSeq.length ; i ++) {
+    			if(delImgYn[i].equals("Y")) {
+    				System.out.println("test ::: "+delImgYn[i]+ " " + delImgFgCd[i]+ " "+delImgSeq[i]);
+    				CompetitionImageModel competitionImageForDelete = new CompetitionImageModel();
+    				competitionImageForDelete.setTenantId(tenantId);
+    				competitionImageForDelete.setCpCd(cpCd);
+    				competitionImageForDelete.setImgFgCd(commonService.selCdIdByCode(CommonEnums.IMG_FG_CD.getValue(), delImgFgCd[i]));
+    				competitionImageForDelete.setImgSeq(Integer.parseInt(delImgSeq[i]));
+    				competitionService.delSelectedCompetitionImage(competitionImageForDelete);
+    			}
+    		}
+    	}
     	
     	if(imgSeq != null) {
     		for(int i = 0 ; i < file.length ; i ++) { 

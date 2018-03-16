@@ -57,4 +57,9 @@ public class CompetitionServiceImpl implements CompetitionService{
 		competitionDao.delCompetitionImage(competitionImageModel);
 	}
 	
+	@Override
+	public void delSelectedCompetitionImage(CompetitionImageModel competitionImageModel) {
+		competitionDao.delSelectedCompetitionImage(competitionImageModel);
+	}
+	
 }

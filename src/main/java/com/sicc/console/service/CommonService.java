@@ -12,6 +12,8 @@ public interface CommonService {
     
     public String selCodeByCdId(String cdGroupId, String cdId) ;
     
+    public String selCdIdByCode(String cdGroupId, String cdNm) ;
+    
     public String selTenantIdSeq();
     
     public List<ContractExtModel> searchContract(String searchType, String searchValue);

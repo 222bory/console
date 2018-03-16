@@ -33,6 +33,11 @@ public class CommonServiceImpl implements CommonService{
 	public String selCodeByCdId(String cdGroupId, String cdId) {
 		return codeDao.selCodeByCdId(cdGroupId, cdId);
 	}
+	
+	@Override
+	public String selCdIdByCode(String cdGroupId, String cdNm) {
+		return codeDao.selCdIdByCode(cdGroupId, cdNm);
+	}
 
 	@Override
 	public String selTenantIdSeq() {

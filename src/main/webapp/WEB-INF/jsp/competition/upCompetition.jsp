@@ -20,6 +20,8 @@
 
 	$(document).ready(function(){
 		
+		$('input[name=cancelDelImgBtn]').hide();
+		
 		$("#btnCancel").click(function(){
 			location.href="/selListCompetition";
 		});
@@ -39,6 +41,24 @@
 						+	'</td>'
 						+'</tr>';
 			$('tbody[name=serviceTbody]').append(html); 
+	    });
+		
+		$('input[name=delImgBtn]').click(function(){
+			var index = $('input[name=delImgBtn]').index(this);
+			var obj = $('#imgTbody > tr:eq('+index+') > td:eq(0) > input:eq(0)');
+			obj.val('Y');
+			
+			$('input[name=delImgBtn]:eq('+index+')').hide();
+			$('input[name=cancelDelImgBtn]:eq('+index+')').show();
+	    });
+		
+		$('input[name=cancelDelImgBtn]').click(function(){
+			var index = $('input[name=cancelDelImgBtn]').index(this);
+			var obj = $('#imgTbody > tr:eq('+index+') > td:eq(0) > input:eq(0)');
+			obj.val('N');
+			
+			$('input[name=cancelDelImgBtn]:eq('+index+')').hide();
+			$('input[name=delImgBtn]:eq('+index+')').show();
 	    });
 		
 		$("#delRowBtn").click(function(){
@@ -231,18 +251,19 @@
 			                        <th></th>
 			                      </tr>
 			                    </thead>
-			                    <tbody>
+			                    <tbody id="imgTbody" name="imgTbody">
 			                    <c:forEach items="${competitionImageList}" var="list" varStatus="parent">
 			                      <tr>
 			                        <th scope="row"></th>
-			                        <td>${list.tenantId}</td>
+			                        <td>${list.tenantId}<input type="hidden" name="delImgYn" value="N"/></td>
 			                        <td>${list.cpCd}</td>
 			                        <td>${list.imgFileNm}</td>
 			                        <td>${list.filePathNm}</td>
-			                        <td>${list.imgFgCd}</td>
-			                        <td>${list.imgSeq}</td>
+			                        <td>${list.imgFgCd}<input type="hidden" name="delImgFgCd" value="${list.imgFgCd}"/></td>
+			                        <td>${list.imgSeq}<input type="hidden" name="delImgSeq" value="${list.imgSeq}"/></td>
 			                        <td>${list.adDate}</td>
-			                        <td><input type="button" name="delImgBtn" id="delImgBtn" value="삭제" class="btn btn-primary"/></td>
+			                        <td><input type="button" name="delImgBtn" id="delImgBtn" value="삭제" class="btn btn-primary"/>
+			                        <input type="button" name="cancelDelImgBtn" id="cancelDelImgBtn" value="취소" class="btn btn-secondary"/></td>
 			                      </tr>
 			                    </c:forEach>  
 			                    </tbody>

@@ -9,6 +9,8 @@ public interface CodeDao {
 	
 	public String selCodeByCdId(String cdGroupId, String cdId) ;
 	
+	public String selCdIdByCode(String cdGroupId, String cdNm) ;
+	
 	public List<CodeModel> selListCode(CodeModel codeModel);
 	
 	public List<CodeModel> selCode(CodeModel codeModel);

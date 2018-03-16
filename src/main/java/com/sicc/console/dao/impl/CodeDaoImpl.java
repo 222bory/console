@@ -34,6 +34,15 @@ public class CodeDaoImpl implements CodeDao{
 	}
 	
 	@Override
+	@Cacheable(value = "code", key="#cdGroupId.concat(#cdNm)")
+	public String selCdIdByCode(String cdGroupId, String cdNm) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("cdGroupId", cdGroupId);
+		map.put("cdNm", cdNm);
+		return sqlSessionTemplate.selectOne("com.sicc.console.dao.CodeDao.selCdIdByCode", map);
+	}
+	
+	@Override
 	public List<CodeModel> selListCode(CodeModel codeModel) {
 		return sqlSessionTemplate.selectList("com.sicc.console.dao.CodeDao.selListCode", codeModel);
 	}

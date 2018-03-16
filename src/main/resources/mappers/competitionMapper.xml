@@ -191,4 +191,12 @@
          WHERE tenant_id = #{tenantId}	
            AND cp_cd = #{cpCd}		   
     </delete>
+    
+    <delete id="delSelectedCompetitionImage" parameterType="com.sicc.console.model.CompetitionImageModel">
+    	DELETE FROM concpimgm
+         WHERE tenant_id = #{tenantId}	
+           AND cp_cd = #{cpCd}		
+           AND img_fg_cd = #{imgFgCd}
+           AND img_seq = #{imgSeq}   
+    </delete>
 </mapper>

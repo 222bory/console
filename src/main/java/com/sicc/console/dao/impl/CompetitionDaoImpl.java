@@ -55,5 +55,9 @@ public class CompetitionDaoImpl implements CompetitionDao{
 		sqlSessionTemplate.delete("com.sicc.console.dao.CompetitionDao.delCompetitionImage", competitionImageModel);
 	}
 	
+	@Override
+	public void delSelectedCompetitionImage(CompetitionImageModel competitionImageModel) {
+		sqlSessionTemplate.delete("com.sicc.console.dao.CompetitionDao.delSelectedCompetitionImage", competitionImageModel);
+	}
 }
 

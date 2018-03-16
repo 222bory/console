@@ -23,4 +23,6 @@ public interface CompetitionService {
     public void insCompetitionImage(CompetitionImageModel competitionImageModel);
     
     public void delCompetitionImage(CompetitionImageModel competitionImageModel);
+    
+    public void delSelectedCompetitionImage(CompetitionImageModel competitionImageModel);
 }
