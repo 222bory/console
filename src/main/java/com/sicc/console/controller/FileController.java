@@ -90,6 +90,7 @@ public class FileController {
     	Connection con = null;
     	PreparedStatement ps = null;
     	ExportDataToFile ef = new ExportDataToFile();
+    	String result = "";
 
 		try {
 			con = sqlSessionFactory.openSession().getConnection();
@@ -100,18 +101,23 @@ public class FileController {
 				System.out.println("query --->"+query);
 				
 				ps.executeUpdate();
+				
 			}
 			
+			result = "1";
+			
 		} catch (SQLException e) {
+			result =e.getMessage();
 			e.printStackTrace();
 		} catch (IOException e) {
+			result =e.getMessage();
 			e.printStackTrace();
 		} finally {
 	  		if(ps != null) try { ps.close();} catch(SQLException e) {}
 	  		if(con != null) try { con.close();} catch(SQLException e) {}
 		}
 		
-        return "1";
+        return result;
     }
 
 	

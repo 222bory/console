@@ -545,11 +545,11 @@ function setDatepicker(addRowNum){
 	
 	<div class="col-lg-12">
 		<div class="form-group">
-           <div class="card">
+           <div class="card" id="configInfo" style="display:none;">
                 <div class="card-header d-flex align-items-center">
 					<h2 class="h5 display">서비스별 설정</h2>
 				</div>
-             <div class="card-body" id="configInfo" style="display:none;">	
+             <div class="card-body" >	
 					<table id="configTbl" name="configTbl" class="table" >
 						<thead>
 	                      <tr>
@@ -571,11 +571,11 @@ function setDatepicker(addRowNum){
 
 	<div class="col-lg-12">
 		<div class="form-group">
-              <div class="card">
+              <div class="card" id="serviceInfo" style="display:none;">
               	<div class="card-header d-flex align-items-center">
 					<h2 class="h5 display">서비스별 상세정보 입력</h2>
 				</div>
-               		<div class="card-body" id="serviceInfo" style="display:none;">	
+               		<div class="card-body" >	
                		<div style="float:right">
 						<input type="button" name="addRowBtn" id="addRowBtn" value="추가" class="btn btn-primary"/>
                 	</div>
