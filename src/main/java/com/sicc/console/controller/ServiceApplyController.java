@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -38,7 +36,7 @@ import com.sicc.console.service.ServiceApplyService;
 @Controller
 public class ServiceApplyController {
 	
-	private final Logger logger = LoggerFactory.getLogger(IndexController.class);
+	//private final Logger logger = LoggerFactory.getLogger(IndexController.class);
 	
 	@Autowired
 	ServiceApplyService serviceApplyService;

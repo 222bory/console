@@ -4,12 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.List;
 import java.util.Properties;
 
 import org.apache.ibatis.executor.statement.StatementHandler;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
@@ -18,7 +15,6 @@ import org.apache.ibatis.plugin.Signature;
 
 import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.model.ContractModel;
-import com.sicc.console.model.Member;
 import com.sicc.console.model.ServiceDetailModel;
 import com.sicc.console.model.ServiceModel; 
 
@@ -31,13 +27,13 @@ public class CUDInterceptor implements Interceptor{
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
 		StatementHandler handler = (StatementHandler) invocation.getTarget();
-		BoundSql bs = handler.getBoundSql();
+		//BoundSql bs = handler.getBoundSql();
 		
 		//String sql = bs.getSql();
 		
 		Object param = handler.getParameterHandler().getParameterObject();
 		
-		List<ParameterMapping> pmList = bs.getParameterMappings();
+		//List<ParameterMapping> pmList = bs.getParameterMappings();
 		
 		//PreparedStatement psmt = null;
 		

@@ -1,6 +1,5 @@
 package com.sicc.console.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -9,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -29,7 +26,7 @@ import com.sicc.console.service.AdminService;
 
 @Controller
 public class AdminController {
-	private final Logger logger = LoggerFactory.getLogger(AdminController.class);
+	//private final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@Autowired
 	AdminService adminService;
     

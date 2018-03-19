@@ -1,7 +1,5 @@
 package com.sicc.console.model;
 
-import java.util.Date;
-
 public class AdminModel {
 	private String adminId;
 	private String adminNm;

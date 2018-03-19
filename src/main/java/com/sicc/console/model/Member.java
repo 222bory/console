@@ -1,7 +1,6 @@
 package com.sicc.console.model;
 
 import java.util.Date;
-import java.util.List;
 
 public class Member {
 	

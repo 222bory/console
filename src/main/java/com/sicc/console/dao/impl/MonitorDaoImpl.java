@@ -6,7 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sicc.console.dao.MonitorDao;
-import com.sicc.console.model.ContractExtModel;
 import com.sicc.console.model.MonitorModel;
 
 public class MonitorDaoImpl implements MonitorDao{

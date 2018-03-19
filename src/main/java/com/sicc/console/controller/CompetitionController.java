@@ -2,9 +2,7 @@ package com.sicc.console.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,16 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.slf4j.Logger; 
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -30,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,16 +30,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sicc.console.common.CommonUtil;
 import com.sicc.console.common.Pagination;
 import com.sicc.console.enums.CommonEnums;
-import com.sicc.console.model.AdminModel;
 import com.sicc.console.model.CodeModel;
 import com.sicc.console.model.CompetitionExtModel;
 import com.sicc.console.model.CompetitionImageModel;
 import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.model.ContractExtModel;
 import com.sicc.console.service.CommonService;
-import com.sicc.console.service.CompetitionService;
-import com.sicc.console.service.UserService;
-import com.sicc.console.service.impl.CustomUserDetailsService; 
+import com.sicc.console.service.CompetitionService; 
 @Controller
 public class CompetitionController { 
 
@@ -372,7 +360,7 @@ public class CompetitionController {
     	if(delImgSeq != null) {
     		for(int i = 0 ; i < delImgSeq.length ; i ++) {
     			if(delImgYn[i].equals("Y")) {
-    				System.out.println("test ::: "+delImgYn[i]+ " " + delImgFgCd[i]+ " "+delImgSeq[i]);
+    				//System.out.println("test ::: "+delImgYn[i]+ " " + delImgFgCd[i]+ " "+delImgSeq[i]);
     				CompetitionImageModel competitionImageForDelete = new CompetitionImageModel();
     				competitionImageForDelete.setTenantId(tenantId);
     				competitionImageForDelete.setCpCd(cpCd);

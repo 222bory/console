@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -32,7 +30,7 @@ public class CodeController {
 	
 	private Integer rowPerPage = 10;  
 	
-	private final Logger logger = LoggerFactory.getLogger(CodeController.class);
+	//private final Logger logger = LoggerFactory.getLogger(CodeController.class);
     
     @Autowired
     CodeService codeService;
@@ -81,7 +79,6 @@ public class CodeController {
     		}
     	}
     	
-    	System.out.println(commonService.selCodeByCdId("qwer", "zxcv"));
     	//등록 완료 플레그 
     	model.addAttribute("result", "1");
         	
@@ -101,10 +98,6 @@ public class CodeController {
 		codeModel.setPage(NumberUtils.toInt(page));
 		codeModel.setSkipCount(rows * (NumberUtils.toInt(page) - 1));
     	
-		System.out.println("======> serachGroup:"+param.get("serachGroup"));
-		System.out.println("======> serachNm:"+param.get("serachNm"));
-		
-		
         List<CodeModel> list = codeService.selListCode(codeModel);  
        
         //페이징 처리

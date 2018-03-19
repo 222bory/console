@@ -1,11 +1,5 @@
 package com.sicc.console.service;
 
-import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
-
-import com.sicc.console.model.Member;
-
 public interface UserService {
 
     /*public Member findByUserNameOrEmail(String username);
