@@ -328,31 +328,41 @@ function dateCheck(){
 
 function duplCheck(){
 	var duplChk = false;
+	var tbody = $('#serviceTbl > tbody');
 	var tableRow = $('#serviceTbl > tbody > tr');
+	var tableLength = tableRow.length;
 
-	tableRow.each(function(){
-		var tr = $(this);
-		var serviceSystemNm1 = $(this).find('td:eq(0) > select').val()+'.'+$(this).find('td:eq(1) > select').val();
-		
+	for(i=0; i< tableLength; i++){
+		var serviceNm = tbody.find('tr:eq('+i+') > td:eq(0) > select').val();
+		var systemNm = tbody.find('tr:eq('+i+') > td:eq(1) > select').val();
+		var serviceSystemNm1 = serviceNm+'.'+systemNm;
+
 		if(duplChk){
-			return false;
+			break;
 		}
 		
-		if(system.val() != 'default'){
-			tableRow.each(function(){
-				var serviceSystemNm2 = $(this).find('td:eq(0) > select').val()+'.'+$(this).find('td:eq(1) > select').val();
-				
-				if(tr != $(this)){
-					if(serviceSystemNm1 == serviceSystemNm2){
-						alert('중복된 서비스가 있습니다. 다시 확인해주세요.');
-						duplChk = true;
-						return false;
+		if(systemNm != 'default'){
+			for( j=0 ; j < tableLength ; j++){
+				var serviceNm2 = tbody.find('tr:eq('+j+') > td:eq(0) > select').val();
+				var systemNm2 = tbody.find('tr:eq('+j+') > td:eq(1) > select').val();
+				var serviceSystemNm2 = serviceNm2+'.'+systemNm2;
+
+				if(systemNm2 != 'default'){
+					if(i != j){
+						if(serviceSystemNm1 == serviceSystemNm2){
+							alert('중복된 서비스가 있습니다. 다시 확인해주세요.');
+							duplChk = true;
+							break;
+						}
 					}
+					
 				}
-			});	
+				
+			}	
 		}
-	});
-	
+		
+	}
+
 	return duplChk;
 }
 

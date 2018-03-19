@@ -119,8 +119,18 @@ $(document).ready(function(){
  	//수정 등록
 	$("#btnRegister").on("click", function(e){
 
-		console.log($("#frm").serializeArray());
+		var serviceCount = $('tbody[name=serviceTbody] > tr').length;
+		var configCount = $('tbody[name=configTbody] > tr').length;
 		
+		if(configCount==0 || serviceCount==0){
+			alert("최소 한개 이상의 서비스를 선택해주세요");
+			return;
+		}
+		
+		//validation check
+		flag = checkValid();
+		
+	if(flag){
 		if($("input[name=serviceUrlAddr]").length == 1 && $("input[name=serviceUrlAddr]").val()==''){
 			$("input[name=serviceUrlAddr]").val(' ');
 		}
@@ -175,9 +185,9 @@ $(document).ready(function(){
 				return;
 			}
 		});  
+	}
 	});
  	
-
 });
 </script>
 
@@ -392,6 +402,131 @@ function setDatepicker(){
  	
     $($('input[name=serviceEndDt]').get(rowNum)).datepicker("setDate",new Date());
 	
+}
+
+function checkValid(){
+	var flag = false;
+
+	$('select[name=serviceCd]').each(function(){
+		if($(this).val()=='0' || $(this).val()=='' || $(this).val()==null){
+			flag = false;
+			alert('서비스를 선택해주세요');
+			$(this).focus();
+			
+			return false;
+		}
+		else{
+			flag = true;
+		}
+	});
+	
+	if(flag){
+		$('select[name=systemCd]').each(function(){
+			if($(this).val()=='0' || $(this).val()=='' || $(this).val()==null){
+				flag = false;
+				alert('하위서비스를 선택해주세요');
+				$(this).focus();
+				
+				return false;
+			}
+			else{
+				flag = true;
+			}
+		});
+	}
+	
+	if(flag){
+		$('input[name=serviceStartDt]').each(function(){
+			if( $(this).val()=='' || $(this).val()==null){
+				flag = false;
+				alert('시작일자를 선택해주세요');
+				$(this).focus();
+				
+				return false;
+			}
+			else{
+				flag = true;
+			}
+		});
+	}
+	
+	if(flag){
+		$('input[name=serviceStartDt]').each(function(){
+			if( $(this).val()=='' || $(this).val()==null){
+				flag = false;
+				alert('종료일자를 선택해주세요');
+				$(this).focus();
+				
+				return false;
+			}
+			else{
+				flag = true;
+			}
+		});
+	}
+	
+	if(flag){
+		$('input[name=repColorValue]').each(function(){
+
+			if( $(this).val()=='' || $(this).val()==null){
+				flag = false;
+				alert('컬러를 선택해주세요');
+				$(this).focus();
+				
+				return false;
+			}
+			else{
+				flag = true;
+			}
+		});
+	}
+	
+	//하위서비스 중복 체크
+	if(flag){
+		flag = !duplCheck();	
+	}
+
+	return flag;
+} 
+
+function duplCheck(){
+	var duplChk = false;
+	var tbody = $('#serviceTbl > tbody');
+	var tableRow = $('#serviceTbl > tbody > tr');
+	var tableLength = tableRow.length;
+
+	for(i=0; i< tableLength; i++){
+		var serviceNm = tbody.find('tr:eq('+i+') > td:eq(0) > select').val();
+		var systemNm = tbody.find('tr:eq('+i+') > td:eq(1) > select').val();
+		var serviceSystemNm1 = serviceNm+'.'+systemNm;
+
+		if(duplChk){
+			break;
+		}
+		
+		if(systemNm != 'default'){
+			for( j=0 ; j < tableLength ; j++){
+				var serviceNm2 = tbody.find('tr:eq('+j+') > td:eq(0) > select').val();
+				var systemNm2 = tbody.find('tr:eq('+j+') > td:eq(1) > select').val();
+				var serviceSystemNm2 = serviceNm2+'.'+systemNm2;
+
+				if(systemNm2 != 'default'){
+					if(i != j){
+						if(serviceSystemNm1 == serviceSystemNm2){
+							alert('중복된 서비스가 있습니다. 다시 확인해주세요.');
+							duplChk = true;
+							break;
+						}
+					}
+					
+				}
+				
+			}	
+		}
+		
+	}
+
+	return duplChk;
 }
 
 </script>
