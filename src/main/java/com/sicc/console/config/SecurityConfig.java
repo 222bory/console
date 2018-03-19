@@ -32,10 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception
 	{
 		http.csrf().disable().authorizeRequests()
-		.antMatchers("/**").hasRole("ADMIN")
-		.antMatchers("/**").permitAll()
+		//.antMatchers("/**").hasRole("ADMIN")
+		//.antMatchers("/**").permitAll()
 		.and().formLogin()
-		.loginPage("/login")
+		.loginPage("/login").permitAll()
 		.loginProcessingUrl("/login")
 		.defaultSuccessUrl("/selListServiceApply")
     	.failureUrl("/login")
