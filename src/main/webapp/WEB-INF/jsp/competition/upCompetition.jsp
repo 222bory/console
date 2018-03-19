@@ -164,8 +164,8 @@
 <div class="breadcrumb-holder"> 
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.html">계정관리</a></li>
-			<li class="breadcrumb-item active">대회 정보 수정</li>
+			<li class="breadcrumb-item"><a href="index.html">서비스관리</a></li>
+			<li class="breadcrumb-item active">대회관리</li>
 		</ul>
 	</div>
 </div>
@@ -178,7 +178,7 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header d-flex align-items-center">
-						<h2 class="h5 display">사용자 정보 수정</h2>
+						<h2 class="h5 display">대회 정보 수정</h2>
 					</div>
 					<div class="card-body">
 						<form class="form-horizontal" id="frm" name="frm" method="POST" action="/upCompetition" enctype="multipart/form-data">
