@@ -11,8 +11,6 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sicc.console.common.Pagination;
-import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.CodeModel;
 import com.sicc.console.service.CodeService;
 import com.sicc.console.service.CommonService;
@@ -45,12 +42,6 @@ public class CodeController {
     
     @Autowired
     MonitorService monitorService;
-    
-    @Autowired
-    private  CacheManager cacheManager;
-    
-	private String temp;
-    
    
     @GetMapping("/insCodeForm")
     public String insCodeForm(Model model) {
@@ -215,7 +206,6 @@ public class CodeController {
 		
     	//코드 디테일 삭제 
     	codeService.delCodeDetail(codeModel);
-		System.out.println("계약 삭제 완료!");
 		
 		//코드 마스터 삭제
 		codeService.delCodeMaster(codeModel);

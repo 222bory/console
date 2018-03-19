@@ -42,7 +42,7 @@ public class ContractController {
     CommonService commonService;
 
     @RequestMapping("/insContractForm") 
-    public String insContract(@RequestParam Map<String, String> param, ContractExtModel contractExtModel,Model model) {
+    public String insContractForm(@RequestParam Map<String, String> param, ContractExtModel contractExtModel,Model model) {
     	String tid = commonService.selTenantIdSeq();
     	//코드 조회
     	List<CodeModel> contStatCdList = commonService.selCode(CommonEnums.CONT_STAT_CD.getValue());

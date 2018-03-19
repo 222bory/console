@@ -143,14 +143,14 @@ function submit(){
 						
 							<div class="form-group row has-success">
 		                      <label class="col-sm-2 form-control-label">* 고객ID</label>
-		                      <div class="col-md-3">
+		                      <div class="col-md-4">
 		                        <input type="text" class="form-control form-control-sm" id="custId" name="custId" value="${cem.custId}" disabled>
 		                      </div>
 		                      
-		                      <div class="form-group col-md-1">
+		                      <!-- <div class="form-group col-md-1">
 		                      	<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">검색</button>
-			                      <!-- <input type="button" value="검색" class="mx-sm-3 btn btn-primary"> -->
-			                    </div>
+			                      <input type="button" value="검색" class="mx-sm-3 btn btn-primary">
+			                    </div> -->
 			                  <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
 			                  <label class="col-sm-2 form-control-label">* 고객명</label>
 		                      <div class="col-md-4">
