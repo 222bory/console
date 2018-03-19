@@ -466,11 +466,41 @@ function checkValid(){
 	}
 	
 	if(flag){
+		$('input[name=serviceUrlAddr]').each(function(){
+			if( $(this).val()=='' || $(this).val()==null){
+				flag = false;
+				alert('서비스URL을 입력해주세요');
+				$(this).focus();
+				
+				return false;
+			}
+			else{
+				flag = true;
+			}
+		});
+	}
+	
+	if(flag){
 		$('input[name=repColorValue]').each(function(){
 
 			if( $(this).val()=='' || $(this).val()==null){
 				flag = false;
 				alert('컬러를 선택해주세요');
+				$(this).focus();
+				
+				return false;
+			}
+			else{
+				flag = true;
+			}
+		});
+	}
+	
+	if(flag){
+		$('select[name=fstLangCd]').each(function(){
+			if( $(this).val()=='0'){
+				flag = false;
+				alert('최소 하나 이상의 언어를 선택해주세요');
 				$(this).focus();
 				
 				return false;
