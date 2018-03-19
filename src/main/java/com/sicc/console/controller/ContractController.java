@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -166,7 +165,6 @@ public class ContractController {
 		
         List<ContractExtModel> list = contractService.selListCust(contractExtModel);  
         
-        System.out.println("list : "+ list.get(0));
         //페이징 처리
         Pagination pagination = new Pagination();
 		if(list != null && !list.isEmpty() ){
@@ -206,7 +204,6 @@ public class ContractController {
 		
 		//contractExtModel.getCustId();
 		//contractExtModel.getTenantId();
-		System.out.println("map : "+param.toString());
 		
 		//유효일 처리
     	validStartDt = validStartDt.replaceAll("-", "");
@@ -234,10 +231,8 @@ public class ContractController {
 		
 		//계약 삭제
 		contractService.delContract(contractExtModel);
-		System.out.println("계약 삭제 완료!");
 		
 		List<ContractExtModel> list = contractService.selListCustCnt(contractExtModel);
-		System.out.println("list.size : " + list.size());
 		
 		if(list.size() <1) {
 			//고객 삭제
@@ -279,14 +274,9 @@ public class ContractController {
         	validStartDt = validStartDt.replaceAll("-", "");
         	validEndDt = validEndDt.replaceAll("-", "");
         	
-        	System.out.println(custId+" "+custNm+" "+repFaxNo+" "+repTelNo +" "+corpAdNo +" "+mgrNm +" "+mgrEmailAddr +" "+mgrTelNo +" "+contNm +" "+
-        			validStartDt+" "+ validEndDt+" "+contStatCd+" "+ networkFgCd+" "+ passwordLodCd +" "+passwordMinLen+" "+ passwordRnwlCyclCd +" "+passwordUseLmtYn+" "+ passwordPoseYn
-        			);
-        	
         	//고객 정보 체크 
         	contractExtModel.setCustId(custId);
         	List<ContractExtModel> list = contractService.selListContractCnt(contractExtModel);
-        	System.out.println("list.size : " + list.size());
         	
         	//로그인정보 
         	User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
