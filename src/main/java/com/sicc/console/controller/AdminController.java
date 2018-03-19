@@ -66,8 +66,8 @@ public class AdminController {
     	
     }
 	
-	@GetMapping("/insAdmin")
-    public String insAdmin() {
+	@GetMapping("/insAdminForm")
+    public String insAdminForm() {
     	return "/admin/insAdmin";
     }
     

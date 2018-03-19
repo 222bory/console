@@ -88,8 +88,10 @@ public class CompetitionController {
         return competitionImageMaxSeqList; 
     }*/
     
-    @GetMapping("/insCompetition") 
-    public String insCompetition(Model model, @RequestParam(value="searchType", required=false) String searchType, @RequestParam(value="searchValue", required=false) String searchValue) {
+    @GetMapping("/insCompetitionForm") 
+    public String insCompetitionForm(Model model, 
+    				@RequestParam(value="searchType", required=false) String searchType, 
+    				@RequestParam(value="searchValue", required=false) String searchValue) {
     	
     	if(searchType == null) {
     		searchType = "C";

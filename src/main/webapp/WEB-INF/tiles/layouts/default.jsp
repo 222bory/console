@@ -115,9 +115,9 @@
               <ul id="pages-nav-list1" class="collapse list-unstyled">
                 <li> <a href="/insContractForm">계약 등록</a></li>
                 <li> <a href="/selListContract">계약 관리</a></li>
-                <li> <a href="/insCompetition">대회 등록</a></li>
+                <li> <a href="/insCompetitionForm">대회 등록</a></li>
                 <li> <a href="/selListCompetition">대회 관리</a></li>
-                <li> <a href="/insServiceApply">서비스 신청</a></li>
+                <li> <a href="/insServiceApplyForm">서비스 신청</a></li>
                 <li> <a href="/selListServiceApply">서비스신청 관리</a></li>
               </ul>
             </li>
@@ -166,7 +166,7 @@
             <li> <a href="#pages-nav-list6" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>계정 관리</span>
                 <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
               <ul id="pages-nav-list6" class="collapse list-unstyled">
-                <li> <a href="/insAdmin">사용자계정 등록</a></li>
+                <li> <a href="/insAdminForm">사용자계정 등록</a></li>
                 <li> <a href="/selectListAdmin">사용자계정 관리</a></li>
               </ul>
             </li>

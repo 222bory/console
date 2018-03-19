@@ -68,8 +68,8 @@ public class ServiceApplyController {
     
     
     
-    @GetMapping("/insServiceApply") 
-    public String insServiceApply(Model model,
+    @GetMapping("/insServiceApplyForm") 
+    public String insServiceApplyForm(Model model,
     	 @RequestParam(value="searchType", required=false) String searchType, 
    		 @RequestParam(value="searchValue", required=false) String searchValue){
     	List<CodeModel> serviceList = commonService.selCode(CommonEnums.SERVICE_CD.getValue());
@@ -106,7 +106,7 @@ public class ServiceApplyController {
     		@RequestParam(value="tenantId", required=true) String tenantId,
     		@RequestParam(value="cpCd", required=true) String cpCd,
     		@RequestParam(value="serviceCd", required=true) String[] serviceCd,
-    		@RequestParam(value="systemCd", required=true) String[] systemCd,
+    		@RequestParam(value="systemCd", required=false) String[] systemCd,
     		@RequestParam(value="serviceStartDt", required=true) String[] serviceStartDt,
     		@RequestParam(value="serviceEndDt", required=true) String[] serviceEndDt,
     		@RequestParam(value="serviceUrlAddr", required=false, defaultValue="" ) String[] serviceUrlAddr,
