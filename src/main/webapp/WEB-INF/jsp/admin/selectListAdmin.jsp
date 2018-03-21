@@ -57,8 +57,8 @@
 <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selectListAdmin">계정관리</a></li>
-			<li class="breadcrumb-item active">사용자 계정 관리</li>
+			<li class="breadcrumb-item">계정관리</li>
+			<li class="breadcrumb-item active"><a href="/selectListAdmin">사용자계정관리</a></li>
 		</ul>
 	</div>
 </div>

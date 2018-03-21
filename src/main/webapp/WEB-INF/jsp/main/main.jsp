@@ -35,7 +35,6 @@ $(function () {
 	<div class="container-fluid">
 		<ul class="breadcrumb">
 			<li class="breadcrumb-item"><a href="/main">메인</a></li> 
-			<li class="breadcrumb-item active">메인</li>
 		</ul>
 	</div>
 </div>

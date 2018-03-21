@@ -83,9 +83,9 @@ function redirectList(){
  <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/userList">서비스관리</a></li>
-			<li class="breadcrumb-item">서비스신청</li>
-			<li class="breadcrumb-item active">서비스신청 상세</li>
+			<li class="breadcrumb-item">서비스관리</li>
+			<li class="breadcrumb-item active"><a href="selListServiceApply">서비스신청관리</a></li>
+			<li class="breadcrumb-item active">서비스신청상세</li>
 		</ul>
 	</div>
 </div>

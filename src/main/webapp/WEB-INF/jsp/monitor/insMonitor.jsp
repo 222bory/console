@@ -75,8 +75,8 @@ $("#btnRegister").on("click", function(e){
         <div class="breadcrumb-holder">
         <div class="container-fluid">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">시스템관리</a></li>
-            <li class="breadcrumb-item">모니터링 등록</li>
+			<li class="breadcrumb-item">시스템관리</li>
+			<li class="breadcrumb-item active"><a href="insMonitorForm">모니터링등록</a></li>
           </ul>
         </div>
       	</div>

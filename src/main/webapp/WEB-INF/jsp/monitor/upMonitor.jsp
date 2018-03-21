@@ -80,8 +80,9 @@ $(document).ready(function(){
         <div class="breadcrumb-holder">
         <div class="container-fluid">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">시스템관리</a></li>
-            <li class="breadcrumb-item">모니터링 수정</li>
+			<li class="breadcrumb-item">시스템관리</li>
+			<li class="breadcrumb-item active"><a href="selListMonitor">모니터링조회</a></li>
+			<li class="breadcrumb-item active">모니터링수정</li>
           </ul>
         </div>
       	</div>

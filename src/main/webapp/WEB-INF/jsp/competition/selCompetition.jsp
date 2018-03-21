@@ -34,8 +34,9 @@
 <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selCompetition">서비스관리</a></li>
-			<li class="breadcrumb-item active">대회관리</li>
+			<li class="breadcrumb-item">서비스관리</li>
+			<li class="breadcrumb-item active"><a href="selListCompetition">대회관리</a></li>
+			<li class="breadcrumb-item active">대회상세</li>
 		</ul>
 	</div>
 </div>

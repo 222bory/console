@@ -564,9 +564,9 @@ function duplCheck(){
  <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selListServiceApply">서비스관리</a></li>
-			<li class="breadcrumb-item">서비스상세</li>
-			<li class="breadcrumb-item active">서비스수정</li>
+			<li class="breadcrumb-item">서비스관리</li>
+			<li class="breadcrumb-item active"><a href="selListServiceApply">서비스신청관리</a></li>
+			<li class="breadcrumb-item active">서비스신청수정</li>
 		</ul>
 	</div>
 </div>
