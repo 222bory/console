@@ -270,7 +270,7 @@
               <p>SICC &copy; 2018-2019</p>
             </div>
             <div class="col-sm-6 text-right">
-              <p>SICC <a href="/index" class="external">GSP CONSOLE</a></p>
+              <p>SICC <a href="/main" >GSP CONSOLE</a></p>
               <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
             </div>
           </div>
