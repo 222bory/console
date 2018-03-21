@@ -47,8 +47,8 @@ $("button").click(function () {
 <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selListContract">시스템관리</a></li> 
-			<li class="breadcrumb-item active">모니터링 목록</li>
+			<li class="breadcrumb-item">시스템관리</li>
+			<li class="breadcrumb-item active"><a href="selListMonitor">모니터링조회</a></li>
 		</ul>
 	</div>
 </div>

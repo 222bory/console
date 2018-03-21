@@ -129,8 +129,8 @@
 <div class="breadcrumb-holder"> 
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.html">서비스 관리</a></li>
-			<li class="breadcrumb-item active">대회 등록</li>
+			<li class="breadcrumb-item">서비스관리</li>
+			<li class="breadcrumb-item active"><a href="/insCompetitionForm">대회등록</a></li>
 		</ul>
 	</div>
 </div>

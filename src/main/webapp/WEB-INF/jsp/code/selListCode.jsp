@@ -41,8 +41,8 @@ $(function () {
 <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selListCode">시스템관리</a></li> 
-			<li class="breadcrumb-item active">코드 목록</li>
+			<li class="breadcrumb-item">시스템관리</li>
+			<li class="breadcrumb-item active"><a href="selListCode">코드관리</a></li>
 		</ul>
 	</div>
 </div>

@@ -170,8 +170,8 @@ $(document).ready(function(){
 <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selectListAdmin">계정관리</a></li>
-			<li class="breadcrumb-item active">사용자 계정 등록</li>
+			<li class="breadcrumb-item">계정관리</li>
+			<li class="breadcrumb-item active"><a href="/insAdminForm">사용자계정등록</a></li>
 		</ul>
 	</div>
 </div>
@@ -189,7 +189,7 @@ $(document).ready(function(){
 					<div class="card-body">
 						<form class="form-horizontal" id="frm" name="frm" method="POST" >
 							<div class="form-group">
-								<label class="col-sm-2 form-control-label">* 관리자ID</label>
+								<label class="col-sm-2 form-control-label">* ID</label>
 									<div class="col-md-6">
 										<div class="row">
 											<div style="width: 60%; padding: 0.375rem 0.75rem;">

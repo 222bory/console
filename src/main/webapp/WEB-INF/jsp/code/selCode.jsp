@@ -70,7 +70,8 @@ function redirectList(){
  <div class="breadcrumb-holder">
 	<div class="container-fluid">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/selListServiceApply">시스템관리</a></li>
+			<li class="breadcrumb-item">시스템관리</li>
+			<li class="breadcrumb-item active"><a href="selListCode">코드관리</a></li>
 			<li class="breadcrumb-item active">코드상세</li>
 		</ul>
 	</div>
