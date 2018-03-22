@@ -58,6 +58,7 @@ $(document).ready(function(){
 	});
 	
 	
+	//하위서비스 setting
 	$("select[name=systemCd]").each(function(i,e){
 		var serviceCd = $("select[name=serviceCd]")[i].value;
 		var selectSystemCd = $(this).val();
@@ -194,6 +195,16 @@ $(document).ready(function(){
 <!-- dynamic object event binding -->
 <script>
 
+	//체크박스 체크
+	$("input[name=serviceChkBox]").each(function(i,e){
+		<c:forEach items="${selServiceApply}" var="list">
+			if($(this).val() == "${list.serviceCd}"){
+				$(this).attr('checked', true);
+		    	$(this).prop('checked', true);
+			}
+		</c:forEach>
+	});
+	
 	//삭제
 	$(document).on("click","input[name='delRowBtn']",function(){
 		$(this).parent().parent().remove();
@@ -205,43 +216,51 @@ $(document).ready(function(){
 		var serviceId = this.value;
 	 	var serviceCd = $(this);
 	 	var systemCd = serviceCd.parent().next().children();
+	 	var serviceChk = false;
 
-	 	//하위서비스 clear
-	 	systemCd.find('option').remove();
+	 	$("input[name='serviceChkBox']").each(function(){	 		
+	 		if(serviceCd.val() == $(this).val()){
+				if(!$(this).is(":checked")){
+	 				alert("서비스 선택을 먼저 체크해주세요!");
+	 				serviceCd.val('0');
+	 				serviceCd.focus();
+	 				
+	 				serviceChk = false;
+	 			}
+				else{ serviceChk = true; }
+	 		} 
+	 	});
+	 	
+	 	if(serviceChk){
 
-		$.ajax({
-			type : 'POST',
-			url : '/selServicebySytem',
-			//파리미터 변수 이름 : 값
-			data : {
-				serviceId : serviceId
-			},
-			cache:true,
-			success : function(data){
-				
-				if(data.length>0){
-					for(var i=0; i <data.length; i++){
-						systemCd.append("<option value='"+data[i].cdId+"'>"+data[i].cdNm+"</option>");
-					}	
-				} 
-			},
-			error:function(){
-				alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
-			}
-		});
-		
+		 	//하위서비스 clear
+		 	systemCd.find('option').remove();
+	
+			$.ajax({
+				type : 'POST',
+				url : '/selServicebySytem',
+				//파리미터 변수 이름 : 값
+				data : {
+					serviceId : serviceId
+				},
+				cache:true,
+				success : function(data){
+					
+					if(data.length>0){
+						for(var i=0; i <data.length; i++){
+							systemCd.append("<option value='"+data[i].cdId+"'>"+data[i].cdNm+"</option>");
+						}	
+					} 
+				},
+				error:function(){
+					alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+				}
+			});
+	 		
+	 	}
 	});
 	
-	
-	$("input[name=serviceChkBox]").each(function(i,e){
-		<c:forEach items="${selServiceApply}" var="list">
-		if($(this).val() == "${list.serviceCd}"){
-			$(this).attr('checked', true);
-	    	$(this).prop('checked', true);
-		}
-	</c:forEach>
-});
- 	
+
 	//체크박스 서비스 선택
 	$(document).on("change","input[name='serviceChkBox']",function(){
 		//상위서비스 사용 체크시
@@ -381,7 +400,6 @@ function delOptionTbl(checkService){
 }
 
 function setDatepicker(){
-	
 	var rowNum = $('tbody[name=serviceTbody] > tr').length -1;
 	
 	// 달력 초기화
@@ -576,7 +594,7 @@ function duplCheck(){
 	<header>
 		<h1 class="h3 display">서비스수정</h1>
 	</header>
-<form class="form-horizontal" id="frm" name="frm" method="POST">
+	<form class="form-horizontal" id="frm" name="frm" method="POST">
 	<div class="col-lg-12">
 		<div class="card">
 			<div class="card-header d-flex align-items-center">
@@ -819,7 +837,7 @@ function duplCheck(){
 						<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
 						<input type="button" id="btnRegister" class="btn btn-primary" value="수정" />
 				</div>	
-					<!-- 삭제할 대상 (Original Data)  -->
+					<!-- 수정시 삭제할 원본 (Original Data)  -->
 					<c:forEach items="${selServiceApply}" var="selList">
 						<input type='hidden' name='serivceOriginCd' value="${selList.serviceCd}"/>
 						<input type='hidden' name='systemOriginCd' value='default'/>
@@ -830,10 +848,8 @@ function duplCheck(){
 					</c:forEach>
 				</div>
               </div>
-	</div>
-</form>
-		
+		</div>
+	</form>
 
 </div>
-
 </section>

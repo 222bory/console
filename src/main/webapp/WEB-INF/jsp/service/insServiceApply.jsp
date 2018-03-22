@@ -120,15 +120,12 @@ $(document).ready(function(){
 				if(XMLHttpRequest.status == '901'){
 					sessionTimeOut();			
 				} else {
-					//console.log(XMLHttpRequest.code + ":" + textStatus + ":" + errorThrown);
 					alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
 				}
 				return;
 			}
 		});
-		
 		}
-		
 	});
 
 });
@@ -148,30 +145,48 @@ $(document).ready(function(){
 		var serviceId = this.value;
 	 	var serviceCd = $(this);
 	 	var systemCd = serviceCd.parent().next().children();
+		var serviceChk = false;
 
-	 	//하위서비스 clear
-	 	systemCd.find('option').remove();
-
-		$.ajax({
-			type : 'POST',
-			url : '/selServicebySytem',
-			//파리미터 변수 이름 : 값
-			data : {
-				serviceId : serviceId
-			},
-			cache:true,
-			success : function(data){
-				
-				if(data.length>0){
-					for(var i=0; i <data.length; i++){
-						systemCd.append("<option value='"+data[i].cdId+"'>"+data[i].cdNm+"</option>");
-					}	
-				} 
-			},
-			error:function(){
-				alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
-			}
-		});
+	 	$("input[name='serviceChkBox']").each(function(){	 		
+	 		if(serviceCd.val() == $(this).val()){
+				if(!$(this).is(":checked")){
+	 				alert("서비스 선택을 먼저 체크해주세요!");
+	 				serviceCd.val('0');
+	 				serviceCd.focus();
+	 				
+	 				serviceChk = false;
+	 			}
+				else{ serviceChk = true; }
+	 		} 
+	 	});
+	 	
+	 	
+	 	if(serviceChk){
+		 	//하위서비스 clear
+		 	systemCd.find('option').remove();
+		 	
+		 	//상위서비스(대표서비스)의 하위서비스를 Load
+			$.ajax({
+				type : 'POST',
+				url : '/selServicebySytem',
+				//파리미터 변수 이름 : 값
+				data : {
+					serviceId : serviceId
+				},
+				cache:true,
+				success : function(data){
+					
+					if(data.length>0){
+						for(var i=0; i <data.length; i++){
+							systemCd.append("<option value='"+data[i].cdId+"'>"+data[i].cdNm+"</option>");
+						}	
+					} 
+				},
+				error:function(){
+					alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+				}
+			});
+	 	}
 	});
  	
 	//체크박스 서비스 선택
@@ -203,18 +218,6 @@ $(document).ready(function(){
 		}
 		//상위서비스 체크 해제
 		else{
-			/* var rowNum = $('tbody[name=serviceTbody] tr').length;
-			
-			for( i=0; i< rowNum; i++){
-				var removeRow = $('tbody[name=serviceTbody] > tr:eq('+i+')');
-				
-				if(removeRow.find('td:eq(1) select').val() == 'default'){
-					if( removeRow.find('td:eq(0) select').val() == $(this).val()){
-						
-						removeRow.remove();
-					}
-				}
-			} */
 			var checkServiceNm = $(this).val();
 			
 			delServiceTbl(checkServiceNm, 'chk'); //서비스 상세정보 입력 row 삭제
@@ -396,6 +399,7 @@ function duplCheck(){
 	return duplChk;
 }
 
+//서비스별 상세정보 입력 테이블 추가
 function addServiceTbl(flag, no){
 	var html ="";
     html += "<tr>"; 
@@ -431,7 +435,7 @@ function addServiceTbl(flag, no){
 	
 }
 
-
+//서비스별 설정 테이블 추가
 function addOptionTbl(serviceCd){
  	var html ="";
 
