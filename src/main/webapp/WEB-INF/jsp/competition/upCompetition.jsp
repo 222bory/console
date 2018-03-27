@@ -6,6 +6,7 @@
 
 	var maxMSImgSeq;
 	var maxEMImgSeq;
+	var maxFAImgSeq;
 	
 	<c:forEach items="${competitionImageMaxSeqList}" var="list" varStatus="parent">
 		<c:if test="${list.imgfgcd == 'MS'}">  
@@ -16,6 +17,10 @@
 	    	maxEMImgSeq = ${list.imgseq};	
 	    	<c:set value="${list.imgseq}" var = "maxEMImgSeq"/>
 	    </c:if>
+	    <c:if test="${list.imgfgcd == 'FA'}">     
+    		maxFAImgSeq = ${list.imgseq};	
+    	<c:set value="${list.imgseq}" var = "maxFAImgSeq"/>
+    </c:if>
 	</c:forEach>
 
 	$(document).ready(function(){
@@ -94,9 +99,13 @@
 			if(maxEMImgSeq==null){
 				maxEMImgSeq = 0;
 			}
+			if(maxFAImgSeq==null){
+				maxFAImgSeq = 0;
+			}
 			
 			var msSeq = maxMSImgSeq ;
 			var emSeq = maxEMImgSeq ;
+			var faSeq = maxFAImgSeq ;
 			
 			for(i = 0 ; i < len ; i ++){
 				if(selectTag[i].value == 'MS'){
@@ -106,6 +115,10 @@
 				if(selectTag[i].value == 'EM'){
 					$('input[name=imgSeq]:eq('+i+')').val(emSeq);
 					emSeq += 1;
+				}
+				if(selectTag[i].value == 'FA'){
+					$('input[name=imgSeq]:eq('+i+')').val(faSeq);
+					faSeq += 1;
 				}
 			}
 			

@@ -63,6 +63,7 @@
 			
 			var msSeq = 0 ;
 			var emSeq = 0 ;
+			var faSeq = 0 ;
 			
 			for(i = 0 ; i < len ; i ++){
 				if(selectTag[i].value == 'MS'){
@@ -72,6 +73,10 @@
 				if(selectTag[i].value == 'EM'){
 					$('input[name=imgSeq]:eq('+i+')').val(emSeq);
 					emSeq += 1;
+				}
+				if(selectTag[i].value == 'FA'){
+					$('input[name=imgSeq]:eq('+i+')').val(emSeq);
+					faSeq += 1;
 				}
 			}
 			

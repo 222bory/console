@@ -139,10 +139,6 @@ public class CompetitionController {
     	
     	if(imgSeq != null) {
     		for(int i = 0 ; i < file.length ; i ++) { 
-        		/*System.out.println("test ::: file originname : "+file[i].getOriginalFilename());
-        		System.out.println("test ::: file contenttype : "+file[i].getContentType());
-        		System.out.println("test ::: file name : "+file[i].getName());
-        		System.out.println("test ::: file size : "+file[i].getSize());*/
         		
         		String sourceFileName = file[i].getOriginalFilename(); 
                 String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
