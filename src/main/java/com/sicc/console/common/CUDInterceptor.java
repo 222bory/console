@@ -13,7 +13,6 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 
-import com.sicc.console.model.CodeModel;
 import com.sicc.console.model.CompetitionModel;
 import com.sicc.console.model.ContractModel;
 import com.sicc.console.model.ServiceDetailModel;
@@ -113,23 +112,7 @@ public class CUDInterceptor implements Interceptor{
 				psmt.execute();
 			}
 		}
-		else if(param instanceof CodeModel) {
-			Statement st = (Statement) (invocation.getArgs())[0];
-			Connection con = st.getConnection();
-			String orginSql = "select * from concdd a, concdm b where a.cd_group_id = b.cd_group_id";
-			
-			PreparedStatement psmt = con.prepareStatement(orginSql);
-			psmt.execute();
-			
-//			ResultSet rs = psmt.getResultSet();
-//			
-//			String histSql = "";
-//			if(rs.next()) {
-//				histSql = "INSERT INTO concpserviced_log(tenant_id, cp_cd, service_cd, system_cd, service_start_dt, service_end_dt, service_url_addr, crt_id, crt_ip, ad_date, udt_id, udt_ip, udt_date) values('"+rs.getString("tenant_id")+"', '"+rs.getString("cp_cd")+"', '"+rs.getString("service_cd")+"', '"+rs.getString("system_cd")+"', '"+rs.getString("service_start_dt")+"', '"+rs.getString("service_end_dt")+"', '"+rs.getString("service_url_addr")+"', '"+rs.getString("crt_id")+"', '"+rs.getString("crt_ip")+"', current_timestamp, '"+rs.getString("udt_id")+"', '"+rs.getString("udt_ip")+"', current_timestamp)";
-//				psmt = con.prepareStatement(histSql); 
-//				psmt.execute();
-//			}
-		}
+		
 		return invocation.proceed();
 	}
 

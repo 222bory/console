@@ -7,6 +7,8 @@ import com.sicc.console.model.CodeModel;
 public interface CodeDao {
 	public List<CodeModel> selCode(String cdGroupId);
 	
+	public List<CodeModel> selCodeRefresh(String cdGroupId);
+	
 	public String selCodeByCdId(String cdGroupId, String cdId) ;
 	
 	public String selCdIdByCode(String cdGroupId, String cdNm) ;
