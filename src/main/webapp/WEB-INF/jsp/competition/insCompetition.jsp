@@ -75,7 +75,7 @@
 					emSeq += 1;
 				}
 				if(selectTag[i].value == 'FA'){
-					$('input[name=imgSeq]:eq('+i+')').val(emSeq);
+					$('input[name=imgSeq]:eq('+i+')').val(faSeq);
 					faSeq += 1;
 				}
 			}
