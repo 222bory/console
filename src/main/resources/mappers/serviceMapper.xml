@@ -109,10 +109,10 @@
 	) s
 	WHERE 1=1
 	<if test = "searchCpCd != '' and searchCpCd != null">
-		AND cpCd like #{searchCpCd}||'%'
+		AND cpCd like '%'||#{searchCpCd}||'%'
 	</if>
 	<if test = "searchCpNm != '' and searchCpNm != null">
-		AND cpNm like #{searchCpNm}||'%'
+		AND cpNm like '%'||#{searchCpNm}||'%'
 	</if>
 	LIMIT #{rowPerPage} OFFSET #{skipCount}
 	</select>

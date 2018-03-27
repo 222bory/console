@@ -15,7 +15,7 @@
 				data : {"tenantId": tenantId },
 				success : function(data, status) {
 					try{
-						if( data.result == '1'){
+						if( data.result == '1' ){
 							alert("'"+data.fileDir+"' 경로로 파일 다운로드가 완료되었습니다");
 						} else {
 							alert("다운로드 중 문제가 발생하였습니다");
@@ -39,40 +39,46 @@
  	 $('#btnScriptExecute').click(function(event){
  		 var form = $('#fileForm')[0];
  		 var formData = new FormData(form);
- 		 
- 		 formData.append("scriptFile", $("#scriptFile")[0].files[0]);
-/* 		 var scriptFile = $('#scriptFile').file;
-		 var scriptFilePath = $('#scriptFile').val().split('\\').pop(); */
+ 		 var file = $("#scriptFile")[0].files[0];
 
-		 $.ajax({
-				type : "POST",
-				url  : "/executeQuery", 
-				processData: false,
-                contentType: false,
-				data : formData,
-				success : function(data, status) {
-					try{
-						 if( data == '1'){
-							alert("스크립트 실행이 완료되었습니다");
-						} else {
-							alert("스크립트 실행 중 문제가 발생하였습니다");
-						} 
-					}catch(e) {	
-						alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
-					}
-				},
-				error : function(XMLHttpRequest, textStatus, errorThrown) {
-					if(XMLHttpRequest.status == '901'){
-						sessionTimeOut();			
-					} else {
-						
-						alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
-					}
-					return;
-				}
-			});
+ 		 if(file != null){
+ 			formData.append("scriptFile", file);
+ 			/* 		 var scriptFile = $('#scriptFile').file;
+ 					 var scriptFilePath = $('#scriptFile').val().split('\\').pop(); */
+
+ 					 $.ajax({
+ 							type : "POST",
+ 							url  : "/executeQuery", 
+ 							processData: false,
+ 			                contentType: false,
+ 							data : formData,
+ 							success : function(data, status) {
+ 								try{
+ 									 if( data.result == '1'){
+ 										alert("스크립트 실행이 완료되었습니다");
+ 									} else {
+ 										alert("스크립트 실행 중 문제가 발생하였습니다");
+ 									} 
+ 								}catch(e) {	
+ 									alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+ 								}
+ 							},
+ 							error : function(XMLHttpRequest, textStatus, errorThrown) {
+ 								if(XMLHttpRequest.status == '901'){
+ 									sessionTimeOut();			
+ 								} else {
+ 									console.log(errorThrown);
+ 									alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
+ 								}
+ 								return;
+ 							}
+ 						});
+ 			
+ 			 }
+	 	 else{
+	 		 alert("파일을 선택해주세요");
+	 	 }
 	 }); 
-	 
 	});
 </script>
 

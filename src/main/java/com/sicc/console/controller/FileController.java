@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -85,6 +86,7 @@ public class FileController {
     
     @ResponseBody
     @PostMapping("/executeQuery")
+    @Transactional(rollbackFor=Exception.class)
     public String executeQuery (@RequestPart MultipartFile scriptFile,
     		HttpServletRequest req, HttpServletResponse res) {
     	Connection con = null;

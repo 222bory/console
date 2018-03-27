@@ -35,10 +35,10 @@
 	     <if test='searchType!=null'>
 	     <if test='searchValue!=null'>
 	     <if test='searchType=="C"'>
-	     AND cont_nm like #{searchValue}||'%'
+	     AND cont_nm like '%'||#{searchValue}||'%'
 	     </if>
 	     <if test='searchType=="T"'>
-	     AND tenant_id like #{searchValue}||'%'
+	     AND tenant_id like '%'||#{searchValue}||'%'
 	     </if>
 	     </if>
 	     </if>
@@ -56,10 +56,10 @@
 	     <if test='searchType!=null'>
 	     <if test='searchValue!=null'>
 	     <if test='searchType=="C"'>
-	     AND cp_cd like #{searchValue}||'%'
+	     AND cp_cd like '%'||#{searchValue}||'%'
 	     </if>
 	     <if test='searchType=="N"'>
-	     AND cp_nm like #{searchValue}||'%'
+	     AND cp_nm like '%'||#{searchValue}||'%'
 	     </if>
 	     </if>
 	     </if>
