@@ -86,7 +86,7 @@ public class FileController {
     
     @ResponseBody
     @PostMapping("/executeQuery")
-    @Transactional(rollbackFor=Exception.class)
+   // @Transactional(rollbackFor=Exception.class)
     public String executeQuery (@RequestPart MultipartFile scriptFile,
     		HttpServletRequest req, HttpServletResponse res) {
     	Connection con = null;
@@ -103,7 +103,6 @@ public class FileController {
 				System.out.println("query --->"+query);
 				
 				ps.executeUpdate();
-				
 			}
 			
 			result = "1";
@@ -115,6 +114,7 @@ public class FileController {
 			result =e.getMessage();
 			e.printStackTrace();
 		} finally {
+			System.out.println("result -->"+result);
 	  		if(ps != null) try { ps.close();} catch(SQLException e) {}
 	  		if(con != null) try { con.close();} catch(SQLException e) {}
 		}
