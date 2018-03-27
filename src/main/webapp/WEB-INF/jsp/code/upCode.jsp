@@ -182,7 +182,7 @@ $(document).on("click","input[name='delRowBtn']",function(){
 		                            <th scope="row" class="no">${countNo}</th>
 			                        <td><input name='cdId' type='text' class='form-control form-control-sm' value='${list.cdId}' /> </td>
 									<td><input name='cdNm' type='text' class='form-control form-control-sm' value='${list.cdNm}'/></td>
-									<!-- <td><input type='button' name='delRowBtn' value='삭제' class='btn btn-primary'/></td> -->
+									<td><input type='button' name='delRowBtn' value='삭제' class='btn btn-primary'/></td>
 			                  </tr>
 			                   <c:set var="countNo" value="${countNo+1 }" />
 			               </c:forEach>  
