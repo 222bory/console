@@ -136,7 +136,10 @@
 		     messages:{
 		    	 cpCd:{required :"대회코드를 입력해주세요"},
 		    	 cpNm:{required :"대회명을 입력해주세요"},
-		    	 cpPlaceNm:{required :"대회장소를 입력해주세요"} //,
+		    	 cpPlaceNm:{required :"대회장소를 입력해주세요"} ,
+		    	 "file" : {required: true,
+		    		 extension: "jpg|jpeg|bmp"
+		            	}
 		    	 //file:{extension :"올바른 file을 선택해주세요"}
 		     },
 		     highlight: function(element) {

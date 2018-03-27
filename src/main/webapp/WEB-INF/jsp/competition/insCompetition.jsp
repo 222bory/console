@@ -82,20 +82,36 @@
 			
 	    });
 		
+		/* $('input[name=file]').each(function(){
+		       $(this).rules("add", {
+		           required:true, 
+		           accept: "jpg|jpeg|bmp"
+		       });                    
+		 });  */
+		
 		$('#frm').validate({
+			/* var imgTag = $('input[name=file]');
+			for(var i = 0 ; i < imgTag.length ; i ++){
+				alert(imgTag[i]);
+				if(imgTag[i].value == '' || imgTag[i] == null){
+					alert("file을 선택해 주세요.");
+					return;
+				}
+			} */
+			
 		     rules: {
 		    	 cpCd : {required : true, minlength: 1, maxlength:100},
 		    	 cpNm :{required : true, minlength: 1, maxlength:100},
-		    	 cpPlaceNm : {required: true, minlength: 1, maxlength:100} //,
-		    	/*  file : {required: true,
-		    		 extension: "jpg";
-		            	} */
+		    	 cpPlaceNm : {required: true, minlength: 1, maxlength:100} ,
+		    	 "file" : {required: true,
+		    		 extension: "jpg|jpeg|bmp"
+		            	} 
 		     },
 		     messages:{
 		    	 cpCd:{required :"대회코드를 입력해주세요"},
 		    	 cpNm:{required :"대회명을 입력해주세요"},
-		    	 cpPlaceNm:{required :"대회장소를 입력해주세요"} //,
-		    	 //file:{extension :"올바른 file을 선택해주세요"}
+		    	 cpPlaceNm:{required :"대회장소를 입력해주세요"} ,
+		    	 "file":{extension :"올바른 file을 선택해주세요"}
 		     },
 		     highlight: function(element) {
 		       $(element).closest('.control-group').removeClass('success').addClass('error');
