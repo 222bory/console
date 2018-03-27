@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
 import com.sicc.console.dao.CodeDao;
@@ -22,6 +23,13 @@ public class CodeDaoImpl implements CodeDao{
 		return sqlSessionTemplate.selectList("com.sicc.console.dao.CodeDao.selCode", cdGroupId);
 	}
 	
+	@Override
+	@CacheEvict(value = "code", key="#cdGroupId")
+	public List<CodeModel> selCodeRefresh(String cdGroupId) {
+		return sqlSessionTemplate.selectList("com.sicc.console.dao.CodeDao.selCode", cdGroupId);
+	}
+	
+
 	@Override
 	@Cacheable(value = "code", key="#cdGroupId.concat(#cdId)")
 	public String selCodeByCdId(String cdGroupId, String cdId) {

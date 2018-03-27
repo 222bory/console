@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sicc.console.common.Pagination;
+import com.sicc.console.enums.CommonEnums;
 import com.sicc.console.model.CodeModel;
 import com.sicc.console.service.CodeService;
 import com.sicc.console.service.CommonService;
@@ -78,6 +79,11 @@ public class CodeController {
 	    		codeService.insCodeDetail(codeModel);
     		}
     	}
+    	
+    	commonService.selCodeRefresh(CommonEnums.CONT_STAT_CD.getValue());
+    	commonService.selCodeRefresh(CommonEnums.NETWORK_FG_CD.getValue());
+    	commonService.selCodeRefresh(CommonEnums.PASSWORD_LOD_CD.getValue());
+    	commonService.selCodeRefresh(CommonEnums.RNWL_CYCL_CD.getValue());
     	
     	//등록 완료 플레그 
     	model.addAttribute("result", "1");
@@ -188,6 +194,12 @@ public class CodeController {
 	    		codeService.insCodeDetail(codeModel);
     		}
     	}
+    	
+    	commonService.selCodeRefresh(CommonEnums.CONT_STAT_CD.getValue());
+    	commonService.selCodeRefresh(CommonEnums.NETWORK_FG_CD.getValue());
+    	commonService.selCodeRefresh(CommonEnums.PASSWORD_LOD_CD.getValue());
+    	commonService.selCodeRefresh(CommonEnums.RNWL_CYCL_CD.getValue());
+    	
         	//등록 완료 플레그 
         	model.addAttribute("result", "1");
     	
@@ -203,6 +215,11 @@ public class CodeController {
 		//코드 마스터 삭제
 		codeService.delCodeMaster(codeModel);
 		
+		commonService.selCodeRefresh(CommonEnums.CONT_STAT_CD.getValue());
+    	commonService.selCodeRefresh(CommonEnums.NETWORK_FG_CD.getValue());
+    	commonService.selCodeRefresh(CommonEnums.PASSWORD_LOD_CD.getValue());
+    	commonService.selCodeRefresh(CommonEnums.RNWL_CYCL_CD.getValue());
+    	
 		//등록 완료 플레그 
     	model.addAttribute("result", "1");
     	

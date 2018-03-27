@@ -28,7 +28,12 @@ public class CommonServiceImpl implements CommonService{
 	public List<CodeModel> selCode(String cdGroupId) {
 		return codeDao.selCode(cdGroupId);
 	}
-
+	
+	@Override
+	public List<CodeModel> selCodeRefresh(String cdGroupId) {
+		return codeDao.selCodeRefresh(cdGroupId);
+	}
+	
 	@Override
 	public String selCodeByCdId(String cdGroupId, String cdId) {
 		return codeDao.selCodeByCdId(cdGroupId, cdId);
