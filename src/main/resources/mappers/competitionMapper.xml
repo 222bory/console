@@ -83,7 +83,7 @@
 		  FROM concustm cust, concustcontm cont, concpm cp
          WHERE cust.cust_id = cont.cust_id
            AND cont.tenant_id = cp.tenant_id
-      order by cp.tenant_id desc  
+      order by cp.ad_Date desc  
      ) s
 	WHERE 1=1
 	<if test = "searchCpCd != '' and searchCpCd != null">

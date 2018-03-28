@@ -86,7 +86,6 @@ public class FileController {
     
     @ResponseBody
     @PostMapping("/executeQuery")
-   // @Transactional(rollbackFor=Exception.class)
     public String executeQuery (@RequestPart MultipartFile scriptFile,
     		HttpServletRequest req, HttpServletResponse res) {
     	Connection con = null;
@@ -96,6 +95,8 @@ public class FileController {
 
 		try {
 			con = sqlSessionFactory.openSession().getConnection();
+			con.setAutoCommit(false);	//오토커밋을 false로 지정
+			
 			List<String> insertQueryList = ef.fileReader(scriptFile.getInputStream());
 			
 			for(String query : insertQueryList) {
@@ -105,9 +106,12 @@ public class FileController {
 				ps.executeUpdate();
 			}
 			
+			con.commit();
+			
 			result = "1";
 			
 		} catch (SQLException e) {
+			if(con!=null) try { con.rollback(); } catch(SQLException sql) {} //Exception발생시 rollback
 			result =e.getMessage();
 			e.printStackTrace();
 		} catch (IOException e) {
