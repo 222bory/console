@@ -105,6 +105,9 @@
 	    	 con.concpm AS cpm
 	    ON servicem.tenant_id = cpm.tenant_id 
 	    AND servicem.cp_cd = cpm.cp_cd
+	    	INNER JOIN
+	    	 con.concustcontm AS contm
+	    ON servicem.tenant_id = contm.tenant_id
 		ORDER BY servicem.ad_date desc
 	) s
 	WHERE 1=1

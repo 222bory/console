@@ -52,6 +52,8 @@
 		       , cpm.cp_cd as cpCd
 		       , cpm.cp_nm as cpNm
 		FROM con.concpm as cpm
+		INNER JOIN con.concustcontm AS contm
+		ON cpm.tenant_id = contm.tenant_id
 	   WHERE 1=1
 	     <if test='searchType!=null'>
 	     <if test='searchValue!=null'>
