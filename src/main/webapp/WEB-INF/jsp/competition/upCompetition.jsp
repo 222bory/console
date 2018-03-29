@@ -82,12 +82,6 @@
 		$("#btnUpdate").click(function(){
 			var result = confirm('대회정보를 수정 하시겠습니까?'); 
 			
-			if(result) { 
-				alert("수정");
-			}else{
-				return;
-			}
-			
 			var selectTag = $('select[name=imgFgCd]');
 			var hiddenTag = $('input[name=imgSeq]');
 			
@@ -122,34 +116,17 @@
 				}
 			}
 			
+			if(result){
+				if(validationCheck() == 1) { 
+					alert("수정 되었습니다.");
+					$('#frm').submit();
+				}else{
+					return;
+				}
+			}
+			
 	    });
 		
-		$('#frm').validate({
-		     rules: {
-		    	 cpCd : {required : true, minlength: 1, maxlength:100},
-		    	 cpNm :{required : true, minlength: 1, maxlength:100},
-		    	 cpPlaceNm : {required: true, minlength: 1, maxlength:100} //,
-		    	/*  file : {required: true,
-		    		 extension: "jpg";
-		            	} */
-		     },
-		     messages:{
-		    	 cpCd:{required :"대회코드를 입력해주세요"},
-		    	 cpNm:{required :"대회명을 입력해주세요"},
-		    	 cpPlaceNm:{required :"대회장소를 입력해주세요"} ,
-		    	 "file" : {required: true,
-		    		 extension: "jpg|jpeg|bmp"
-		            	}
-		    	 //file:{extension :"올바른 file을 선택해주세요"}
-		     },
-		     highlight: function(element) {
-		       $(element).closest('.control-group').removeClass('success').addClass('error');
-		     },
-		     submitHandler: function(frm){
-		    	frm.submit();
-		     }
-		     
-		});
 		
 	});
 	
@@ -174,6 +151,39 @@
 		$("#cpStartDt").datepicker("setDate", cpStartDt);
 		$("#cpEndDt").datepicker("setDate", cpEndDt);
 	});
+	
+	function validationCheck(){
+		
+		var cpCdTag = $('input[name=cpCd]');
+		var cpNmTag = $('input[name=cpNm]');
+		var cpPlaceNmTag = $('input[name=cpPlaceNm]');
+		var imgTag = $('input[name=file]');
+		
+		if(cpCdTag.val() ==''|| cpCdTag.val() == null){
+			alert("대회코드를 입력 하십시오.");
+			return;
+		}
+		
+		if(cpNmTag.val() ==''|| cpNmTag.val() == null){
+			alert("대회명을 입력 하십시오.");
+			return;
+		}
+		
+		if(cpPlaceNmTag.val() ==''|| cpPlaceNmTag.val() == null){
+			alert("대회장소를 입력 하십시오.");
+			return;
+		}
+		
+		for(var i = 0 ; i < imgTag.length ; i ++){
+			
+			if(imgTag[i].value == '' || imgTag[i] == null){
+				alert("file을 선택 하십시오.");
+				return;
+			}
+		}
+		
+		return 1;
+	}
 	
 </script>
 
@@ -340,7 +350,7 @@
 							<div class="line"></div>
 							<div class="btn-center">
 									<input type="button" id="btnCancel" class="btn btn-secondary" value="취소" />
-									<button type="submit" id="btnUpdate" class="btn btn-primary" >수정</button>
+									<input type="button" id="btnUpdate" class="btn btn-primary" value="수정"/>
 								
 							</div>
 						</form>
