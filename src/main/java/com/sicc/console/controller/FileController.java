@@ -118,7 +118,6 @@ public class FileController {
 			result =e.getMessage();
 			e.printStackTrace();
 		} finally {
-			System.out.println("result -->"+result);
 	  		if(ps != null) try { ps.close();} catch(SQLException e) {}
 	  		if(con != null) try { con.close();} catch(SQLException e) {}
 		}

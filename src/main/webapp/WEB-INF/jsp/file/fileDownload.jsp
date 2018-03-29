@@ -57,7 +57,7 @@
  									 if( data.result == '1'){
  										alert("스크립트 실행이 완료되었습니다");
  									} else {
- 										alert("스크립트 실행 중 문제가 발생하였습니다 \n message: "+ data);
+ 										alert("스크립트 실행 중 문제가 발생하였습니다 \n "+ data);
  									} 
  								}catch(e) {	
  									alert('서비스에 문제가 발생되었습니다. 관리자에게 문의 하시기 바랍니다.');
