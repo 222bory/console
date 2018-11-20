@@ -12,7 +12,7 @@
     			email_addr as emailAddr, 
     			password as password
     	  FROM 
-    	   conadminm 
+    	   con.conadminm 
     	 WHERE admin_id = #{username} 
     </select>
     

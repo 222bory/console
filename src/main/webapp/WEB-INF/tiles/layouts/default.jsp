@@ -107,7 +107,7 @@
           </ul>
         </div> -->
         
-        <sec:authorize access="isAuthenticated()">
+	<sec:authorize access="isAuthenticated()">
         <div class="admin-menu">
           <ul id="side-admin-menu" class="side-menu list-unstyled"> 
 			<li sec:authorize="isAuthenticated()"> <a href="#pages-nav-list1" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>서비스 관리</span>
@@ -177,7 +177,7 @@
             <li> <a href=""> <i class="icon-picture"> </i><span>Demo</span></a></li> -->
           </ul>
         </div>
-        </sec:authorize>
+ 	</sec:authorize>
         <!-- here is tag properties for security function -->
        <%--  principal : <sec:authentication property="principal"/>
 			principal.username : <sec:authentication property="principal.username"/>

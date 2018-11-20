@@ -32,6 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		if(member == null) {
 			throw new UsernameNotFoundException(id);
 		}
+		System.out.println("loadUserByUsername!!!");
 		
 		return Optional.ofNullable(adminDao.getMemberById(id))
 				.filter(m -> m!= null)
