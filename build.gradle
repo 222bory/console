@@ -15,7 +15,7 @@ buildscript {
 } 
 
 apply plugin: 'java'
-apply plugin: 'eclipse-wtp'
+apply plugin: 'eclipse-wtp' 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
 apply plugin: "com.palantir.docker"
