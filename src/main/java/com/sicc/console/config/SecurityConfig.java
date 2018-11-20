@@ -32,8 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception
 	{
 		http.csrf().disable().authorizeRequests()
-		//.antMatchers("/**").hasRole("ADMIN")
-		//.antMatchers("/**").permitAll()
+		/*.antMatchers("/**").hasRole("ADMIN")
+		.antMatchers("/**").permitAll();*/
 		.and().formLogin()
 		.loginPage("/login").permitAll()
 		.loginProcessingUrl("/login")
@@ -51,14 +51,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 	}
 	
-	@Bean
+	
+	//비밀번호 암호화
+/*	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
+	}*/
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(customUserDetailsService);//.passwordEncoder(passwordEncoder()); 임시 주석처리
 	}
 	
 	@Bean

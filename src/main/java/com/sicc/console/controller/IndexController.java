@@ -41,7 +41,7 @@ public class IndexController {
     @PostMapping("/login")
     public String login(Model model , @RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest req, HttpServletResponse res) {
 		
-    	System.out.println("test" + username);
+    	System.out.println("test--------------" + username);
     	customUserDetailsService.loadUserByUsername(username);
     	
     	return "/admin/admin";
